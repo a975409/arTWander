@@ -1,0 +1,100 @@
+<div class="container">
+  <div class="row">
+    <nav class="col-12" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">會員功能</a></li>
+        <li class="breadcrumb-item"><a href="#">我的展演</a></li>
+        <li class="breadcrumb-item active" aria-current="page">查看展演</li>
+      </ol>
+    </nav>
+  </div>
+
+  <div class="row d-flex justify-content-center">
+    <div class="col-9 px-0">
+
+      <!--第一列 顯示瀏覽人數 ＆ 選單功能列-->
+      <div class="d-flex justify-content-between align-items-center">
+        <span class=""><i class="far fa-eye"></i>5577</span>
+        <div class="btn-group dropright">
+          <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item"><i class="fas fa-pencil-alt mr-3"
+                style="vertical-align: middle;"></i>編輯</a>
+            <a href="#" class="dropdown-item"><i class="fas fa-trash-alt mr-3"
+                style="vertical-align: middle;"></i>移除</a>
+            <a href="#" class="dropdown-item"><i class="far fa-flag mr-3" style="vertical-align: middle;"></i>檢舉</a>
+          </div>
+        </div>
+      </div>
+
+      <figure class="d-flex flex-column align-items-center mb-3">
+        <img src="./CompanyPage/img/4c1fe5_9a74d3a863254665a34f7c7b4fa9696d_mv2.jpg" class="img-fluid d-block" alt="">
+        <figcaption>火焰, 油彩、畫布, 165.1x139.7cm / 65"x55", 2021</figcaption>
+      </figure>
+
+      <div class="jumbotron w-75 p-5 mb-4" style="margin: auto;">
+        <p>
+          紐約當代藝術家，奧普海姆（Peter Opheim
+          b.1961-），有著斯堪地那維亞血統（Scandinavia）。他最新的作品帶著一些北歐神話與色彩，無論你知不知道北歐神話，其實都沒關係，奧普海姆的作品始終擁有純粹、天馬行空及療癒感，這正是步調緊湊、生活壓抑的現代人所缺少的。
+        </p>
+      </div>
+      <div class="jumbotron w-75 p-5 mb-5" style="margin: auto;">
+        <p>
+          紐約當代藝術家，奧普海姆（Peter Opheim
+          b.1961-），有著斯堪地那維亞血統（Scandinavia）。他最新的作品帶著一些北歐神話與色彩，無論你知不知道北歐神話，其實都沒關係，奧普海姆的作品始終擁有純粹、天馬行空及療癒感，這正是步調緊湊、生活壓抑的現代人所缺少的。
+        </p>
+      </div>
+      <hr>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">評論</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">評分排序 <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">日期排序</a>
+            </li>
+          </ul>
+          <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal"
+            data-whatever="@getbootstrap">發表評論</button>
+        </div>
+      </nav>
+      
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">評論者：陳小白</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Recipient:</label>
+                  <input type="text" class="form-control" id="recipient-name">
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Message:</label>
+                  <textarea class="form-control" id="message-text"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Send message</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
