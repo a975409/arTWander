@@ -32,9 +32,29 @@
                     <figure class="col-4 d-flex justify-content-center">
                         <a href="#"><img src="./image/logo/logo.png" alt=""></a>
                     </figure>
-                    <div class="col-4 d-flex justify-content-end ">
-                        <!-- <a class="mx-3" href=""><i class="far fa-bell" aria-hidden="true"></i></a> -->
-                        <a class="mx-3" href="#"><img id="avatarNav" src="./image/avatar/頭像_展演單位.png" alt=""></a>
+                    <div class="col-4">
+                        <div class="d-flex justify-content-end">
+                            <a class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
+                                    id="avatarNav" src="./image/avatar/頭像_展演單位.png" alt=""></a>
+                            <!-- <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button> -->
+
+                            <!--會員下拉式選單-->
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <p class="dropdown-item-text">會員功能</p>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item"><i class="fas fa-pencil-alt mr-3"
+                                        style="vertical-align: middle;"></i>我的展演</a>
+                                <a href="#" class="dropdown-item"><i class="fas fa-trash-alt mr-3"
+                                        style="vertical-align: middle;"></i>社群管理</a>
+                                <a href="#" class="dropdown-item"><i class="far fa-flag mr-3"
+                                        style="vertical-align: middle;"></i>帳戶管理</a>
+                                <a href="#" class="dropdown-item"><i class="fas fa-sign-out-alt  mr-3"
+                                        style="vertical-align: middle;"></i>登出</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </hgroup>
