@@ -1,15 +1,13 @@
 <link rel="stylesheet" href="/css/SingleShowPage.css">
 
 <div class="container">
-  <div class="row">
-    <nav class="col-12" aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">會員功能</a></li>
-        <li class="breadcrumb-item"><a href="#">我的展演</a></li>
-        <li class="breadcrumb-item active" aria-current="page">查看展演</li>
-      </ol>
-    </nav>
-  </div>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">會員功能</a></li>
+      <li class="breadcrumb-item"><a href="#">我的展演</a></li>
+      <li class="breadcrumb-item active" aria-current="page">查看展演</li>
+    </ol>
+  </nav>
 
   <div class="row d-flex justify-content-center">
     <div class="col-9 px-0">
@@ -23,9 +21,30 @@
           <div class="dropdown-menu">
             <a href="#" class="dropdown-item"><i class="fas fa-pencil-alt mr-3"
                 style="vertical-align: middle;"></i>編輯</a>
-            <a href="#" class="dropdown-item"><i class="fas fa-trash-alt mr-3"
+            <a href="#RemoveModal" class="dropdown-item" data-toggle="modal" data-whatever="@getbootstrap"><i
+                class="fas fa-trash-alt mr-3"
                 style="vertical-align: middle;"></i>移除</a>
-            <a href="#" class="dropdown-item"><i class="far fa-flag mr-3" style="vertical-align: middle;"></i>檢舉</a>
+          </div>
+        </div>
+
+        <!--按下移除後的彈出視窗-->
+        <div class="modal fade" id="RemoveModal" tabindex="-1" aria-labelledby="RemoveModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">移除展覽</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>是否要移除此展覽？</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">否</button>
+                <button type="button" class="btn btn-danger">是</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -88,12 +107,12 @@
                     placeholder="輸入評論內容..."></textarea>
                 </div>
                 <div class="form-group">
-                  <div class="text-center">
-                    <span><i class="fas fa-star text-warning"></i></span>
-                    <span><i class="fas fa-star text-warning"></i></span>
-                    <span><i class="fas fa-star text-warning"></i></span>
-                    <span><i class="far fa-star"></i></span>
-                    <span><i class="far fa-star"></i></span>
+                  <div id="form-5stars" class="d-flex d-flex justify-content-center">
+                    <span><i id="1" class="star far fa-star"></i></span>
+                    <span><i id="2" class="star far fa-star"></i></span>
+                    <span><i id="3" class="star far fa-star"></i></span>
+                    <span><i id="4" class="star far fa-star"></i></span>
+                    <span><i id="5" class="star far fa-star"></i></span>
                   </div>
                   <input type="number" class="form-control" id="star-num" name="star-num" min="1" max="5" value="5"
                     hidden>
@@ -186,38 +205,69 @@
               </div>
             </div>
           </div>
-        </div>
-
-        <!--第二位用戶評論-->
-        <div class="col-11 mt-3 px-0 d-flex justify-content-between">
-          <div class="usercommentImg">
-            <img src="CompanyPage/img/4c1fe5_9a74d3a863254665a34f7c7b4fa9696d_mv2.jpg" alt="">
+          <div class="dropright">
+            <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a href="#Response" class="dropdown-item" data-toggle="modal" data-whatever="@getbootstrap"><i
+                  class="fas fa-pencil-alt mr-3" style="vertical-align: middle;"></i>回覆評論</a>
+              <a href="#ReportModal" class="dropdown-item" data-toggle="modal" data-whatever="@getbootstrap"><i
+                  class="fas fa-trash-alt mr-3" style="vertical-align: middle;"></i>檢舉評論</a>
+            </div>
           </div>
-          <div>
-            <span class="userCommentName">王小明</span>
-            <div class="usercommentStar">
-              <span><i class="fas fa-star text-warning"></i></span>
-              <span><i class="fas fa-star text-warning"></i></span>
-              <span><i class="fas fa-star text-warning"></i></span>
-              <span><i class="far fa-star"></i></span>
-              <span><i class="far fa-star"></i></span>
+
+          <!--按下回覆評論後的彈出視窗-->
+          <div class="modal fade" id="Response" tabindex="-1" aria-labelledby="ResponseModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="ResponseModalLabel">回覆評論者：陳小白</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form id="Response-form" action="">
+                    <div class="form-group">
+                      <textarea class="form-control" id="Response-message" name="message-text" rows="5"
+                        placeholder="輸入評論內容..."></textarea>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>
+                  <button type="submit" class="btn btn-primary" form="Response-form">回覆留言</button>
+                </div>
+              </div>
             </div>
-            <div class="jumbotron pt-4 pb-0 bg-transparent">
-              <p>紐約當代藝術家，奧普海姆（Peter Opheim
-                b.1961-），有著斯堪地那維亞血統（Scandinavia）。他最新的作品帶著一些北歐神話與色彩，無論你知不知道北歐神話，其實都沒關係，奧普海姆的作品始終擁有純粹、天馬行空及療癒感，這正是步調緊湊、生活壓抑的現代人所缺少的。
-              </p>
-            </div>
-            <div class="jumbotron pt-4 pb-0">
-              <h4>展演單位回覆：</h4>
-              <div class="jumbotron py-4">
-                <p>紐約當代藝術家，奧普海姆（Peter Opheim
-                  b.1961-），有著斯堪地那維亞血統（Scandinavia）。他最新的作品帶著一些北歐神話與色彩，無論你知不知道北歐神話，其實都沒關係，奧普海姆的作品始終擁有純粹、天馬行空及療癒感，這正是步調緊湊、生活壓抑的現代人所缺少的。
-                </p>
+          </div>
+
+          <!--按下檢舉評論後的彈出視窗-->
+          <div class="modal fade" id="ReportModal" tabindex="-1" aria-labelledby="ReportModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">檢舉評論</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>是否要檢舉此評論？</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">否</button>
+                  <button type="button" class="btn btn-danger">是</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
 </div>
+
+<script src="./javascript/SingleShowPage.js"></script>

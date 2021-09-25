@@ -16,6 +16,10 @@
   font-size: large;
 }
 
+.star {
+  font-size: 40px;
+}
+
 /*所有用戶評論*/
 .usercommentImg {
   vertical-align: top;
