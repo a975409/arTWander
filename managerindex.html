@@ -94,13 +94,13 @@
                                     <hr>
                                     <ul class="list-group  list-group-flush bg-transparent">
                                         <li class="list-group-item bg-transparent">
-                                            <a class="" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="city">
+                                            <a class="userListBtn" data-toggle="collapse" href="#userList" aria-expanded="false" aria-controls="city">
                                                 一般會員 
                                                 <!-- <i class="fa fa-chevron-down" aria-hidden="true"></i> -->
                                             </a>
                                         </li>
                                         <li class="list-group-item bg-transparent">
-                                            <a class="" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="town">
+                                            <a class="showCustomerListBtn" data-toggle="collapse" href="#showCustomerList" aria-expanded="false" aria-controls="town">
                                                 展演單位 
                                                 <!-- <i class="fa fa-chevron-down" aria-hidden="true"></i> -->
                                             </a>
@@ -161,8 +161,8 @@
                     <!-- col-12 col-md-9 bg-gray -->
                     
                     <section id="Section" class="col-12 col-md-9 w-100">
-                        <div id ="mainPage">
-                        </div>
+                        <div id ="mainPage"></div>
+                        <!-- <div id="showCustomerList"></div> -->
                     </section>
                 </div>
             </div>  
@@ -170,8 +170,11 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            $('#mainPage').load('ManagerPage/UserMaintain.html');
+        $(".userListBtn").click(function(){
+            $('#mainPage').load('ManagerPage/UserList.html');
+        });
+        $(".showCustomerListBtn").click(function(){
+            $('#mainPage').load('ManagerPage/ShowCustomList.html');
         });
     </script>
 
