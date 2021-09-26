@@ -1,0 +1,122 @@
+<link rel="stylesheet" href="./css/UserList.css">
+
+<!-- breadcrumb start -->
+<div class="justify-items-start">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-white">
+            <li class="breadcrumb-item"><a href="#">系統管理員</a></li>
+            <li class="breadcrumb-item"><a href="#">會員管理</a></li>
+            <li class="breadcrumb-item active" aria-current="page">一般會員</li>
+        </ol>
+    </nav>
+</div>
+<!-- breadcrumb end -->
+<article>
+    <section id="Section" class="col-12">
+        <div class="AllList"> 
+            <!-- 關鍵字查詢 start-->
+            <div class="AllListTitle">       
+                <div class="input-group-prepend my-2">
+                    <div class="row">
+                        <span class="col-11 col-md-4 my-auto mx-2">一般會員</span>
+                        <input type="text" id="textSearch" class="col-8 col-md-6 form-control rounded-pill my-1 w-100" style="width:180px;height:auto;" placeholder="關鍵字搜尋" aria-label="search" aria-describedby="buttonSearch">
+                        <button class="btn col-2 col-md-1 my-2" type="button" id="buttonSearch"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            </div>
+            <!-- 關鍵字查詢 end -->
+            <div class="AllListContent">
+                <table class="table table-hover w-100">
+                    <thead>
+                      <tr>
+                        <th scope="col col-md-1">編號</th>
+                        <th scope="col-md-1" class="d-none d-sm-table-cell">姓名</th>
+                        <th scope="col col-md-1">ID</th>
+                        <th scope="col-md-1" class="d-none d-sm-table-cell">帳號</th>
+                        <th scope="col-md-4" class="d-none d-sm-table-cell">Email</th>
+                        <th scope="col-2 col-md-2">註冊日</th>
+                        <th scope="col col-md-1">登入次數</th>
+                        <th scope="col col-md-1">狀態</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">U0001</th>
+                        <td scope="col-md-1" class="d-none d-sm-table-cell">陳品宏</td>
+                        <td scope="col col-md-1">DIDI</td>
+                        <td sscope="col-md-1" class="d-none d-sm-table-cell">didi333</td>
+                        <td scope="col-md-4" class="d-none d-sm-table-cell">didi3325s@hotmail.com</td>
+                        <td scope="col-2 col-md-2">2021-07-19</td>
+                        <td scope="col col-md-1">30</td>
+                        <td scope="col col-md-1">OK</td>
+                       
+                      </tr>
+                      <tr>
+                        <th scope="row">U0002</th>
+                        <td scope="col-md-1" class="d-none d-sm-table-cell">王小名</td>
+                        <td scope="col col-md-1">ming</td>
+                        <td sscope="col-md-1" class="d-none d-sm-table-cell">ming3</td>
+                        <td scope="col-md-4" class="d-none d-sm-table-cell">minge23@hotmail.com</td>
+                        <td scope="col-2 col-md-2">2021-07-19</td>
+                        <td scope="col col-md-1">3</td>
+                        <td scope="col col-md-1">OK</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">U0003</th>
+                        <td scope="col-md-1" class="d-none d-sm-table-cell">李大白</td>
+                        <td scope="col col-md-1">bai</td>
+                        <td sscope="col-md-1" class="d-none d-sm-table-cell">dbai2</td>
+                        <td scope="col-md-4" class="d-none d-sm-table-cell">dbai@hotmail.com</td>
+                        <td scope="col-2 col-md-2">2021-09-19</td>
+                        <td scope="col col-md-1">999</td>
+                        <td scope="col col-md-1">黑名單</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">U0004</th>
+                        <td scope="col-md-1" class="d-none d-sm-table-cell">葉大雄</td>
+                        <td scope="col col-md-1">bai</td>
+                        <td sscope="col-md-1" class="d-none d-sm-table-cell">dbai2</td>
+                        <td scope="col-md-4" class="d-none d-sm-table-cell">dbai@hotmail.com</td>
+                        <td scope="col-2 col-md-2">2021-09-19</td>
+                        <td scope="col col-md-1">999</td>
+                        <td scope="col col-md-1">黑名單</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">U0005</th>
+                        <td scope="col-md-1" class="d-none d-sm-table-cell">黃小米</td>
+                        <td scope="col col-md-1">bai</td>
+                        <td sscope="col-md-1" class="d-none d-sm-table-cell">dbai2</td>
+                        <td scope="col-md-4" class="d-none d-sm-table-cell">dbai@hotmail.com</td>
+                        <td scope="col-2 col-md-2">2021-09-19</td>
+                        <td scope="col col-md-1">99</td>
+                        <td scope="col col-md-1">OK</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">U0006</th>
+                        <td scope="col-md-1" class="d-none d-sm-table-cell">鯉魚王</td>
+                        <td scope="col col-md-1">bai</td>
+                        <td sscope="col-md-1" class="d-none d-sm-table-cell">dbai2</td>
+                        <td scope="col-md-4" class="d-none d-sm-table-cell">dbai@hotmail.com</td>
+                        <td scope="col-2 col-md-2">2021-09-19</td>
+                        <td scope="col col-md-1">999</td>
+                        <td scope="col col-md-1">OK</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                
+
+            </div>
+            <nav aria-label="Page navigation example ">
+                <ul class="pagination justify-content-center text-secondary">
+                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+              </nav>
+        </div>
+        
+    </section>
+   
+</article>

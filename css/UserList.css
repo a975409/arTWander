@@ -1,0 +1,59 @@
+body{
+    position: relative;
+    overflow-x: hidden;
+}
+i{
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+}
+
+@media screen and (max-width: 768px){
+
+    /* breadcrumb start */
+    .breadcrumb{
+        display:none;
+    }
+    /* breadcrumb end */
+    /* section邊框 */
+    .AllListTitle .row{
+        justify-content: center;
+    }
+    .AllList{
+        margin-left: -10%;
+        margin-right: -10%;
+        border: solid;
+        border-color: black;
+        border-radius:5px;
+    }
+    /* section邊框end */
+    
+}
+
+
+/* section start*/
+.AllList{
+    border: solid;
+    border-color: black;
+    border-radius:5px;
+}
+.AllListContent{
+    border: solid;
+    border-color: rgb(196, 196, 196);
+    border-radius:5px;
+    margin: 10px;
+}
+.AllListTitle input{
+    height: auto;
+    min-height: 20px;
+    padding: 2px;
+}
+
+
+
+/* pagination 控制顏色 */
+.page-link
+{
+    color: #333;
+} 
+
+/* section end */
