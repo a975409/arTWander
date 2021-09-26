@@ -1,21 +1,44 @@
 body{
     position: relative;
+    overflow-x: hidden;
 }
 
-.bg-gray{
-    background-color: rgb(196, 196, 196);
-}
 
 /* header starts*/
-
+/* a{
+    font-size: 18px;
+} */
 i{
     font-size: 20px;
     color: rgb(0, 0, 0);
 }
 
+
+
+/* 右上頭像下拉式選單 */
+
+#avatarNavSet >a{
+    padding: 0px;
+    width: 30px;
+    font-size: 25px;
+}
+#avatarNavSet >a i{
+    font-size: 22px;
+}
 #avatarNav{
     width: 25px;
     height: auto;
+}
+.dropdown-menu >a{
+    font-size: 16px;
+}
+ 
+#avatarNavDropdown{
+    position: fixed;
+    width: 180px;
+    top: 50px;
+    left:100%;
+    transition:all .3s ease-in-out;
 }
 
 /* header end */
@@ -167,8 +190,23 @@ select{
     /* navbar end */
 
     /* breadcrumb start */
-
+    .breadcrumb{
+        display:none;
+    }
     /* breadcrumb end */
+    /* section邊框 */
+    .AllListTitle .row{
+        justify-content: center;
+    }
+    .AllList{
+        margin-left: -10%;
+        margin-right: -10%;
+        border: solid;
+        border-color: black;
+        border-radius:5px;
+    }
+    /* section邊框end */
+    
 }
 /* aside RWD end */
 
@@ -183,10 +221,22 @@ select{
     border: solid;
     border-color: rgb(196, 196, 196);
     border-radius:5px;
+    margin: 10px;
 }
 .AllListTitle input{
     height: auto;
     min-height: 20px;
     padding: 2px;
 }
+
+
+
+/* pagination 控制顏色 */
+.page-link
+{
+    color: #333;
+} 
+
 /* section end */
+
+
