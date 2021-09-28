@@ -1,0 +1,136 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">會員功能</a></li>
+    <li class="breadcrumb-item"><a href="#">帳戶管理</a></li>
+  </ol>
+</nav>
+
+<!--統計資料-->
+<h1>統計資料</h1>
+<div class="row jumbotron bg-light">
+  <div class="col-12 col-lg-4">
+    <h3>一般統計資料：</h3>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">加入日期：<span>2017年6月20日</span></li>
+      <li class="list-group-item">訂閱數：<span>31,931,853</span> 位訂閱者</li>
+    </ul>
+  </div>
+  <div class="col-12 col-lg-4">
+    <h3>展覽數據統計：</h3>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">已發佈的展覽數：<span>31,931,853</span> 次</li>
+      <li class="list-group-item">已發佈展覽的瀏覽數：<span>31,931,853</span> 次</li>
+    </ul>
+  </div>
+  <div class="col-12 col-lg-4">
+    <h3>社群數據統計：</h3>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">已發佈的貼文數：<span>31,931,853</span> 次</li>
+      <li class="list-group-item">已發佈貼文的總Like數：<span>31,931,853</span> 次</li>
+      <li class="list-group-item">已發佈貼文的總disLike數：<span>853</span> 次</li>
+    </ul>
+  </div>
+</div>
+
+<h1>資料查詢＆修改</h1>
+<div class="row jumbotron bg-light">
+  <!--說明-->
+  <div class="col-12 col-lg-5">
+    <div class="d-flex align-items-center">
+      <h3 style="margin: 0px;">說明：</h3>
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#EditCaption"
+        data-whatever="@getbootstrap">編輯說明</button>
+    </div>
+    <br>
+    <pre class="col-12">您好呀！我是XX展演單位
+
+以下是我們的聯絡方式！
+════════════
+FB：XX展演單位➤https://www.facebook.com/XXXXXX/
+
+IG：XXXXXX
+➤https://www.instagram.com/XXXXXX/
+
+或私訊 Fb/IG 會由經紀人回覆您喔 !</pre>
+    <!--按下編輯說明後的彈出視窗-->
+    <div class="modal fade" id="EditCaption" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-labelledby="EditCaptionLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="EditCaptionLabel">編輯說明</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="EditCaption-form">
+              <div class="form-group">
+                <textarea class="form-control" id="EditCaption-text" name="EditCaption-text" rows="10"
+                  placeholder="輸入說明內容..."></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>
+            <button type="submit" class="btn btn-primary" form="EditCaption-form">送出</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+  </div>
+
+  <!--連結-->
+  <div class="col-12 col-lg-4">
+    <div class="d-flex align-items-center">
+      <h3 style="margin: 0px;">連結：</h3>
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#EditLink"
+        data-whatever="@getbootstrap">編輯連結</button>
+    </div>
+    <br>
+    <pre class="col-12">
+FB：https://www.facebook.com/XXXXXX/
+
+IG：https://www.instagram.com/XXXXXX/</pre>
+    <!--按下編輯連結後的彈出視窗-->
+    <div class="modal fade" id="EditLink" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-labelledby="EditLinkLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="EditLinkLabel">編輯連結</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="EditLink-form">
+              <div class="form-group">
+                <textarea class="form-control" id="EditLink-text" name="EditLink-text" rows="10"
+                  placeholder="輸入連結內容..."></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>
+            <button type="submit" class="btn btn-primary" form="EditLink-form">送出</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+  </div>
+
+  <div class="col-12 col-lg-3">
+    <h3>其他功能：</h3>
+    <div class="btn-group-vertical" role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#EditLink"
+        data-whatever="@getbootstrap">查看被檢舉下架的展覽</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditLink"
+        data-whatever="@getbootstrap">查看被檢舉下架的貼文</button>
+      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditLink"
+        data-whatever="@getbootstrap">修改帳號密碼</button>
+    </div>
+  </div>
+</div>
