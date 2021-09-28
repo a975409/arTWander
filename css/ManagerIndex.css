@@ -144,7 +144,7 @@ select{
     /* aside hidden */
     #aside1{
         position:absolute;
-        width: 60%;
+        width: 80%;
         height: 92vh;
         left: -100%;
         background-color: rgb(255, 255, 255);
@@ -155,7 +155,7 @@ select{
     /* slide aside hidden */
     #aside1.aside1_Slide{
         position:fixed;
-        width: 60%;
+        width: 80%;
         height: 94vh;
         left: -100%;
         top: 48px;

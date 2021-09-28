@@ -17,13 +17,13 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js">
     </script>
-    <!-- <script src="./javascript/custom.js"></script> -->
     
 
     <!-- font-awesome -->
     <script src="https://kit.fontawesome.com/9bd3ad2735.js" crossorigin="anonymous"></script>
     <!-- css -->
     <link rel="stylesheet" type="text/css" href="./css/ManagerIndex.css">
+    <!-- <link rel="stylesheet" href="showList.css"> -->
 
 </head>
 
@@ -76,9 +76,14 @@
         <main>
             <div class="container">
                 <div class="row">
+                    <!-- 判斷是否開啟RWD左側邊框 -->
                     <input type="checkbox" id="menuControl">
-                    <!-- 主內容 -->
-                    <section id="Section" class="col-12 w-100">
+                    <!-- 左側邊框 -->
+                    <aside id="aside1" class="col-12 col-md-3 d-flex justify-content-center align-content-center mt-0" style="z-index: 1002;">
+                    </aside>
+                    
+                    <!-- 右側主內容 -->
+                    <section id="Section" class="col-12 col-md-9 w-100">
                         <div id ="mainPage"></div>
                     </section>
                 </div>
@@ -89,9 +94,9 @@
 
 
     <script>
-        // mainPage Ajax導入處 於此處更改要導入頁面
+        // Aside Ajax導入處 於此處更改要導入頁面
         document.addEventListener("DOMContentLoaded", function () {
-            $('#mainPage').load('CompanyPage/EditSingleShowPage.html');
+            $('#aside1').load('AsidePage/logInFalseAside.html');
         });
 
         //下面這幾串使用按鍵觸發導入Ajax功能需一併帶到有該按鍵的html頁面! Ex範例managerAside.html內最下面
