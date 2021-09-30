@@ -7,6 +7,9 @@ i{
     color: rgb(0, 0, 0);
 }
 
+#showTitle{
+line-height: 50px;
+}
 
 @media screen and (max-width: 768px){
 
@@ -62,4 +65,17 @@ i{
 hr{
     border-top: 2px solid rgba(0,0,0,.1);
     width: 95%;
+}
+
+/* breadcrumb color */
+.breadcrumb .active{
+    color: #C57E68;
+}
+
+#timeSelect{
+    padding: 0px;
+}
+#sort{
+    padding: 0px;
+    
 }

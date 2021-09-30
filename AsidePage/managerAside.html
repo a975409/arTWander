@@ -15,19 +15,19 @@
             <hr>
             <ul class="list-group  list-group-flush bg-transparent">
                 <li class="list-group-item bg-transparent">
-                    <a class="userListBtn" data-toggle="collapse" href="#userList" aria-expanded="false" aria-controls="city">
+                    <a class="userListBtn" data-toggle="collapse" href="#userList" aria-expanded="false">
                         一般會員 
                         <!-- <i class="fa fa-chevron-down" aria-hidden="true"></i> -->
                     </a>
                 </li>
                 <li class="list-group-item bg-transparent">
-                    <a class="showCustomerListBtn" data-toggle="collapse" href="#showCustomerList" aria-expanded="false" aria-controls="town">
+                    <a class="showCustomerListBtn" data-toggle="collapse" href="#showCustomerList" aria-expanded="false">
                         展演單位 
                         <!-- <i class="fa fa-chevron-down" aria-hidden="true"></i> -->
                     </a>
                 </li>
                 <li class="list-group-item bg-transparent">
-                    <a class="blackListBtn" data-toggle="collapse" href="#blackList" aria-expanded="false" aria-controls="town">
+                    <a class="blackListBtn" data-toggle="collapse" href="#blackList" aria-expanded="false">
                         黑名單 
                         <!-- <i class="fa fa-chevron-down" aria-hidden="true"></i> -->
                     </a>
@@ -40,7 +40,7 @@
             <hr>
             <ul class="list-group list-group-flush bg-transparent">
                 <li class="list-group-item bg-transparent">
-                    <a class="" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="town">
+                    <a class="allShowListBtn" data-toggle="collapse" href="#allShowList" aria-expanded="false">
                         所有展覽 
                         <!-- <i class="fa fa-chevron-down" aria-hidden="true"></i> -->
                     </a>
@@ -53,7 +53,7 @@
             <hr>
             <ul class="list-group  list-group-flush bg-transparent">
                 <li class="list-group-item bg-transparent">
-                    <a class="" data-toggle="collapse" href="#" >
+                    <a class="showInformBtn" data-toggle="collapse" href="#" >
                         展覽檢舉 
                         <!-- <i class="fa fa-chevron-down" aria-hidden="true"></i> -->
                     </a>
@@ -80,15 +80,24 @@
 
 
 <script>
-
+    //一般使用者List
     $(".userListBtn").click(function(){
         $('#mainPage').load('ManagerPage/UserList.html');
     });
+    //展演單位List
     $(".showCustomerListBtn").click(function(){
         $('#mainPage').load('ManagerPage/ShowCustomList.html');
     });
-
+    //黑名單List
     $(".blackListBtn").click(function(){
         $('#mainPage').load('ManagerPage/BlackList.html');
+    });
+    //所有展演List
+    $(".allShowListBtn").click(function(){
+        $('#mainPage').load('ManagerPage/AllShowList.html');
+    });
+
+    $(".showInformBtn").click(function(){
+        $('#mainPage').load('ManagerPage/ShowInform.html');
     });
 </script>

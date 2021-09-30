@@ -3,7 +3,7 @@
 <!-- breadcrumb start -->
 <div class="justify-items-start">
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb bg-white">
+        <ol class="breadcrumb bg-light">
             <li class="breadcrumb-item"><a href="#">系統管理員</a></li>
             <li class="breadcrumb-item"><a href="#">會員管理</a></li>
             <li class="breadcrumb-item active" aria-current="page">黑名單</li>
@@ -113,77 +113,38 @@
                 <table class="table table-hover w-100">
                     <thead>
                       <tr>
-                        <th scope="col col-md-1">編號</th>
-                        <th scope="col-md-1" class="d-none d-sm-table-cell">姓名</th>
-                        <th scope="col col-md-1">ID</th>
-                        <th scope="col-md-1" class="d-none d-sm-table-cell">帳號</th>
-                        <th scope="col-md-4" class="d-none d-sm-table-cell">Email</th>
-                        <th scope="col-2 col-md-2">註冊日</th>
-                        <th scope="col col-md-1">登入次數</th>
-                        <th scope="col col-md-1">狀態</th>
+                        <th scope="col-1 col-md-1">編號</th>
+                        <th scope="col-1 col-md-1" >單位名稱</th>
+                        <th scope="col-1 col-md-1" class="d-none d-sm-table-cell">帳號</th>
+                        <th scope="col-7 col-md-7" >黑名單原因</th>
+                        <th scope="col-1 col-md-1">黑名單日期</th>
+                        <th scope="col-1 col-md-1" class="d-none d-sm-table-cell">執行人</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <th scope="row">U0001</th>
-                        <td scope="col-md-1" class="d-none d-sm-table-cell">陳品宏</td>
-                        <td scope="col col-md-1">DIDI</td>
-                        <td sscope="col-md-1" class="d-none d-sm-table-cell">didi333</td>
-                        <td scope="col-md-4" class="d-none d-sm-table-cell">didi3325s@hotmail.com</td>
-                        <td scope="col-2 col-md-2">2021-07-19</td>
-                        <td scope="col col-md-1">30</td>
-                        <td scope="col col-md-1">OK</td>
-                       
+                        <th scope="col-1 col-md-1">C0001</th>
+                        <td scope="col-1 col-md-1" >高美館</td>
+                        <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">KMS</td>
+                        <td scope="col-7 col-md-7" >多次爭議展出受檢舉</td>
+                        <td scope="col-1 col-md-1">2021/09/22</td>
+                        <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">GM</td>
                       </tr>
                       <tr>
-                        <th scope="row">U0002</th>
-                        <td scope="col-md-1" class="d-none d-sm-table-cell">王小名</td>
-                        <td scope="col col-md-1">ming</td>
-                        <td sscope="col-md-1" class="d-none d-sm-table-cell">ming3</td>
-                        <td scope="col-md-4" class="d-none d-sm-table-cell">minge23@hotmail.com</td>
-                        <td scope="col-2 col-md-2">2021-07-19</td>
-                        <td scope="col col-md-1">3</td>
-                        <td scope="col col-md-1">OK</td>
+                        <th scope="col-1 col-md-1">C0002</th>
+                        <td scope="col-1 col-md-1" >衛武營</td>
+                        <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">KSKK</td>
+                        <td scope="col-7 col-md-7" >多次假展演</td>
+                        <td scope="col-1 col-md-1">2021/09/28</td>
+                        <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">DD</td>
                       </tr>
                       <tr>
-                        <th scope="row">U0003</th>
-                        <td scope="col-md-1" class="d-none d-sm-table-cell">李大白</td>
-                        <td scope="col col-md-1">bai</td>
-                        <td sscope="col-md-1" class="d-none d-sm-table-cell">dbai2</td>
-                        <td scope="col-md-4" class="d-none d-sm-table-cell">dbai@hotmail.com</td>
-                        <td scope="col-2 col-md-2">2021-09-19</td>
-                        <td scope="col col-md-1">999</td>
-                        <td scope="col col-md-1">黑名單</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">U0004</th>
-                        <td scope="col-md-1" class="d-none d-sm-table-cell">葉大雄</td>
-                        <td scope="col col-md-1">bai</td>
-                        <td sscope="col-md-1" class="d-none d-sm-table-cell">dbai2</td>
-                        <td scope="col-md-4" class="d-none d-sm-table-cell">dbai@hotmail.com</td>
-                        <td scope="col-2 col-md-2">2021-09-19</td>
-                        <td scope="col col-md-1">999</td>
-                        <td scope="col col-md-1">黑名單</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">U0005</th>
-                        <td scope="col-md-1" class="d-none d-sm-table-cell">黃小米</td>
-                        <td scope="col col-md-1">bai</td>
-                        <td sscope="col-md-1" class="d-none d-sm-table-cell">dbai2</td>
-                        <td scope="col-md-4" class="d-none d-sm-table-cell">dbai@hotmail.com</td>
-                        <td scope="col-2 col-md-2">2021-09-19</td>
-                        <td scope="col col-md-1">99</td>
-                        <td scope="col col-md-1">OK</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">U0006</th>
-                        <td scope="col-md-1" class="d-none d-sm-table-cell">鯉魚王</td>
-                        <td scope="col col-md-1">bai</td>
-                        <td sscope="col-md-1" class="d-none d-sm-table-cell">dbai2</td>
-                        <td scope="col-md-4" class="d-none d-sm-table-cell">dbai@hotmail.com</td>
-                        <td scope="col-2 col-md-2">2021-09-19</td>
-                        <td scope="col col-md-1">999</td>
-                        <td scope="col col-md-1">OK</td>
+                        <th scope="col-1 col-md-1" >C0003</th>
+                        <td scope="col-1 col-md-1" >中美館</td>
+                        <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">TMSS</td>
+                        <td scope="col-7 col-md-7" >就是想下架他</td>
+                        <td scope="col-1 col-md-1">2021/09/30</td>
+                        <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">GM</td>
                       </tr>
                     </tbody>
                   </table>
@@ -192,7 +153,7 @@
             </div>
             <nav aria-label="Page navigation example ">
                 <ul class="pagination justify-content-center text-secondary">
-                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                  <li class="page-item "><a class="page-link" href="#">Previous</a></li>
                   <li class="page-item"><a class="page-link" href="#">1</a></li>
                   <li class="page-item"><a class="page-link" href="#">2</a></li>
                   <li class="page-item"><a class="page-link" href="#">3</a></li>
