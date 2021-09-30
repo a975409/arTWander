@@ -1,6 +1,9 @@
 var c = css.sheet;
 let fixAside = document.getElementById("aside1");
 let NavbarFixed = document.getElementById("navbarFixed");
+let menuCheckbox = document.getElementById("menuControl");
+let navCheckbox = document.getElementById("navControl");
+let backGroundClick = document.getElementById("mainPage");
 
 //判斷是否存在aside
 if (fixAside){
@@ -11,6 +14,24 @@ else{
      c.insertRule("#navbarFixed#navbarFixed::before{display:none;}", 0);
 }
 
+window.addEventListener("click", function () {
+    if (fixAside){
+        // console.log("在");
+    
+        if(menuCheckbox.checked == true)
+        {
+            navCheckbox.checked = true;
+            backGroundClick.onclick=function(){
+                navCheckbox.checked = false;
+                menuCheckbox.checked = false;
+            };
+            
+        }else{
+            navCheckbox.checked = false;
+            menuCheckbox.checked = false;
+        }
+    }
+});
 
 
 //用於Navbar下滑動畫
@@ -19,8 +40,7 @@ window.addEventListener("scroll", function () {
     let topHeader = document.getElementById("topHeader");
     let fixedNav = document.getElementById("navbarFixed");
     let fixAside = document.getElementById("aside1");
-    let menuCheckbox = document.getElementById("menuControl");
-    let navCheckbox = document.getElementById("navControl");
+    
     // 取得使用者滑動位置
     let y = window.scrollY;
     // console.log(y);
@@ -31,13 +51,6 @@ window.addEventListener("scroll", function () {
     // navbar control開關
     if (fixAside){
         // console.log("在");
-        
-        if(menuCheckbox.checked == true)
-        {
-            navCheckbox.checked = true;
-        }else{
-            navCheckbox.checked = false;
-        }
         // 改變fixed導覽列位置
         if (y > top) {
             fixedNav.classList.add('navbarFixed_Slide');
@@ -63,4 +76,7 @@ window.addEventListener("scroll", function () {
             fixedNav.classList.remove('fixed-top','navbarFixed_active','navbarFixed_Slide');
         }
     }
+
+    
 });
+

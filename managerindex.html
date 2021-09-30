@@ -17,7 +17,7 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js">
     </script>
-    <script src="./javascript/custom.js"></script>
+    <!-- <script src="./javascript/custom.js"></script> -->
 
     <!-- font-awesome -->
     <script src="https://kit.fontawesome.com/9bd3ad2735.js" crossorigin="anonymous"></script>
@@ -50,14 +50,10 @@
                             style="vertical-align: middle;"></i>設定和隱私</a>
                             <a href="#" class="dropdown-item"><i class="fas fa-sign-out-alt  mr-3"
                             style="vertical-align: middle;"></i>登出</a>
-                        
-                </div>
-                    
+                        </div>
                     </div>
                 </div>
-                
             </hgroup>
-
             <hgroup>
                 <!-- fixed導覽列 starts -->
                 <input type="checkbox" id="navControl">
@@ -66,103 +62,26 @@
                     <a href="#" class="d-md-none"> </a>
                     <a class="nav-link active" href="#">首頁</a>
                     <a class="nav-link" href="#">全部展覽</a>
-                    <a class="nav-link" href="#">展演單位</a>
-                    
+                    <a class="nav-link" href="#">展演單位</a>   
                 </nav>
                 <!-- fixed導覽列 end -->
             </hgroup>
         </header>
         <!-- 導覽列 end -->
-        <main>
+        
+        <!-- 主要內容區 -->
+        <main id="main">
             <div class="container">
                 <div class="row">
+                    <!-- 判斷是否開啟RWD左側邊框 -->
                     <input type="checkbox" id="menuControl">
+                    <!-- 左側邊框 -->
                     <aside id="aside1" class="col-12 col-md-3 d-flex justify-content-center align-content-center mt-0" style="z-index: 1002;">
-                        <!-- d-none position-fixed d-md-block aside_active-->
-                        <div id="aside1Div" class=" d-md-block">
-                            <!-- 頭像starts -->
-                            <figure>
-                                <div id="asideAvatar" class="d-flex justify-content-center overflow-hidden">
-                                    <img class="" src="./image/avatar/頭像_展演單位.png" alt="">
-                                </div>
-                            </figure>
-                            <!-- 頭像end -->
-                            <!-- 條件查詢 starts -->
-                            <ul class="list-group list-group-flush bg-transparent">
-                                <!-- 會員管理 starts -->
-                                <li class="list-group-item bg-transparent "> 會員管理
-                                    <hr>
-                                    <ul class="list-group  list-group-flush bg-transparent">
-                                        <li class="list-group-item bg-transparent">
-                                            <a class="userListBtn" data-toggle="collapse" href="#userList" aria-expanded="false" aria-controls="city">
-                                                一般會員 
-                                                <!-- <i class="fa fa-chevron-down" aria-hidden="true"></i> -->
-                                            </a>
-                                        </li>
-                                        <li class="list-group-item bg-transparent">
-                                            <a class="showCustomerListBtn" data-toggle="collapse" href="#showCustomerList" aria-expanded="false" aria-controls="town">
-                                                展演單位 
-                                                <!-- <i class="fa fa-chevron-down" aria-hidden="true"></i> -->
-                                            </a>
-                                        </li>
-                                        <li class="list-group-item bg-transparent">
-                                            <a class="" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="town">
-                                                黑名單 
-                                                <!-- <i class="fa fa-chevron-down" aria-hidden="true"></i> -->
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <!-- 會員管理 end -->
-                                <!-- 展覽管理 starts -->
-                                <li class="list-group-item bg-transparent">展覽管理
-                                    <hr>
-                                    <ul class="list-group list-group-flush bg-transparent">
-                                        <li class="list-group-item bg-transparent">
-                                            <a class="" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="town">
-                                                所有展覽 
-                                                <!-- <i class="fa fa-chevron-down" aria-hidden="true"></i> -->
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <!-- 展覽管理 end -->
-                                <!-- 通報管理 starts -->
-                                <li class="list-group-item bg-transparent ">通報管理
-                                    <hr>
-                                    <ul class="list-group  list-group-flush bg-transparent">
-                                        <li class="list-group-item bg-transparent">
-                                            <a class="" data-toggle="collapse" href="#" >
-                                                展覽檢舉 
-                                                <!-- <i class="fa fa-chevron-down" aria-hidden="true"></i> -->
-                                            </a>
-                                        </li>
-                                        <li class="list-group-item bg-transparent">
-                                            <a class="" data-toggle="collapse" href="#" >
-                                                貼文檢舉 
-                                                <!-- <i class="fa fa-chevron-down" aria-hidden="true"></i> -->
-                                            </a>
-                                        </li>
-                                        <li class="list-group-item bg-transparent">
-                                            <a class="" data-toggle="collapse" href="#" >
-                                                意見回饋
-                                                <!-- <i class="fa fa-chevron-down" aria-hidden="true"></i> -->
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <!-- 通報管理end -->
-                                
-                            </ul>
-                            <!-- 條件查詢 end -->
-                        </div>
                     </aside>
-
-                    <!-- col-12 col-md-9 bg-gray -->
                     
-                    <section id="Section" class="col-12 col-md-9 w-100">
+                    <!-- 右側主內容 -->
+                    <section id="Section" class="col-12 col-md-9 mx-0">
                         <div id ="mainPage"></div>
-                        <!-- <div id="showCustomerList"></div> -->
                     </section>
                 </div>
             </div>  
@@ -170,14 +89,18 @@
     </div>
 
     <script>
-        $(".userListBtn").click(function(){
-            $('#mainPage').load('ManagerPage/UserList.html');
+
+        // Aside Ajax導入處 於此處更改要導入頁面
+        document.addEventListener("DOMContentLoaded", function () {
+            $('#aside1').load('AsidePage/ManagerAside.html');
         });
-        $(".showCustomerListBtn").click(function(){
-            $('#mainPage').load('ManagerPage/ShowCustomList.html');
-        });
+
     </script>
 
-</body>
+    <!-- 下面用於判斷aside是否存在, 以及為CSS偽類增加一行display:none -->
+    <style id="css"></style>
+    <script src="./javascript/AsideTrue.js"></script>
+    <!-- aside判斷結束 -->
+    </body>
 
 </html>

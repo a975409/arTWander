@@ -7,6 +7,7 @@ i{
     color: rgb(0, 0, 0);
 }
 
+
 @media screen and (max-width: 768px){
 
     /* breadcrumb start */
@@ -57,3 +58,8 @@ i{
 } 
 
 /* section end */
+
+hr{
+    border-top: 2px solid rgba(0,0,0,.1);
+    width: 95%;
+}
