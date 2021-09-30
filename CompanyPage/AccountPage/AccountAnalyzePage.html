@@ -1,0 +1,144 @@
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-link active" id="nav-subscribe-tab" data-toggle="tab" href="#nav-subscribe" role="tab"
+      aria-controls="nav-subscribe" aria-selected="true">訂閱統計</a>
+    <a class="nav-link" id="nav-show-tab" data-toggle="tab" href="#nav-show" role="tab" aria-controls="nav-show"
+      aria-selected="false">展演統計</a>
+    <a class="nav-link" id="nav-Community-tab" data-toggle="tab" href="#nav-Community" role="tab"
+      aria-controls="nav-Community" aria-selected="false">社群統計</a>
+  </div>
+</nav>
+
+<div class="tab-content">
+  <div class="tab-pane fade show active" id="nav-subscribe" role="tabpanel" aria-labelledby="nav-subscribe-tab">
+    <br>
+    <form action="">
+      <div class="form-group row">
+        <label for="startSubscribeDate" class="col-sm-2 col-form-label">開始日期：</label>
+        <div class="col-sm-3">
+          <input type="date" class="form-control" id="startSubscribeDate">
+        </div>
+        <div class="col-sm-3 ml-auto">
+          <select class="form-control" id="exampleFormControlSelect1">
+            <option value="7">最近7天</option>
+            <option value="14">最近14天</option>
+            <option value="21">最近21天</option>
+            <option value="28">最近28天</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <canvas id="subscribeChart"></canvas>
+  </div>
+  <div class="tab-pane fade show" id="nav-show" role="tabpanel" aria-labelledby="nav-show-tab">
+    <br>
+    <form action="">
+      <div class="form-group row">
+        <label for="startshowViewDate" class="col-sm-2 col-form-label">開始日期：</label>
+        <div class="col-sm-3">
+          <input type="date" class="form-control" id="startshowViewDate">
+        </div>
+        <div class="col-sm-3 ml-auto">
+          <select class="form-control" id="exampleFormControlSelect1">
+            <option value="7">最近7天</option>
+            <option value="14">最近14天</option>
+            <option value="21">最近21天</option>
+            <option value="28">最近28天</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <div class="row">
+      <canvas id="showViewChart" class="col-12"></canvas>
+    </div>
+    <hr>
+    <div class="row">
+      <canvas id="ViewStarsChart" class="col-6"></canvas>
+      <canvas id="ViewReportChart" class="col-6"></canvas>
+    </div>
+  </div>
+  <div class="tab-pane fade show" id="nav-Community" role="tabpanel" aria-labelledby="nav-Community-tab">
+    <br>
+    <form action="">
+      <div class="form-group row">
+        <label for="startCommunityDate" class="col-sm-2 col-form-label">開始日期：</label>
+        <div class="col-sm-3">
+          <input type="date" class="form-control" id="startCommunityDate">
+        </div>
+        <div class="col-sm-3 ml-auto">
+          <select class="form-control" id="exampleFormControlSelect1">
+            <option value="7">最近7天</option>
+            <option value="14">最近14天</option>
+            <option value="21">最近21天</option>
+            <option value="28">最近28天</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <div class="row">
+      <canvas id="CommunityLikeChart" class="col-6"></canvas>
+      <canvas id="CommunityDisLikeChart" class="col-6"></canvas>
+    </div>
+    <hr>
+    <div class="row">
+      <canvas id="CommunityViewChart" class="col-12"></canvas>
+    </div>
+  </div>
+</div>
+
+<script>
+  let subscribe = document.getElementById('subscribeChart').getContext('2d');
+  lineChart(subscribe, true, 'circle', 0, true, '用戶訂閱數');
+
+  let showViewChart = document.getElementById('showViewChart').getContext('2d');
+  let ViewStarsChart = document.getElementById('ViewStarsChart').getContext('2d');
+  let ViewReportChart = document.getElementById('ViewReportChart').getContext('2d');
+  lineChart(showViewChart, true, 'circle', 0, true, '展覽瀏覽數');
+  lineChart(ViewStarsChart, true, 'circle', 0, true, '用戶評論數');
+  lineChart(ViewReportChart, true, 'circle', 0, true, '用戶評比數');
+
+  let CommunityViewChart = document.getElementById('CommunityViewChart').getContext('2d');
+  let CommunityLikeChart = document.getElementById('CommunityLikeChart').getContext('2d');
+  let CommunityDisLikeChart = document.getElementById('CommunityDisLikeChart').getContext('2d');
+  lineChart(CommunityViewChart, true, 'circle', 0, true, '貼文留言數');
+  lineChart(CommunityLikeChart, true, 'circle', 0, true, '貼文按讚數');
+  lineChart(CommunityDisLikeChart, true, 'circle', 0, true, '貼文倒讚數');
+
+  function lineChart(context, fillmode, point, curve, showline, label) {
+    var chart = new Chart(context, {
+      type: "line",
+      data: {
+        labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+        datasets: [{
+          label: label,
+          data: [16, 15, 18, -21, 25, 27],
+          fill: fillmode,
+          pointStyle: point,
+          lineTension: curve,
+          showLine: showline,
+          pointRadius: 4,
+          pointHoverRadius: 8,
+          backgroundColor: 'rgba(85,165,250,0.3)',
+          borderColor: 'rgb(0,123,255)',
+          pointBackgroundColor: 'rgb(255,0,0)',
+          pointBorderColor: 'rgb(0,0,255)'
+        }]
+      },
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          fontSize: 26,
+          text: label
+        },
+        tooltips: {
+          mode: 'point',
+          intersect: true
+        },
+        legend: {
+          position: 'none'
+        }
+      }
+    });
+  }
+</script>
