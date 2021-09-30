@@ -1,0 +1,157 @@
+<link rel="stylesheet" href="./css/UserList.css">
+
+<!-- breadcrumb start -->
+<div class="justify-items-start">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light">
+            <li class="breadcrumb-item"><a href="#">系統管理員</a></li>
+            <li class="breadcrumb-item"><a href="#">展覽管理</a></li>
+            <li class="breadcrumb-item active" aria-current="page">展覽資訊</li>
+        </ol>
+    </nav>
+</div>
+<!-- breadcrumb end -->
+<article>
+    <section id="Section" class="col-12">
+        <div class="AllList"> 
+            <!-- 關鍵字查詢 start-->
+            <div class="AllListTitle">  
+                <div class="input-group-prepend my-2">
+                    <div class="row">
+                        <span class="col-11 col-md-4 my-auto mx-2">展覽資訊</span>
+                        <input type="text" id="textSearch" class="col-8 col-md-6 form-control rounded-pill my-1 w-100" style="width:180px;height:auto;" placeholder="關鍵字搜尋" aria-label="search" aria-describedby="buttonSearch">
+                        <button class="btn col-2 col-md-1 my-2" type="button" id="buttonSearch"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+                
+                <div class="input-group-prepend my-1">
+                    <div class="row w-100 justify-content-between">
+
+                        <!-- 下拉式地區搜尋 -->
+                        <div class="dropdown d-flex my-auto col-5 col-md-5 col-lg-3 col-xl-2">
+                            <a class="btn btn-White dropdown-toggle col-6" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            縣市
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                              <a class="dropdown-item" href="#">台北市</a>
+                              <a class="dropdown-item" href="#">台中市</a>
+                              <a class="dropdown-item" href="#">高雄市</a>
+                            </div>
+
+                            <a class="btn btn-White dropdown-toggle col-6" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                鄉鎮
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                  <a class="dropdown-item" href="#">台北市</a>
+                                  <a class="dropdown-item" href="#">台中市</a>
+                                  <a class="dropdown-item" href="#">高雄市</a>
+                                </div>  
+                        </div>
+                              
+                        <!-- 時間搜尋 -->
+                        <div id="timeSelect" class="d-flex col-6 col-md-6 col-lg-8 col-xl-9">
+                            <div class="row w-100 justify-content-center">
+                                <label for="startDate" class="col-lg-2 my-auto">開始時間</label>
+                                <input type="date" class="form-control col-lg-3" id="startDate"> 
+                                <label for="endDate" class="col-lg-2 my-auto">結束時間</label>
+                                <input type="date" class="form-control col-lg-3" id="endDate">
+                                
+                            </div>
+                        </div>
+
+                        <!-- 排序 -->
+                        <div class="col-1 ">
+                            <a class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-sort-amount-down" aria-hidden="true"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right" id="sort">
+                                <a href="#" class="dropdown-item">編號排序</a>
+                                <a href="#" class="dropdown-item">縣市排序</a>
+                                <a href="#" class="dropdown-item">日期排序</a>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            <!-- 關鍵字查詢 end -->
+            <div class="AllListContent">
+                <table class="table table-hover w-100">
+                    <thead>
+                      <tr>
+                        <th scope="col-1 col-md-1">編號</th>
+                        <th scope="col-3 col-md-3" >展演名稱</th>
+                        <th scope="col-1 col-md-1">單位</th>
+                        <th scope="col-1 col-md-1">縣市</th>
+                        <th scope="col-1 col-md-1" class="d-none d-sm-table-cell">鄉鎮</th>
+                        <th scope="col-2 col-md-2" >開始日</th>
+                        <th scope="col-2" class="d-none d-lg-table-cell">結束日</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td scope="col-1 col-md-1">S0001</td>
+                        <td scope="col-3 col-md-3" >晚安，待會見</td>
+                        <td scope="col-1 col-md-1">蘇育賢</td>
+                        <td scope="col-1 col-md-1">台北市</td>
+                        <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">不知</td>
+                        <td scope="col-2 col-md-2" >2021/06/06</td>
+                        <td scope="col-2" class="d-none d-lg-table-cell">2021/09/13</td>
+                      </tr>
+                      <tr>
+                        <td scope="col-1 col-md-1">S0002</td>
+                        <td scope="col-3 col-md-3" >黎志文個展</td>
+                        <td scope="col-1 col-md-1">黎志文</td>
+                        <td scope="col-1 col-md-1">台北市</td>
+                        <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">不知</td>
+                        <td scope="col-2 col-md-2" >2021/07/06</td>
+                        <td scope="col-2" class="d-none d-lg-table-cell">2021/09/13</td>
+                      </tr>
+                      <tr>
+                        <td scope="col-1 col-md-1">S0003</td>
+                        <td scope="col-3 col-md-3" >單飛不解散，你怎麼說</td>
+                        <td scope="col-1 col-md-1">紅野畫廊</td>
+                        <td scope="col-1 col-md-1">台北市</td>
+                        <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">中山區</td>
+                        <td scope="col-2 col-md-2" >2021/06/06</td>
+                        <td scope="col-2" class="d-none d-lg-table-cell">2021/09/13</td>
+                      </tr>
+                      <tr>
+                        <td scope="col-1 col-md-1">S0004</td>
+                        <td scope="col-3 col-md-3" >單飛不解散，你怎麼說</td>
+                        <td scope="col-1 col-md-1">紅野畫廊</td>
+                        <td scope="col-1 col-md-1">台北市</td>
+                        <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">中山區</td>
+                        <td scope="col-2 col-md-2" >2021/06/06</td>
+                        <td scope="col-2" class="d-none d-lg-table-cell">2021/09/13</td>
+                      </tr>
+                      <tr>
+                        <td scope="col-1 col-md-1">S0005</td>
+                        <td scope="col-3 col-md-3" >單飛不解散，你怎麼說</td>
+                        <td scope="col-1 col-md-1">紅野畫廊</td>
+                        <td scope="col-1 col-md-1">台北市</td>
+                        <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">中山區</td>
+                        <td scope="col-2 col-md-2" >2021/06/06</td>
+                        <td scope="col-2" class="d-none d-lg-table-cell">2021/09/13</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                
+
+            </div>
+            <nav aria-label="Page navigation example ">
+                <ul class="pagination justify-content-center text-secondary">
+                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+              </nav>
+        </div>
+        
+
+    </section>
+   
+</article>
