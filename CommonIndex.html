@@ -23,41 +23,30 @@
     <script src="https://kit.fontawesome.com/9bd3ad2735.js" crossorigin="anonymous"></script>
     <!-- css -->
     <link rel="stylesheet" type="text/css" href="./css/ManagerIndex.css">
-    <!-- <link rel="stylesheet" href="showList.css"> -->
+    <link rel="stylesheet" href="css/CommonIndex.css">
+    <link rel="stylesheet" href="CommonPage/CommonPageCss/ShowList.css">
+
 
 </head>
 
 <body>
-    <!-- 導覽列 starts -->
     <div class="container">
+        <!-- 導覽列 starts -->
         <header>
+            <!-- logo及登入 starts -->
             <hgroup>
                 <div id="topHeader" class="row mt-3 d-flex justify-content-end">
                     <figure class="col-4 d-flex justify-content-center">
                         <a href="#"><img src="./image/logo/logo.png" alt=""></a>
                     </figure>
                     <div class="col-4 d-flex justify-content-end align-items-start" id="avatarNavSet">
-                        <a class="btn mx-md-2 mx-0" data-toggle="#" href="#"><i class="far fa-bell" aria-hidden="true"></i></a>
-                        <!-- <a class="mx-3" href="#"><img id="avatarNav" src="./image/avatar/頭像_展演單位.png" alt=""></a> -->
-                        <!--會員下拉式選單-->
-                        <a class="btn mx-md-2 mx-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                            id="avatarNav" src="./image/avatar/頭像_展演單位.png" alt=""></a>
-                        <div class="dropdown-menu dropdown-menu-right" id="avatarNavDropdown">
-                            <p class="dropdown-item-text">系統管理員</p>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item"><i class="fas fa-pencil-alt mr-3"
-                            style="vertical-align: middle;"></i>查看您的檔案</a>
-                            <a href="#" class="dropdown-item"><i class="fas fa-flag mr-3"
-                            style="vertical-align: middle;"></i>設定和隱私</a>
-                            <a href="#" class="dropdown-item"><i class="fas fa-sign-out-alt  mr-3"
-                            style="vertical-align: middle;"></i>登出</a>
-                        
-                        </div>
+                        <a class="nav-link active" href="#">登入</a>
                     </div>
                 </div>
             </hgroup>
+            <!-- logo及登入 ends -->
+            <!-- fixed導覽列 starts -->
             <hgroup>
-                <!-- fixed導覽列 starts -->
                 <input type="checkbox" id="navControl">
                 <nav id="navbarFixed" class="nav justify-content-center bg-white">
                     <label for="menuControl" class="menuControlBtn d-block"><span>AA</span></label>
@@ -66,22 +55,27 @@
                     <a class="nav-link" href="#">全部展覽</a>
                     <a class="nav-link" href="#">展演單位</a>   
                 </nav>
-                <!-- fixed導覽列 end -->
             </hgroup>
+            <!-- fixed導覽列 end -->
+            <!-- breadcrumb starts -->
+            <nav class="col-12 my-4" aria-label="breadcrumb">
+                <ol class="breadcrumb bg-light">
+                    <li class="breadcrumb-item"><a href="#">全部展覽</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">台北市</li>
+                </ol>
+            </nav>
+            <!-- breadcrumb ends -->
         </header>
         <!-- 導覽列 end -->
-
-
-        <!-- 主要內容區 -->
+        <!-- 主要內容區 starts-->
         <main>
             <div class="container">
                 <div class="row">
                     <!-- 判斷是否開啟RWD左側邊框 -->
                     <input type="checkbox" id="menuControl">
-                    <!-- 左側邊框 -->
-                    <aside id="aside1" class="col-12 col-md-3 d-flex justify-content-center align-content-center mt-0" style="z-index: 1002;">
+                    <!-- 左側邊框 我拿掉了d-flex justify-content-center align-content-center-->
+                    <aside id="aside1" class="col-12 col-md-3  mt-0" style="z-index: 1002;">
                     </aside>
-                    
                     <!-- 右側主內容 -->
                     <section id="Section" class="col-12 col-md-9 w-100">
                         <div id ="mainPage"></div>
@@ -89,14 +83,87 @@
                 </div>
             </div>  
         </main>
+        <!-- 主要內容區 ends-->
     </div>
 
-
+    <!-- footer strats -->
+    <footer class="">
+        <section class="bg-gray d-flex flex-column w-100 py-5">
+            <!-- 資訊 starts -->
+            <section class="container w-100 ">
+                <!-- row1 strats-->
+                <div class="row justify-content-center mt-5">
+                    <div class="col-12 container-fluid d-md-flex  ">
+                        <!-- About us starts -->
+                        <div class="co1-12 col-md-4 mb-5 mr-md-4">
+                            <h5 class="font-weight-bold">About us</h5>
+                            <p>
+                                本站宗旨為增強台灣藝文展演資訊之能見度，透過蒐集四散於網路各角落的台灣展演資訊，打造一個可供展演單位宣傳精心之作、
+                                同時方便使用者探索全台藝文展覽的平台。<br>
+                                本站於2021年起始營運至今，歡迎透過以下連絡方式與我們取得聯繫。
+                            </p>
+                            <h5 class="font-weight-bold">Contact us</h5>
+                            <p>
+                                電話：0800-111-222 <br>
+                                信箱：test001@gmail.com
+                            </p>
+                            <div class="w-100 d-flex justify-content-end">
+                                <h5>arTWander 藝文漫步</h5>
+                            </div>
+                        </div>
+                        <!-- About us ends -->
+                        <!-- 意見回饋 starts -->
+                        <div class="col-12 col-md-8">
+                            <h5 class="font-weight-bold">我們重視你的意見！</h5>
+                            <form class="d-flex flex-column justify-content-end" action="">
+                                <div class="form-group">
+                                    <label  class="font-size-sm" for="feedBack">請將您寶貴的意見回饋給本站，您的關注是我們持續改進的動力</label>
+                                    <textarea class="form-control" id="feedBack" rows="5"></textarea><br>
+                                    <input type="text" class="form-control" placeholder="請留下您的email，讓我們回信給您">
+                                </div>
+                                <button class="btn btn-outline-secondary bg-pink text-white" type="button" id="btnFeedback">送出</button>
+                            </form>
+                        </div>
+                        <!-- 意見回饋 ends -->
+                    </div>
+                </div>
+                <!-- row1 ends -->
+                <!-- row2 starts -->
+                <div class="row mt-5 mt-md-0">
+                    <div class="col-12 container-fluid ">
+                        <!-- 訂閱 starts -->
+                        <div class="col-12 ">
+                            <h5 class="font-weight-bold">想收到第一手展演資訊嗎?</h5>
+                            <p>請留下您的email，接收本站的電子報！</p>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="email" aria-label="suscribeEmail" aria-describedby="btnSuscribe">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary bg-pink text-white" type="button" id="btnSuscribe">訂閱</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 訂閱 ends -->
+                    </div>
+                </div>
+                <!-- row2 ends -->
+                <!-- row3 starts -->
+                <div class="row justify-content-center mt-5">
+                    <p>Copyright© 2021 arTWander Inc.  </p>
+                </div>
+                <!-- row3 ends -->
+            </section>
+            <!-- 資訊 ends -->
+        </section>
+    </footer>
+    <!-- footer ends -->
 
     <script>
         // Aside Ajax導入處 於此處更改要導入頁面
         document.addEventListener("DOMContentLoaded", function () {
             $('#aside1').load('AsidePage/logInFalseAside.html');
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            $('#mainPage').load('CommonPage/ShowList.html');
         });
 
         //下面這幾串使用按鍵觸發導入Ajax功能需一併帶到有該按鍵的html頁面! Ex範例managerAside.html內最下面

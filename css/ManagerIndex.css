@@ -14,7 +14,6 @@ i{
 }
 
 
-
 /* 右上頭像下拉式選單 */
 
 #avatarNavSet >a{
@@ -206,11 +205,15 @@ select{
         border-radius:5px;
     }
     /* section邊框end */
-    
 }
 /* aside RWD end */
 
-
+/* asideAvatar 的 RWD */
+@media screen and (min-width: 768px) and (max-width: 992px){
+    #asideAvatar{
+        height: 145px;
+    }
+}
 
 
 
