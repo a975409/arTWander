@@ -17,8 +17,9 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js">
     </script>
-    <!-- <script src="./javascript/custom.js"></script> -->
-    
+
+    <!--統計圖表Chart.js函示庫-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 
     <!-- font-awesome -->
     <script src="https://kit.fontawesome.com/9bd3ad2735.js" crossorigin="anonymous"></script>
@@ -37,21 +38,21 @@
                         <a href="#"><img src="./image/logo/logo.png" alt=""></a>
                     </figure>
                     <div class="col-4 d-flex justify-content-end align-items-start" id="avatarNavSet">
-                        <a class="btn mx-md-2 mx-0" data-toggle="#" href="#"><i class="far fa-bell" aria-hidden="true"></i></a>
+                        <a class="btn mx-md-2 mx-0" data-toggle="#" href="#"><i class="far fa-bell"
+                                aria-hidden="true"></i></a>
                         <!-- <a class="mx-3" href="#"><img id="avatarNav" src="./image/avatar/頭像_展演單位.png" alt=""></a> -->
                         <!--會員下拉式選單-->
-                        <a class="btn mx-md-2 mx-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                            id="avatarNav" src="./image/avatar/頭像_展演單位.png" alt=""></a>
+                        <a class="btn mx-md-2 mx-0" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false"><img id="avatarNav" src="./image/avatar/頭像_展演單位.png" alt=""></a>
                         <div class="dropdown-menu dropdown-menu-right" id="avatarNavDropdown">
                             <p class="dropdown-item-text">系統管理員</p>
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item"><i class="fas fa-pencil-alt mr-3"
-                            style="vertical-align: middle;"></i>查看您的檔案</a>
+                                    style="vertical-align: middle;"></i>查看您的檔案</a>
                             <a href="#" class="dropdown-item"><i class="fas fa-flag mr-3"
-                            style="vertical-align: middle;"></i>設定和隱私</a>
+                                    style="vertical-align: middle;"></i>設定和隱私</a>
                             <a href="#" class="dropdown-item"><i class="fas fa-sign-out-alt  mr-3"
-                            style="vertical-align: middle;"></i>登出</a>
-                        
+                                    style="vertical-align: middle;"></i>登出</a>
                         </div>
                     </div>
                 </div>
@@ -64,14 +65,12 @@
                     <a href="#" class="d-md-none"> </a>
                     <a class="nav-link active" href="#">首頁</a>
                     <a class="nav-link" href="#">全部展覽</a>
-                    <a class="nav-link" href="#">展演單位</a>   
+                    <a class="nav-link" href="#">展演單位</a>
                 </nav>
                 <!-- fixed導覽列 end -->
             </hgroup>
         </header>
         <!-- 導覽列 end -->
-
-
         <!-- 主要內容區 -->
         <main>
             <div class="container">
@@ -79,19 +78,16 @@
                     <input type="checkbox" id="menuControl">
                     <!-- 主內容 -->
                     <section id="Section" class="col-12 w-100">
-                        <div id ="mainPage"></div>
+                        <div id="mainPage"></div>
                     </section>
                 </div>
-            </div>  
+            </div>
         </main>
     </div>
-
-
-
     <script>
         // mainPage Ajax導入處 於此處更改要導入頁面
         document.addEventListener("DOMContentLoaded", function () {
-            $('#mainPage').load('CompanyPage/AccountPage.html');
+            $('#mainPage').load('CompanyPage/EditSingleShowPage.html');
         });
 
         //下面這幾串使用按鍵觸發導入Ajax功能需一併帶到有該按鍵的html頁面! Ex範例managerAside.html內最下面

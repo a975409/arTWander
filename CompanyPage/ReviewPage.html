@@ -1,29 +1,39 @@
 <link rel="stylesheet" href="/css/SingleShowPage.css">
+<div class="d-flex justify-content-between align-items-center">
+  <h1 class="display-4">預覽展演資訊</h1>
+  <button type="button" id="BtnBackEdit" class="btn btn-primary">返回上一步：編輯展演</button>
+</div>
 
-<div class="container">
-  <div class="row d-flex justify-content-center">
-    <div class="col-9 px-0">
-      <!--展演標題-->
-      <h1>【單飛不解散，你怎麼說？】左點 Left dot. 詩集 × 插畫個展</h1>
+<hr>
+<div class="row d-flex justify-content-center">
+  <div class="col-9 px-0">
+    <!--展演標題-->
+    <h1>【單飛不解散，你怎麼說？】左點 Left dot. 詩集 × 插畫個展</h1>
 
-      <figure class="d-flex flex-column align-items-center mb-3">
-        <img src="./CompanyPage/img/4c1fe5_9a74d3a863254665a34f7c7b4fa9696d_mv2.jpg" class="img-fluid d-block" alt="">
-        <figcaption>火焰, 油彩、畫布, 165.1x139.7cm / 65"x55", 2021</figcaption>
-      </figure>
+    <figure class="d-flex flex-column align-items-center mb-3">
+      <img src="./CompanyPage/img/4c1fe5_9a74d3a863254665a34f7c7b4fa9696d_mv2.jpg" class="img-fluid d-block" alt="">
+      <figcaption>火焰, 油彩、畫布, 165.1x139.7cm / 65"x55", 2021</figcaption>
+    </figure>
 
-      <div class="jumbotron w-75 p-5 mb-4" style="margin: auto;">
-        <p>
-          紐約當代藝術家，奧普海姆（Peter Opheim
-          b.1961-），有著斯堪地那維亞血統（Scandinavia）。他最新的作品帶著一些北歐神話與色彩，無論你知不知道北歐神話，其實都沒關係，奧普海姆的作品始終擁有純粹、天馬行空及療癒感，這正是步調緊湊、生活壓抑的現代人所缺少的。
-        </p>
-      </div>
-      <div class="w-75 mb-5" style="margin: auto;">
-        <p>日期：<span>2021/6/5~7/4</span></p>
-        <p>時間：<span>10:00 - 19:00（星期二至日）</span></p>
-        <p>地點：<span>紅野畫廊 (台北市中山區松江路164巷11號)</span></p>
-        <p>備註：<span></span></p>
-      </div>
-      <hr>
+    <div class="jumbotron w-75 p-5 mb-4" style="margin: auto;">
+      <p>
+        紐約當代藝術家，奧普海姆（Peter Opheim
+        b.1961-），有著斯堪地那維亞血統（Scandinavia）。他最新的作品帶著一些北歐神話與色彩，無論你知不知道北歐神話，其實都沒關係，奧普海姆的作品始終擁有純粹、天馬行空及療癒感，這正是步調緊湊、生活壓抑的現代人所缺少的。
+      </p>
     </div>
+    <div class="w-75 mb-5" style="margin: auto;">
+      <p>日期：<span>2021/6/5~7/4</span></p>
+      <p>時間：<span>10:00 - 19:00（星期二至日）</span></p>
+      <p>地點：<span>紅野畫廊 (台北市中山區松江路164巷11號)</span></p>
+      <p>備註：<span></span></p>
+    </div>
+    <hr>
   </div>
 </div>
+
+<script>
+  document.getElementById('BtnBackEdit').addEventListener('click', function () {
+    $('#mainPage').load('CompanyPage/EditSingleShowPage.html');
+    $('html,body').animate({ scrollTop: 0 }, 'slow');
+  })
+</script>
