@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="./css/UserList.css">
+<!-- breadcrumb -->
+<div class="justify-items-start">
+  <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bg-light">
+          <li class="breadcrumb-item"><a href="#">系統管理員</a></li>
+          <li class="breadcrumb-item active" aria-current="page">數據統計</li>
+      </ol>
+  </nav>
+</div>
+<!-- nav-tab -->
+
+
+<!-- nav-tab -->
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-link active" id="navWebFlowTab" data-toggle="tab" href="#nav-navWebFlow" role="tab"
+      aria-controls="nav-navWebFlow" aria-selected="true">網頁流量統計</a>
+    <a class="nav-link" id="navPostInformTab" data-toggle="tab" href="#nav-PostInform" role="tab" 
+     aria-controls="nav-PostInform" aria-selected="false">用戶統計</a>
+    <a class="nav-link" id="navFeedBackTab" data-toggle="tab" href="#nav-FeedBack" role="tab"
+      aria-controls="nav-FeedBack" aria-selected="false">展演統計</a>
+  </div>
+</nav>
+
+<main>
+  <!-- 主內容 -->
+    <section id="Section" class="w-100">
+      <div id ="dataStatisticsMain">
+      </div>
+    </section>
+</main>
+  
+<script>
+    //一般使用者List (預設導入) (jquery ready (檔案讀取完成後導入))
+    $(document).ready(function (){
+    $('#dataStatisticsMain').load('ManagerPage/DataStatistics/WebFlow.html');
+    });
+</script>
+
+<script>
+    //點擊分頁連結頁面
+    //一般使用者list
+    $("#navWebFlowTab").click(function(){
+        $('#dataStatisticsMain').load('ManagerPage/DataStatistics/WebFlow.html');
+    });
+    //展演單位List
+    // $("#navPostInformTab").click(function(){
+    //     $('#dataStatisticsMain').load('');
+    // });
+    //黑名單List
+    // $("#navFeedBackTab").click(function(){
+    //     $('#dataStatisticsMain').load('');
+    // });
+</script>
