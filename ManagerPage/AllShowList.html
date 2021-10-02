@@ -5,41 +5,30 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-light">
             <li class="breadcrumb-item"><a href="#">系統管理員</a></li>
-            <li class="breadcrumb-item"><a href="#">展覽管理</a></li>
             <li class="breadcrumb-item active" aria-current="page">展覽資訊</li>
         </ol>
     </nav>
 </div>
 <!-- breadcrumb end -->
 <article>
-    <section id="Section" class="col-12">
+    <section id="Section">
         <div class="AllList"> 
             <!-- 關鍵字查詢 start-->
             <div class="AllListTitle">  
-                <div class="input-group-prepend my-2">
-                    <div class="row">
-                        <span class="col-11 col-md-4 my-auto mx-2">展覽資訊</span>
-                        <input type="text" id="textSearch" class="col-8 col-md-6 form-control rounded-pill my-1 w-100" style="width:180px;height:auto;" placeholder="關鍵字搜尋" aria-label="search" aria-describedby="buttonSearch">
-                        <button class="btn col-2 col-md-1 my-2" type="button" id="buttonSearch"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </div>
-                </div>
-                
                 <div class="input-group-prepend my-1">
-                    <div class="row w-100 justify-content-between">
-
+                    <div class="row w-100">
                         <!-- 下拉式地區搜尋 -->
-                        <div class="dropdown d-flex my-auto col-5 col-md-5 col-lg-3 col-xl-2">
+                        <div class="dropdown d-flex my-auto col-6 col-md-6 col-lg-3">
                             <a class="btn btn-White dropdown-toggle col-6" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            縣市
+                              台北市
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                               <a class="dropdown-item" href="#">台北市</a>
                               <a class="dropdown-item" href="#">台中市</a>
                               <a class="dropdown-item" href="#">高雄市</a>
                             </div>
-
                             <a class="btn btn-White dropdown-toggle col-6" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                鄉鎮
+                              台北市
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                   <a class="dropdown-item" href="#">台北市</a>
@@ -49,32 +38,35 @@
                         </div>
                               
                         <!-- 時間搜尋 -->
-                        <div id="timeSelect" class="d-flex col-6 col-md-6 col-lg-8 col-xl-9">
-                            <div class="row w-100 justify-content-center">
-                                <label for="startDate" class="col-lg-2 my-auto">開始時間</label>
-                                <input type="date" class="form-control col-lg-3" id="startDate"> 
-                                <label for="endDate" class="col-lg-2 my-auto">結束時間</label>
-                                <input type="date" class="form-control col-lg-3" id="endDate">
+                        <div id="timeSelect" class="d-flex col-6 col-md-6 col-lg-9 justify-content-end">
+                            <div class="row w-100 justify-content-between">
+                                <label for="startDate" class="col-lg-2-text-right my-auto p-0">開始時間</label>
+                                <input type="date" class="form-control col-lg-4" id="startDate"> 
+                                <label for="endDate" class="col-lg-2-text-right my-auto p-0">結束時間</label>
+                                <input type="date" class="form-control col-lg-4" id="endDate">
                                 
                             </div>
-                        </div>
-
-                        <!-- 排序 -->
-                        <div class="col-1 ">
-                            <a class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-sort-amount-down" aria-hidden="true"></i></a>
-                            <div class="dropdown-menu dropdown-menu-right" id="sort">
-                                <a href="#" class="dropdown-item">編號排序</a>
-                                <a href="#" class="dropdown-item">縣市排序</a>
-                                <a href="#" class="dropdown-item">日期排序</a>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    
-                    
-                </div>
+                        </div>                       
+                    </div>   
+                </div>    
             </div>
+            <div class="AllListTitle">       
+              <div class="input-group-prepend my-2 justify-content-between">
+                  <div class="row col-10 col-sm-8">
+                    <!-- <span class="col-11 col-md-4 my-auto mx-2">一般會員</span> -->
+                    <input type="text" id="textSearch" class="col-10 col-sm-8 form-control rounded-pill my-1 w-100 " style="width:180px;height:auto;" placeholder="關鍵字搜尋" aria-label="search" aria-describedby="buttonSearch">
+                    <button class="btn col-2 col-md-1 my-2" type="button" id="buttonSearch"><i class="fa fa-search" aria-hidden="true"></i></button>
+                  </div>
+                  <div class="my-auto">
+                    <a class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-sort-amount-down" aria-hidden="true"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right" id="sort">
+                        <a href="#" class="dropdown-item">編號排序</a>
+                        <a href="#" class="dropdown-item">帳號排序</a>
+                        <a href="#" class="dropdown-item">註冊日排序</a>
+                    </div>
+                  </div>
+              </div>
             <!-- 關鍵字查詢 end -->
             <div class="AllListContent">
                 <table class="table table-hover w-100">
@@ -140,7 +132,7 @@
                 
 
             </div>
-            <nav aria-label="Page navigation example ">
+            <nav aria-label="Page navigation example" class="mt-2">
                 <ul class="pagination justify-content-center text-secondary">
                   <li class="page-item"><a class="page-link" href="#">Previous</a></li>
                   <li class="page-item"><a class="page-link" href="#">1</a></li>

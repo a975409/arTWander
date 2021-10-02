@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="./css/UserList.css">
 
-<!-- breadcrumb start -->
-<div class="justify-items-start">
+<!-- breadcrumb start (已取代)-->
+<!-- <div class="justify-items-start">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-light">
             <li class="breadcrumb-item"><a href="#">系統管理員</a></li>
@@ -9,23 +9,38 @@
             <li class="breadcrumb-item active" aria-current="page">黑名單</li>
         </ol>
     </nav>
-</div>
-<!-- breadcrumb end -->
+</div> -->
+<!-- breadcrumb end  (已取代)-->
 <article>
-    <section id="Section" class="col-12 w-100">
+    <section id="Section">
         <div class="AllList"> 
             <!-- 一般使用者黑名單start -->
             <!-- 關鍵字查詢 start-->
-            <div class="AllListTitle">
-                <div class="input-group-prepend my-2">
-                    <div class="row">
-                        <span class="col-11 col-md-4 my-auto mx-2">一般會員</span>
-                        <input type="text" id="textSearch" class="col-8 col-md-6 form-control rounded-pill my-1 w-100" style="width:180px;height:auto;" placeholder="關鍵字搜尋" aria-label="search" aria-describedby="buttonSearch">
-                        <button class="btn col-2 col-md-1 my-2" type="button" id="buttonSearch"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </div>
+            <div class="AllListTitle">  
+              <div class="ListTitle">
+                <div class="row w-100 mx-0 my-3">
+                  <label class="col-lg-2-text-right my-auto">一般會員</label>
                 </div>
-            </div>
-            <!-- 關鍵字查詢 end -->
+                <hr>
+              </div>
+              <div class="input-group-prepend my-2 justify-content-between">
+                  <div class="row col-10 col-sm-8">
+                    <!-- <span class="col-11 col-md-4 my-auto mx-2">一般會員</span> -->
+                    <input type="text" id="textSearch" class="col-10 col-sm-8 form-control rounded-pill my-1 w-100 " style="width:180px;height:auto;" placeholder="關鍵字搜尋" aria-label="search" aria-describedby="buttonSearch">
+                    <button class="btn col-2 col-md-1 my-2" type="button" id="buttonSearch"><i class="fa fa-search" aria-hidden="true"></i></button>
+                  </div>
+                  <div class="my-auto">
+                    <a class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-sort-amount-down" aria-hidden="true"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right" id="sort">
+                        <a href="#" class="dropdown-item">編號排序</a>
+                        <a href="#" class="dropdown-item">日期排序</a>
+                        <a href="#" class="dropdown-item">執行者排序</a>
+                    </div>
+                  </div>
+              </div>
+          </div>
+          <!-- 關鍵字查詢 end -->
             <div class="AllListContent">
                 <table class="table table-hover w-100">
                     <thead>
@@ -86,7 +101,7 @@
                 
 
             </div>
-            <nav aria-label="Page navigation example ">
+            <nav aria-label="Page navigation example" class="mt-2">
                 <ul class="pagination justify-content-center text-secondary">
                   <li class="page-item"><a class="page-link" href="#">Previous</a></li>
                   <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -100,15 +115,32 @@
             <hr>
             <!-- 展演單位黑名單start -->
             <!-- 關鍵字查詢 start-->
-            <div class="AllListTitle">       
-                <div class="input-group-prepend my-2">
-                    <div class="row">
-                        <span class="col-11 col-md-4 my-auto mx-2">展演單位</span>
-                        <input type="text" id="textSearch" class="col-8 col-md-6 form-control rounded-pill my-1 w-100" style="width:180px;height:auto;" placeholder="關鍵字搜尋" aria-label="search" aria-describedby="buttonSearch">
-                        <button class="btn col-2 col-md-1 my-2" type="button" id="buttonSearch"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </div>
+            <div class="AllListTitle">    
+              <!-- 展演單位 -->
+              <div class="ListTitle">
+                <div class="row w-100 mx-0 my-3">
+                  <label class="col-lg-2-text-right my-auto">展演單位</label>
                 </div>
-            </div>
+                <hr>
+              </div>   
+              <div class="input-group-prepend my-2 justify-content-between">
+                  <div class="row col-10 col-sm-8">
+                    <!-- <span class="col-11 col-md-4 my-auto mx-2">一般會員</span> -->
+                    <input type="text" id="textSearch" class="col-10 col-sm-8 form-control rounded-pill my-1 w-100 " style="width:180px;height:auto;" placeholder="關鍵字搜尋" aria-label="search" aria-describedby="buttonSearch">
+                    <button class="btn col-2 col-md-1 my-2" type="button" id="buttonSearch"><i class="fa fa-search" aria-hidden="true"></i></button>
+                  </div>
+                  <div class="my-auto">
+                    <a class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-sort-amount-down" aria-hidden="true"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right" id="sort">
+                        <a href="#" class="dropdown-item">編號排序</a>
+                        <a href="#" class="dropdown-item">日期排序</a>
+                        <a href="#" class="dropdown-item">執行人排序</a>
+                    </div>
+                  </div>
+              </div>
+          </div>
+          <!-- 關鍵字查詢 end -->
             <div class="AllListContent">
                 <table class="table table-hover w-100">
                     <thead>
@@ -151,7 +183,7 @@
                 
 
             </div>
-            <nav aria-label="Page navigation example ">
+            <nav aria-label="Page navigation example" class="mt-2">
                 <ul class="pagination justify-content-center text-secondary">
                   <li class="page-item "><a class="page-link" href="#">Previous</a></li>
                   <li class="page-item"><a class="page-link" href="#">1</a></li>

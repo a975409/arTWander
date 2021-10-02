@@ -194,15 +194,15 @@ select{
     }
     /* breadcrumb end */
     /* section邊框 */
-    .AllListTitle .row{
+    /* .AllListTitle .row{
         justify-content: center;
-    }
+    } */
     .AllList{
-        margin-left: -10%;
-        margin-right: -10%;
-        border: solid;
-        border-color: black;
-        border-radius:5px;
+        /* margin-left: -10%;
+        margin-right: -10%; */
+        /* border: solid;
+        border-color: black; */
+        /* border-radius:5px; */
     }
     /* section邊框end */
     

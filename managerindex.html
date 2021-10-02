@@ -23,6 +23,9 @@
     <!-- css -->
     <link rel="stylesheet" type="text/css" href="./css/ManagerIndex.css">
 
+    <!--統計圖表Chart.js函示庫-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+
 </head>
 
 <body>
@@ -80,7 +83,7 @@
                     
                     <!-- 右側主內容 -->
                     <section id="Section" class="col-12 col-md-9 mx-0 w-100">
-                        <div id ="mainPage"></div>
+                        <div id ="mainPage" class="w-100"></div>
                     </section>
                 </div>
             </div>  
@@ -92,9 +95,10 @@
         // Aside Ajax導入處 於此處更改要導入頁面
         document.addEventListener("DOMContentLoaded", function () {
             $('#aside1').load('AsidePage/managerAside.html');
+            $('#mainPage').load('ManagerPage/MemberManage.html');
         });
-
     </script>
+    
 
     <!-- 下面用於判斷aside是否存在, 以及為CSS偽類增加一行display:none -->
     <style id="css"></style>

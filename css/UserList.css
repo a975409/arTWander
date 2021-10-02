@@ -19,32 +19,32 @@ line-height: 50px;
     }
     /* breadcrumb end */
     /* section邊框 */
-    .AllListTitle .row{
+    /* .AllListTitle .row{
         justify-content: center;
-    }
-    .AllList{
+    } */
+    /* .AllList{
         margin-left: -10%;
         margin-right: -10%;
         border: solid;
         border-color: black;
         border-radius:5px;
-    }
+    } */
     /* section邊框end */
     
 }
 
 
 /* section start*/
-.AllList{
+/* .AllList{
     border: solid;
     border-color: black;
     border-radius:5px;
-}
+} */
 .AllListContent{
     border: solid;
     border-color: rgb(196, 196, 196);
     border-radius:5px;
-    margin: 10px;
+    /* margin: 10px; */
 }
 .AllListTitle input{
     height: auto;
@@ -72,9 +72,11 @@ hr{
     color: #C57E68;
 }
 
-#timeSelect{
+/* #timeSelect{
     padding: 0px;
-}
+} */
+
+/* sort標籤 */
 #sort{
     padding: 0px;
     

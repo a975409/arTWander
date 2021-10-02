@@ -1,0 +1,93 @@
+<!-- 關鍵字查詢 start-->
+<div class="AllListTitle">  
+    <div class="input-group-prepend my-1">
+        <div class="row w-100 mt-2">
+            <!-- 處理狀態選擇 -->
+            <div class="dropdown d-flex my-auto col-6 col-md-6 col-lg-4">
+                <div class="row w-100 mx-0 justify-content-between">
+                  <label class="col-12 col-md-4 px-0 my-auto">處理狀態</label>
+                  <div class="col-12 col-md-8 px-0">
+                    <select class="form-control ml-1" id="informStatus">
+                      <option value="處理完畢">待處理</option>
+                      <option value="處理中">處理中</option>
+                      <option value="待處理">處理完畢</option>
+                    </select>
+                  </div>
+                </div>
+            </div>
+            <!-- 時間搜尋 -->
+            <div id="timeSelect" class="d-flex col-6 col-md-6 col-lg-8 justify-content-end">
+                <div class="row w-100 justify-content-between">
+                    <label for="startDate" class="col-lg-2-text-right my-auto p-0">開始時間  </label>
+                    <input type="date" class="form-control col-lg-4" id="startDate"> 
+                    <label for="endDate" class="col-lg-2-text-right my-auto p-0 pr-1 ">結束時間  </label>
+                    <input type="date" class="form-control col-lg-4" id="endDate">
+                </div>
+            </div>                       
+        </div>   
+    </div>    
+</div>
+
+
+<canvas id="subscribeChart"></canvas>
+<div class="row">
+    <canvas id="CommunityLikeChart" class="col-6"></canvas>
+    <canvas id="CommunityDisLikeChart" class="col-6"></canvas>
+</div>
+
+<script>
+    let subscribe = document.getElementById('subscribeChart').getContext('2d');
+    lineChart(subscribe, true, 'circle', 0, true, '網頁流量');
+  
+    let showViewChart = document.getElementById('showViewChart').getContext('2d');
+    let ViewStarsChart = document.getElementById('ViewStarsChart').getContext('2d');
+    let ViewReportChart = document.getElementById('ViewReportChart').getContext('2d');
+    lineChart(showViewChart, true, 'circle', 0, true, '展覽瀏覽數');
+    lineChart(ViewStarsChart, true, 'circle', 0, true, '用戶評論數');
+    lineChart(ViewReportChart, true, 'circle', 0, true, '用戶評比數');
+  
+    let CommunityViewChart = document.getElementById('CommunityViewChart').getContext('2d');
+    let CommunityLikeChart = document.getElementById('CommunityLikeChart').getContext('2d');
+    let CommunityDisLikeChart = document.getElementById('CommunityDisLikeChart').getContext('2d');
+    lineChart(CommunityViewChart, true, 'circle', 0, true, '貼文留言數');
+    lineChart(CommunityLikeChart, true, 'circle', 0, true, '貼文按讚數');
+    lineChart(CommunityDisLikeChart, true, 'circle', 0, true, '貼文倒讚數');
+  
+    function lineChart(context, fillmode, point, curve, showline, label) {
+      var chart = new Chart(context, {
+        type: "line",
+        data: {
+          labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+          datasets: [{
+            label: label,
+            data: [16, 20, 50, 100, 115, 200],
+            fill: fillmode,
+            pointStyle: point,
+            lineTension: curve,
+            showLine: showline,
+            pointRadius: 4,
+            pointHoverRadius: 8,
+            backgroundColor: 'rgba(85,165,250,0.3)',
+            borderColor: 'rgb(0,123,255)',
+            pointBackgroundColor: 'rgb(255,0,0)',
+            pointBorderColor: 'rgb(0,0,255)'
+          }]
+        },
+        options: {
+          responsive: true,
+          title: {
+            display: true,
+            fontSize: 26,
+            text: label
+          },
+          tooltips: {
+            mode: 'point',
+            intersect: true
+          },
+          legend: {
+            position: 'none'
+          }
+        }
+      });
+    }
+  </script>
