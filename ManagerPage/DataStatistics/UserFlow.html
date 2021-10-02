@@ -49,13 +49,11 @@
 
 <script src="ManagerPage/DataStatistics/drawCanvasData.js"></script>
 <script>
-  lineChart(document.getElementById('webFlowLiner').getContext('2d'), true, 'circle', 0, true, '網頁點擊流量');
-  bar(document.getElementById('webFlowBar').getContext('2d'), true, 'circle', 0, true, '網頁點擊流量bar');
+  lineChart(document.getElementById('webFlowLiner').getContext('2d'), true, 'circle', 0, true, '一般用戶數量');
   lineChart(document.getElementById('webNewLiner').getContext('2d'), true, 'circle', 0, true, '用戶新增量bar');
+  bar(document.getElementById('webFlowBar').getContext('2d'), true, 'circle', 0, true, '展演單位數量');
   bar(document.getElementById('webNewCustomerLiner').getContext('2d'), true, 'circle', 0, true, '展商新增量bar');
-  bar(document.getElementById('webNewShowLiner').getContext('2d'), true, 'circle', 0, true, '新增展演數量bar');
-
-
+  bar(document.getElementById('webNewCustomerLiner').getContext('2d'), true, 'circle', 0, true, '地區瀏覽排行');
 </script>
 
 
