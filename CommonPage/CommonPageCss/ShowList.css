@@ -5,6 +5,7 @@
 /* shortDetail 白色敘述卡 starts*/
 .shortDetail{
     background-color: rgb(255, 255, 255);
+    box-shadow: 5px 0 10px rgb(131, 131, 131);
     width: 80%;
     z-index: 1000;
     padding: 20px;
