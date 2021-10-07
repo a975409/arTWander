@@ -70,8 +70,8 @@ namespace arTWander.Controllers
                 return View(model);
             }
 
-            // This doen't count login failures towards lockout only two factor authentication
-            // To enable password failures to trigger lockout, change to shouldLockout: true
+            // 這不會計算為帳戶鎖定的登入失敗
+            // 若要啟用密碼失敗來觸發帳戶鎖定，請變更為 shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -93,11 +93,12 @@ namespace arTWander.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl)
         {
-            // Require that the user has already logged in via username/password or external login
+            // 需要使用者已透過使用者名稱/密碼或外部登入進行登入
             if (!await SignInManager.HasBeenVerifiedAsync())
             {
                 return View("Error");
             }
+
             var user = await UserManager.FindByIdAsync(await SignInManager.GetVerifiedUserIdAsync());
             if (user != null)
             {
@@ -118,6 +119,10 @@ namespace arTWander.Controllers
                 return View(model);
             }
 
+            // 下列程式碼保護兩個因素碼不受暴力密碼破解攻擊。 
+            // 如果使用者輸入不正確的代碼來表示一段指定的時間，則使用者帳戶 
+            // 會有一段指定的時間遭到鎖定。 
+            // 您可以在 IdentityConfig 中設定帳戶鎖定設定
             var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: false, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
@@ -127,7 +132,7 @@ namespace arTWander.Controllers
                     return View("Lockout");
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid code.");
+                    ModelState.AddModelError("", "代碼無效。");
                     return View(model);
             }
         }
@@ -153,16 +158,22 @@ namespace arTWander.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    // 如需如何進行帳戶確認及密碼重設的詳細資訊，請前往 https://go.microsoft.com/fwlink/?LinkID=320771
+                    // 傳送包含此連結的電子郵件
+
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+
+
+                    await UserManager.SendEmailAsync(user.Id, "確認您的帳戶", "請按一下此連結確認您的帳戶 <a href=\"" + callbackUrl + "\">這裏</a>");
                     ViewBag.Link = callbackUrl;
+
                     return View("DisplayEmail");
                 }
                 AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
+            // 如果執行到這裡，發生某項失敗，則重新顯示表單
             return View(model);
         }
 
@@ -199,15 +210,18 @@ namespace arTWander.Controllers
                 var user = await UserManager.FindByNameAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
+                    // 不顯示使用者不存在或未受確認
                     return View("ForgotPasswordConfirmation");
                 }
 
+                // 如需如何進行帳戶確認及密碼重設的詳細資訊，請前往 https://go.microsoft.com/fwlink/?LinkID=320771
+                // 傳送包含此連結的電子郵件
+
                 var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
+                await UserManager.SendEmailAsync(user.Id, "重設密碼", "請按 <a href=\"" + callbackUrl + "\">這裏</a> 重設密碼");
                 ViewBag.Link = callbackUrl;
-                return View("ForgotPasswordConfirmation");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
@@ -244,7 +258,7 @@ namespace arTWander.Controllers
             var user = await UserManager.FindByNameAsync(model.Email);
             if (user == null)
             {
-                // Don't reveal that the user does not exist
+                // 不顯示使用者不存在
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
@@ -271,7 +285,7 @@ namespace arTWander.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
-            // Request a redirect to the external login provider
+            // 要求重新導向至外部登入提供者
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
 
@@ -321,7 +335,7 @@ namespace arTWander.Controllers
                 return RedirectToAction("Login");
             }
 
-            // Sign in the user with this external login provider if the user already has a login
+            // 若使用者已經有登入資料，請使用此外部登入提供者登入使用者
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
             switch (result)
             {
@@ -333,7 +347,7 @@ namespace arTWander.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
                 case SignInStatus.Failure:
                 default:
-                    // If the user does not have an account, then prompt the user to create an account
+                    // 若使用者沒有帳戶，請提示使用者建立帳戶
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
@@ -354,7 +368,7 @@ namespace arTWander.Controllers
 
             if (ModelState.IsValid)
             {
-                // Get the information about the user from the external login provider
+                // 從外部登入提供者處取得使用者資訊
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {

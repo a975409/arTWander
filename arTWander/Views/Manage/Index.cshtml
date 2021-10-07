@@ -10,11 +10,11 @@
         <p>
             @if (Model.HasPassword)
             {
-                @Html.ActionLink("Change your password", "ChangePassword")
+                @Html.ActionLink("變更密碼", "ChangePassword")
             }
             else
             {
-                @Html.ActionLink("Pick a password", "SetPassword")
+                @Html.ActionLink("建立", "SetPassword")
             }
         </p>
         <p>

@@ -112,7 +112,3 @@ D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.csproj.CoreCompileInputs.cache
 D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.csproj.CopyComplete
 D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.dll
 D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.pdb
-D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.Migrations.Init.resources
-D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.csproj.GenerateResource.cache
-D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.Migrations.testupdate.resources
-D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.Migrations.delete_Posts.resources

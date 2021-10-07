@@ -6,7 +6,7 @@ namespace arTWander.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "電子郵件")]
         public string Email { get; set; }
     }
 
@@ -28,11 +28,11 @@ namespace arTWander.Models
         public string Provider { get; set; }
 
         [Required]
-        [Display(Name = "Code")]
+        [Display(Name = "代碼")]
         public string Code { get; set; }
         public string ReturnUrl { get; set; }
 
-        [Display(Name = "Remember this browser?")]
+        [Display(Name = "記住此瀏覽器?")]
         public bool RememberBrowser { get; set; }
     }
 

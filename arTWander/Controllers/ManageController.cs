@@ -39,12 +39,12 @@ namespace arTWander.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two factor provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "The phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                message == ManageMessageId.ChangePasswordSuccess ? "已變更您的密碼。"
+                : message == ManageMessageId.SetPasswordSuccess ? "已設定您的密碼。"
+                : message == ManageMessageId.SetTwoFactorSuccess ? "已設定您的雙因素驗證。"
+                : message == ManageMessageId.Error ? "發生錯誤。"
+                : message == ManageMessageId.AddPhoneSuccess ? "已新增您的電話號碼。"
+                : message == ManageMessageId.RemovePhoneSuccess ? "已移除您的電話號碼。"
                 : "";
 
             var model = new IndexViewModel
@@ -115,7 +115,7 @@ namespace arTWander.Controllers
                 var message = new IdentityMessage
                 {
                     Destination = model.Number,
-                    Body = "Your security code is: " + code
+                    Body = "您的安全碼為: " + code
                 };
                 await UserManager.SmsService.SendAsync(message);
             }
@@ -177,6 +177,8 @@ namespace arTWander.Controllers
             // For production use please register a SMS provider in IdentityConfig and generate a code here.
             var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId<int>(), phoneNumber);
             ViewBag.Status = "For DEMO purposes only, the current code is " + code;
+
+            // 透過 SMS 提供者傳送 SMS，以驗證電話號碼
             return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
         }
 
@@ -200,7 +202,7 @@ namespace arTWander.Controllers
                 }
                 return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
             }
-            // If we got this far, something failed, redisplay form
+            // 如果執行到這裡，發生某項失敗，則重新顯示表單
             ModelState.AddModelError("", "Failed to verify phone");
             return View(model);
         }
@@ -281,7 +283,7 @@ namespace arTWander.Controllers
                 AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
+            // 如果執行到這裡，發生某項失敗，則重新顯示表單
             return View(model);
         }
 
@@ -314,7 +316,7 @@ namespace arTWander.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LinkLogin(string provider)
         {
-            // Request a redirect to the external login provider to link a login for the current user
+            // 要求重新導向至外部登入提供者，以連結目前使用者的登入
             return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId<int>().ToString());
         }
 

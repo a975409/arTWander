@@ -13,7 +13,7 @@ using System.Web;
 
 namespace arTWander.Models
 {
-    // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
+    // 設定此應用程式中使用的應用程式使用者管理員。UserManager 在 ASP.NET Identity 中定義且由應用程式中使用。
 
     // *** PASS IN TYPE ARGUMENT TO BASE CLASS:
     public class ApplicationUserManager : UserManager<ApplicationUser, int>
@@ -32,16 +32,14 @@ namespace arTWander.Models
             var manager = new ApplicationUserManager(
                 new ApplicationUserStore(context.Get<ApplicationDbContext>()));
 
-            // Configure validation logic for usernames
-
-            // *** ADD INT TYPE ARGUMENT TO METHOD CALL:
+            // 設定使用者名稱的驗證邏輯
             manager.UserValidator = new UserValidator<ApplicationUser, int>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
             };
 
-            // Configure validation logic for passwords
+            // 設定密碼的驗證邏輯
             manager.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
@@ -51,28 +49,25 @@ namespace arTWander.Models
                 RequireUppercase = true,
             };
 
-            // Configure user lockout defaults
+            // 設定使用者鎖定詳細資料
             manager.UserLockoutEnabledByDefault = true;
             manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
             manager.MaxFailedAccessAttemptsBeforeLockout = 5;
 
-            // Register two factor authentication providers. 
-            // This application uses Phone and Emails as a step of receiving a 
-            // code for verifying the user You can write your own provider and plug in here.
-
-            // *** ADD INT TYPE ARGUMENT TO METHOD CALL:
-            manager.RegisterTwoFactorProvider("PhoneCode",
+            // 註冊雙因素驗證提供者。此應用程式使用手機和電子郵件接收驗證碼以驗證使用者
+            // 您可以撰寫專屬提供者，並將它外掛到這裡。
+            manager.RegisterTwoFactorProvider("電話代碼",
                 new PhoneNumberTokenProvider<ApplicationUser, int>
                 {
-                    MessageFormat = "Your security code is: {0}"
+                    MessageFormat = "您的安全碼為 {0}"
                 });
 
             // *** ADD INT TYPE ARGUMENT TO METHOD CALL:
-            manager.RegisterTwoFactorProvider("EmailCode",
+            manager.RegisterTwoFactorProvider("電子郵件代碼",
                 new EmailTokenProvider<ApplicationUser, int>
                 {
-                    Subject = "SecurityCode",
-                    BodyFormat = "Your security code is {0}"
+                    Subject = "安全碼",
+                    BodyFormat = "您的安全碼為 {0}"
                 });
 
             manager.EmailService = new EmailService();
@@ -113,7 +108,7 @@ namespace arTWander.Models
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
+            // 將您的電子郵件服務外掛到這裡以傳送電子郵件。
             return Task.FromResult(0);
         }
     }
@@ -123,7 +118,7 @@ namespace arTWander.Models
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your sms service here to send a text message.
+            // 將您的 SMS 服務外掛到這裡以傳送簡訊。
             return Task.FromResult(0);
         }
     }
@@ -168,7 +163,7 @@ namespace arTWander.Models
         }
     }
 
-
+    // 設定在此應用程式中使用的應用程式登入管理員。
     public class ApplicationSignInManager : SignInManager<ApplicationUser, int>
     {
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager) : 
