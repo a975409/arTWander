@@ -2,34 +2,34 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// 組件的一般資訊會透過將設定 
-// 控制。變更這些屬性值可修改與組件關聯的
-// 資訊。
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
 [assembly: AssemblyTitle("arTWander")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("arTWander")]
-[assembly: AssemblyCopyright("Copyright (C)  2021")]
+[assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// ComVisible 為 false 的方式來控制，讓此組件中的類型在 
-// COM 組件中為不可見。如果您需要從
-// COM 存取此組件中的型別，請在該型別上將 ComVisible 屬性設定為 true。
+// Setting ComVisible to false makes the types in this assembly not visible 
+// to COM components.  If you need to access a type in this assembly from 
+// COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-// 下列 GUID 為專案公開 (Expose) 至 COM 時所要使用的 typelib ID
-[assembly: Guid("74355719-00d6-4b85-b696-c9b0bc3f9070")]
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("60583fe5-93e5-40e0-bb74-ee684d8d5410")]
 
-// 組件的版本資訊是由下列四項值構成:
+// Version information for an assembly consists of the following four values:
 //
-//      主要版本
-//      次要版本存取此組件中的類型，
-//      組建編號
-//      修訂編號
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
 //
-// 您可以指定所有值或預設修訂和組件數目
-// 指定為預設值:
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

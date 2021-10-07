@@ -1,7 +1,5 @@
-﻿using Microsoft.Owin;
-using Owin;
+﻿using Owin;
 
-[assembly: OwinStartupAttribute(typeof(arTWander.Startup))]
 namespace arTWander
 {
     public partial class Startup
