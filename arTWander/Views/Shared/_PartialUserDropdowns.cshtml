@@ -1,0 +1,70 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+        if (User.IsInRole("Admin"))
+        {
+            <p class="dropdown-item-text">系統管理員</p>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+                <i class="fas fa-pencil-alt mr-3"
+                   style="vertical-align: middle;"></i>查看您的檔案
+            </a>
+            <a href="#" class="dropdown-item">
+                <i class="fas fa-flag mr-3"
+                   style="vertical-align: middle;"></i>設定和隱私
+            </a>
+            <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item">
+                <i class="fas fa-sign-out-alt  mr-3"
+                   style="vertical-align: middle;"></i>登出
+            </a>
+        }
+        else if (User.IsInRole("Company"))
+        {
+            <p class="dropdown-item-text">展演單位</p>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+                <i class="fas fa-pencil-alt mr-3"
+                   style="vertical-align: middle;"></i>我的展演
+            </a>
+            <a href="#" class="dropdown-item">
+                <i class="fas fa-pencil-alt mr-3"
+                   style="vertical-align: middle;"></i>社群管理
+            </a>
+            <a href="#" class="dropdown-item">
+                <i class="fas fa-pencil-alt mr-3"
+                   style="vertical-align: middle;"></i>帳戶管理
+            </a>
+            <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item">
+                <i class="fas fa-sign-out-alt  mr-3"
+                   style="vertical-align: middle;"></i>登出
+            </a>
+        }
+        else if (User.IsInRole("Member"))
+        {
+            <p class="dropdown-item-text">系統管理員</p>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+                <i class="fas fa-pencil-alt mr-3"
+                   style="vertical-align: middle;"></i>查看您的檔案
+            </a>
+            <a href="#" class="dropdown-item">
+                <i class="fas fa-flag mr-3"
+                   style="vertical-align: middle;"></i>設定和隱私
+            </a>
+            <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item">
+                <i class="fas fa-sign-out-alt  mr-3"
+                   style="vertical-align: middle;"></i>登出
+            </a>
+        }
+    }
+}
+else
+{
+    <a href="~/Account/Login" class="dropdown-item" id="loginLink">
+        <i class="fas fa-sign-out-alt  mr-3"
+           style="vertical-align: middle;"></i>登入
+    </a>
+}

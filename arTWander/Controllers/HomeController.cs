@@ -4,6 +4,9 @@ namespace arTWander.Controllers
 {
     public class HomeController : Controller
     {
+        public ActionResult homeIndexPage() {
+            return View();
+        }
         public ActionResult Index()
         {
             return View();

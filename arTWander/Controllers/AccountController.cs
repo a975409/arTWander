@@ -76,7 +76,8 @@ namespace arTWander.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    // RedirectToLocal(returnUrl);
+                    return RedirectToAction("homeIndexPage", "Home");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
