@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Web;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace arTWander.Models
 {
@@ -78,7 +80,11 @@ namespace arTWander.Models
                 // *** ADD INT TYPE ARGUMENT TO METHOD CALL:
                 manager.UserTokenProvider =
                     new DataProtectorTokenProvider<ApplicationUser, int>(
-                        dataProtectionProvider.Create("ASP.NET Identity"));
+                        dataProtectionProvider.Create("ASP.NET Identity"))
+                    {
+                        //設定忘記密碼或mail確認的timeout時間
+                        TokenLifespan = TimeSpan.FromHours(3)
+                    };
             }
             return manager;
         }
@@ -108,8 +114,18 @@ namespace arTWander.Models
     {
         public Task SendAsync(IdentityMessage message)
         {
+            //Console.WriteLine("SendAsync");
             // 將您的電子郵件服務外掛到這裡以傳送電子郵件。
-            return Task.FromResult(0);
+            var apiKey = "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";
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("a975409@gmail.com", "arTWander");
+            var subject = "Sending with SendGrid is Fun";
+            var to = new EmailAddress(message.Destination, "Example User");
+            var plainTextContent = "請按一下此連結確認您的帳戶";
+            var htmlContent = message.Body;
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            return client.SendEmailAsync(msg);
+            //return Task.FromResult(0);
         }
     }
 

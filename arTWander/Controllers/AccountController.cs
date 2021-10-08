@@ -70,14 +70,23 @@ namespace arTWander.Controllers
                 return View(model);
             }
 
+            var usermanger = UserManager.FindByEmail(model.Email);
+
+            //檢查該帳號是否有做mail驗證
+            if (!UserManager.IsEmailConfirmed(usermanger.Id))
+            {
+                ModelState.AddModelError("Email", "此帳號的信箱尚未驗證，請驗證後再登入");
+                return View(model);
+            }
+
             // 這不會計算為帳戶鎖定的登入失敗
             // 若要啟用密碼失敗來觸發帳戶鎖定，請變更為 shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
-                    // RedirectToLocal(returnUrl);
-                    return RedirectToAction("homeIndexPage", "Home");
+                    return RedirectToLocal(returnUrl);
+                //return RedirectToAction("homeIndexPage", "Home");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -165,10 +174,10 @@ namespace arTWander.Controllers
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 
-
+                    //寄mail到新註冊使用者的帳戶
                     await UserManager.SendEmailAsync(user.Id, "確認您的帳戶", "請按一下此連結確認您的帳戶 <a href=\"" + callbackUrl + "\">這裏</a>");
-                    ViewBag.Link = callbackUrl;
 
+                    ViewBag.Link = callbackUrl;
                     return View("DisplayEmail");
                 }
                 AddErrors(result);
