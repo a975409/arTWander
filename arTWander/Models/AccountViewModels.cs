@@ -55,7 +55,7 @@ namespace arTWander.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "記住帳號")]
         public bool RememberMe { get; set; }
     }
 

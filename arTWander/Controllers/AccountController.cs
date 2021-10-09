@@ -43,6 +43,8 @@ namespace arTWander.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            //讀取cookie裡面的帳號
+
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -65,28 +67,31 @@ namespace arTWander.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            //寫入帳號至cookie
+
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
             var usermanger = UserManager.FindByEmail(model.Email);
-
-            //檢查該帳號是否有做mail驗證
-            if (!UserManager.IsEmailConfirmed(usermanger.Id))
-            {
-                ModelState.AddModelError("Email", "此帳號的信箱尚未驗證，請驗證後再登入");
-                return View(model);
-            }
-
             // 這不會計算為帳戶鎖定的登入失敗
             // 若要啟用密碼失敗來觸發帳戶鎖定，請變更為 shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                //return RedirectToAction("homeIndexPage", "Home");
+                    //檢查該帳號是否有做mail驗證
+                    if (!UserManager.IsEmailConfirmed(usermanger.Id))
+                    {
+                        ModelState.AddModelError("Email", "此帳號的信箱尚未驗證，請驗證後再登入");
+                        return View(model);
+                    }
+                    else
+                    {
+                        return RedirectToLocal(returnUrl);
+                        //return RedirectToAction("homeIndexPage", "Home");
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -249,8 +254,10 @@ namespace arTWander.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
+        public ActionResult ResetPassword(int userId, string code)
         {
+            var user = UserManager.FindById(userId);
+            ViewBag.Email = user.Email;
             return code == null ? View("Error") : View();
         }
 
@@ -261,6 +268,7 @@ namespace arTWander.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
+            ViewBag.Email = model.Email;
             if (!ModelState.IsValid)
             {
                 return View(model);
