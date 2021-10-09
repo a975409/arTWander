@@ -57,6 +57,8 @@
     transform: scale(1.2);
 }
 
+
+
 @media screen and (max-width: 992px){
     .showImg{
         height: 400px;
@@ -75,5 +77,8 @@
         color: black;
     }
     
+    .showlistRow > div{
+        margin-bottom: 100px;
+    }
 }
 /* shortDetail 白色敘述卡 ends*/

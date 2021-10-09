@@ -6,6 +6,12 @@
     position: relative;
     width: 100px;
     height: 100px;
+    transition: all .2s ease-in-out;
+}
+
+#userAvatarDiv:hover{
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
 }
 
 .fa-camera{
@@ -20,12 +26,6 @@
 #fakeDiv{
     width: 100px;
     height: 100px;
-    /* background-color: blueviolet; */
-}
-
-#userAvatarImg:hover{
-    /* filter: blur(4px); */
-    transition: all .2s ease-in-out;
 }
 
 #mainPage input{

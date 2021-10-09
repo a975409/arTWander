@@ -24,7 +24,7 @@ i{
     width: 30px;
     font-size: 25px;
 }
-#avatarNavSet >a i{
+#avatarNavSet>a i{
     font-size: 22px;
 }
 #avatarNav{
@@ -83,6 +83,10 @@ nav a:hover{
     color: rgb(0, 0, 0);  
 }
 
+input{
+    font-size: 5px;
+}
+
 #aside1 a:hover{
     text-decoration: none;
     color: rgb(197, 126, 104);
@@ -101,7 +105,11 @@ nav a:hover{
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    cursor: pointer;
+    /* cursor: pointer; */
+}
+
+#asideAvatar img{
+    object-fit: cover;
 }
 
 #buttonSearch:active{
@@ -165,6 +173,10 @@ select{
         overflow-x: hidden;
         transition: .3s;
     }
+
+    /* #aside1 a,#aside1 :radio{
+        font-size: 5px;
+    } */
     /* slide aside hidden */
     #aside1.aside1_Slide{
         position:fixed;
