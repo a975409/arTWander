@@ -56,7 +56,7 @@
    <div class="AllListContent">
        <table class="table table-hover w-100">
            <thead>
-             <tr>
+             <tr class="feedBack" href="" data-toggle="modal" data-target="#staticBackdrop">
                <th scope="col-1 col-md-1" >編號</th>
                <th scope="col-1 col-md-1" >回饋人</th>
                <th scope="col-2 col-md-3" >回饋內容</th>
@@ -67,7 +67,7 @@
              </tr>
            </thead>
            <tbody>
-            <tr>
+            <tr class="feedBack" href="" data-toggle="modal" data-target="#staticBackdrop">
               <td scope="col-1 col-md-1" >F0001</td>
               <td scope="col-3 col-md-3" >鯉魚王</td>
               <td scope="col-3 col-md-3" >建議網頁速度提升些</td>
@@ -76,7 +76,7 @@
               <td scope="col-1 col-md-1">未處理</td>
               <td scope="col-1" class="d-none d-lg-table-cell"> </td>
             </tr>
-            <tr>
+            <tr class="feedBack" href="" data-toggle="modal" data-target="#staticBackdrop">
               <td scope="col-1 col-md-1" >F0002</td>
               <td scope="col-3 col-md-3" >暴鯉龍</td>
               <td scope="col-3 col-md-3" >網頁切換不順</td>
@@ -111,3 +111,40 @@
 </section>
    
 </article>
+
+<!-- 彈出視窗顯示展演資訊 -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade px-0" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <!-- 控至彈出窗大小 -->
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">展演檢舉</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <main>
+          <!-- 主內容 -->
+          <!-- ajax導入相關內容 -->
+            <section id="Section" class="w-100">
+              <div id ="detailInform">
+              </div>
+            </section>
+          </main>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  //點擊分頁連結頁面
+  //一般使用者list
+  $(".feedBack").click(function(){
+      $('#detailInform').load('ManagerPage/ReportPage/feedBackPage.html');
+  });
+</script>

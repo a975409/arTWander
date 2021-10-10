@@ -44,7 +44,7 @@
             <div class="AllListContent">
                 <table class="table table-hover w-100">
                     <thead>
-                      <tr>
+                      <tr >
                         <th scope="col-1 col-md-1">編號</th>
                         <th scope="col-1 col-md-1" class="d-none d-sm-table-cell">姓名</th>
                         <th scope="col-1 col-md-1">帳號</th>
@@ -54,7 +54,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
+                      <tr id="BlackInform" href="" data-toggle="modal" data-target="#staticBackdrop">
                         <th scope="row">U0001</th>
                         <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">陳品宏</td>
                         <td scope="col-1 col-md-1">didi333</td>
@@ -63,7 +63,7 @@
                         <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">GM</td>
                        
                       </tr>
-                      <tr>
+                      <tr id="BlackInform" href="" data-toggle="modal" data-target="#staticBackdrop">
                         <th scope="row">U0002</th>
                         <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">王小名</td>
                         <td scope="col-1 col-md-1">ming3</td>
@@ -198,3 +198,41 @@
     </section>
    
 </article>
+
+
+
+<!-- 彈出視窗顯示用戶資訊 -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade px-0" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <!-- 控至彈出窗大小 -->
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">黑名單詳細資訊</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <main>
+          <!-- 主內容 -->
+          <!-- ajax導入相關內容 -->
+            <section id="Section" class="w-100">
+              <div id ="detailInform">
+              </div>
+            </section>
+          </main>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<script>
+  //點擊分頁連結頁面
+  //一般使用者list
+  $("#BlackInform").click(function(){
+      $('#detailInform').load('ManagerPage/MemberInformPage/BlackInform.html');
+  });
+</script>

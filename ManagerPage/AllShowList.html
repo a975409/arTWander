@@ -82,7 +82,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
+                      <tr class="showInform" href="" data-toggle="modal" data-target="#staticBackdrop">
                         <td scope="col-1 col-md-1">S0001</td>
                         <td scope="col-3 col-md-3" >晚安，待會見</td>
                         <td scope="col-1 col-md-1">蘇育賢</td>
@@ -91,7 +91,7 @@
                         <td scope="col-2 col-md-2" >2021/06/06</td>
                         <td scope="col-2" class="d-none d-lg-table-cell">2021/09/13</td>
                       </tr>
-                      <tr>
+                      <tr class="showInform" href="" data-toggle="modal" data-target="#staticBackdrop">
                         <td scope="col-1 col-md-1">S0002</td>
                         <td scope="col-3 col-md-3" >黎志文個展</td>
                         <td scope="col-1 col-md-1">黎志文</td>
@@ -100,7 +100,7 @@
                         <td scope="col-2 col-md-2" >2021/07/06</td>
                         <td scope="col-2" class="d-none d-lg-table-cell">2021/09/13</td>
                       </tr>
-                      <tr>
+                      <tr class="showInform" href="" data-toggle="modal" data-target="#staticBackdrop">
                         <td scope="col-1 col-md-1">S0003</td>
                         <td scope="col-3 col-md-3" >單飛不解散，你怎麼說</td>
                         <td scope="col-1 col-md-1">紅野畫廊</td>
@@ -147,3 +147,41 @@
     </section>
    
 </article>
+
+
+<!-- 彈出視窗顯示展演資訊 -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade px-0" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <!-- 控至彈出窗大小 -->
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">展演詳細資訊</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <main>
+          <!-- 主內容 -->
+          <!-- ajax導入相關內容 -->
+            <section id="Section" class="w-100">
+              <div id ="detailInform">
+              </div>
+            </section>
+          </main>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  //點擊分頁連結頁面
+  //一般使用者list
+  $(".showInform").click(function(){
+      $('#detailInform').load('ManagerPage/ShowInformPage/ShowInformPage.html');
+  });
+</script>
