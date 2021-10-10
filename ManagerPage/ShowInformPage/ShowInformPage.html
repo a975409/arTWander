@@ -1,0 +1,93 @@
+<link rel="stylesheet" href="./css/UserList.css">
+
+<article>
+  <section id="Section">
+        <div class="AllList"> 
+            <div class="userDetailInform mb-3">
+                <div class="container px-0">
+                    <p class="text-right">帳號狀態: <span class="isBlock">正常</span></p>
+                    <hr>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <img src="https://picsum.photos/500/500?random=8" class="d-flex w-100" alt="">
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="">展演描述</label>
+                            <p id="showDescript"> 紐約當代藝術家，奧普海姆（Peter Opheim
+                                b.1961-），有著斯堪地那維亞血統（Scandinavia）。他最新的作品帶著一些北歐神話與色彩，無論你知不知道北歐神話，其實都沒關係，奧普海姆的作品始終擁有純粹、天馬行空及療癒感，這正是步調緊湊、生活壓抑的現代人所缺少的。</p>
+                            </div>
+                        <hr>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <p>展演編號: <span>S0001</span></p>
+                            <p>展演名稱: <span>噬山者們</span></p>
+                            <p>展演單位名稱: <span>弘野義郎</span></p>
+                            <p>Email: <span>dKMS@art.com</span></p>
+                            <p>連絡電話: <span>0973000123</span></p>
+                            <p>縣市: <span>高雄市</span></p>
+                            <p>地區: <span>鼓山區</span></p>
+                            <p>地址: <span>美術館路</span></p>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <p>開始日期: <span>2021-09-09</span></p>
+                            <p>結束日期: <span>2021-09-30</span></p>
+                            <p>開放時間: <span>一三五七九</span></p>
+                            <p>閉館時間: <span>17:30</span></p>
+                            <p>收費: <span>是</span></p>
+                            <p>價格: <span> NT. 200</span></p>
+                            <p>年齡限制: <span>12</span></p>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <p>登錄日期: <span>2021-09-18</span></p>
+                            <p>點閱人數: <span>3334</span></p>
+                            <p>訂閱人數: <span>125</span></p>
+                            <p>檢舉次數: <span>5</span></p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                
+                <div class="userInfoUpdate d-flex justify-content-end">
+                    <button class="btn btn-primary mx-1" id="blackReason" href="" data-toggle="modal" data-target="#inputBlackReason">展演下架與通知</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        
+  </section>
+   
+</article>
+
+
+<!-- 彈出視窗顯示下架資訊 -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade px-0" id="inputBlackReason" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- 控至彈出窗大小 -->
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">展演下架</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <main>
+            <!-- 主內容 -->
+              <section id="Section" class="w-100">
+                <div id ="reasonInput ">
+                    <label for="">請輸入下架原因: </label>
+                    <textarea class="form-control" id="reasonContent" rows="5"></textarea>
+                </div>
+              </section>
+            </main>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary">確定送出</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

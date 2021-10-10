@@ -51,7 +51,10 @@ line-height: 50px;
     min-height: 20px;
     padding: 2px;
 }
-
+.AllListContent a{
+    text-decoration: none;
+    color: #000;
+}
 
 
 /* pagination 控制顏色 */

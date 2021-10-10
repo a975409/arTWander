@@ -78,7 +78,7 @@
              </tr>
            </thead>
            <tbody>
-            <tr>
+            <tr class="postsReport" href="" data-toggle="modal" data-target="#staticBackdrop">
                 <td scope="col-1 col-md-1" >P0001</td>
                 <td scope="col-1 col-md-1" >小白</td>
                 <td scope="col-1 col-md-1" class="d-none d-lg-table-cell">單飛不解</td>
@@ -90,7 +90,7 @@
                 <td scope="col-1 col-md-1">處理完畢</td>
                 <td scope="col-1" class="d-none d-lg-table-cell">DD</td>
             </tr>
-            <tr>
+            <tr class="postsReport" href="" data-toggle="modal" data-target="#staticBackdrop">
                 <td scope="col-1 col-md-1" >P0002</td>
                 <td scope="col-1 col-md-1" >超白</td>
                 <td scope="col-1 col-md-1" class="d-none d-lg-table-cell">泛南</td>
@@ -131,3 +131,42 @@
 </section>
    
 </article>
+
+
+
+<!-- 彈出視窗顯示展演資訊 -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade px-0" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <!-- 控至彈出窗大小 -->
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">展演檢舉</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <main>
+          <!-- 主內容 -->
+          <!-- ajax導入相關內容 -->
+            <section id="Section" class="w-100">
+              <div id ="detailInform">
+              </div>
+            </section>
+          </main>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  //點擊分頁連結頁面
+  //一般使用者list
+  $(".postsReport").click(function(){
+      $('#detailInform').load('ManagerPage/ReportPage/PostsReport.html');
+  });
+</script>
