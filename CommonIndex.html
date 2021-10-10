@@ -23,10 +23,10 @@
     <script src="https://kit.fontawesome.com/9bd3ad2735.js" crossorigin="anonymous"></script>
     <!-- css -->
     <link rel="stylesheet" type="text/css" href="./css/ManagerIndex.css">
-    <link rel="stylesheet" type="text/css" href="css/CommonIndex.css">
-    <link rel="stylesheet" type="text/css" href="CommonPage/CommonPageCss/ShowList.css">
-    <link rel="stylesheet" type="text/css" href="CommonPage/CommonPageCss/GalleryList.css">
-    <link rel="stylesheet" type="text/css" href="CommonPage/CommonPageCss/forum.css">
+    <link rel="stylesheet" type="text/css" href="./css/CommonIndex.css">
+    <link rel="stylesheet" type="text/css" href="CommonPage/_css/ShowList.css">
+    <link rel="stylesheet" type="text/css" href="CommonPage/_css/GalleryList.css">
+    <link rel="stylesheet" type="text/css" href="CommonPage/_css/forum.css">
 </head>
 
 <body>
@@ -159,32 +159,40 @@
     <!-- footer ends -->
 
     <script>
-        //Ajax導入處 於此處更改要導入頁面
+        //fixedNav:
         document.addEventListener("DOMContentLoaded",()=>{
-            //$('#avatarNavSet').load('CommonPage/logInFalseNav.html')
-            $('#avatarNavSet').load('CommonPage/logInTrueNav.html')
+            // => 沒登入
+            $('#avatarNavSet').load('/CommonPage/Nav/logInFalse.html')
+            // => 有登入
+            //$('#avatarNavSet').load('/CommonPage/Nav/logInTrue.html')
+        });
+        // aside
+        document.addEventListener("DOMContentLoaded", function () {
+            // => 沒登入
+            $('#aside1').load('/CommonPage/Aside/LogInFalse.html');
+            // => 有登入
+            //$('#aside1').load('/CommonPage/Aside/LogInTrue.html');
         });
         document.addEventListener("DOMContentLoaded", function () {
-            //$('#aside1').load('AsidePage/logInFalseAside.html');
-            $('#aside1').load('AsidePage/logInTrueAside.html');
-        });
-        document.addEventListener("DOMContentLoaded", function () {
-            $('#mainPage').load('CommonPage/ShowList.html');
-            //$('#mainPage').load('CommonPage/GalleryList.html');
-            //$('#mainPage').load('CommonPage/forum.html');
+            // => 預設顯示全部展覽
+            $('#mainPage').load('/CommonPage/mainPage/ShowList.html');
+            // => 預設顯示展演單位
+            //$('#mainPage').load('/CommonPage/mainPage/GalleryList.html');
+            // => 預設顯示討論區
+            //$('#mainPage').load('/CommonPage/mainPage/forum.html');
         });
   
-        //下面這幾串使用按鍵觸發導入Ajax功能需一併帶到有該按鍵的html頁面! Ex範例managerAside.html內最下面
+        //按鍵觸發導入Ajax
         $('#showList').click(function(){
-            $('#mainPage').load('CommonPage/ShowList.html');
+            $('#mainPage').load('/CommonPage/mainPage/ShowList.html');
         })
 
         $('#GalleryList').click(function(){
-            $('#mainPage').load('CommonPage/GalleryList.html');
+            $('#mainPage').load('/CommonPage/mainPage/GalleryList.html');
         })
 
         $('#forum').click(function(){
-            $('#mainPage').load('CommonPage/forum.html');
+            $('#mainPage').load('/CommonPage/mainPage/forum.html');
         })
     </script>
 

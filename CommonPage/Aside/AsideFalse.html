@@ -22,13 +22,12 @@
     <!-- font-awesome -->
     <script src="https://kit.fontawesome.com/9bd3ad2735.js" crossorigin="anonymous"></script>
     <!-- css -->
-    <link rel="stylesheet" type="text/css" href="../css/ManagerIndex.css">
-    <link rel="stylesheet" type="text/css" href="../css/CommonIndex.css">
-    <!-- <link rel="stylesheet" type="text/css" href="../CommonPage/CommonPageCss/ShowList.css"> -->
-    <!-- <link rel="stylesheet" type="text/css" href="/CommonPageCss/ShowList.css"> -->
-    <!-- <link rel="stylesheet" type="text/css" href="CommonPage/CommonPageCss/GalleryList.css"> -->
-    <!-- <link rel="stylesheet" type="text/css" href="CommonPage/CommonPageCss/forum.css"> -->
-    <link rel="stylesheet" href="./CommonPageCss/setUpPage.css">
+    <link rel="stylesheet" type="text/css" href="/css/ManagerIndex.css">
+    <link rel="stylesheet" type="text/css" href="/css/CommonIndex.css">
+    <link rel="stylesheet" type="text/css" href="/CommonPage/_css/ShowList.css">
+    <link rel="stylesheet" type="text/css" href="/CommonPage/_css/GalleryList.css">
+    <link rel="stylesheet" type="text/css" href="/CommonPage/_css/forum.css">
+    <link rel="stylesheet" href="/CommonPage/_css/setUpPage.css">
 </head>
 
 <body>
@@ -39,7 +38,7 @@
             <hgroup>
                 <div id="topHeader" class="row mt-3 d-flex justify-content-end">
                     <figure class="col-4 d-flex justify-content-center">
-                        <a href="#"><img src="../image/logo/logo.png" alt=""></a>
+                        <a href="#"><img src="/image/logo/logo.png" alt=""></a>
                     </figure>
                     <div class="col-4 d-flex justify-content-end align-items-start" id="avatarNavSet">
 
@@ -53,10 +52,10 @@
                 <nav id="navbarFixed" class="nav justify-content-center bg-white">
                     <label for="menuControl" class="menuControlBtn d-block"><span>AA</span></label>
                     <a href="#" class="d-md-none"> </a>
-                    <a id="homePage" class="nav-link active" href="../CommonIndex.html">首頁</a>
-                    <a id="showList" class="nav-link" href="#">全部展覽</a>
-                    <a id="GalleryList" class="nav-link" href="#">展演單位</a> 
-                    <a id="forum" class="nav-link" href="#">討論區</a>  
+                    <a id="homePage" class="nav-link active" href="/CommonIndex.html">首頁</a>
+                    <a id="showList" class="nav-link" href="/CommonIndex.html">全部展覽</a>
+                    <a id="GalleryList" class="nav-link" href="/CommonIndex.html">展演單位</a> 
+                    <a id="forum" class="nav-link" href="/CommonIndex.html">討論區</a>  
                 </nav>
             </hgroup>
             <!-- fixed導覽列 end -->
@@ -77,57 +76,8 @@
                     <input type="checkbox" id="menuControl">
                     <!-- 主內容 -->
                     <section id="Section" class="col-12">
-                        <div id="mainPage">
-                            <form class="container p-5 w-100 border rounded-lg mt-5 " action="">
-                                <div class="row-cols-1 ">
-                                    <h4>用戶資料</h4>
-                                    <hr>
-                                </div>
-                                <div class="row mt-5 justify-content-center ">
-                                    <label class="col-7 col-md-2 " for="userAvatar">頭像</label>
-                                    <!-- 消除input type="file" UI的方法 https://www.wfublog.com/2017/10/input-type-file-upload-css-skill.html -->
-                                    <label class=" col-3 col-md-1 offset-md-5 p-0" for="userAvatar" role="button">
-                                        <div id="userAvatarDiv">
-                                            <img id="userAvatarImg" class="rounded-circle position-absolute" width="100px" height="100px" src="../image/exhibiton/dav.png" style="object-fit: cover;" alt="">
-                                            <i class="fa fa-camera" aria-hidden="true"></i>
-                                            <div id="fakeDiv" ></div>
-                                        </div>
-                                        <input class="d-none" name="userAvatar" id="userAvatar" type="file">
-                                    </label><br>
-                                </div>
-                                <div class="row mt-4 justify-content-center ">
-                                    <label class="col-4 col-md-2" for="userName">會員暱稱</label>
-                                    <input class="col-6" name="userName" id="userName" type="text"><br>
-                                </div>
-                                <div class="row mt-4 justify-content-center">
-                                    <label class="col-4 col-md-2"  for="userBDay">生日</label>
-                                    <input class="col-6"  name="userBDay" id="userBDay" type="date"><br>
-                                </div>
-                                <div class="row mt-4 justify-content-center">
-                                    <label class="col-4 col-md-2"  for="userAddress">常用地址</label>
-                                    <input class="col-6"  name="userAddress" id="userAddress"   type="text"><br>
-                                </div>
-                                <div class="row mt-4 justify-content-center">
-                                    <label class="col-4 col-md-2"  for="userEmail">電子郵件</label>
-                                    <input class="col-6"  name="userEmail" id="userEmail"   type="text"><br>
-                                </div>
-                                <div class="row mt-4 justify-content-center">
-                                    <label class="col-4 col-md-2"  for="userPhone">聯絡電話</label>
-                                    <input class="col-6"  name="userPhone" id="userPhone"   type="text"><br>
-                                </div>
-                                <div class="row mt-4 justify-content-center">
-                                    <label class="col-4 col-md-2"  for="userSuscribe">訂閱電子報</label>
-                                    <select class="col-6"  name="" id="">
-                                        <option value="">是</option>
-                                        <option value="">否</option>
-                                    </select><br>
-                                </div>
-                                
-                                <div class="row mt-5 justify-content-center">
-                                    <button class="col-4 col-md-2 btn btn-outline-secondary border-0 bg-pink text-white" type="submit" id="btnSuscribe">儲存修改</button>
-                                </div>
-                                
-                            </form>
+                        <div id="main">
+                            
                         </div>
                     </section>
                 </div>
@@ -210,8 +160,8 @@
     <script>
         //Ajax導入處 於此處更改要導入頁面
         document.addEventListener("DOMContentLoaded",()=>{
-            //$('#avatarNavSet').load('CommonPage/logInFalseNav.html')
-            $('#avatarNavSet').load('../CommonPage/logInTrueNav.html')
+            //$('#avatarNavSet').load('/CommonPage/Nav/logInFalse.html')
+            $('#avatarNavSet').load('/CommonPage/Nav/logInTrue.html')
         });
         document.addEventListener("DOMContentLoaded", function () {
             //$('#aside1').load('AsidePage/logInFalseAside.html');
@@ -221,25 +171,26 @@
             //$('#mainPage').load('CommonPage/ShowList.html');
             //$('#mainPage').load('CommonPage/GalleryList.html');
             //$('#mainPage').load('CommonPage/forum.html');
+            $('#main').load('/CommonPage/mainPage/setUpPage.html');
         });
   
         //下面這幾串使用按鍵觸發導入Ajax功能需一併帶到有該按鍵的html頁面! Ex範例managerAside.html內最下面
         $('#showList').click(function(){
-            $('#mainPage').load('CommonPage/ShowList.html');
+            $('#mainPage').load('/CommonPage/mainPage/ShowList.html');
         })
 
         $('#GalleryList').click(function(){
-            $('#mainPage').load('CommonPage/GalleryList.html');
+            $('#mainPage').load('/CommonPage/mainPage/GalleryList.html');
         })
 
         $('#forum').click(function(){
-            $('#mainPage').load('CommonPage/forum.html');
+            $('#mainPage').load('/CommonPage/mainPage/forum.html');
         })
     </script>
 
     <!-- 下面用於判斷aside是否存在, 以及為CSS偽類增加一行display:none -->
     <style id="css"></style>
-    <script src="../javascript/AsideTrue.js"></script>
+    <script src="/javascript/AsideTrue.js"></script>
     <!-- aside判斷結束 -->
 </body>
 
