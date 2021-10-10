@@ -22,11 +22,12 @@
     <!-- font-awesome -->
     <script src="https://kit.fontawesome.com/9bd3ad2735.js" crossorigin="anonymous"></script>
     <!-- css -->
-    <link rel="stylesheet" type="text/css" href="./css/ManagerIndex.css">
-    <link rel="stylesheet" type="text/css" href="./css/CommonIndex.css">
-    <link rel="stylesheet" type="text/css" href="CommonPage/_css/ShowList.css">
-    <link rel="stylesheet" type="text/css" href="CommonPage/_css/GalleryList.css">
-    <link rel="stylesheet" type="text/css" href="CommonPage/_css/forum.css">
+    <link rel="stylesheet" type="text/css" href="/css/ManagerIndex.css">
+    <link rel="stylesheet" type="text/css" href="/css/CommonIndex.css">
+    <link rel="stylesheet" type="text/css" href="/CommonPage/_css/ShowList.css">
+    <link rel="stylesheet" type="text/css" href="/CommonPage/_css/GalleryList.css">
+    <link rel="stylesheet" type="text/css" href="/CommonPage/_css/forum.css">
+    <link rel="stylesheet" href="/CommonPage/_css/setUpPage.css">
 </head>
 
 <body>
@@ -37,7 +38,7 @@
             <hgroup>
                 <div id="topHeader" class="row mt-3 d-flex justify-content-end">
                     <figure class="col-4 d-flex justify-content-center">
-                        <a href="#"><img src="./image/logo/logo.png" alt=""></a>
+                        <a href="#"><img src="/image/logo/logo.png" alt=""></a>
                     </figure>
                     <div class="col-4 d-flex justify-content-end align-items-start" id="avatarNavSet">
 
@@ -51,38 +52,36 @@
                 <nav id="navbarFixed" class="nav justify-content-center bg-white">
                     <label for="menuControl" class="menuControlBtn d-block"><span>AA</span></label>
                     <a href="#" class="d-md-none"> </a>
-                    <a id="homePage" class="nav-link active" href="#">首頁</a>
-                    <a id="showList" class="nav-link" href="#">全部展覽</a>
-                    <a id="GalleryList" class="nav-link" href="#">展演單位</a> 
-                    <a id="forum" class="nav-link" href="#">討論區</a>  
+                    <a id="homePage" class="nav-link active" href="/CommonIndex.html">首頁</a>
+                    <a id="showList" class="nav-link" href="/CommonIndex.html">全部展覽</a>
+                    <a id="GalleryList" class="nav-link" href="/CommonIndex.html">展演單位</a> 
+                    <a id="forum" class="nav-link" href="/CommonIndex.html">討論區</a>  
                 </nav>
             </hgroup>
             <!-- fixed導覽列 end -->
             <!-- breadcrumb starts -->
-            <nav id="cmnPage_BreadCrumb" class="col-12 my-4" aria-label="breadcrumb">
+            <!-- <nav id="cmnPage_BreadCrumb" class="col-12 my-4" aria-label="breadcrumb">
                 <ol class="breadcrumb bg-light">
-                    <li class="breadcrumb-item"><a href="#">全部展覽</a></li>
+                    <li class="breadcrumb-item"><a href="#"></a></li>
                     <li class="breadcrumb-item active" aria-current="page">台北市</li>
                 </ol>
-            </nav>
+            </nav> -->
             <!-- breadcrumb ends -->
         </header>
         <!-- 導覽列 end -->
         <!-- 主要內容區 starts-->
         <main>
             <div class="container">
-                <div id="mainSection" class="row">
-                    <!-- 判斷是否開啟RWD左側邊框 -->
+                <div class="row">
                     <input type="checkbox" id="menuControl">
-                    <!-- 左側邊框 -->
-                    <aside id="aside1" class="col-12 col-md-3  mt-0" style="z-index: 1002;">
-                    </aside>
-                    <!-- 右側主內容 -->
-                    <section id="Section" class="col-12 col-md-9 w-100">
-                        <div id ="mainPage"></div>
+                    <!-- 主內容 -->
+                    <section id="Section" class="col-12">
+                        <div id="main">
+                            
+                        </div>
                     </section>
                 </div>
-            </div>  
+            </div>
         </main>
         <!-- 主要內容區 ends-->
     </div>
@@ -122,7 +121,7 @@
                                     <textarea class="form-control" id="feedBack" rows="5"></textarea><br>
                                     <input type="text" class="form-control" placeholder="請留下您的email，讓我們回信給您">
                                 </div>
-                                <button class="btn btn-outline-secondary border-0 bg-pink text-white" type="input" id="btnFeedback">送出</button>
+                                <button class="btn btn-outline-secondary border-0 bg-pink text-white" type="button" id="btnFeedback">送出</button>
                             </form>
                         </div>
                         <!-- 意見回饋 ends -->
@@ -133,16 +132,16 @@
                 <div class="row mt-5 mt-md-0">
                     <div class="col-12 container-fluid ">
                         <!-- 訂閱 starts -->
-                        <form class="col-12 ">
+                        <div class="col-12 ">
                             <h5 class="font-weight-bold">想收到第一手展演資訊嗎?</h5>
                             <p>請留下您的email，接收本站的電子報！</p>
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" placeholder="email" aria-label="suscribeEmail" aria-describedby="btnSuscribe">
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary border-0 bg-pink text-white" type="submit" id="btnSuscribe">訂閱</button>
+                                    <button class="btn btn-outline-secondary border-0 bg-pink text-white" type="button" id="btnSuscribe">訂閱</button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                         <!-- 訂閱 ends -->
                     </div>
                 </div>
@@ -159,30 +158,23 @@
     <!-- footer ends -->
 
     <script>
-        //fixedNav:
+        //Ajax導入處 於此處更改要導入頁面
         document.addEventListener("DOMContentLoaded",()=>{
-            // => 沒登入
-            $('#avatarNavSet').load('/CommonPage/Nav/logInFalse.html')
-            // => 有登入
-            //$('#avatarNavSet').load('/CommonPage/Nav/logInTrue.html')
-        });
-        // aside
-        document.addEventListener("DOMContentLoaded", function () {
-            // => 沒登入
-            $('#aside1').load('/CommonPage/Aside/LogInFalse.html');
-            // => 有登入
-            //$('#aside1').load('/CommonPage/Aside/LogInTrue.html');
+            //$('#avatarNavSet').load('/CommonPage/Nav/logInFalse.html')
+            $('#avatarNavSet').load('/CommonPage/Nav/logInTrue.html')
         });
         document.addEventListener("DOMContentLoaded", function () {
-            // => 預設顯示全部展覽
-            $('#mainPage').load('/CommonPage/mainPage/ShowList.html');
-            // => 預設顯示展演單位
-            //$('#mainPage').load('/CommonPage/mainPage/GalleryList.html');
-            // => 預設顯示討論區
-            //$('#mainPage').load('/CommonPage/mainPage/forum.html');
+            //$('#aside1').load('AsidePage/logInFalseAside.html');
+            //$('#aside1').load('AsidePage/logInTrueAside.html');
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            //$('#mainPage').load('CommonPage/ShowList.html');
+            //$('#mainPage').load('CommonPage/GalleryList.html');
+            //$('#mainPage').load('CommonPage/forum.html');
+            $('#main').load('/CommonPage/mainPage/setUpPage.html');
         });
   
-        //按鍵觸發導入Ajax
+        //下面這幾串使用按鍵觸發導入Ajax功能需一併帶到有該按鍵的html頁面! Ex範例managerAside.html內最下面
         $('#showList').click(function(){
             $('#mainPage').load('/CommonPage/mainPage/ShowList.html');
         })
@@ -198,7 +190,7 @@
 
     <!-- 下面用於判斷aside是否存在, 以及為CSS偽類增加一行display:none -->
     <style id="css"></style>
-    <script src="./javascript/AsideTrue.js"></script>
+    <script src="/javascript/AsideTrue.js"></script>
     <!-- aside判斷結束 -->
 </body>
 
