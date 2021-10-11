@@ -59,10 +59,9 @@
             </hgroup>
             <!-- fixed導覽列 end -->
             <!-- breadcrumb starts -->
-            <nav id="cmnPage_BreadCrumb" class="col-12 my-4" aria-label="breadcrumb">
+            <nav id="cmnPage_BreadCrumb" class="col-12 my-4 px-0" aria-label="breadcrumb">
                 <ol class="breadcrumb bg-light">
-                    <li class="breadcrumb-item"><a href="#">全部展覽</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">台北市</li>
+                    <li class="breadcrumb-item"><a href="#">我的展覽</a></li>
                 </ol>
             </nav>
             <!-- breadcrumb ends -->
@@ -174,26 +173,33 @@
             $('#aside1').load('/MemberPage/Aside/LogInTrue.html');
         });
         document.addEventListener("DOMContentLoaded", function () {
-            // => 預設顯示全部展覽
-            //$('#mainPage').load('/MemberPage/mainPage/ShowList.html');
+            // => 預設顯示我的展覽
+            $('#mainPage').load('/MemberPage/mainPage/MyshowPage.html');
             // => 預設顯示展演單位
-            $('#mainPage').load('/MemberPage/mainPage/GalleryList.html');
+            //$('#mainPage').load('/MemberPage/mainPage/GalleryList.html');
             // => 預設顯示討論區
             //$('#mainPage').load('/MemberPage/mainPage/forum.html');
         });
   
         //按鍵觸發導入Ajax
+        //Nav
         $('#showList').click(function(){
-            $('#mainPage').load('/MemberPage/mainPage/ShowList.html');
+            $('#mainPage').load('/CommonPage/mainPage/ShowList.html');
         })
 
         $('#GalleryList').click(function(){
-            $('#mainPage').load('/MemberPage/mainPage/GalleryList.html');
+            $('#mainPage').load('/CommonPage/mainPage/GalleryList.html');
         })
 
         $('#forum').click(function(){
+            $('#mainPage').load('/CommonPage/mainPage/forum.html');
+        })
+        
+        // Aside btn觸發
+        $('#forum').click(function(){
             $('#mainPage').load('/MemberPage/mainPage/forum.html');
         })
+
     </script>
 
     <!-- 下面用於判斷aside是否存在, 以及為CSS偽類增加一行display:none -->

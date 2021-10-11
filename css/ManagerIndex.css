@@ -16,6 +16,10 @@ i{
     color: rgb(0, 0, 0);
 }
 
+/* 取消li前預設maker點 */
+#aside1DivUl li{
+    list-style-type: none;
+}
 
 /* 右上頭像下拉式選單 */
 
@@ -243,6 +247,19 @@ select{
     }
 }
 
+/* MemberPage */
+#MyshowDeleteIcon{
+    display: flex;
+    position:absolute;
+    z-index: 2;
+    top: 10px;
+    right: 25px;
+    padding: 1px 3px;
+    background-color: rgb(256, 256, 256, 0.7);
+    color: rgb(36, 36, 36);
+}
 
-
+#MyshowDeleteIcon:hover{
+    background-color: rgb(256, 256, 256, 1);
+}
 
