@@ -1,0 +1,102 @@
+main{
+    position: relative;
+    width: 100%;
+}
+
+#TWmap{
+    position: absolute;
+    top: 0;
+    right: 10%;
+    width: 30%;
+    margin: 60px 0;
+    opacity: 0;
+    animation-name: scale;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    /* animation-delay: 1s; */
+}
+
+main mark h4,main mark h3{
+    position: absolute;
+    background-color: transparent;
+    letter-spacing: 10px;
+    margin: 0;
+}
+
+main mark h4{
+    /* 藝文漫步 */
+    top: 60px;
+    animation-name: rightFadeIn;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+main mark h3{
+    /* arTWander */
+    writing-mode: vertical-lr;
+    top: -300px;
+    left: 5%;
+    animation-name: bottomFadeIn;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+}
+
+#pickACity{
+    position: absolute;
+    right: 35vw;
+    top: 50vh;
+    display: flex;
+    align-items: center;
+}
+
+#pickACity p{
+    font-size: 40px;
+    margin: 0;
+}
+
+#pickACity #pointer{
+    width: 20px;
+    height: 20px;
+    background-color: rgb(0, 255, 170);
+    border-radius: 50%;
+    filter: drop-shadow(0px 0px 15px rgb(0, 255, 170));
+    margin: 0 20px;
+}
+
+/* 動畫 starts */
+@keyframes rightFadeIn{
+    from{
+        opacity: 0;
+        left: -400px;
+    }
+
+    to{
+        opacity: 1;
+        left: 10%;
+    }
+}
+
+@keyframes bottomFadeIn{
+    from{
+        opacity: 0;
+        top: -300px;
+    }
+    to{
+        opacity: 1;
+        top: 60px;
+    }
+}
+
+@keyframes scale{
+    from{
+        filter: blur(50px);
+        transform: scale(0);
+        opacity: 0;
+    }
+    to{
+        filter: blur(0);
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+/* 動畫 ends */
