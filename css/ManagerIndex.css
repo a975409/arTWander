@@ -275,7 +275,7 @@ select{
     font-size: 15px;
 }
 
-
+/* mySubscriptionPage */
 .mySubscriptionDeleteIcon{
     display: flex;
     position:absolute;
@@ -294,4 +294,50 @@ select{
         top: 0px;
         right: 0px;
     }
+}
+
+
+/* mySubscription detail page */
+.breadcrumb .active{
+    color: #C57E68;
+}
+
+
+.spanText{
+    background-color: rgba(196, 196, 196, 1);
+    border-radius: 2px;
+    color: white;
+}
+
+.subscriptionShowImg img{
+ height: 300px;
+}
+
+.SubShowDetail{
+    background-color: rgb(255, 255, 255);
+    box-shadow: 5px 0 10px rgb(131, 131, 131);
+    width: 80%;
+    z-index: 1000;
+    padding: 20px;
+    position: absolute;
+    bottom: -15%;
+    right: 7%;
+}
+@media screen and (max-width: 768px){
+    .SubShowDetail{
+        width: 65%;
+        bottom: -15%;
+    }
+}
+
+.SubShowDetail a{
+    text-decoration: none;
+    color: rgb(197, 126, 104);
+    font-size: 10px;
+    transition: all .3s ease-in-out;
+}
+
+.SubShowDetail a:hover{
+    /* font-weight: bold; */
+    color: rgb(0, 0, 0);
 }
