@@ -13,7 +13,7 @@
         <div class="col position-relative mb-5 d-flex flex-column align-items-center">
             <!-- 展演單位頭像 starts -->
             <div class="GalleryImg rounded-circle d-flex position-relative ">
-                <a href="#">
+                <a class="galleryPage" href="#">
                     <img class="w-100 rounded-circle img-fluid " src="../image/exhibiton/moca1.jpg" alt="">
                 </a>
             </div>
@@ -32,7 +32,7 @@
         <div class="col position-relative mb-5 d-flex flex-column align-items-center">
             <!-- 展演單位頭像 starts -->
             <div class="GalleryImg rounded-circle d-flex position-relative ">
-                <a href="#">
+                <a class="galleryPage" href="#">
                     <img class="w-100 rounded-circle img-fluid " src="../image/exhibiton/moca1.jpg" alt="">
                 </a>
             </div>
@@ -168,3 +168,9 @@
     </div>
 </div>
 <!-- 分頁 ends -->
+
+<script>
+$(".galleryPage").click(function(){
+    $('#mainPage').load('MemberPage/mainPage/SubscriptionDetail.html');
+});
+</script>

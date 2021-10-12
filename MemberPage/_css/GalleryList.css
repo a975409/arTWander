@@ -1,13 +1,13 @@
 
 .GalleryImg{
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     overflow: hidden;
 }
 
 .GalleryImg img{
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     object-fit: cover;
     transition: all .3s ease-in-out;
     filter: grayscale(.5);
