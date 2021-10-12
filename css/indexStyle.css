@@ -1,6 +1,8 @@
 main{
     position: relative;
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(54, 50, 50);
 }
 
 #TWmap{
@@ -16,23 +18,27 @@ main{
     /* animation-delay: 1s; */
 }
 
-main mark h4,main mark h3{
+main h4,main h3{
     position: absolute;
     background-color: transparent;
-    letter-spacing: 10px;
+    
     margin: 0;
+    color: rgb(178, 185, 185);
 }
 
-main mark h4{
-    /* 藝文漫步 */
+main h4{
+    /* arTWander */
+    letter-spacing: 5px;
     top: 60px;
+    font-size: 15px;
     animation-name: rightFadeIn;
     animation-duration: 1s;
     animation-fill-mode: forwards;
 }
 
-main mark h3{
-    /* arTWander */
+main h3{
+    /* 藝文漫步 */
+    letter-spacing: 10px;
     writing-mode: vertical-lr;
     top: -300px;
     left: 5%;
@@ -42,16 +48,22 @@ main mark h3{
 }
 
 #pickACity{
+    color: white;
     position: absolute;
     right: 35vw;
     top: 50vh;
     display: flex;
     align-items: center;
+    flex-direction: column;
 }
 
-#pickACity p{
-    font-size: 40px;
+#picbox p{
+    font-size: 15px;
     margin: 0;
+}
+
+#pickACity p:last-of-type{
+    /* font-size: 15px; */
 }
 
 #pickACity #pointer{
