@@ -111,7 +111,7 @@
             <a class="MyshowBtn" href="#MyshowPage">我的展覽</a> 
           </li>
           <li class="list-group-item bg-transparent">
-            <a class="MyItineraryBtn" href="MyItineraryPage">我的行程 </a>
+            <a class="MyItineraryBtn" href="#MyItineraryPage">我的行程 </a>
           </li>
         </ul>
         <br>
@@ -137,7 +137,9 @@
     $(".MyshowBtn").click(function(){
         $('#mainPage').load('MemberPage/mainPage/MyshowPage.html');
     });
+    
     $(".MyItineraryBtn").click(function(){
-        // $('#mainPage').load('ManagerPage/ShowCustomList.html');
+        $('#mainPage').load('MemberPage/mainPage/MyItineraryPage.html');
     });
+
 </script>

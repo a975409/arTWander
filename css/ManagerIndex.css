@@ -263,3 +263,12 @@ select{
     background-color: rgb(256, 256, 256, 1);
 }
 
+/* MyItineraryPage */
+.showCityBorder{
+    border: 1px solid #ced4da;
+}
+
+/* showSort icon */
+.showSort i{
+    font-size: 15px;
+}
