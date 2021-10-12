@@ -248,7 +248,7 @@ select{
 }
 
 /* MemberPage */
-#MyshowDeleteIcon{
+.MyshowDeleteIcon{
     display: flex;
     position:absolute;
     z-index: 2;
@@ -259,9 +259,11 @@ select{
     color: rgb(36, 36, 36);
 }
 
-#MyshowDeleteIcon:hover{
+.MyshowDeleteIcon:hover{
     background-color: rgb(256, 256, 256, 1);
 }
+
+
 
 /* MyItineraryPage */
 .showCityBorder{
@@ -271,4 +273,25 @@ select{
 /* showSort icon */
 .showSort i{
     font-size: 15px;
+}
+
+
+.mySubscriptionDeleteIcon{
+    display: flex;
+    position:absolute;
+    z-index: 2;
+    top: 5px;
+    right: 35px;
+    padding: 1px 3px;
+    background-color: rgb(256, 256, 256, 0.7);
+    color: rgb(36, 36, 36);
+}
+
+@media screen and (max-width: 768px){
+    .mySubscriptionDeleteIcon{
+        display: flex;
+        position:absolute;
+        top: 0px;
+        right: 0px;
+    }
 }
