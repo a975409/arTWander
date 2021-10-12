@@ -1,0 +1,75 @@
+﻿@model arTWander.Models.IndexViewModel
+@{
+    ViewBag.Title = "Manage your account";
+}
+
+<h2>@ViewBag.Title.</h2>
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="row">
+    <div class="col-md-8">
+        <p>
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("變更密碼", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("建立", "SetPassword")
+            }
+        </p>
+        @*<p>
+                Phone Number: @(Model.PhoneNumber ?? "None") [
+                @if (Model.PhoneNumber != null)
+                {
+                    @Html.ActionLink("Change", "AddPhoneNumber")
+                    @: &nbsp;|&nbsp;
+                    @Html.ActionLink("Remove", "RemovePhoneNumber")
+                }
+                else
+                {
+                    @Html.ActionLink("Add", "AddPhoneNumber")
+                }
+                ]
+            </p>*@
+        @*<p>
+                External Logins: @Model.Logins.Count
+                @Html.ActionLink("[Manage]", "ManageLogins")
+            </p>*@
+        <div id="TwoFactor">
+            @Html.Partial("_IsTwoFactor", Model)
+        </div>
+
+        <div id="Browser">
+            @Html.Partial("_IsRememberBrowser", Model)
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $("#Browser").on("submit", "#IsRememberBrowser", function (event) {
+            event.preventDefault();
+            $.ajax({
+                method: 'post',
+                url: $(this).attr("action"),
+                data: '@Model',
+                success: function (data) {
+                    $("#Browser").html(data);
+                }
+            });
+        });
+
+        $('#TwoFactor').on('submit', '#IsEnableTFA', function (event) {
+            event.preventDefault();
+            $.ajax({
+                method: 'post',
+                url: $(this).attr('action'),
+                data: '@Model',
+                success: function (data) {
+                    $('#TwoFactor').html(data);
+                }
+            })
+        })
+    </script>
+}

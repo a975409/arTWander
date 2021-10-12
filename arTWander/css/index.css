@@ -1,0 +1,98 @@
+body {
+    position: relative;
+}
+
+.bg-gray {
+    background-color: rgb(196, 196, 196);
+}
+
+/* header starts*/
+
+i {
+    font-size: 25px;
+    color: rgb(0, 0, 0);
+}
+
+#avatarNav {
+    width: 25px;
+    height: auto;
+}
+
+/* header end */
+/* navbar starts */
+
+nav a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    transition: all .3s ease-in-out;
+}
+
+nav a:hover {
+    text-decoration: none;
+    color: rgb(197, 126, 104);
+}
+
+#navbarFixed {
+    height: 60px;
+    background-color: white;
+}
+
+.navbarFixed_Slide {
+    /* height: 60px;
+    position: fixed;
+    top: -60px;
+    left: 0;
+    right: 0; */
+    top: -60px;
+}
+
+.navbarFixed_active {
+    top: 0px;
+    transition: all .3s ease;
+}
+/* navbar end */
+/* aside starts */
+
+#aside1Div {
+    width: 20%;
+}
+
+#aside1Div a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+}
+
+#aside1Div i {
+    font-size: 10px;
+}
+
+#asideAvatar {
+    /*
+        width: 200px;
+        height: 200px;
+    */
+    border-radius: 50%;
+}
+
+#buttonSearch:active {
+    transform: scale(1.2);
+}
+
+.list-group-flush>.list-group-item {
+    border-width: 0 0 0;
+}
+
+select {
+    width: 105px;
+}
+
+.aside_active {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    z-index: 1001;
+    transition: all .3s ease;
+}
+
+/* aside end */
+
