@@ -35,18 +35,9 @@
             </td>
         </tr>
     }
-    <tr>
-        <td>
-            <form method="post" action="/UsersAdmin/SendEmail" id="SendEmail">
-                @Html.AntiForgeryToken()
-                <input id="Id" type="hidden" name="Id" value="@Model.Id" />
-                <input id="Submit1" type="submit" value="發送驗證信" />
-            </form>
-            <div id="divConfirm"></div>
-        </td>
-    </tr>
 </table>
 <p>
+    @Html.ActionLink("發送驗證信", "SendEmail", new { id = Model.Id }) |
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
