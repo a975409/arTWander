@@ -8,7 +8,7 @@ namespace arTWander.Models
     {
         public int Id { get; set; }
         [Required(AllowEmptyStrings = false)]
-        [Display(Name = "RoleName")]
+        [Display(Name = "權限名稱")]
         public string Name { get; set; }
     }
 

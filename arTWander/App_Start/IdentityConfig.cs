@@ -118,7 +118,7 @@ namespace arTWander.Models
             // 將您的電子郵件服務外掛到這裡以傳送電子郵件。
             var apiKey = "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";
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("a975409@gmail.com", "arTWander");
+            var from = new EmailAddress("admin@artwander.art", "arTWander");
             var subject = "Sending with SendGrid is Fun";
             var to = new EmailAddress(message.Destination, "Example User");
             var plainTextContent = "請按一下此連結確認您的帳戶";
@@ -153,8 +153,8 @@ namespace arTWander.Models
         public static void InitializeIdentityForEF(ApplicationDbContext db) {
             var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
-            const string name = "admin@example.com";
-            const string password = "Admin@123456";
+            const string name = "a975409@gmail.com";
+            const string password = "@Acs856745";
             const string roleName = "Admin";
 
             //Create Role Admin if it does not exist

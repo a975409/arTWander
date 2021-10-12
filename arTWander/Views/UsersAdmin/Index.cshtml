@@ -5,7 +5,6 @@
 }
 
 <h2>Index</h2>
-
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -28,9 +27,18 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+
+                <form action="/UsersAdmin/Delete" method="post">
+                    @Html.AntiForgeryToken()
+                    @* @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                    <input id="id" type="hidden" name="id" value="@item.Id" />
+                    <input id="Submit1" type="submit" value="Delete" />
+                </form>
             </td>
         </tr>
     }
 
 </table>
+@section scripts{
+
+}

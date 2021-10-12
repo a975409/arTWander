@@ -17,59 +17,59 @@
                 @Html.ActionLink("建立", "SetPassword")
             }
         </p>
-        <p>
-            Phone Number: @(Model.PhoneNumber ?? "None") [
-            @if (Model.PhoneNumber != null)
-            {
-                @Html.ActionLink("Change", "AddPhoneNumber")
-                @: &nbsp;|&nbsp;
-                @Html.ActionLink("Remove", "RemovePhoneNumber")
-            }
-            else
-            {
-                @Html.ActionLink("Add", "AddPhoneNumber")
-            }
-            ]
-        </p>
-        <p>
-            External Logins: @Model.Logins.Count
-            @Html.ActionLink("[Manage]", "ManageLogins")
-        </p>
-        @if (Model.TwoFactor)
-        {
-            <form method="post" action="/Manage/DisableTFA">
-                <p>
-                    Two factor is currently enabled:
-                    <input type="submit" value="Disable" class="btn btn-default"/>
-                </p>
-            </form>
-        }
-        else
-        {
-            <form method="post" action="/Manage/EnableTFA">
-                <p>
-                    Two factor is currently disabled:
-                    <input type="submit" value="Enable" class="btn btn-default"/>
-                </p>
-            </form>
-        }
-        @if (Model.BrowserRemembered)
-        {
-            <form method="post" action="/Manage/ForgetBrowser">
-                <p>
-                    Browser is curently remembered for two factor:
-                    <input type="submit" value="Forget Browser" class="btn btn-default" />
-                </p>
-            </form>
-        }
-        else
-        {
-            <form method="post" action="/Manage/RememberBrowser">
-                <p>
-                    Browser is curently not remembered for two factor:
-                    <input type="submit" value="Remember Browser" class="btn btn-default"/>
-                </p>
-            </form>
-        }
+        @*<p>
+                Phone Number: @(Model.PhoneNumber ?? "None") [
+                @if (Model.PhoneNumber != null)
+                {
+                    @Html.ActionLink("Change", "AddPhoneNumber")
+                    @: &nbsp;|&nbsp;
+                    @Html.ActionLink("Remove", "RemovePhoneNumber")
+                }
+                else
+                {
+                    @Html.ActionLink("Add", "AddPhoneNumber")
+                }
+                ]
+            </p>*@
+        @*<p>
+                External Logins: @Model.Logins.Count
+                @Html.ActionLink("[Manage]", "ManageLogins")
+            </p>*@
+        <div id="TwoFactor">
+            @Html.Partial("_IsTwoFactor", Model)
+        </div>
+
+        <div id="Browser">
+            @Html.Partial("_IsRememberBrowser", Model)
+        </div>
     </div>
 </div>
+
+@section scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $("#Browser").on("submit", "#IsRememberBrowser", function (event) {
+            event.preventDefault();
+            $.ajax({
+                method: 'post',
+                url: $(this).attr("action"),
+                data: '@Model',
+                success: function (data) {
+                    $("#Browser").html(data);
+                }
+            });
+        });
+
+        $('#TwoFactor').on('submit', '#IsEnableTFA', function (event) {
+            event.preventDefault();
+            $.ajax({
+                method: 'post',
+                url: $(this).attr('action'),
+                data: '@Model',
+                success: function (data) {
+                    $('#TwoFactor').html(data);
+                }
+            })
+        })
+    </script>
+}

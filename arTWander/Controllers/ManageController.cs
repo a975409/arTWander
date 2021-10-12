@@ -125,26 +125,30 @@ namespace arTWander.Controllers
         //
         // POST: /Manage/RememberBrowser
         [HttpPost]
-        public ActionResult RememberBrowser()
+        public ActionResult RememberBrowser(IndexViewModel model)
         {
             var rememberBrowserIdentity = AuthenticationManager.CreateTwoFactorRememberBrowserIdentity(User.Identity.GetUserId<int>().ToString());
             AuthenticationManager.SignIn(new AuthenticationProperties { IsPersistent = true }, rememberBrowserIdentity);
-            return RedirectToAction("Index", "Manage");
+            model.BrowserRemembered = true;
+            //return RedirectToAction("Index");
+            return PartialView("_IsRememberBrowser", model);
         }
 
         //
         // POST: /Manage/ForgetBrowser
         [HttpPost]
-        public ActionResult ForgetBrowser()
+        public ActionResult ForgetBrowser(IndexViewModel model)
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
-            return RedirectToAction("Index", "Manage");
+            model.BrowserRemembered = false;
+            //return RedirectToAction("Index");
+            return PartialView("_IsRememberBrowser", model);
         }
 
         //
         // POST: /Manage/EnableTFA
         [HttpPost]
-        public async Task<ActionResult> EnableTFA()
+        public async Task<ActionResult> EnableTFA(IndexViewModel model)
         {
             await UserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId<int>(), true);
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
@@ -152,13 +156,15 @@ namespace arTWander.Controllers
             {
                 await SignInAsync(user, isPersistent: false);
             }
-            return RedirectToAction("Index", "Manage");
+            model.TwoFactor = true;
+            //return RedirectToAction("Index", "Manage");
+            return PartialView("_IsTwoFactor", model);
         }
 
         //
         // POST: /Manage/DisableTFA
         [HttpPost]
-        public async Task<ActionResult> DisableTFA()
+        public async Task<ActionResult> DisableTFA(IndexViewModel model)
         {
             await UserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId<int>(), false);
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
@@ -166,7 +172,9 @@ namespace arTWander.Controllers
             {
                 await SignInAsync(user, isPersistent: false);
             }
-            return RedirectToAction("Index", "Manage");
+            model.TwoFactor = false;
+            return PartialView("_IsTwoFactor", model);
+            //return RedirectToAction("Index", "Manage");
         }
 
         //

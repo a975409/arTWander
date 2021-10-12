@@ -74,6 +74,19 @@ namespace arTWander.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SendEmail(int Id) 
+        {
+            var code = await UserManager.GenerateEmailConfirmationTokenAsync(Id);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = Id, code = code }, protocol: Request.Url.Scheme);
+
+            //寄mail到新註冊使用者的帳戶
+            await UserManager.SendEmailAsync(Id, "確認您的帳戶", "請按一下此連結確認您的帳戶 <a href=\"" + callbackUrl + "\">這裏</a>");
+
+            return Content("已發送驗證信");
+        }
+
         //
         // GET: /Users/Create
         public async Task<ActionResult> Create()
@@ -114,6 +127,12 @@ namespace arTWander.Controllers
                     return View();
 
                 }
+                var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+
+                //寄mail到新註冊使用者的帳戶
+                await UserManager.SendEmailAsync(user.Id, "確認您的帳戶", "請按一下此連結確認您的帳戶 <a href=\"" + callbackUrl + "\">這裏</a>");
+
                 return RedirectToAction("Index");
             }
             ViewBag.RoleId = new SelectList(RoleManager.Roles, "Name", "Name");
@@ -191,19 +210,19 @@ namespace arTWander.Controllers
 
         //
         // GET: /Users/Delete/5
-        public async Task<ActionResult> Delete(int id)
-        {
-            if (id > 0)
-            {
-                var user = await UserManager.FindByIdAsync(id);
-                if (user == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(user);
-            }
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        }
+        //public async Task<ActionResult> Delete(int id)
+        //{
+        //    if (id > 0)
+        //    {
+        //        var user = await UserManager.FindByIdAsync(id);
+        //        if (user == null)
+        //        {
+        //            return HttpNotFound();
+        //        }
+        //        return View(user);
+        //    }
+        //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //}
 
         //
         // POST: /Users/Delete/5

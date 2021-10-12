@@ -43,10 +43,18 @@ namespace arTWander.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            LoginViewModel model = new LoginViewModel();
+
             //讀取cookie裡面的帳號
+            HttpCookie cookie = Request.Cookies["Email"];
+            if (cookie != null && !string.IsNullOrEmpty(cookie.Value))
+            {
+                model.Email = cookie.Value;
+                model.RememberMe = true;
+            }
 
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            return View(model);
         }
 
         private ApplicationSignInManager _signInManager;
@@ -68,6 +76,23 @@ namespace arTWander.Controllers
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             //寫入帳號至cookie
+            HttpCookie cookie = Request.Cookies["Email"];
+
+            if (model.RememberMe)
+            {
+                if (cookie == null)
+                {
+                    cookie = new HttpCookie("Email");
+                    cookie.Value = model.Email;
+                    cookie.Expires = DateTime.Now.AddMonths(1);
+                    Response.Cookies.Add(cookie);
+                }
+                else
+                {
+                    cookie.Value = model.Email;
+                    Response.Cookies.Set(cookie);
+                }
+            }
 
             if (!ModelState.IsValid)
             {
@@ -317,6 +342,7 @@ namespace arTWander.Controllers
             {
                 var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
                 var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
+
                 return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl });
             }
             return View("Error");
