@@ -1,0 +1,142 @@
+
+
+<div id="aside1Div" class="d-md-block"> <!-- d-flex justify-content-center -->
+    <!-- 頭像starts -->
+    <figure class="d-flex justify-content-center"> 
+      <div id="asideAvatar" class="d-flex justify-content-center overflow-hidden ">
+        <img class="" src="../image/exhibiton/crenature_kv_tkg.jpg" alt="">
+      </div>
+    </figure>
+    <!-- 頭像end -->
+    <!-- 關鍵字查詢 starts -->
+    <div class="input-group input-group-sm w-100 my-4">
+      <input type="text" class="form-control rounded-pill" placeholder="查詢展覽" aria-label="search"
+        aria-describedby="buttonSearch">
+      <div class="input-group-prepend">
+        <button class="btn" type="button" id="buttonSearch"><i class="fa fa-search" aria-hidden="true"></i></button>
+      </div>
+    </div>
+    <!-- 關鍵字查詢 end -->
+    <!-- 條件查詢 starts -->
+    <ul class="list-group list-group-flush bg-transparent">
+        <!-- 地點 starts -->
+        <li class="list-group-item bg-transparent "> 地點
+          <hr>
+          <ul class="list-group list-group-flush bg-transparent">
+            <li class="list-group-item bg-transparent">
+              <a class="" data-toggle="collapse" href="#city" aria-expanded="false" aria-controls="city">
+                縣市
+                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+              </a>
+              <div class="collapse" id="city">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <a href="#">台北市 </a>
+                  </li>
+                  <li class="list-group-item">
+                    <a href="#">台中市 </a>
+                  </li>
+                  <li class="list-group-item">
+                    <a href="#">高雄市 </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="list-group-item bg-transparent">
+              <a class="" data-toggle="collapse" href="#town" aria-expanded="false" aria-controls="town">
+                鄉鎮
+                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+              </a>
+              <div class="collapse" id="town">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <a href="#">某區 </a>
+                  </li>
+                  <li class="list-group-item">
+                    <a href="#">某鄉 </a>
+                  </li>
+                  <li class="list-group-item">
+                    <a href="#">某鎮 </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <!-- 地點 end -->
+        <!-- 展覽期間 starts -->
+        <li class="list-group-item bg-transparent">展覽期間
+          <hr>
+          <!-- <ul class="list-group list-group-flush bg-transparent">
+                                <li class="list-group-item bg-transparent">
+                                    <p>開始時間</p>
+                                    <select>
+                                        <option value="2020/02/03">2020/02/03</option>
+                                        <option value="2021/09/03">2020/09/03</option>
+                                    </select>
+                                </li>
+                                <li class="list-group-item bg-transparent">
+                                    <p>結束時間</p>
+                                    <select name="endTime" id="endTime">
+                                        <option value="2020/02/03">2020/02/03</option>
+                                        <option value="2021/09/03">2020/09/03</option>
+                                    </select>
+                                </li>
+                            </ul> -->
+          <ul class="list-group list-group-flush bg-transparent">
+            <li class="list-group-item bg-transparent">
+              <div class="form-group">
+                <label for="startDate">開始時間</label>
+                <input type="date" class="form-control" id="startDate">
+              </div>
+            </li>
+            <li class="list-group-item bg-transparent">
+              <div class="form-group">
+                <label for="endDate">結束時間</label>
+                <input type="date" class="form-control" id="endDate">
+              </div>
+            </li>
+          </ul>
+        </li>
+        <!-- 展覽期間 end -->
+        <!-- 費用 starts -->
+        <li class="list-group-item bg-transparent">
+          <!-- <hr>
+                            <ul class="list-group  list-group-flush bg-transparent">
+                                <li class="list-group-item bg-transparent">
+                                    <p>是否收費</p>
+                                    <select>
+                                        <option value="true">是</option>
+                                        <option value="false">否</option>
+                                    </select>
+                                </li>
+                            </ul> -->
+
+          <div class="form-group">
+            <label for="cost">費用</label>
+            <select class="form-control" id="cost">
+              <option value="true">是</option>
+              <option value="false">否</option>
+            </select>
+          </div>
+
+        </li>
+        <!-- 費用 end -->
+        <!-- 按鈕 starts -->
+        <button type="button" class="btn my-2 bg-gray">清除篩選</button>
+        <button type="button" class="btn my-2 bg-gray">搜尋展覽</button>
+        <!-- 按鈕 end -->
+    </ul>
+      <!-- 條件查詢 end -->
+</div>
+
+
+<script>
+
+    $(".userListBtn").click(function(){
+        // $('#mainPage').load('ManagerPage/UserList.html');
+    });
+    $(".showCustomerListBtn").click(function(){
+        // $('#mainPage').load('ManagerPage/ShowCustomList.html');
+    });
+</script>
