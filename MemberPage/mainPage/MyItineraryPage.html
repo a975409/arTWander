@@ -1,14 +1,22 @@
+<!-- breadcrumb starts -->
+<nav id="cmnPage_BreadCrumb" class="col-12 mb-3 px-0" aria-label="breadcrumb">
+    <ol class="breadcrumb bg-light">
+        <li class="breadcrumb-item"><a href="#">我的行程</a></li>
+    </ol>
+</nav>
+<!-- breadcrumb ends -->
+
 
 <div>
-    <p class="col-6 col-md-4 px-0 my-auto itineraryIcon" >請選擇您的看展時段</p>
+    <p class="col-6 col-md-4 my-auto itineraryIcon" >請選擇您的看展時段</p>
     <br>
 </div>
 
 <!-- 區域選擇 -->
 <div class="container mb-3">
-    <div class="d-flex my-auto px-0">
+    <div class="d-flex my-auto">
         <div class="row w-100 justify-content-start">
-            <label for="startDate" class="col-6 col-lg-2 my-auto pl-0">出發日期 </label>
+            <label for="startDate" class="col-6 col-lg-2 my-auto">出發日期 </label>
                     <input type="date" class="form-control col-6 col-lg-4" id="startDate"> 
         </div>
     </div>
@@ -16,11 +24,11 @@
 <!-- 時間選擇 -->
 <div class="container mb-3">
     <div class="row my-3">
-        <div class="col-12 col-md-6 mx-0">
-            <div class="d-flex my-auto px-0">
+        <div class="col-12 col-md-6 ">
+            <div class="d-flex my-auto">
                 <div class="row w-100 justify-content-start">
-                    <label for="startDate" class="col-12 my-auto pl-0">開始時間 </label>
-                    <select class="form-control ml-1 col-12" id="informStatus" multiple size="5">
+                    <label for="startDate" class="col-12 my-auto ">開始時間 </label>
+                    <select class="form-control col-12 mx-3" id="informStatus" multiple size="5">
                     <option value="" selected disabled hidden>請選擇開始時間</option>
                     <option value="1">08:00</option>
                     <option value="2">09:00</option>
@@ -41,10 +49,10 @@
             </div>
         </div>
         <div class="col-12 col-md-6">
-            <div class="d-flex my-auto px-0">
+            <div class="d-flex my-auto">
                 <div class="row w-100 justify-content-start">
-                    <label for="startDate" class="col-12 my-auto pl-0">結束時間 </label>
-                    <select class="form-control ml-1 col-12" id="informStatus" multiple size="5">
+                    <label for="startDate" class="col-12 my-auto">結束時間 </label>
+                    <select class="form-control mx-3 col-12" id="informStatus" multiple size="5">
                         <option value="" selected disabled hidden>請選擇結束時間</option>
                         <option value="1">08:00</option>
                         <option value="2">09:00</option>
@@ -70,11 +78,11 @@
 <!-- 主畫面資料導入 -->
 <div class="container px-0 mt-5">
     <div>
-        <p class="col-6 col-md-4 px-0 my-auto itineraryIcon" >請選擇您打算觀看展覽</p>
+        <p class="col-6 col-md-4 my-auto itineraryIcon" >請選擇您打算觀看展覽</p>
     </div>
     <!-- 選擇打算參加展覽導入 -->
     <!-- 顯示訂單內縣市展演 start -->
-    <div class="showJoin col-12 px-0 mt-3"> 
+    <div class="showJoin col-12 mt-3"> 
         <!-- 顯示訂單內縣市展演 start -->
         <label for="showCity" class="col-12 my-auto pl-0">台北市 </label>
         <div class="showCityBorder py-0">
@@ -104,9 +112,9 @@
     </div>
     <!-- 顯示訂單內縣市展演 end -->
     <!-- 顯示訂單內縣市展演 start -->
-    <div class="showJoin col-12 px-0 mt-3"> 
+    <div class="showJoin col-12 mt-3"> 
         <!-- 顯示訂單內縣市展演 start -->
-        <label for="showCity" class="col-12 my-auto pl-0">台北市 </label>
+        <label for="showCity" class="col-12 my-auto ">台北市 </label>
         <div class="showCityBorder py-0">
             <table class="table table-borderless my-auto" >
                 <tbody>
@@ -140,10 +148,10 @@
     <!-- 本次行程排序 -->
     <div class="showSort col-12 px-0 mt-5" >
         <div>
-            <p class="col-6 col-md-4 px-0 my-auto itineraryIcon" >請為本次行程排序</p>
+            <p class="col-6 col-md-4 my-auto itineraryIcon" >請為本次行程排序</p>
         </div>
         <!-- 顯示訂單內縣市展演 start -->
-    <div class="showJoin col-12 px-0 mt-3"> 
+    <div class="showJoin col-12 mt-3"> 
         <!-- 顯示訂單內縣市展演 start -->
         <div class="showCityBorder py-0">
             <table class="table table-borderless my-auto" >
@@ -180,7 +188,7 @@
     <!-- 顯示訂單內縣市展演 end -->
     
     <!-- 輸入出發地點 start-->
-    <div class="startPosition col-12 px-0 mt-5">
+    <div class="startPosition col-12 mt-5">
         <div>
             <p class="col-6 col-md-4 px-0 my-auto" >請輸入您的出發位置</p>
         </div>
@@ -193,9 +201,9 @@
     <!-- 輸入出發地點 end-->
 
     <!-- 地圖建議路線 start-->
-    <div class="startPosition col-12 px-0 mt-5">
+    <div class="startPosition col-12 my-5">
         <div>
-            <p class="col-6 col-md-4 px-0 my-auto mt-3" >建議路線</p>
+            <p class="col-6 col-md-4 px-0 my-auto" >建議路線</p>
         </div>
         
         <!-- 導入地圖api -->

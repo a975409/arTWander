@@ -121,7 +121,7 @@
         <hr>
         <ul class="list-group list-group-flush ">
           <li class="list-group-item bg-transparent">
-            <a href="">訂閱單位</a> 
+            <a class="MySubscriptionBtn" href="#MySubscriptionPage">訂閱單位</a> 
           </li>
         </ul>
         <br>
@@ -140,6 +140,10 @@
     
     $(".MyItineraryBtn").click(function(){
         $('#mainPage').load('MemberPage/mainPage/MyItineraryPage.html');
+    });
+
+    $(".MySubscriptionBtn").click(function(){
+        $('#mainPage').load('MemberPage/mainPage/MySubscription.html');
     });
 
 </script>
