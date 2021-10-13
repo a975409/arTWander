@@ -12,12 +12,12 @@ namespace arTWander.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ShowPage()
         {
-            PageToTodays = new HashSet<PageToTodays>();
-            PageViewCount = new HashSet<PageViewCount>();
-            Reports = new HashSet<Reports>();
-            ShowComment = new HashSet<ShowComment>();
-            ApplicationUser = new HashSet<ApplicationUser>();
-            Keywords = new HashSet<Keywords>();
+            PageToTodaysList = new HashSet<PageToTodays>();
+            PageViewCounts = new HashSet<PageViewCount>();
+            ReportsList = new HashSet<Reports>();
+            ShowComments = new HashSet<ShowComment>();
+            ApplicationUsers = new HashSet<ApplicationUser>();
+            KeywordsList = new HashSet<Keywords>();
         }
 
         public int Id { get; set; }
@@ -77,23 +77,23 @@ namespace arTWander.Models
         public virtual District District { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PageToTodays> PageToTodays { get; set; }
+        public virtual ICollection<PageToTodays> PageToTodaysList { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PageViewCount> PageViewCount { get; set; }
+        public virtual ICollection<PageViewCount> PageViewCounts { get; set; }
 
         public virtual Posts Posts { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Reports> Reports { get; set; }
+        public virtual ICollection<Reports> ReportsList { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ShowComment> ShowComment { get; set; }
+        public virtual ICollection<ShowComment> ShowComments { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ApplicationUser> ApplicationUser { get; set; }
+        public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Keywords> Keywords { get; set; }
+        public virtual ICollection<Keywords> KeywordsList { get; set; }
     }
 }

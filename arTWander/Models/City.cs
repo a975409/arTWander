@@ -12,9 +12,9 @@ namespace arTWander.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public City()
         {
-            Company = new HashSet<Company>();
-            District = new HashSet<District>();
-            ShowPage = new HashSet<ShowPage>();
+            Companies = new HashSet<Company>();
+            Districts = new HashSet<District>();
+            ShowPages = new HashSet<ShowPage>();
         }
 
         public int Id { get; set; }
@@ -23,12 +23,12 @@ namespace arTWander.Models
         public string CityName { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Company> Company { get; set; }
+        public virtual ICollection<Company> Companies { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<District> District { get; set; }
+        public virtual ICollection<District> Districts { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ShowPage> ShowPage { get; set; }
+        public virtual ICollection<ShowPage> ShowPages { get; set; }
     }
 }

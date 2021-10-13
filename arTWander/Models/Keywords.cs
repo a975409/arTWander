@@ -11,7 +11,7 @@ namespace arTWander.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Keywords()
         {
-            ShowPage = new HashSet<ShowPage>();
+            ShowPages = new HashSet<ShowPage>();
         }
 
         public int Id { get; set; }
@@ -21,6 +21,6 @@ namespace arTWander.Models
         public string Name { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ShowPage> ShowPage { get; set; }
+        public virtual ICollection<ShowPage> ShowPages { get; set; }
     }
 }
