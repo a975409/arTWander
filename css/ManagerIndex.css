@@ -341,3 +341,19 @@ select{
     /* font-weight: bold; */
     color: rgb(0, 0, 0);
 }
+
+
+/* mySubscription detail page */
+.showDetailInform{
+    background-color: rgb(196, 196, 196);
+}
+
+/*右側各星號評論百分比*/
+.progress {
+    height: 16px;
+  }
+  
+  .progress>span {
+    line-height: 16px;
+    font-size: 16px;
+  }
