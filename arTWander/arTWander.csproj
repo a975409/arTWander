@@ -343,16 +343,45 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110131250065_InsertDBSet.cs" />
+    <Compile Include="Migrations\202110131250065_InsertDBSet.designer.cs">
+      <DependentUpon>202110131250065_InsertDBSet.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
+    <Compile Include="Models\BlackList.cs" />
+    <Compile Include="Models\City.cs" />
+    <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\CompanyLink.cs" />
+    <Compile Include="Models\District.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Keywords.cs" />
+    <Compile Include="Models\LogingLog.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PageToTodays.cs" />
+    <Compile Include="Models\PageViewCount.cs" />
+    <Compile Include="Models\PostComment.cs" />
+    <Compile Include="Models\PostLike.cs" />
+    <Compile Include="Models\Posts.cs" />
+    <Compile Include="Models\PostsPic.cs" />
+    <Compile Include="Models\Reports.cs" />
+    <Compile Include="Models\ResponseComment.cs" />
+    <Compile Include="Models\ResponseCommentLike.cs" />
+    <Compile Include="Models\ResponseShowComment.cs" />
+    <Compile Include="Models\ShowComment.cs" />
+    <Compile Include="Models\ShowPage.cs" />
+    <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202110131250065_InsertDBSet.resx">
+      <DependentUpon>202110131250065_InsertDBSet.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

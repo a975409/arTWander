@@ -156,8 +156,8 @@ namespace arTWander.Models
             const string name = "a975409@gmail.com";
             const string password = "@Acs856745";
             const string roleName = "Admin";
-
-            //Create Role Admin if it does not exist
+            
+            //新增Admin權限
             var role = roleManager.FindByName(roleName);
             if (role == null) {
                 role = new ApplicationRole(roleName);
@@ -165,13 +165,15 @@ namespace arTWander.Models
             }
 
             var user = userManager.FindByName(name);
+
+            //新增使用者
             if (user == null) {
                 user = new ApplicationUser { UserName = name, Email = name };
                 var result = userManager.Create(user, password);
                 result = userManager.SetLockoutEnabled(user.Id, false);
             }
 
-            // Add user admin to Role Admin if not already added
+            //將User加入至Admin權限群組
             var rolesForUser = userManager.GetRoles(user.Id);
             if (!rolesForUser.Contains(role.Name)) {
                 var result = userManager.AddToRole(user.Id, role.Name);
