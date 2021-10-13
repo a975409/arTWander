@@ -1,8 +1,12 @@
+body{
+    background-color: rgb(54, 50, 50);
+}
+
 main{
     position: relative;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
-    background-color: rgb(54, 50, 50);
+    /* background-color: rgb(54, 50, 50); */
 }
 
 #TWmap{
@@ -18,13 +22,19 @@ main{
     /* animation-delay: 1s; */
 }
 
-main h4,main h3{
+main h4,main h3,main>p{
     position: absolute;
     background-color: transparent;
-    
     margin: 0;
     color: rgb(178, 185, 185);
 }
+
+main>p{
+    right: 10%;
+    top: 60px;
+}
+
+
 
 main h4{
     /* arTWander */
@@ -43,36 +53,86 @@ main h3{
     top: -300px;
     left: 5%;
     animation-name: bottomFadeIn;
-    animation-duration: 1.5s;
+    animation-duration: 1s;
     animation-fill-mode: forwards;
 }
 
 #pickACity{
     color: white;
     position: absolute;
-    right: 35vw;
+    right: 50vw;
     top: 50vh;
     display: flex;
     align-items: center;
     flex-direction: column;
+    opacity: 0;
+    animation-name: popOut;
+    animation-duration: 1s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+}
+
+#picbox{
+    width: 400px;
 }
 
 #picbox p{
-    font-size: 15px;
+    font-size: 20px;
     margin: 0;
 }
 
 #pickACity p:last-of-type{
-    /* font-size: 15px; */
+    font-size: 15px;
 }
 
 #pickACity #pointer{
     width: 20px;
     height: 20px;
-    background-color: rgb(0, 255, 170);
     border-radius: 50%;
-    filter: drop-shadow(0px 0px 15px rgb(0, 255, 170));
     margin: 0 20px;
+    animation-name: light;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+}
+
+footer{
+    width: 100%;
+    /* height: 100vh; */
+    background-color: rgb(54, 50, 50);
+    margin-bottom: 300px;
+}
+
+footer .row{
+    margin-top: 200px;
+}
+
+.descCard{
+    width: 100%;
+    height: 250px;
+    background-color: blueviolet;
+}
+
+.descCard p{
+    color: white;
+}
+
+#card1{
+    right: 150px;
+    top: 250px;
+    z-index: 1000;
+}
+
+#card2{
+    left: 150px;
+    top: 250px;
+    z-index: 1001;
+}
+
+#infobox{
+    width: 100%;
+    height: 400px;
+    background-color: azure;
+
 }
 
 /* 動畫 starts */
@@ -84,7 +144,7 @@ main h3{
 
     to{
         opacity: 1;
-        left: 10%;
+        left: 5%;
     }
 }
 
@@ -95,19 +155,45 @@ main h3{
     }
     to{
         opacity: 1;
-        top: 60px;
+        top: 450px;
     }
 }
 
 @keyframes scale{
     from{
         filter: blur(50px);
-        transform: scale(0);
+        transform: scale(20);
         opacity: 0;
     }
     to{
         filter: blur(0);
         transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes light{
+    from{
+        opacity: 1;
+        filter: drop-shadow(0px 0px 15px rgb(0, 255, 170));
+        border: 2px solid rgb(0, 255, 170);
+        width: 20px;
+        height: 20px;
+    }
+    
+    to{
+        opacity: 0;
+        border: 2px solid rgb(0, 255, 170);
+        width: 0px;
+        height: 0px;
+    }
+}
+
+@keyframes popOut{
+    from{
+        opacity: 0;
+    }
+    to{
         opacity: 1;
     }
 }
