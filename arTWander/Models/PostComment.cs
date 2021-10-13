@@ -12,8 +12,8 @@ namespace arTWander.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PostComment()
         {
-            ResponseComment = new HashSet<ResponseComment>();
-            ResponseCommentLike = new HashSet<ResponseCommentLike>();
+            ResponseComments = new HashSet<ResponseComment>();
+            ResponseCommentLikes = new HashSet<ResponseCommentLike>();
         }
 
         public int Id { get; set; }
@@ -31,9 +31,9 @@ namespace arTWander.Models
         public virtual Posts Posts { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ResponseComment> ResponseComment { get; set; }
+        public virtual ICollection<ResponseComment> ResponseComments { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ResponseCommentLike> ResponseCommentLike { get; set; }
+        public virtual ICollection<ResponseCommentLike> ResponseCommentLikes { get; set; }
     }
 }

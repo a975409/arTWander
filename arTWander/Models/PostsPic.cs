@@ -12,7 +12,7 @@ namespace arTWander.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PostsPic()
         {
-            Posts = new HashSet<Posts>();
+            PostsList = new HashSet<Posts>();
         }
 
         public int Id { get; set; }
@@ -22,6 +22,6 @@ namespace arTWander.Models
         public string fileName { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Posts> Posts { get; set; }
+        public virtual ICollection<Posts> PostsList { get; set; }
     }
 }

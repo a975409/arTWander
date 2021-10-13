@@ -64,51 +64,51 @@ namespace arTWander.Models
         //建立與Posts一對多的關聯，Posts是額外建立的Model
         //public ICollection<Posts> Posts { get; set; }
 
-        [Required]
-        [StringLength(255)]
+        //[Required]
+        //[StringLength(255)]
         public string AccountAddress { get; set; }
 
-        [Required]
-        [StringLength(30)]
+        //[Required]
+        //[StringLength(30)]
         public string Avatar { get; set; }
 
         public DateTime? Birthday { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BlackList> BlackList { get; set; }
+        public virtual ICollection<BlackList> BlackLists { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Company> Company { get; set; }
+        public virtual ICollection<Company> Companies { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LogingLog> LogingLog { get; set; }
+        public virtual ICollection<LogingLog> LogingLogs { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PostComment> PostComment { get; set; }
+        public virtual ICollection<PostComment> PostComments { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PostLike> PostLike { get; set; }
+        public virtual ICollection<PostLike> PostLikes { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Reports> Reports { get; set; }
+        public virtual ICollection<Reports> ReportsList { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ResponseComment> ResponseComment { get; set; }
+        public virtual ICollection<ResponseComment> ResponseComments { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ResponseCommentLike> ResponseCommentLike { get; set; }
+        public virtual ICollection<ResponseCommentLike> ResponseCommentLikes { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ResponseShowComment> ResponseShowComment { get; set; }
+        public virtual ICollection<ResponseShowComment> ResponseShowComments { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ShowComment> ShowComment { get; set; }
+        public virtual ICollection<ShowComment> ShowComments { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ShowPage> ShowPage { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Company> CompanySub { get; set; }
+        public virtual ICollection<Company> CompanySubs { get; set; }
     }
 
     //=========================Model資料表===============================
@@ -165,121 +165,121 @@ namespace arTWander.Models
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<ApplicationUser>()
-                .HasMany(e => e.BlackList)
+                .HasMany(e => e.BlackLists)
                 .WithRequired(e => e.ApplicationUser)
                 .HasForeignKey(e => e.FK_ApplicationUser)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ApplicationUser>()
-                .HasMany(e => e.Company)
+                .HasMany(e => e.Companies)
                 .WithRequired(e => e.ApplicationUser)
                 .HasForeignKey(e => e.FK_ApplicationUser)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ApplicationUser>()
-                .HasMany(e => e.LogingLog)
+                .HasMany(e => e.LogingLogs)
                 .WithOptional(e => e.ApplicationUser)
                 .HasForeignKey(e => e.FK_ApplicationUser);
 
             modelBuilder.Entity<ApplicationUser>()
-                .HasMany(e => e.PostComment)
+                .HasMany(e => e.PostComments)
                 .WithRequired(e => e.ApplicationUser)
                 .HasForeignKey(e => e.FK_ApplicationUser)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ApplicationUser>()
-                .HasMany(e => e.PostLike)
+                .HasMany(e => e.PostLikes)
                 .WithRequired(e => e.ApplicationUser)
                 .HasForeignKey(e => e.FK_ApplicationUser)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ApplicationUser>()
-                .HasMany(e => e.Reports)
+                .HasMany(e => e.ReportsList)
                 .WithOptional(e => e.ApplicationUser)
                 .HasForeignKey(e => e.FK_ApplicationUser);
 
             modelBuilder.Entity<ApplicationUser>()
-                .HasMany(e => e.ResponseComment)
+                .HasMany(e => e.ResponseComments)
                 .WithRequired(e => e.ApplicationUser)
                 .HasForeignKey(e => e.FK_ApplicationUser)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ApplicationUser>()
-                .HasMany(e => e.ResponseCommentLike)
+                .HasMany(e => e.ResponseCommentLikes)
                 .WithRequired(e => e.ApplicationUser)
                 .HasForeignKey(e => e.FK_ApplicationUser)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ApplicationUser>()
-                .HasMany(e => e.ResponseShowComment)
+                .HasMany(e => e.ResponseShowComments)
                 .WithRequired(e => e.ApplicationUser)
                 .HasForeignKey(e => e.FK_ApplicationUser)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ApplicationUser>()
-                .HasMany(e => e.ShowComment)
+                .HasMany(e => e.ShowComments)
                 .WithRequired(e => e.ApplicationUser)
                 .HasForeignKey(e => e.FK_ApplicationUser)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(e => e.ShowPage)
-                .WithMany(e => e.ApplicationUser)
+                .WithMany(e => e.ApplicationUsers)
                 .Map(m => m.ToTable("MyShow"));
 
             modelBuilder.Entity<ApplicationUser>()
-                .HasMany(e => e.CompanySub)
-                .WithMany(e => e.ApplicationUserSub)
+                .HasMany(e => e.CompanySubs)
+                .WithMany(e => e.ApplicationUserSubs)
                 .Map(m => m.ToTable("Subscription").MapLeftKey("AccountUserSub_Id").MapRightKey("CompanySub_Id"));
 
             modelBuilder.Entity<City>()
-                .HasMany(e => e.Company)
+                .HasMany(e => e.Companies)
                 .WithRequired(e => e.City)
                 .HasForeignKey(e => e.FK_City)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<City>()
-                .HasMany(e => e.District)
+                .HasMany(e => e.Districts)
                 .WithRequired(e => e.City)
                 .HasForeignKey(e => e.FK_City)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<City>()
-                .HasMany(e => e.ShowPage)
+                .HasMany(e => e.ShowPages)
                 .WithRequired(e => e.City)
                 .HasForeignKey(e => e.FK_City)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Company>()
-                .HasMany(e => e.CompanyLink)
+                .HasMany(e => e.CompanyLinks)
                 .WithRequired(e => e.Company)
                 .HasForeignKey(e => e.FK_Company)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Company>()
-                .HasMany(e => e.PageViewCount)
+                .HasMany(e => e.PageViewCounts)
                 .WithOptional(e => e.Company)
                 .HasForeignKey(e => e.FK_Company);
 
             modelBuilder.Entity<Company>()
-                .HasMany(e => e.Posts)
+                .HasMany(e => e.PostsList)
                 .WithRequired(e => e.Company)
                 .HasForeignKey(e => e.FK_Company)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Company>()
-                .HasMany(e => e.Reports)
+                .HasMany(e => e.ReportsList)
                 .WithOptional(e => e.Company)
                 .HasForeignKey(e => e.FK_Company);
 
             modelBuilder.Entity<Company>()
-                .HasMany(e => e.ResponseShowComment)
+                .HasMany(e => e.ResponseShowComments)
                 .WithRequired(e => e.Company)
                 .HasForeignKey(e => e.FK_Company)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Company>()
-                .HasMany(e => e.ShowPage)
+                .HasMany(e => e.ShowPages)
                 .WithRequired(e => e.Company)
                 .HasForeignKey(e => e.FK_Company)
                 .WillCascadeOnDelete(false);
@@ -291,79 +291,79 @@ namespace arTWander.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Keywords>()
-                .HasMany(e => e.ShowPage)
-                .WithMany(e => e.Keywords)
+                .HasMany(e => e.ShowPages)
+                .WithMany(e => e.KeywordsList)
                 .Map(m => m.ToTable("PageToKeyword"));
 
             modelBuilder.Entity<PostComment>()
-                .HasMany(e => e.ResponseComment)
+                .HasMany(e => e.ResponseComments)
                 .WithRequired(e => e.PostComment)
                 .HasForeignKey(e => e.FK_ResponsePost)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<PostComment>()
-                .HasMany(e => e.ResponseCommentLike)
+                .HasMany(e => e.ResponseCommentLikes)
                 .WithRequired(e => e.PostComment)
                 .HasForeignKey(e => e.FK_ResponsePost)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Posts>()
-                .HasMany(e => e.PageViewCount)
+                .HasMany(e => e.PageViewCounts)
                 .WithOptional(e => e.Posts)
                 .HasForeignKey(e => e.FK_Posts);
 
             modelBuilder.Entity<Posts>()
-                .HasMany(e => e.PostComment)
+                .HasMany(e => e.PostComments)
                 .WithRequired(e => e.Posts)
                 .HasForeignKey(e => e.FK_Posts)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Posts>()
-                .HasMany(e => e.PostLike)
+                .HasMany(e => e.PostLikes)
                 .WithRequired(e => e.Posts)
                 .HasForeignKey(e => e.FK_Posts)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Posts>()
-                .HasMany(e => e.ShowPage)
+                .HasMany(e => e.ShowPages)
                 .WithRequired(e => e.Posts)
                 .HasForeignKey(e => e.FK_Post)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<PostsPic>()
-                .HasMany(e => e.Posts)
+                .HasMany(e => e.PostsList)
                 .WithRequired(e => e.PostsPic)
                 .HasForeignKey(e => e.FK_PostPic)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ResponseShowComment>()
-                .HasMany(e => e.Reports)
+                .HasMany(e => e.ReportsList)
                 .WithOptional(e => e.ResponseShowComment)
                 .HasForeignKey(e => e.FK_ResponseShowComment);
 
             modelBuilder.Entity<ShowComment>()
-                .HasMany(e => e.Reports)
+                .HasMany(e => e.ReportsList)
                 .WithOptional(e => e.ShowComment)
                 .HasForeignKey(e => e.FK_ShowComment);
 
             modelBuilder.Entity<ShowPage>()
-                .HasMany(e => e.PageToTodays)
+                .HasMany(e => e.PageToTodaysList)
                 .WithRequired(e => e.ShowPage)
                 .HasForeignKey(e => e.FK_ShowPage)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ShowPage>()
-                .HasMany(e => e.PageViewCount)
+                .HasMany(e => e.PageViewCounts)
                 .WithOptional(e => e.ShowPage)
                 .HasForeignKey(e => e.FK_ShowPage);
 
             modelBuilder.Entity<ShowPage>()
-                .HasMany(e => e.Reports)
+                .HasMany(e => e.ReportsList)
                 .WithOptional(e => e.ShowPage)
                 .HasForeignKey(e => e.FK_ShowPage);
 
             modelBuilder.Entity<ShowPage>()
-                .HasMany(e => e.ShowComment)
+                .HasMany(e => e.ShowComments)
                 .WithRequired(e => e.ShowPage)
                 .HasForeignKey(e => e.FK_ShowPage)
                 .WillCascadeOnDelete(false);

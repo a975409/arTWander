@@ -11,10 +11,10 @@ namespace arTWander.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Posts()
         {
-            PageViewCount = new HashSet<PageViewCount>();
-            PostComment = new HashSet<PostComment>();
-            PostLike = new HashSet<PostLike>();
-            ShowPage = new HashSet<ShowPage>();
+            PageViewCounts = new HashSet<PageViewCount>();
+            PostComments = new HashSet<PostComment>();
+            PostLikes = new HashSet<PostLike>();
+            ShowPages = new HashSet<ShowPage>();
         }
 
         public int Id { get; set; }
@@ -36,17 +36,17 @@ namespace arTWander.Models
         public virtual Company Company { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PageViewCount> PageViewCount { get; set; }
+        public virtual ICollection<PageViewCount> PageViewCounts { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PostComment> PostComment { get; set; }
+        public virtual ICollection<PostComment> PostComments { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PostLike> PostLike { get; set; }
+        public virtual ICollection<PostLike> PostLikes { get; set; }
 
         public virtual PostsPic PostsPic { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ShowPage> ShowPage { get; set; }
+        public virtual ICollection<ShowPage> ShowPages { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace arTWander.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ShowComment()
         {
-            Reports = new HashSet<Reports>();
+            ReportsList = new HashSet<Reports>();
         }
 
         public int Id { get; set; }
@@ -32,7 +32,7 @@ namespace arTWander.Models
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Reports> Reports { get; set; }
+        public virtual ICollection<Reports> ReportsList { get; set; }
 
         public virtual ShowPage ShowPage { get; set; }
     }

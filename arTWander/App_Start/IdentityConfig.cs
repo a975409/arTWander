@@ -38,6 +38,8 @@ namespace arTWander.Models
             manager.UserValidator = new UserValidator<ApplicationUser, int>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,
+                
+                //Email不能重複
                 RequireUniqueEmail = true
             };
 
@@ -117,8 +119,9 @@ namespace arTWander.Models
             //Console.WriteLine("SendAsync");
             // 將您的電子郵件服務外掛到這裡以傳送電子郵件。
             var apiKey = "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";
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("admin@artwander.art", "arTWander");
+            //var apiKey = "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";
+            var client = new SendGridClient(apiKey);//admin@artwander.art
+            var from = new EmailAddress("a975409@gmail.com", "arTWander");
             var subject = "Sending with SendGrid is Fun";
             var to = new EmailAddress(message.Destination, "Example User");
             var plainTextContent = "請按一下此連結確認您的帳戶";
@@ -168,7 +171,7 @@ namespace arTWander.Models
 
             //新增使用者
             if (user == null) {
-                user = new ApplicationUser { UserName = name, Email = name };
+                user = new ApplicationUser { UserName = name, Email = name, EmailConfirmed = true };
                 var result = userManager.Create(user, password);
                 result = userManager.SetLockoutEnabled(user.Id, false);
             }
