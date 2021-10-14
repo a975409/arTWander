@@ -208,8 +208,10 @@ namespace arTWander.Controllers
                     //寄mail到新註冊使用者的帳戶
                     await UserManager.SendEmailAsync(user.Id, "確認您的帳戶", "請按一下此連結確認您的帳戶 <a href=\"" + callbackUrl + "\">這裏</a>");
 
-                    //將新用戶新增至一般使用者（User）的權限
-                    //await UserManager.AddToRoleAsync(user.Id,"User");
+                    //await UserManager.AddToRoleAsync(user.Id,"Admin");//系統管理員
+                    //await UserManager.AddToRoleAsync(user.Id,"Company");//展演單位
+                    //await UserManager.AddToRoleAsync(user.Id,"User");//一般會員
+                    //await UserManager.AddToRoleAsync(user.Id,"User");//黑名單
 
                     ViewBag.Link = callbackUrl;
                     return View("DisplayEmail");
