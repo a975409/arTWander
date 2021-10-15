@@ -38,6 +38,8 @@ namespace arTWander.Models
             manager.UserValidator = new UserValidator<ApplicationUser, int>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,
+                
+                //Email不能重複
                 RequireUniqueEmail = true
             };
 
@@ -116,16 +118,16 @@ namespace arTWander.Models
         {
             //Console.WriteLine("SendAsync");
             // 將您的電子郵件服務外掛到這裡以傳送電子郵件。
-            var apiKey = "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";
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("admin@artwander.art", "arTWander");
-            var subject = "Sending with SendGrid is Fun";
-            var to = new EmailAddress(message.Destination, "Example User");
-            var plainTextContent = "請按一下此連結確認您的帳戶";
-            var htmlContent = message.Body;
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            return client.SendEmailAsync(msg);
-            //return Task.FromResult(0);
+            
+            //var client = new SendGridClient(apiKey);//admin@artwander.art
+            //var from = new EmailAddress("a975409@gmail.com", "arTWander");
+            //var subject = "Sending with SendGrid is Fun";
+            //var to = new EmailAddress(message.Destination, "Example User");
+            //var plainTextContent = "請按一下此連結確認您的帳戶";
+            //var htmlContent = message.Body;
+            //var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            //return client.SendEmailAsync(msg);
+            return Task.FromResult(0);
         }
     }
 
@@ -142,6 +144,8 @@ namespace arTWander.Models
     // This is useful if you do not want to tear down the database each time you run the application.
     // public class ApplicationDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
     // This example shows you how to create a new database if the Model changes
+    //DropCreateDatabaseAlways=>移除現有DB(如果存在的話)，再建立新DB
+    //DropCreateDatabaseIfModelChanges=>DB不存在時建立，若Model與目前存在DB不相符時會自動移除現有DB後再建立新DB
     public class ApplicationDbInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext> 
     {
         protected override void Seed(ApplicationDbContext context) {
@@ -155,23 +159,51 @@ namespace arTWander.Models
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
             const string name = "a975409@gmail.com";
             const string password = "@Acs856745";
-            const string roleName = "Admin";
+            const string roleName = "Admin";//系統管理員
+            const string CompanyName = "Company";//展演單位
+            const string MemberName = "Member";//一般會員
+            const string BlacklistName = "Blacklist";//黑名單
 
-            //Create Role Admin if it does not exist
+            //新增系統管理員權限
             var role = roleManager.FindByName(roleName);
             if (role == null) {
                 role = new ApplicationRole(roleName);
                 var roleresult = roleManager.Create(role);
             }
 
+            //新增展演單位權限
+            var Company = roleManager.FindByName(CompanyName);
+            if (Company == null)
+            {
+                Company = new ApplicationRole(CompanyName);
+                var roleresult = roleManager.Create(Company);
+            }
+
+            //新增一般會員權限
+            var Member = roleManager.FindByName(MemberName);
+            if (Member == null)
+            {
+                Member = new ApplicationRole(MemberName);
+                var roleresult = roleManager.Create(Member);
+            }
+
+            //新增黑名單權限
+            var Blacklist = roleManager.FindByName(BlacklistName);
+            if (Blacklist == null)
+            {
+                Blacklist = new ApplicationRole(BlacklistName);
+                var roleresult = roleManager.Create(Blacklist);
+            }
+
+            //新增使用者（User）
             var user = userManager.FindByName(name);
             if (user == null) {
-                user = new ApplicationUser { UserName = name, Email = name };
+                user = new ApplicationUser { UserName = name, Email = name, EmailConfirmed = true };
                 var result = userManager.Create(user, password);
                 result = userManager.SetLockoutEnabled(user.Id, false);
             }
 
-            // Add user admin to Role Admin if not already added
+            //將User加入至系統管理員
             var rolesForUser = userManager.GetRoles(user.Id);
             if (!rolesForUser.Contains(role.Name)) {
                 var result = userManager.AddToRole(user.Id, role.Name);
