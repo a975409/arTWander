@@ -24,7 +24,7 @@
             <div class="row my-3 col-12 col-md-6 mx-auto">
                 <div class="w-100 mx-auto text-center">
                     <label for="account">Email：</label>
-                    <input id="account" name="account" type="text" class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
+                    <input id="accountc" name="account" type="text" class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
                 </div>
             </div>
             <div class="row my-3 col-12 col-md-6 mx-auto">
@@ -45,7 +45,7 @@
             </div>
             <div class="row mt-5 mb-2 justify-content-center">
                 <div class="col-6 col-md-3 mx-auto d-flex justify-content-center">
-                    <button type="button" class="btn btn-outline-secondary border-0 bg-dark text-white w-100">登入</button>
+                    <button id="loginBtn" type="button" class="btn btn-outline-secondary border-0 bg-dark text-white w-100" data-toggle="modal" data-target="#loginVerifyFalse" >登入</button>
                 </div>
             </div>
         </form>
@@ -57,7 +57,7 @@
                     <label for="account">Email：</label>
                 </div>
                 <div class="col-5 px-0">
-                    <input id="account" type="account" class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
+                    <input id="accountLogin" type="account" class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
                 </div>
                 <div class="col-2 col-md-0 px-0">
                 </div>
@@ -101,10 +101,59 @@
             
             <div class="row mt-5 mb-2 justify-content-center">
                 <div class="col-6 col-md-3 mx-auto d-flex justify-content-center">
-                    <button type="button" class="btn btn-outline-secondary border-0 bg-dark text-white w-100">註冊</button>
+                    <button id="register" type="button" class="btn btn-outline-secondary border-0 bg-dark text-white w-100">註冊</button>
                 </div>
             </div>
         </form>
         <!-- 註冊欄位 ends -->
     </div>
 </div>
+
+
+<!-- 彈出視窗顯示驗證失敗資訊 -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade px-0 mt-5" id="loginVerifyFalse" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- 控至彈出窗大小 -->
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <h5 class="modal-title" id="staticBackdropLabel">登入失敗</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span> -->
+          </button>
+        </div>
+        <div class="modal-body">
+          <main>
+            <!-- 主內容 -->
+                <br>
+              <section id="Section" class="w-100 text-center">
+                  <div id="loginFalse">
+                    
+                  </div>
+
+                
+              </section>
+            </main>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+$('#register').click(function(){
+    $('#mainPage').load('/AccountPage/RegisterVerify.html');
+})
+
+// 測試判斷是否空值帶連結 細部待後續後端補上
+// $('#loginBtn').click(function(){
+//     $('#mainPage').load('/AccountPage/LoginRegister.html');
+
+// })
+
+$('#loginBtn').click(function(){
+    $('#loginFalse').load('/AccountPage/LoginVerify.html');
+})
+
+console.log(document.getElementById("accountc").value);
+</script>
