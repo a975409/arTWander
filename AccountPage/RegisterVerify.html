@@ -1,0 +1,107 @@
+
+<!-- 登入頁面 -->
+<div class="container">
+    <!-- 驗證nav starts -->
+    <ul class="nav nav-tabs d-flex justify-content-center border-bottom-0 " id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+              <h4>請輸入信箱驗證碼</h4>
+            
+        </li>
+    </ul>
+    
+    <!-- 驗證nav ends -->
+    <div class="tab-content">
+        <!-- 驗證欄位 starts -->
+        <form id="loginForm" action="" class="tab-pane fade show active " role="tabpanel" aria-labelledby="loginForm-tab">
+            <!-- <div class="row my-3 col-12 col-md-6 mx-auto">
+                <div class="col-12 w-100 mx-auto text-center">
+                    <label for="account"></label>
+                </div> -->
+                <div class="col-12 w-100 mx-auto text-center mt-2">
+                    <input id="account" name="account" type="text" class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
+                </div>
+            </div>
+            <br>
+            <br>
+            
+            
+            <div class="row mt-5 mb-2 justify-content-center">
+                <div class="col-12 col-md-4 col-lg-3 d-flex justify-content-center my-2">
+                    <button type="button" class="btn btn-outline-secondary border-0 bg-pink text-white" id="mailVerbtn" data-toggle="modal" data-target="#mailVerifyTrue">提交驗證碼</button>
+                </div>
+            </div>
+            <a class="mx-auto" href="" id="mailVerfail" data-toggle="modal" data-target="#mailVerifyFault" >失敗測試</a>
+        </form>
+        <!-- 驗證欄位 ends -->
+    </div>   
+</div>
+
+
+<!-- 彈出視窗顯示驗證成功資訊 -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade px-0 mt-5" id="mailVerifyTrue" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- 控至彈出窗大小 -->
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <h5 class="modal-title">信箱驗證成功</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span> -->
+          </button>
+        </div>
+        <div class="modal-body">
+          <main>
+            <!-- 主內容 -->
+                <br>
+              <section id="Section" class="w-100 text-center">
+                <p>您的信箱驗證已完成 !</p>
+                <br>
+                <div class="row col-12 justify-content-center mx-auto">
+                    <div class="col-12 mx-auto text-center">
+                        <input id="memo" type="CheckBox">
+                        <label for="memo" class="text-dark">是否記住此瀏覽器 ?</span>
+                    </div>
+                </div>
+                <br>
+                <p>請重新登入或點擊 <a href="">此處</a> 進行導向</p>
+                
+              </section>
+            </main>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+<!-- 彈出視窗顯示驗證失敗資訊 -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade px-0 mt-5" id="mailVerifyFault" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- 控至彈出窗大小 -->
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <h5 class="modal-title" id="staticBackdropLabel">信箱驗證失敗</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span> -->
+          </button>
+        </div>
+        <div class="modal-body">
+          <main>
+            <!-- 主內容 -->
+                <br>
+              <section id="Section" class="w-100 text-center">
+                <p>您輸入的驗證碼錯誤!</p>
+                <br>
+                <p>請至信箱確認驗證碼後再次進行驗證 ! </p>
+                <br>
+                <p>或是點擊 <a href="">此處</a> 重新寄送驗證碼</p>
+                
+              </section>
+            </main>
+        </div>
+      </div>
+    </div>
+  </div>
+  

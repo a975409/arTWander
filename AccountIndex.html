@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     
-    <head>
+<head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>arTWander</title>
@@ -25,7 +25,8 @@
 <script src="https://kit.fontawesome.com/9bd3ad2735.js" crossorigin="anonymous"></script>
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="./css/ManagerIndex.css">
-
+<link rel="stylesheet" type="text/css" href="./css/CommonIndex.css">
+<link rel="stylesheet" type="text/css" href="./CommonPage/_css/setUpPage.css">
 </head>
 
 <body>
@@ -53,22 +54,28 @@
                 </div>
             </div>
         </main>
-        
+        <br>
+        <hr>
     </div>
+
+    <footer class="container mb-0">
     
+        <div class="row justify-content-center">
+             <p>Copyright© 2021 arTWander Inc. </p>
+        </div>
+    </footer>
+
     <script>
         // mainPage Ajax導入處 於此處更改要導入頁面
         document.addEventListener("DOMContentLoaded", function () {
-            $('#mainPage').load('AccountPage/Login.html');
+            $('#mainPage').load('AccountPage/LoginRegister.html');
         });
         
         </script>
 
-<!-- 下面用於判斷aside是否存在, 以及為CSS偽類增加一行display:none -->
-<style id="css"></style>
-<script src="./javascript/AsideTrue.js"></script>
-<!-- aside判斷結束 -->
+
 </body>
+
 
 </html>
    

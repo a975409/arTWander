@@ -24,7 +24,7 @@
             <div class="row my-3 col-12 col-md-6 mx-auto">
                 <div class="w-100 mx-auto text-center">
                     <label for="account">Email：</label>
-                    <input id="account" name="account" type="text" class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
+                    <input id="accountc" name="account" type="text" class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
                 </div>
             </div>
             <div class="row my-3 col-12 col-md-6 mx-auto">
@@ -36,16 +36,16 @@
             <br>
             <div class="row mx-auto col-12 col-md-6 col-lg-4 justify-content-between">
                 <div class="col-6 mx-auto mx-auto">
-                    <input type="CheckBox">
-                    <span class="text-dark">記住帳號</span>
+                    <input type="CheckBox" >
+                    <span class="">記住帳號</span>
                 </div>
                 <div class="col-6 mx-auto text-right">
-                    <u><a class="font-weight-light " href="">忘記密碼?</a></u>
+                    <u><a id="forgetPasswordBtn" class="font-weight-light">忘記密碼?</a></u>
                 </div>
             </div>
             <div class="row mt-5 mb-2 justify-content-center">
                 <div class="col-6 col-md-3 mx-auto d-flex justify-content-center">
-                    <button type="button" class="btn btn-outline-secondary border-0 bg-dark text-white w-100">登入</button>
+                    <button id="loginBtn" type="button" class="btn btn-outline-secondary border-0 bg-pink text-white w-100" data-toggle="modal" data-target="#loginVerifyFalse" >登入</button>
                 </div>
             </div>
         </form>
@@ -57,7 +57,7 @@
                     <label for="account">Email：</label>
                 </div>
                 <div class="col-5 px-0">
-                    <input id="account" type="account" class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
+                    <input id="accountLogin" type="account" class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
                 </div>
                 <div class="col-2 col-md-0 px-0">
                 </div>
@@ -101,10 +101,78 @@
             
             <div class="row mt-5 mb-2 justify-content-center">
                 <div class="col-6 col-md-3 mx-auto d-flex justify-content-center">
-                    <button type="button" class="btn btn-outline-secondary border-0 bg-dark text-white w-100">註冊</button>
+                    <button id="register" type="button" class="btn btn-outline-secondary border-0 bg-pink text-white w-100">註冊</button>
                 </div>
             </div>
         </form>
         <!-- 註冊欄位 ends -->
     </div>
 </div>
+
+
+<!-- 彈出視窗顯示驗證失敗資訊 -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade px-0 mt-5" id="loginVerifyFalse" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- 控至彈出窗大小 -->
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <h5 class="modal-title" id="staticBackdropLabel">登入失敗</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span> -->
+          </button>
+        </div>
+        <div class="modal-body">
+          <main>
+            <!-- 主內容 -->
+                <br>
+              <section id="Section" class="w-100 text-center">
+                  <div id="loginFalse">
+                    
+                  </div>
+
+                
+              </section>
+            </main>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+$('#register').click(function(){
+    $('#mainPage').load('/AccountPage/RegisterVerify.html');
+})
+
+// 忘記密碼  
+$('#forgetPasswordBtn').click(function(){
+    $('#mainPage').load('/AccountPage/ForgerPassword.html');
+  })
+
+// 測試判斷是否空值帶連結 細部待後續後端補上
+// $('#loginBtn').click(function(){
+//     $('#mainPage').load('/AccountPage/LoginRegister.html');
+
+// })
+
+$('#loginBtn').click(function(){
+    $('#loginFalse').load('/AccountPage/LoginVerify.html');
+})
+
+</script>
+
+<!-- 下面測試用 -->
+<a class="mx-auto" href="" id="modifyCommon" data-toggle="modal" data-target="#mailVerifyFault" >個人資訊資料設定測試</a><br>
+<a class="mx-auto" href="" id="modifyCompany" data-toggle="modal" data-target="#mailVerifyFault" >展演單位資料設定測試</a>
+<script>
+// 一般會員資料設定
+$('#modifyCommon').click(function(){
+    $('#mainPage').load('/AccountPage/LoginSettingCommon.html');
+  })
+
+// 展演單位資料設定
+$('#modifyCompany').click(function(){
+    $('#mainPage').load('/AccountPage/LoginSettingCompany.html');
+  })
+</script>

@@ -1,0 +1,123 @@
+
+<!-- 註冊後修改資料頁面 -->
+<div class="container px-0">
+    <!-- 歡迎 starts -->
+    <ul class="nav nav-tabs d-flex justify-content-center border-bottom-0 px-0" id="myTab" role="tablist">
+        <div class="row w-100 justify-content-center">
+            <h4 >感謝您的註冊，</h4>
+            <h4>請讓我們更加了解您</h4>
+
+
+    </ul>
+    <!-- 歡迎 ends -->
+    <div class="tab-content">
+        <!-- 初次登入設定資料 starts -->
+        <form class="container p-0 w-100 rounded-lg mt-4 " action="">
+            <div class="row mt-3 justify-content-center ">
+                <!-- <label class="col-7 col-md-2 " for="userAvatar">頭像</label> -->
+                <!-- 消除input type="file" UI的方法 https://www.wfublog.com/2017/10/input-type-file-upload-css-skill.html -->
+                <label class=" col-3 col-md-1 p-0" for="userAvatar" role="button">
+                    <div id="userAvatarDiv">
+                        <img id="userAvatarImg" class="rounded-circle d-flex " width="100px" height="100px" src="/image/exhibiton/dav.png" style="object-fit: cover;" alt="">
+                        <i class="fa fa-camera " aria-hidden="true"></i>
+                        <div id="fakeDiv" ></div>
+                    </div>
+                    <input class="d-none" name="userAvatar" id="userAvatar" type="file">
+                </label><br>
+            </div>
+            <div class="row mt-4 justify-content-center ">
+                <label class="col-4 col-md-2" for="userName">用戶暱稱</label>
+                <input class="col-6" name="userName" id="userName" type="text"><br>
+            </div>
+            <div class="row mt-4 justify-content-center ">
+                <label class="col-4 col-md-2" for="passwordModify">密碼變更</label>
+                <u class="col-6 px-0" ><a id="passwordModifyBtn">變更</a><br></u>
+            </div>
+            <div class="row mt-4 justify-content-center ">
+                <label class="col-4 col-md-2" for="userName">展演單位名稱</label>
+                <input class="col-6" name="userName" id="userName" type="text"><br>
+            </div>
+            <div class="row mt-4 justify-content-center">
+                <label class="col-4 col-md-2"  for="userBDay">展演單位簡介</label>
+                <textarea class="col-6 form-control" id="ComanyDescript" rows="5"></textarea><br>
+            </div>
+            <div class="row mt-4 justify-content-center">
+                <label class="col-4 col-md-2"  for="userSuscribe">城市</label>
+                <select class="col-6"  name="" id="">
+                    <option value="" selected disabled hidden>選擇您所在城市</option>
+                    <option value="1">台北市</option>
+                    <option value="2">高雄市</option>
+                </select><br>
+            </div>
+            <div class="row mt-4 justify-content-center">
+                <label class="col-4 col-md-2"  for="userAddress">地址</label>
+                <input class="col-6"  name="userAddress" id="userAddress"   type="text"><br>
+            </div>
+            <div class="row mt-4 justify-content-center">
+                <label class="col-4 col-md-2"  for="userPhone">聯絡電話</label>
+                <input class="col-6"  name="userPhone" id="userPhone"   type="text"><br>
+            </div>
+            <div class="row mt-4 justify-content-center">
+                <label class="col-4 col-md-2"  for="twoFactor">二階段驗證</label>
+                <div class="col-6 px-0">
+                   <input class="mr-2" type="CheckBox" ><span class="">開啟</span>
+                </div>
+            </div>
+            <div class="row mt-4 justify-content-center">
+                <label class="col-4 col-md-2"  for="browserRemember">瀏覽器紀錄</label>
+                <div class="col-6 px-0">
+                   <input class="mr-2" type="CheckBox" ><span class="">開啟</span>
+                </div>
+            </div>
+            
+            
+            
+            <div class="row mt-5 justify-content-center">
+                <button class="col-4 col-md-2 btn btn-outline-secondary border-0 bg-pink text-white" type="submit" id="btnSuscribe">儲存修改</button>
+            </div>
+            
+        </form>
+        <!-- 初次登入設定資料 ends -->
+    </div>
+</div>
+
+
+<!-- 彈出視窗顯示驗證失敗資訊 -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade px-0 mt-5" id="loginVerifyFalse" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- 控至彈出窗大小 -->
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <h5 class="modal-title" id="staticBackdropLabel">登入失敗</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span> -->
+          </button>
+        </div>
+        <div class="modal-body">
+          <main>
+            <!-- 主內容 -->
+                <br>
+              <section id="Section" class="w-100 text-center">
+                  <div id="loginFalse">
+                    
+                  </div>
+
+                
+              </section>
+            </main>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+
+
+// 密碼變更  
+$('#passwordModifyBtn').click(function(){
+    $('#mainPage').load('/AccountPage/PasswordModify.html');
+  })
+
+</script>

@@ -162,16 +162,16 @@
         //fixedNav:
         document.addEventListener("DOMContentLoaded",()=>{
             // => 沒登入
-            $('#avatarNavSet').load('/CommonPage/Nav/logInFalse.html')
+            //$('#avatarNavSet').load('/CommonPage/Nav/logInFalse.html')
             // => 有登入
-            //$('#avatarNavSet').load('/CommonPage/Nav/logInTrue.html')
+            $('#avatarNavSet').load('/CommonPage/Nav/logInTrue.html')
         });
         // aside
         document.addEventListener("DOMContentLoaded", function () {
             // => 沒登入
-            //$('#aside1').load('/CommonPage/Aside/LogInFalse.html');
+            $('#aside1').load('/CommonPage/Aside/LogInFalse.html');
             // => 有登入
-            $('#aside1').load('/CommonPage/Aside/LogInTrue.html');
+            //$('#aside1').load('/CommonPage/Aside/LogInTrue.html');
         });
         document.addEventListener("DOMContentLoaded", function () {
             // => 預設顯示全部展覽

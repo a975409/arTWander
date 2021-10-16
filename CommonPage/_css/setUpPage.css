@@ -26,8 +26,16 @@
 #fakeDiv{
     width: 100px;
     height: 100px;
+    display: none;
 }
 
+/* 移除mainPage(影響整個主頁) input css */
+/* 
 #mainPage input{
     height: 32px;
+} */
+
+/* 更改日期字體大小 */
+#userBDay{
+    font-size: 16px;
 }
