@@ -126,3 +126,5 @@ D:\MyWork\arTWander\arTWander\bin\Microsoft.Configuration.ConfigurationBuilders.
 D:\MyWork\arTWander\arTWander\bin\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.dll
 D:\MyWork\arTWander\arTWander\bin\Microsoft.Configuration.ConfigurationBuilders.Base.xml
 D:\MyWork\arTWander\arTWander\bin\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.xml
+D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.Migrations.Companyaddaddressfield.resources
+D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.csproj.GenerateResource.cache

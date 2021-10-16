@@ -266,6 +266,9 @@
     <Content Include="Views\AsidePage\_logInFalseAside.cshtml" />
     <Content Include="Views\Shared\_IsRememberBrowser.cshtml" />
     <Content Include="Views\Shared\_IsTwoFactor.cshtml" />
+    <Content Include="Views\AccountPage\_PartialLogin.cshtml" />
+    <Content Include="Views\Account\AccountIndex.cshtml" />
+    <Content Include="Views\Home\test.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -349,6 +352,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110151607074_Company-add-address-field.cs" />
+    <Compile Include="Migrations\202110151607074_Company-add-address-field.designer.cs">
+      <DependentUpon>202110151607074_Company-add-address-field.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -379,6 +386,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202110151607074_Company-add-address-field.resx">
+      <DependentUpon>202110151607074_Company-add-address-field.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

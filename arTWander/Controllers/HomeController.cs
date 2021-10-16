@@ -26,5 +26,12 @@ namespace arTWander.Controllers
 
             return View();
         }
+
+        public ActionResult test() {
+
+
+            ModelState.AddModelError("error", "錯誤訊息測試");
+            return View();
+        }
     }
 }
