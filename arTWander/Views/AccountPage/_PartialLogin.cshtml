@@ -1,0 +1,113 @@
+﻿<!-- 登入頁面 -->
+<div class="container">
+    <!-- 登入及註冊鈕 starts -->
+    <ul class="nav nav-tabs d-flex justify-content-center border-bottom-0 " id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active border-0 bg-transparent" id="loginForm-tab" data-toggle="tab" data-target="#loginForm" type="button" role="tab" aria-controls="loginForm" aria-selected="true">
+                <h4>登入</h4>
+            </button>
+        </li>
+        <li class="nav-item p-1">
+            <h4>|</h4>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link border-0 bg-transparent" id="regist-tab" data-toggle="tab" data-target="#registerForm" type="button" role="tab" aria-controls="registerForm" aria-selected="false">
+                <h4>註冊</h4>
+            </button>
+        </li>
+    </ul>
+    <!-- 登入及註冊鈕 ends -->
+    <div class="tab-content">
+        <!-- 登入欄位 starts -->
+        <form id="loginForm" action="~/Account/Login" method="post" class="tab-pane fade show active " role="tabpanel" aria-labelledby="loginForm-tab">
+            @Html.AntiForgeryToken()
+            <div class="row my-3 col-12 col-md-6 mx-auto">
+                <div class="w-100 mx-auto text-center">
+                    <label for="LoginAccount">Email：</label>
+                    <input id="LoginAccount" name="Email" type="email" value="@ViewBag.Email" class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
+                </div>
+            </div>
+            <div class="row my-3 col-12 col-md-6 mx-auto">
+                <div class="w-100 mx-auto text-center">
+                    <label for="LoginPwd">密碼：</label>
+                    <input id="LoginPwd" name="Password" type="password" class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
+                </div>
+            </div>
+            <br>
+            <div class="row mx-auto col-12 col-md-6 col-lg-4 justify-content-between">
+                <div class="col-6 mx-auto mx-auto">
+                    @*<input type="CheckBox" name="RememberMe" id="RememberMe">
+                    <span class="text-dark">記住帳號</span>*@
+                    <input type="checkbox" class="control-input" id="RememberMe" name="RememberMe">
+                    <label class="control-label" for="RememberMe">記住帳號</label>
+                </div>
+                <div class="col-6 mx-auto text-right">
+                    <u><a class="font-weight-light " href="~/Account/ForgotPassword">忘記密碼?</a></u>
+                </div>
+            </div>
+            <div class="row mt-5 mb-2 justify-content-center">
+                <div class="col-6 col-md-3 mx-auto d-flex justify-content-center">
+                    <button type="submit" class="btn btn-outline-secondary border-0 bg-dark text-white w-100">登入</button>
+                </div>
+            </div>
+        </form>
+        <!-- 登入欄位 ends -->
+        <!-- 註冊欄位 starts -->
+        <form id="registerForm" action="~/Account/Register" method="post" class="tab-pane" role="tabpanel" aria-labelledby="regist-tab">
+            @Html.AntiForgeryToken()
+            <div class="row my-3 col-12 col-md-6 mx-auto">
+                <div class="col-5 mr-0 text-right">
+                    <label for="RegAccount">Email：</label>
+                </div>
+                <div class="col-5 px-0">
+                    <input id="RegAccount" type="email" name="Email" class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
+                </div>
+                <div class="col-2 col-md-0 px-0">
+                </div>
+            </div>
+            <div class="row my-3 col-12 col-md-6 mx-auto">
+                <div class="col-5 mr-0 text-right">
+                    <label for="RegPwd">密碼：</label>
+                </div>
+                <div class="col-5 px-0">
+                    <input id="RegPwd" type="password" name="Password" class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
+                </div>
+                <div class="col-2 col-md-0 px-0">
+                </div>
+            </div>
+
+            <div class="row my-3 col-12 col-md-6 mx-auto">
+                <div class="col-5 mr-0 text-right">
+                    <label for="RegPwdConfirm">確認密碼：</label>
+                </div>
+                <div class="col-5 px-0">
+                    <input id="RegPwdConfirm" type="password" name="ConfirmPassword" class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
+                </div>
+                <div class="col-2 col-md-0 px-0">
+                </div>
+            </div>
+
+            <div class="row mt-4 mx-auto col-12 col-md-5 col-lg-4 justify-content-between">
+                <div class="form-check col-6 mx-auto mx-auto text-center">
+                    <input class="form-check-input" type="radio" name="AccountRoles" id="accountRoles1" value="Member" checked>
+                    <label class="form-check-label" for="accountRoles1">
+                        一般會員
+                    </label>
+                </div>
+                <div class="form-check col-6 mx-auto mx-auto text-center">
+                    <input class="form-check-input" type="radio" name="AccountRoles" id="accountRoles2" value="Company">
+                    <label class="form-check-label" for="accountRoles2">
+                        展演單位
+                    </label>
+                </div>
+            </div>
+
+            <div class="row mt-5 mb-2 justify-content-center">
+                <div class="col-6 col-md-3 mx-auto d-flex justify-content-center">
+                    <button type="submit" class="btn btn-outline-secondary border-0 bg-dark text-white w-100">註冊</button>
+                </div>
+            </div>
+        </form>
+        <!-- 註冊欄位 ends -->
+    </div>
+</div>

@@ -118,7 +118,7 @@ namespace arTWander.Models
         {
             //Console.WriteLine("SendAsync");
             // 將您的電子郵件服務外掛到這裡以傳送電子郵件。
-            
+            //var apiKey = "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";
             //var client = new SendGridClient(apiKey);//admin@artwander.art
             //var from = new EmailAddress("a975409@gmail.com", "arTWander");
             //var subject = "Sending with SendGrid is Fun";

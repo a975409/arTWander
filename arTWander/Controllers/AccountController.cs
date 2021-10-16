@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace arTWander.Controllers
 {
@@ -19,7 +20,7 @@ namespace arTWander.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -38,24 +39,42 @@ namespace arTWander.Controllers
             }
         }
 
-        //
-        // GET: /Account/Login
+        //登入＆註冊畫面
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult AccountIndex(string email, bool error = false)
         {
-            LoginViewModel model = new LoginViewModel();
-
             //讀取cookie裡面的帳號
             HttpCookie cookie = Request.Cookies["Email"];
             if (cookie != null && !string.IsNullOrEmpty(cookie.Value))
             {
-                model.Email = cookie.Value;
-                model.RememberMe = true;
+                ViewBag.Email = cookie.Value;
+                ViewBag.RememberMe = true;
             }
+            else
+                ViewBag.Email = email;
 
-            ViewBag.ReturnUrl = returnUrl;
-            return View(model);
+            ViewBag.Error = error;
+            return View();
         }
+
+
+        // GET: /Account/Login
+        //[AllowAnonymous]
+        //public ActionResult Login(string returnUrl)
+        //{
+        //    LoginViewModel model = new LoginViewModel();
+
+        //    //讀取cookie裡面的帳號
+        //    HttpCookie cookie = Request.Cookies["Email"];
+        //    if (cookie != null && !string.IsNullOrEmpty(cookie.Value))
+        //    {
+        //        model.Email = cookie.Value;
+        //        model.RememberMe = true;
+        //    }
+
+        //    ViewBag.ReturnUrl = returnUrl;
+        //    return View(model);
+        //}
 
         private ApplicationSignInManager _signInManager;
 
@@ -96,26 +115,30 @@ namespace arTWander.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View(model);
+                //return View(model);
+                return RedirectToAction("AccountIndex", new { email = model.Email, error = true });
             }
 
             var usermanger = UserManager.FindByEmail(model.Email);
             // 這不會計算為帳戶鎖定的登入失敗
             // 若要啟用密碼失敗來觸發帳戶鎖定，請變更為 shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
             switch (result)
             {
                 case SignInStatus.Success:
                     //檢查該帳號是否有做mail驗證
                     if (!UserManager.IsEmailConfirmed(usermanger.Id))
                     {
-                        ModelState.AddModelError("Email", "此帳號的信箱尚未驗證，請驗證後再登入");
-                        return View(model);
+                        //ModelState.AddModelError("Email", "此帳號的信箱尚未驗證，請驗證後再登入");
+                        //return View(model);
+                        return RedirectToAction("AccountIndex", new { email = model.Email, error = true });
                     }
                     else
                     {
-                        return RedirectToLocal(returnUrl);
-                        //return RedirectToAction("homeIndexPage", "Home");
+                        //登入成功
+                        //return RedirectToLocal(returnUrl);
+                        return RedirectToAction("Index", "Manage");
                     }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -123,8 +146,11 @@ namespace arTWander.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                    //ModelState.AddModelError("login", "登入失敗，帳號或密碼輸入錯誤");
+                    //return View(model);
+                    //傳遞Model=> new RouteValueDictionary(model)
+                    //return RedirectToAction("AccountIndex", new RouteValueDictionary(model));
+                    return RedirectToAction("AccountIndex", new { email = model.Email, error = true });
             }
         }
 
@@ -179,11 +205,11 @@ namespace arTWander.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
-        public ActionResult Register()
-        {
-            return View();
-        }
+        //[AllowAnonymous]
+        //public ActionResult Register()
+        //{
+        //    return View("~/Views/Account/AccountIndex.cshtml");
+        //}
 
         //
         // POST: /Account/Register
@@ -208,19 +234,23 @@ namespace arTWander.Controllers
                     //寄mail到新註冊使用者的帳戶
                     await UserManager.SendEmailAsync(user.Id, "確認您的帳戶", "請按一下此連結確認您的帳戶 <a href=\"" + callbackUrl + "\">這裏</a>");
 
+                    await UserManager.AddToRoleAsync(user.Id, model.AccountRoles);
+
                     //await UserManager.AddToRoleAsync(user.Id,"Admin");//系統管理員
                     //await UserManager.AddToRoleAsync(user.Id,"Company");//展演單位
-                    //await UserManager.AddToRoleAsync(user.Id,"User");//一般會員
-                    //await UserManager.AddToRoleAsync(user.Id,"User");//黑名單
+                    //await UserManager.AddToRoleAsync(user.Id,"Member");//一般會員
+                    //await UserManager.AddToRoleAsync(user.Id,"Blacklist");//黑名單
 
                     ViewBag.Link = callbackUrl;
                     return View("DisplayEmail");
                 }
                 AddErrors(result);
+                return RedirectToAction("AccountIndex", new { email = model.Email, error = true });
             }
 
-            // 如果執行到這裡，發生某項失敗，則重新顯示表單
-            return View(model);
+            //如果執行到這裡，發生某項失敗，則重新顯示表單
+            //return View(model);
+            return RedirectToAction("AccountIndex", new { email = model.Email, error = true });
         }
 
         //
@@ -266,7 +296,8 @@ namespace arTWander.Controllers
                 var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                 await UserManager.SendEmailAsync(user.Id, "重設密碼", "請按 <a href=\"" + callbackUrl + "\">這裏</a> 重設密碼");
-                ViewBag.Link = callbackUrl;
+
+                TempData["ResetLink"] = callbackUrl;
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -279,6 +310,7 @@ namespace arTWander.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
+            TempData.Keep();
             return View();
         }
 

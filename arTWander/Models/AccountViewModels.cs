@@ -43,11 +43,52 @@ namespace arTWander.Models
         public string Email { get; set; }
     }
 
+    public class AccountViewModel
+    {
+        public class Login
+        {
+            [Required]
+            [Display(Name = "Email")]
+            [EmailAddress(ErrorMessage = "請輸入正確的Email")]
+            public string Email { get; set; }
+
+            [Required]
+            [DataType(DataType.Password)]
+            [Display(Name = "密碼")]
+            public string Password { get; set; }
+
+            [Display(Name = "記住帳號")]
+            public bool RememberMe { get; set; }
+        }
+
+        public class Register
+        {
+            [Required]
+            [EmailAddress]
+            [Display(Name = "電子信箱")]
+            public string Email { get; set; }
+
+            [Required]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+            [DataType(DataType.Password)]
+            [Display(Name = "密碼")]
+            public string Password { get; set; }
+
+            [DataType(DataType.Password)]
+            [Display(Name = "確認密碼")]
+            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            public string ConfirmPassword { get; set; }
+
+            [Display(Name = "用戶權限")]
+            public string AccountRoles { get; set; }
+        }
+    }
+
     public class LoginViewModel
     {
         [Required]
         [Display(Name = "Email")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage ="請輸入正確的Email")]
         public string Email { get; set; }
 
         [Required]
@@ -81,6 +122,9 @@ namespace arTWander.Models
         [Display(Name = "確認密碼")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "用戶權限")]
+        public string AccountRoles { get; set; }
     }
 
     public class ResetPasswordViewModel

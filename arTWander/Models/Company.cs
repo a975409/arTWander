@@ -29,6 +29,10 @@ namespace arTWander.Models
         [StringLength(255)]
         public string CompanyDescription { get; set; }
 
+        [Required]
+        [StringLength(255)]
+        public string Address { get; set; }
+
         public int FK_City { get; set; }
 
         public int FK_ApplicationUser { get; set; }
