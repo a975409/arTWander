@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Microsoft.AspNet.Identity
+@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -40,7 +41,22 @@
         <!-- 導覽列 starts -->
         <nav class="row">
             <div id="signInBtn" class="col-12">
-                 <a href="~/Account/AccountIndex" class="btn btn-outline-light">登入 / 註冊</a> 
+                @if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+
+                        @Html.ActionLink("您好" + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "btn btn-outline-light",style= "border-style:none" })
+
+                        <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-outline-light">登出</a>
+                    }
+                }
+                else
+                {
+                    <a href="~/Account/AccountIndex" class="btn btn-outline-light">登入 / 註冊</a>
+                }
             </div>
         </nav>
         <!-- 導覽列 ends -->
@@ -300,9 +316,9 @@
 
     <!-- 頁尾 ends -->
     <script>
-    //    document.addEventListener("DOMContentLoaded", function () {
-    //         $('#signInBtn').load('/CommonPage/Nav/logInFalse.html');
-    //    });
+        //    document.addEventListener("DOMContentLoaded", function () {
+        //         $('#signInBtn').load('/CommonPage/Nav/logInFalse.html');
+        //    });
     </script>
 </body>
 </html>

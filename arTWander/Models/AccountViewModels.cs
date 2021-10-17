@@ -28,7 +28,7 @@ namespace arTWander.Models
         public string Provider { get; set; }
 
         [Required]
-        [Display(Name = "代碼")]
+        [Display(Name = "驗證碼")]
         public string Code { get; set; }
         public string ReturnUrl { get; set; }
 
@@ -134,15 +134,15 @@ namespace arTWander.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage ="請填寫密碼")]
+        [StringLength(100, ErrorMessage = "{0}至少設定 {2} 以上", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "密碼")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "確認密碼")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "輸入的密碼不一致")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
@@ -150,8 +150,8 @@ namespace arTWander.Models
 
     public class ForgotPasswordViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage ="請輸入Email")]
+        [EmailAddress(ErrorMessage = "請輸入有效的Email")]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
