@@ -43,6 +43,11 @@ namespace arTWander.Controllers
         [AllowAnonymous]
         public ActionResult AccountIndex()
         {
+            if (Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Manage", null);
+            }
+
             //讀取cookie裡面的帳號
             HttpCookie cookie = Request.Cookies["Email"];
             if (cookie != null && !string.IsNullOrEmpty(cookie.Value))
@@ -119,8 +124,10 @@ namespace arTWander.Controllers
             //{
             //    TempData["Email"] = model.Email;
             //    TempData["LoginPage"] = true;
-            //    TempData["Error"] = "欄位驗證失敗，請檢查所有欄位是否已填寫!";
+            //    TempData["Status"] = "登入失敗";
+            //    TempData["DialogMsg"] = "欄位驗證失敗，請檢查所有欄位是否已填寫!<br><br>";
             //    return RedirectToAction("AccountIndex");
+            //    //return View(model);
             //}
 
             var usermanger = UserManager.FindByEmail(model.Email);
@@ -137,14 +144,15 @@ namespace arTWander.Controllers
                     {
                         TempData["Email"] = model.Email;
                         TempData["LoginPage"] = true;
-                        TempData["Error"] = "此帳號的信箱尚未驗證，請驗證後再登入!";
+                        TempData["Status"] = "登入失敗";
+                        TempData["DialogMsg"] = "<p>此帳號的信箱尚未驗證，請驗證後再登入!</p><br><br>";
                         return RedirectToAction("AccountIndex");
                     }
                     else
                     {
                         //登入成功
                         //return RedirectToLocal(returnUrl);
-                        return RedirectToAction("Index", "Manage");
+                        return RedirectToAction("Index", "Home");
                     }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -156,7 +164,8 @@ namespace arTWander.Controllers
                     //return RedirectToAction("AccountIndex", new RouteValueDictionary(model));
                     TempData["Email"] = model.Email;
                     TempData["LoginPage"] = true;
-                    TempData["Error"] = "請確認您的登入資訊是否正確!"; 
+                    TempData["Status"] = "登入失敗";
+                    TempData["DialogMsg"] = "<p>請確認您的登入資訊是否正確!</p><br><br>"; 
                     return RedirectToAction("AccountIndex");
             }
         }
@@ -230,7 +239,8 @@ namespace arTWander.Controllers
             //    //如果執行到這裡，發生某項失敗，則重新顯示表單
             //    //return View(model);
             //    TempData["LoginPage"] = false;
-            //    TempData["Error"] = "欄位驗證失敗，請檢查所有欄位是否已填寫!";
+            //    TempData["Status"] = "註冊失敗";
+            //    TempData["DialogMsg"] = "<p>欄位驗證失敗，請檢查所有欄位是否已填寫!</p><br><br>";
             //    return RedirectToAction("AccountIndex");
             //}
 
@@ -256,11 +266,15 @@ namespace arTWander.Controllers
                 //await UserManager.AddToRoleAsync(user.Id,"Blacklist");//黑名單
 
                 ViewBag.Link = callbackUrl;
-                return View("DisplayEmail");
+                //return View("DisplayEmail");
+                TempData["Status"] = "註冊完成";
+                TempData["DialogMsg"] = "<p>請至信箱收驗證信</p><p>或點擊 <a href=" + callbackUrl + ">此連結</a></p><br><br>";
+                return RedirectToAction("AccountIndex");
             }
             AddErrors(result);
             TempData["LoginPage"] = false;
-            TempData["Error"] = "註冊失敗！！";
+            TempData["Status"] = "註冊失敗";
+            TempData["DialogMsg"] = "<p>註冊失敗！！</p><br><br>";
             return RedirectToAction("AccountIndex");
         }
 
@@ -297,10 +311,10 @@ namespace arTWander.Controllers
                 var user = await UserManager.FindByNameAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
-                    // 不顯示使用者不存在或未受確認
-                    //return View("ForgotPasswordConfirmation");
-                    ViewBag.MailErrorMsg = "Email寄送失敗，請重新寄送";
-                    return PartialView("_PartialForgotPwdError");
+                    ModelState.AddModelError("Email", "該使用者不存在或未確認");
+                    return View();
+                    //ViewBag.MailErrorMsg = "Email寄送失敗，請重新寄送";
+                    //return PartialView("_PartialForgotPwdError");
                 }
 
                 // 如需如何進行帳戶確認及密碼重設的詳細資訊，請前往 https://go.microsoft.com/fwlink/?LinkID=320771
@@ -310,15 +324,15 @@ namespace arTWander.Controllers
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                 await UserManager.SendEmailAsync(user.Id, "重設密碼", "請按 <a href=\"" + callbackUrl + "\">這裏</a> 重設密碼");
 
-                ViewBag.ResetLink = "請按 <a href=\"" + callbackUrl + "\">這裏</a> 重設密碼";
-                return PartialView("_PartialForgotPwdSuccess");
-                //return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                //ViewBag.ResetLink = "請按 <a href=\"" + callbackUrl + "\">這裏</a> 重設密碼";
+                //return PartialView("_PartialForgotPwdSuccess");
+                TempData["ResetLink"] = callbackUrl;
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
-
             // If we got this far, something failed, redisplay form
-            //return View(model);
-            ViewBag.MailErrorMsg = "Email輸入錯誤，請重新輸入";
-            return PartialView("_PartialForgotPwdError");
+            return View(model);
+            //ViewBag.MailErrorMsg = "Email輸入錯誤，請重新輸入";
+            //return PartialView("_PartialForgotPwdError");
         }
 
         //
@@ -355,8 +369,9 @@ namespace arTWander.Controllers
             var user = await UserManager.FindByNameAsync(model.Email);
             if (user == null)
             {
-                // 不顯示使用者不存在
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                //return RedirectToAction("ResetPasswordConfirmation", "Account");
+                ModelState.AddModelError("Email", "該使用者不存在或未確認");
+                return View(model);
             }
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
@@ -364,6 +379,8 @@ namespace arTWander.Controllers
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
             AddErrors(result);
+
+            ModelState.AddModelError("Password", "設定的密碼不符合規範");
             return View();
         }
 

@@ -46,7 +46,7 @@
             <div class="row mx-auto col-12 col-md-6 col-lg-4 justify-content-between">
                 <div class="col-6 mx-auto mx-auto">
                     <input type="checkbox" class="control-input" id="RememberMe" name="RememberMe" value="true">
-                    <input type="checkbox" class="control-input"  name="RememberMe" value="false" hidden>
+                    <input type="checkbox" class="control-input" name="RememberMe" value="false" hidden>
                     <label class="control-label" for="RememberMe">記住帳號</label>
                 </div>
                 <div class="col-6 mx-auto text-right">
@@ -128,13 +128,14 @@
     </div>
 </div>
 
+@*彈出視窗*@
 <div class="modal fade px-0 mt-5" id="loginVerifyFalse" data-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <!-- 控至彈出窗大小 -->
+    <!-- 控制彈出窗大小 -->
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h5 class="modal-title" id="staticBackdropLabel">登入失敗</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">@((string)TempData["Status"])</h5>
             </div>
             <div class="modal-body">
                 <main>
@@ -143,7 +144,7 @@
                     <section id="Section" class="w-100 text-center">
                         <div id="loginFalse">
                             @{
-                                Html.RenderPartial("_PartialErrorLogin");
+                                Html.RenderPartial("_PartialAccountDialog");
                             }
                         </div>
                     </section>
@@ -155,32 +156,50 @@
 
 @section scripts
 {
-    @if (TempData.ContainsKey("LoginPage"))
-    {
-        bool loginPage = (bool)TempData["LoginPage"];
-
-        if (loginPage)
+    @*@if (TempData.ContainsKey("LoginPage"))
         {
-            <script>
-                $('#staticBackdropLabel').html('登入失敗');
-                $('#loginForm-tab').trigger('click');
-            </script>
-        }
-        else
-        {
-            <script>
-                $('#staticBackdropLabel').html('註冊失敗');
-                $('#regist-tab').trigger('click');
-            </script>
-        }
-    }
+            bool loginPage = (bool)TempData["LoginPage"];
 
-    @if (TempData.ContainsKey("Error"))
+            if (loginPage)
+            {
+                <script>
+                    $('#staticBackdropLabel').html('登入失敗');
+                    $('#loginForm-tab').trigger('click');
+                </script>
+            }
+            else
+            {
+                <script>
+                    $('#staticBackdropLabel').html('註冊失敗');
+                    $('#regist-tab').trigger('click');
+                </script>
+            }
+        }*@
+
+    @if (TempData.ContainsKey("DialogMsg"))
     {
         <script>
             $('#dialogBtn').trigger('click');
         </script>
     }
+
+    <script>
+            //$('#loginForm-tab').click(function () {
+            //    foucePage($(this));
+            //});
+
+            //$('#regist-tab').click(function () {
+            //    foucePage($(this));
+            //});
+
+            //function foucePage(obj) {
+            //    $('#loginForm-tab').removeClass("bg-danger text-white");
+            //    $('#regist-tab').removeClass("bg-danger text-white");
+
+            //    $(obj).addClass("bg-danger text-white");
+            //}
+
+    </script>
 
     <script src="~/javascript/LoginForm.js"></script>
     <script src="~/javascript/RegisterForm.js"></script>

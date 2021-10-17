@@ -272,9 +272,10 @@
     <Content Include="Views\Account\AccountIndex.cshtml" />
     <Content Include="Views\Home\test.cshtml" />
     <Content Include="Views\Shared\_AccountLayout.cshtml" />
-    <Content Include="Views\Shared\_PartialErrorLogin.cshtml" />
+    <Content Include="Views\Shared\_PartialAccountDialog.cshtml" />
     <Content Include="Views\Shared\_PartialForgotPwdSuccess.cshtml" />
     <Content Include="Views\Shared\_PartialForgotPwdError.cshtml" />
+    <Content Include="CityCountyData.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
