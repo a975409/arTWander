@@ -1,63 +1,188 @@
 ﻿@model arTWander.Models.AccountViewModel
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>arTWander</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
-    </script>
-
-    <!-- font-awesome -->
-    <script src="https://kit.fontawesome.com/9bd3ad2735.js" crossorigin="anonymous"></script>
-
-</head>
-
-<body>
-    <!-- 導覽列 starts -->
-    <div class="container">
-        <header>
-            <div id="topHeader" class="row my-5 d-flex justify-content-center">
-                <figure class="col-4 d-flex justify-content-center">
-                    <a href="#"><img src="~/image/logo/logo.png" alt=""></a>
-                </figure>
-            </div>
-        </header>
-        <!-- 導覽列 end -->
-        <!-- 主要內容區 -->
-        <main>
-            <div class="container my-auto">
-                <div class="row">
-                    <!-- 主內容 -->
-                    <section id="Section" class="col-12 w-100">
-                        <div id="mainPage">
-                            @Html.Partial("~/Views/AccountPage/_PartialLogin.cshtml")
-                        </div>
-                        <!-- 登入頁面 -->
-                    </section>
+<!-- 登入頁面 -->
+<div class="container">
+    <!-- 登入及註冊鈕 starts -->
+    <ul class="nav nav-tabs d-flex justify-content-center border-bottom-0 " id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active border-0 bg-transparent" id="loginForm-tab" data-toggle="tab"
+                    data-target="#loginForm" type="button" role="tab" aria-controls="loginForm" aria-selected="true">
+                <h4>登入</h4>
+            </button>
+        </li>
+        <li class="nav-item p-1">
+            <h4>|</h4>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link border-0 bg-transparent" id="regist-tab" data-toggle="tab"
+                    data-target="#registerForm" type="button" role="tab" aria-controls="registerForm" aria-selected="false">
+                <h4>註冊</h4>
+            </button>
+        </li>
+    </ul>
+    <!-- 登入及註冊鈕 ends -->
+    <div class="tab-content">
+        <!-- 登入欄位 starts -->
+        <form id="loginForm" action="~/Account/Login" method="post" class="tab-pane fade show active" role="tabpanel" aria-labelledby="loginForm-tab">
+            @Html.AntiForgeryToken()
+            <div class="row my-3 col-12 col-md-6 mx-auto">
+                <div class="w-100 mx-auto text-center">
+                    <label for="LoginEmail">Email：</label>
+                    <input id="LoginEmail" name="Email" type="email" value="@ViewBag.Email"
+                           class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
+                    <div id="LoginEmailMsg" class="text-danger"></div>
                 </div>
             </div>
-        </main>
+            <div class="row my-3 col-12 col-md-6 mx-auto">
+                <div class="w-100 mx-auto text-center">
+                    <label for="LoginPwd">密碼：</label>
+                    <input id="LoginPwd" name="Password" type="password"
+                           class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
+                    <div id="LoginPwdMsg" class="text-danger"></div>
+                </div>
+            </div>
+            <div class="row mx-auto col-12 col-md-6 col-lg-4 justify-content-between">
+                <div class="col-6 mx-auto mx-auto">
+                    <input type="checkbox" class="control-input" id="RememberMe" name="RememberMe" value="true">
+                    <input type="checkbox" class="control-input"  name="RememberMe" value="false" hidden>
+                    <label class="control-label" for="RememberMe">記住帳號</label>
+                </div>
+                <div class="col-6 mx-auto text-right">
+                    <u><a id="forgetPasswordBtn" href="~/Account/ForgotPassword" class="font-weight-light">忘記密碼?</a></u>
+                </div>
+            </div>
+            <div class="row mt-5 mb-2 justify-content-center">
+                <div class="col-6 col-md-3 mx-auto d-flex justify-content-center">
+                    <button id="loginBtn" type="submit"
+                            class="btn btn-outline-secondary border-0 bg-pink text-white w-100">
+                        登入
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!-- 登入欄位 ends -->
+        <!-- 註冊欄位 starts -->
+        <form id="registerForm" action="~/Account/Register" method="post" class="tab-pane" role="tabpanel" aria-labelledby="regist-tab">
+            @Html.AntiForgeryToken()
+            <div class="row my-3 col-12 col-md-6 mx-auto">
+                <div class="col-5 mr-0 text-right">
+                    <label for="RegEmail">Email：</label>
+                </div>
+                <div class="col-5 px-0">
+                    <input id="RegEmail" type="email" name="Email"
+                           class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
+                    <div id="RegEmailMsg" class="text-danger"></div>
+                </div>
+            </div>
+            <div class="row my-3 col-12 col-md-6 mx-auto">
+                <div class="col-5 mr-0 text-right">
+                    <label for="RegPwd">密碼：</label>
+                </div>
+                <div class="col-5 px-0">
+                    <input id="RegPwd" type="password" name="Password"
+                           class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
+                    <div id="RegPwdMsg" class="pwdCompare text-danger"></div>
+                </div>
+
+            </div>
+            <div class="row my-3 col-12 col-md-6 mx-auto">
+                <div class="col-5 mr-0 text-right">
+                    <label for="RegPwdConfirm">確認密碼：</label>
+                </div>
+                <div class="col-5 px-0">
+                    <input id="RegPwdConfirm" type="password" name="ConfirmPassword"
+                           class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
+                    <div id="RegConfirmMsg" class="pwdCompare text-danger"></div>
+                </div>
+            </div>
+
+            <div class="row mt-4 mx-auto col-12 col-md-5 col-lg-4 justify-content-between">
+                <div class="form-check col-6 mx-auto mx-auto text-center">
+                    <input class="control-input" type="radio" name="AccountRoles" id="accountRoles1" value="Member" checked>
+                    <label class="control-label" for="accountRoles1">
+                        一般會員
+                    </label>
+                </div>
+                <div class="form-check col-6 mx-auto mx-auto text-center">
+                    <input class="control-input" type="radio" name="AccountRoles" id="accountRoles2" value="Company">
+                    <label class="control-label" for="accountRoles2">
+                        展演單位
+                    </label>
+                </div>
+            </div>
+            <div class="row mt-5 mb-2 justify-content-center">
+                <div class="col-6 col-md-3 mx-auto d-flex justify-content-center">
+                    <button id="register" type="submit"
+                            class="btn btn-outline-secondary border-0 bg-pink text-white w-100">
+                        註冊
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!-- 註冊欄位 ends -->
+
+        <button type="button" id="dialogBtn" class="btn btn-primary" data-toggle="modal" data-target="#loginVerifyFalse" hidden></button>
+
     </div>
+</div>
 
-    <script>
-        //要寫欄位驗證
-    </script>
-</body>
+<div class="modal fade px-0 mt-5" id="loginVerifyFalse" data-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- 控至彈出窗大小 -->
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h5 class="modal-title" id="staticBackdropLabel">登入失敗</h5>
+            </div>
+            <div class="modal-body">
+                <main>
+                    <!-- 主內容 -->
+                    <br>
+                    <section id="Section" class="w-100 text-center">
+                        <div id="loginFalse">
+                            @{
+                                Html.RenderPartial("_PartialErrorLogin");
+                            }
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>
 
-</html>
+@section scripts
+{
+    @if (TempData.ContainsKey("LoginPage"))
+    {
+        bool loginPage = (bool)TempData["LoginPage"];
 
+        if (loginPage)
+        {
+            <script>
+                $('#staticBackdropLabel').html('登入失敗');
+                $('#loginForm-tab').trigger('click');
+            </script>
+        }
+        else
+        {
+            <script>
+                $('#staticBackdropLabel').html('註冊失敗');
+                $('#regist-tab').trigger('click');
+            </script>
+        }
+    }
 
+    @if (TempData.ContainsKey("Error"))
+    {
+        <script>
+            $('#dialogBtn').trigger('click');
+        </script>
+    }
+
+    <script src="~/javascript/LoginForm.js"></script>
+    <script src="~/javascript/RegisterForm.js"></script>
+    <script src="~/javascript/AccountIndex.js"></script>
+}

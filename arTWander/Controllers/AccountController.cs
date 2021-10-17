@@ -41,7 +41,7 @@ namespace arTWander.Controllers
 
         //登入＆註冊畫面
         [AllowAnonymous]
-        public ActionResult AccountIndex(string email, bool error = false)
+        public ActionResult AccountIndex()
         {
             //讀取cookie裡面的帳號
             HttpCookie cookie = Request.Cookies["Email"];
@@ -51,9 +51,11 @@ namespace arTWander.Controllers
                 ViewBag.RememberMe = true;
             }
             else
-                ViewBag.Email = email;
+            {
+                ViewBag.Email = (string)TempData["Email"];
+                //TempData.Keep("Email");
+            }
 
-            ViewBag.Error = error;
             return View();
         }
 
@@ -113,16 +115,19 @@ namespace arTWander.Controllers
                 }
             }
 
-            if (!ModelState.IsValid)
-            {
-                //return View(model);
-                return RedirectToAction("AccountIndex", new { email = model.Email, error = true });
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    TempData["Email"] = model.Email;
+            //    TempData["LoginPage"] = true;
+            //    TempData["Error"] = "欄位驗證失敗，請檢查所有欄位是否已填寫!";
+            //    return RedirectToAction("AccountIndex");
+            //}
 
             var usermanger = UserManager.FindByEmail(model.Email);
             // 這不會計算為帳戶鎖定的登入失敗
             // 若要啟用密碼失敗來觸發帳戶鎖定，請變更為 shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            
 
             switch (result)
             {
@@ -130,9 +135,10 @@ namespace arTWander.Controllers
                     //檢查該帳號是否有做mail驗證
                     if (!UserManager.IsEmailConfirmed(usermanger.Id))
                     {
-                        //ModelState.AddModelError("Email", "此帳號的信箱尚未驗證，請驗證後再登入");
-                        //return View(model);
-                        return RedirectToAction("AccountIndex", new { email = model.Email, error = true });
+                        TempData["Email"] = model.Email;
+                        TempData["LoginPage"] = true;
+                        TempData["Error"] = "此帳號的信箱尚未驗證，請驗證後再登入!";
+                        return RedirectToAction("AccountIndex");
                     }
                     else
                     {
@@ -146,11 +152,12 @@ namespace arTWander.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
                 case SignInStatus.Failure:
                 default:
-                    //ModelState.AddModelError("login", "登入失敗，帳號或密碼輸入錯誤");
-                    //return View(model);
                     //傳遞Model=> new RouteValueDictionary(model)
                     //return RedirectToAction("AccountIndex", new RouteValueDictionary(model));
-                    return RedirectToAction("AccountIndex", new { email = model.Email, error = true });
+                    TempData["Email"] = model.Email;
+                    TempData["LoginPage"] = true;
+                    TempData["Error"] = "請確認您的登入資訊是否正確!"; 
+                    return RedirectToAction("AccountIndex");
             }
         }
 
@@ -218,39 +225,43 @@ namespace arTWander.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            //if (!ModelState.IsValid)
+            //{
+            //    //如果執行到這裡，發生某項失敗，則重新顯示表單
+            //    //return View(model);
+            //    TempData["LoginPage"] = false;
+            //    TempData["Error"] = "欄位驗證失敗，請檢查所有欄位是否已填寫!";
+            //    return RedirectToAction("AccountIndex");
+            //}
+
+            var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+            var result = await UserManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                // 如需如何進行帳戶確認及密碼重設的詳細資訊，請前往 https://go.microsoft.com/fwlink/?LinkID=320771
+                // 傳送包含此連結的電子郵件
 
-                if (result.Succeeded)
-                {
-                    // 如需如何進行帳戶確認及密碼重設的詳細資訊，請前往 https://go.microsoft.com/fwlink/?LinkID=320771
-                    // 傳送包含此連結的電子郵件
+                var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 
-                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                //寄mail到新註冊使用者的帳戶
+                await UserManager.SendEmailAsync(user.Id, "確認您的帳戶", "請按一下此連結確認您的帳戶 <a href=\"" + callbackUrl + "\">這裏</a>");
 
-                    //寄mail到新註冊使用者的帳戶
-                    await UserManager.SendEmailAsync(user.Id, "確認您的帳戶", "請按一下此連結確認您的帳戶 <a href=\"" + callbackUrl + "\">這裏</a>");
+                await UserManager.AddToRoleAsync(user.Id, model.AccountRoles);
 
-                    await UserManager.AddToRoleAsync(user.Id, model.AccountRoles);
+                //await UserManager.AddToRoleAsync(user.Id,"Admin");//系統管理員
+                //await UserManager.AddToRoleAsync(user.Id,"Company");//展演單位
+                //await UserManager.AddToRoleAsync(user.Id,"Member");//一般會員
+                //await UserManager.AddToRoleAsync(user.Id,"Blacklist");//黑名單
 
-                    //await UserManager.AddToRoleAsync(user.Id,"Admin");//系統管理員
-                    //await UserManager.AddToRoleAsync(user.Id,"Company");//展演單位
-                    //await UserManager.AddToRoleAsync(user.Id,"Member");//一般會員
-                    //await UserManager.AddToRoleAsync(user.Id,"Blacklist");//黑名單
-
-                    ViewBag.Link = callbackUrl;
-                    return View("DisplayEmail");
-                }
-                AddErrors(result);
-                return RedirectToAction("AccountIndex", new { email = model.Email, error = true });
+                ViewBag.Link = callbackUrl;
+                return View("DisplayEmail");
             }
-
-            //如果執行到這裡，發生某項失敗，則重新顯示表單
-            //return View(model);
-            return RedirectToAction("AccountIndex", new { email = model.Email, error = true });
+            AddErrors(result);
+            TempData["LoginPage"] = false;
+            TempData["Error"] = "註冊失敗！！";
+            return RedirectToAction("AccountIndex");
         }
 
         //
@@ -287,7 +298,9 @@ namespace arTWander.Controllers
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // 不顯示使用者不存在或未受確認
-                    return View("ForgotPasswordConfirmation");
+                    //return View("ForgotPasswordConfirmation");
+                    ViewBag.MailErrorMsg = "Email寄送失敗，請重新寄送";
+                    return PartialView("_PartialForgotPwdError");
                 }
 
                 // 如需如何進行帳戶確認及密碼重設的詳細資訊，請前往 https://go.microsoft.com/fwlink/?LinkID=320771
@@ -297,12 +310,15 @@ namespace arTWander.Controllers
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                 await UserManager.SendEmailAsync(user.Id, "重設密碼", "請按 <a href=\"" + callbackUrl + "\">這裏</a> 重設密碼");
 
-                TempData["ResetLink"] = callbackUrl;
-                return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                ViewBag.ResetLink = "請按 <a href=\"" + callbackUrl + "\">這裏</a> 重設密碼";
+                return PartialView("_PartialForgotPwdSuccess");
+                //return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            //return View(model);
+            ViewBag.MailErrorMsg = "Email輸入錯誤，請重新輸入";
+            return PartialView("_PartialForgotPwdError");
         }
 
         //

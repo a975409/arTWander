@@ -46,7 +46,7 @@ namespace arTWander.Models
             // 設定密碼的驗證邏輯
             manager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 6,
+                RequiredLength = 8,
                 RequireNonLetterOrDigit = true,
                 RequireDigit = true,
                 RequireLowercase = true,

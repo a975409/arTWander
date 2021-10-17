@@ -248,10 +248,13 @@
     <Content Include="image\logo\logo.png" />
     <Content Include="image\map.png" />
     <Content Include="image\nav\notify.png" />
+    <Content Include="javascript\AccountIndex.js" />
     <Content Include="javascript\AsideTrue.js" />
     <Content Include="javascript\EditSingleShowPage.js" />
     <Content Include="javascript\index.js" />
+    <Content Include="javascript\LoginForm.js" />
     <Content Include="javascript\MyShowPage.js" />
+    <Content Include="javascript\RegisterForm.js" />
     <Content Include="javascript\SingleShowPage.js" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -266,9 +269,12 @@
     <Content Include="Views\AsidePage\_logInFalseAside.cshtml" />
     <Content Include="Views\Shared\_IsRememberBrowser.cshtml" />
     <Content Include="Views\Shared\_IsTwoFactor.cshtml" />
-    <Content Include="Views\AccountPage\_PartialLogin.cshtml" />
     <Content Include="Views\Account\AccountIndex.cshtml" />
     <Content Include="Views\Home\test.cshtml" />
+    <Content Include="Views\Shared\_AccountLayout.cshtml" />
+    <Content Include="Views\Shared\_PartialErrorLogin.cshtml" />
+    <Content Include="Views\Shared\_PartialForgotPwdSuccess.cshtml" />
+    <Content Include="Views\Shared\_PartialForgotPwdError.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
