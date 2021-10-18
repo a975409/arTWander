@@ -70,6 +70,7 @@ header section svg{
 }
 
 svg{
+    width: 100%;
     fill: #7c7c7c;
     stroke: #ffffff;
     stroke-width: .5px;
@@ -446,7 +447,7 @@ footer .row:last-of-type p{
     }
 
     header section .paddingMap{
-        padding:0 50px;
+        padding:0 20px;
     }
 
     #section1 .detailCard{
