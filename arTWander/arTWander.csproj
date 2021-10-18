@@ -273,8 +273,6 @@
     <Content Include="Views\Home\test.cshtml" />
     <Content Include="Views\Shared\_AccountLayout.cshtml" />
     <Content Include="Views\Shared\_PartialAccountDialog.cshtml" />
-    <Content Include="Views\Shared\_PartialForgotPwdSuccess.cshtml" />
-    <Content Include="Views\Shared\_PartialForgotPwdError.cshtml" />
     <Content Include="CityCountyData.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -387,6 +385,7 @@
     <Compile Include="Models\ResponseShowComment.cs" />
     <Compile Include="Models\ShowComment.cs" />
     <Compile Include="Models\ShowPage.cs" />
+    <Compile Include="Models\SweetAlert.cs" />
     <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

@@ -43,46 +43,46 @@ namespace arTWander.Models
         public string Email { get; set; }
     }
 
-    public class AccountViewModel
-    {
-        public class Login
-        {
-            [Required]
-            [Display(Name = "Email")]
-            [EmailAddress(ErrorMessage = "請輸入正確的Email")]
-            public string Email { get; set; }
+    //public class AccountViewModel
+    //{
+    //    public class Login
+    //    {
+    //        [Required]
+    //        [Display(Name = "Email")]
+    //        [EmailAddress(ErrorMessage = "請輸入正確的Email")]
+    //        public string Email { get; set; }
 
-            [Required]
-            [DataType(DataType.Password)]
-            [Display(Name = "密碼")]
-            public string Password { get; set; }
+    //        [Required]
+    //        [DataType(DataType.Password)]
+    //        [Display(Name = "密碼")]
+    //        public string Password { get; set; }
 
-            [Display(Name = "記住帳號")]
-            public bool RememberMe { get; set; }
-        }
+    //        [Display(Name = "記住帳號")]
+    //        public bool RememberMe { get; set; }
+    //    }
 
-        public class Register
-        {
-            [Required]
-            [EmailAddress]
-            [Display(Name = "電子信箱")]
-            public string Email { get; set; }
+    //    public class Register
+    //    {
+    //        [Required]
+    //        [EmailAddress]
+    //        [Display(Name = "電子信箱")]
+    //        public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            [Display(Name = "密碼")]
-            public string Password { get; set; }
+    //        [Required]
+    //        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+    //        [DataType(DataType.Password)]
+    //        [Display(Name = "密碼")]
+    //        public string Password { get; set; }
 
-            [DataType(DataType.Password)]
-            [Display(Name = "確認密碼")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-            public string ConfirmPassword { get; set; }
+    //        [DataType(DataType.Password)]
+    //        [Display(Name = "確認密碼")]
+    //        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+    //        public string ConfirmPassword { get; set; }
 
-            [Display(Name = "用戶權限")]
-            public string AccountRoles { get; set; }
-        }
-    }
+    //        [Display(Name = "用戶權限")]
+    //        public string AccountRoles { get; set; }
+    //    }
+    //}
 
     public class LoginViewModel
     {
@@ -113,6 +113,7 @@ namespace arTWander.Models
         //public string UserName { get; set; }
 
         [Required]
+        [RegularExpression("^((?=.{8,}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).*|(?=.{8,}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!\u0022#$%&'()*+,./:;<=>?@'[\\]\\^_`{|}~-]).*)", ErrorMessage = "設定的密碼不符合規範")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "密碼")]
@@ -134,6 +135,7 @@ namespace arTWander.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
+        [RegularExpression("^((?=.{8,}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).*|(?=.{8,}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!\u0022#$%&'()*+,./:;<=>?@'[\\]\\^_`{|}~-]).*)",ErrorMessage ="設定的密碼不符合規範")]
         [Required(ErrorMessage ="請填寫密碼")]
         [StringLength(100, ErrorMessage = "{0}至少設定 {2} 以上", MinimumLength = 8)]
         [DataType(DataType.Password)]

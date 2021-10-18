@@ -39,7 +39,7 @@ $('#RegPwd').change(function () {
     if (!inputRequire(data)) {
         RegPwdMsg.html('請輸入密碼 !!');
     } else if (!pwdformatCheck(data)) {
-        RegPwdMsg.html('密碼輸入格式不符，請參考下列規則設定密碼');
+        RegPwdMsg.html('密碼必須8個字以上，包含英文大小寫、數字和特殊符號');
     } else {
         RegPwdMsg.html('');
     }
