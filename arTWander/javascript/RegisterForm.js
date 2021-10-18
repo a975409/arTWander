@@ -1,22 +1,4 @@
-﻿//提交表單時，驗證Email和密碼欄位，如果驗證失敗，則取消提交表單
-$('#registerForm').submit(function () {
-    let RegEmail = $('#RegEmail').val();
-    let RegPwd = $('#RegPwd').val();
-    let RegPwdConfirm = $('#RegPwdConfirm').val();
-
-    let RegEmailResult = inputRequire(RegEmail) && IsEmail(RegEmail);
-    let RegPwdResult = inputRequire(RegPwd) && pwdformatCheck(RegPwd);
-    let RegPwdConfirmResult = inputRequire(RegPwdConfirm) && pwdformatCheck(RegPwdConfirm) && pwdCompare(RegPwdConfirm, RegPwd);
-
-    if (!RegEmailResult || !RegPwdResult || !RegPwdConfirmResult) {
-        $('#RegEmail').trigger('change');
-        $('#RegPwd').trigger('change');
-        $('#RegPwdConfirm').trigger('change');
-        return false;
-    }
-});
-
-//當Email欄位的值改變時，驗證該欄位是否成功，失敗的話則顯示錯誤訊息
+﻿//當Email欄位的值改變時，驗證該欄位是否成功，失敗的話則顯示錯誤訊息
 $('#RegEmail').change(function () {
     let data = $(this).val();
     let RegEmailMsg = $('#RegEmailMsg');
