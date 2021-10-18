@@ -1,4 +1,4 @@
-﻿@model arTWander.Models.AccountViewModel
+﻿
 @{
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
@@ -122,83 +122,72 @@
             </div>
         </form>
         <!-- 註冊欄位 ends -->
-
-        <button type="button" id="dialogBtn" class="btn btn-primary" data-toggle="modal" data-target="#loginVerifyFalse" hidden></button>
-
-    </div>
-</div>
-
-@*彈出視窗*@
-<div class="modal fade px-0 mt-5" id="loginVerifyFalse" data-keyboard="false" tabindex="-1"
-     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <!-- 控制彈出窗大小 -->
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header justify-content-center">
-                <h5 class="modal-title" id="staticBackdropLabel">@((string)TempData["Status"])</h5>
-            </div>
-            <div class="modal-body">
-                <main>
-                    <!-- 主內容 -->
-                    <br>
-                    <section id="Section" class="w-100 text-center">
-                        <div id="loginFalse">
-                            @{
-                                Html.RenderPartial("_PartialAccountDialog");
-                            }
-                        </div>
-                    </section>
-                </main>
-            </div>
-        </div>
     </div>
 </div>
 
 @section scripts
 {
-    @*@if (TempData.ContainsKey("LoginPage"))
-        {
-            bool loginPage = (bool)TempData["LoginPage"];
-
-            if (loginPage)
-            {
-                <script>
-                    $('#staticBackdropLabel').html('登入失敗');
-                    $('#loginForm-tab').trigger('click');
-                </script>
-            }
-            else
-            {
-                <script>
-                    $('#staticBackdropLabel').html('註冊失敗');
-                    $('#regist-tab').trigger('click');
-                </script>
-            }
-        }*@
-
-    @if (TempData.ContainsKey("DialogMsg"))
-    {
-        <script>
-            $('#dialogBtn').trigger('click');
-        </script>
-    }
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    <script src="sweetalert2.all.min.js"></script>
+    <script src="sweetalert2.min.js"></script>
 
     <script>
-            //$('#loginForm-tab').click(function () {
-            //    foucePage($(this));
-            //});
+        //提交表單時，驗證Email和密碼欄位，如果驗證失敗，則取消提交表單
+        $('#loginForm').submit(function (event) {
+            let LoginEmail = $('#LoginEmail').val();
+            let LoginPwd = $('#LoginPwd').val();
 
-            //$('#regist-tab').click(function () {
-            //    foucePage($(this));
-            //});
+            if (!inputRequire(LoginEmail) || !IsEmail(LoginEmail) || !inputRequire(LoginPwd)) {
+                $('#LoginEmail').trigger('change');
+                $('#LoginPwd').trigger('change');
+                return false;
+            }
 
-            //function foucePage(obj) {
-            //    $('#loginForm-tab').removeClass("bg-danger text-white");
-            //    $('#regist-tab').removeClass("bg-danger text-white");
+            event.preventDefault();
+            let formData = $(this).serialize();
 
-            //    $(obj).addClass("bg-danger text-white");
-            //}
+            $.ajax({
+                type: 'post',
+                dataType: 'script',
+                url: '@Url.Action("Login","Account")',
+                data: formData,
+                success: function (data) {
+                    eval(data);
+                }
+            });
+        });
 
+        //提交表單時，驗證Email和密碼欄位，如果驗證失敗，則取消提交表單
+        $('#registerForm').submit(function (event) {
+            let RegEmail = $('#RegEmail').val();
+            let RegPwd = $('#RegPwd').val();
+            let RegPwdConfirm = $('#RegPwdConfirm').val();
+
+            let RegEmailResult = inputRequire(RegEmail) && IsEmail(RegEmail);
+            let RegPwdResult = inputRequire(RegPwd) && pwdformatCheck(RegPwd);
+            let RegPwdConfirmResult = inputRequire(RegPwdConfirm) && pwdformatCheck(RegPwdConfirm) && pwdCompare(RegPwdConfirm, RegPwd);
+
+            if (!RegEmailResult || !RegPwdResult || !RegPwdConfirmResult) {
+                $('#RegEmail').trigger('change');
+                $('#RegPwd').trigger('change');
+                $('#RegPwdConfirm').trigger('change');
+                return false;
+            }
+
+            event.preventDefault();
+            let formData = $(this).serialize();
+
+            $.ajax({
+                type: 'post',
+                dataType: 'script',
+                url: '@Url.Action("Register", "Account")',
+                data: formData,
+                success: function (data) {
+                    eval(data);
+                }
+            });
+        });
     </script>
 
     <script src="~/javascript/LoginForm.js"></script>

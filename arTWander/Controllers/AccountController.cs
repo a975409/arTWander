@@ -126,8 +126,8 @@ namespace arTWander.Controllers
             //    TempData["LoginPage"] = true;
             //    TempData["Status"] = "登入失敗";
             //    TempData["DialogMsg"] = "欄位驗證失敗，請檢查所有欄位是否已填寫!<br><br>";
-            //    return RedirectToAction("AccountIndex");
-            //    //return View(model);
+            //    //return RedirectToAction("AccountIndex");
+            //    return View(model);
             //}
 
             var usermanger = UserManager.FindByEmail(model.Email);
@@ -135,38 +135,37 @@ namespace arTWander.Controllers
             // 若要啟用密碼失敗來觸發帳戶鎖定，請變更為 shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             
-
             switch (result)
             {
                 case SignInStatus.Success:
                     //檢查該帳號是否有做mail驗證
                     if (!UserManager.IsEmailConfirmed(usermanger.Id))
                     {
-                        TempData["Email"] = model.Email;
-                        TempData["LoginPage"] = true;
-                        TempData["Status"] = "登入失敗";
-                        TempData["DialogMsg"] = "<p>此帳號的信箱尚未驗證，請驗證後再登入!</p><br><br>";
-                        return RedirectToAction("AccountIndex");
+                        string error = SweetAlert.initAlert() + SweetAlert.ErrorAlert("登入失敗", "此帳號的信箱尚未驗證，請驗證後再登入!", "");
+                        return JavaScript(error);
                     }
                     else
                     {
                         //登入成功
                         //return RedirectToLocal(returnUrl);
-                        return RedirectToAction("Index", "Home");
+                        //return RedirectToAction("Index", "Home");
+                        string success = SweetAlert.timeoutCloseToLinkAlert(3000, Url.Action("Index", "Home")) + SweetAlert.SuccessAlert("登入成功", "3秒後自動跳轉到首頁", "");
+                        return JavaScript(success);
                     }
                 case SignInStatus.LockedOut:
-                    return View("Lockout");
+                    //return View("Lockout");
+                    string LockedOut = SweetAlert.initAlert() + SweetAlert.ErrorAlert("登入失敗", "該用戶已被鎖定，請稍後再試", "");
+                    return JavaScript(LockedOut);
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
+                    //return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
+                    string Verification = SweetAlert.timeoutCloseToLinkAlert(3000, Url.Action("SendCode", "Account", new { ReturnUrl = returnUrl })) + SweetAlert.SuccessAlert("請稍後", "3秒後自動跳轉到驗證畫面", "");
+                    return JavaScript(Verification);
                 case SignInStatus.Failure:
                 default:
                     //傳遞Model=> new RouteValueDictionary(model)
                     //return RedirectToAction("AccountIndex", new RouteValueDictionary(model));
-                    TempData["Email"] = model.Email;
-                    TempData["LoginPage"] = true;
-                    TempData["Status"] = "登入失敗";
-                    TempData["DialogMsg"] = "<p>請確認您的登入資訊是否正確!</p><br><br>"; 
-                    return RedirectToAction("AccountIndex");
+                    string loginFailure = SweetAlert.initAlert() + SweetAlert.ErrorAlert("登入失敗", "請確認您輸入的帳號密碼是否正確!", "");
+                    return JavaScript(loginFailure);
             }
         }
 
@@ -209,13 +208,20 @@ namespace arTWander.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(model.ReturnUrl);
+                    //return RedirectToLocal(model.ReturnUrl);
+                    string successAlert = SweetAlert.timeoutCloseToLinkAlert(3000, Url.Action("Index", "Home")) + SweetAlert.SuccessAlert("驗證成功", "3秒後自動跳轉到首頁", "");
+
+                    return JavaScript(successAlert);
                 case SignInStatus.LockedOut:
-                    return View("Lockout");
+                    //return View("Lockout");
+                    string LockedOut = SweetAlert.initAlert() + SweetAlert.ErrorAlert("驗證失敗", "該用戶已被鎖定，請稍後再試", "");
+                    return JavaScript(LockedOut);
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "代碼無效。");
-                    return View(model);
+                    //ModelState.AddModelError("", "代碼無效。");
+                    //return View(model);
+                    string validAlert = SweetAlert.initAlert() + SweetAlert.ErrorAlert("驗證失敗", "驗證碼無效", "");
+                    return JavaScript(validAlert);
             }
         }
 
@@ -265,17 +271,22 @@ namespace arTWander.Controllers
                 //await UserManager.AddToRoleAsync(user.Id,"Member");//一般會員
                 //await UserManager.AddToRoleAsync(user.Id,"Blacklist");//黑名單
 
-                ViewBag.Link = callbackUrl;
+                //ViewBag.Link = callbackUrl;
                 //return View("DisplayEmail");
-                TempData["Status"] = "註冊完成";
-                TempData["DialogMsg"] = "<p>請至信箱收驗證信</p><p>或點擊 <a href=" + callbackUrl + ">此連結</a></p><br><br>";
-                return RedirectToAction("AccountIndex");
+                //TempData["Status"] = "註冊完成";
+                //TempData["DialogMsg"] = "<p>請至信箱收驗證信</p><p>或點擊 <a href=" + callbackUrl + ">此連結</a></p><br><br>";
+                //return RedirectToAction("AccountIndex");
+
+                string success = SweetAlert.timeoutCloseToLinkAlert(0, Url.Action("Index", "Home")) + SweetAlert.SuccessAlert("註冊成功", "請至信箱收驗證信", "或點擊 <a href=" + callbackUrl + ">此連結</a>");
+                return JavaScript(success);
             }
             AddErrors(result);
-            TempData["LoginPage"] = false;
-            TempData["Status"] = "註冊失敗";
-            TempData["DialogMsg"] = "<p>註冊失敗！！</p><br><br>";
-            return RedirectToAction("AccountIndex");
+            //TempData["LoginPage"] = false;
+            //TempData["Status"] = "註冊失敗";
+            //TempData["DialogMsg"] = "<p>註冊失敗！！</p><br><br>";
+            //return RedirectToAction("AccountIndex");
+            string failure = SweetAlert.initAlert() + SweetAlert.ErrorAlert("註冊失敗", "欄位驗證失敗!", "");
+            return JavaScript(failure);
         }
 
         //
@@ -311,10 +322,8 @@ namespace arTWander.Controllers
                 var user = await UserManager.FindByNameAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
-                    ModelState.AddModelError("Email", "該使用者不存在或未確認");
-                    return View();
-                    //ViewBag.MailErrorMsg = "Email寄送失敗，請重新寄送";
-                    //return PartialView("_PartialForgotPwdError");
+                    string alert = SweetAlert.initAlert() + SweetAlert.ErrorAlert("Email寄送失敗", "該使用者不存在或未確認", "");
+                    return JavaScript(alert);
                 }
 
                 // 如需如何進行帳戶確認及密碼重設的詳細資訊，請前往 https://go.microsoft.com/fwlink/?LinkID=320771
@@ -324,15 +333,14 @@ namespace arTWander.Controllers
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                 await UserManager.SendEmailAsync(user.Id, "重設密碼", "請按 <a href=\"" + callbackUrl + "\">這裏</a> 重設密碼");
 
-                //ViewBag.ResetLink = "請按 <a href=\"" + callbackUrl + "\">這裏</a> 重設密碼";
-                //return PartialView("_PartialForgotPwdSuccess");
-                TempData["ResetLink"] = callbackUrl;
-                return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string a_href = "或請按 <a href=\"" + callbackUrl + "\">這裏</a> 重設密碼";
+                string successAlert = SweetAlert.timeoutCloseToLinkAlert(0, Url.Action("AccountIndex", "Account")) + SweetAlert.SuccessAlert("Email寄送成功", "請至Email收密碼重設信", a_href);
+
+                return JavaScript(successAlert);
             }
-            // If we got this far, something failed, redisplay form
-            return View(model);
-            //ViewBag.MailErrorMsg = "Email輸入錯誤，請重新輸入";
-            //return PartialView("_PartialForgotPwdError");
+            string errorMsg = ModelState["Email"].Errors[0].ErrorMessage;
+            string validAlert = SweetAlert.initAlert() + SweetAlert.ErrorAlert("Email寄送失敗", errorMsg, "");
+            return JavaScript(validAlert);
         }
 
         //
@@ -361,27 +369,29 @@ namespace arTWander.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
-            ViewBag.Email = model.Email;
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(model);
+                var user = await UserManager.FindByNameAsync(model.Email);
+                if (user == null)
+                {
+                    string notFind = SweetAlert.initAlert() + SweetAlert.ErrorAlert("密碼重設失敗", "該使用者不存在或未確認", "");
+                    return JavaScript(notFind);
+                }
+                var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+                if (result.Succeeded)
+                {
+                    string successAlert = SweetAlert.timeoutCloseToLinkAlert(3000, Url.Action("AccountIndex", "Account")) + SweetAlert.SuccessAlert("密碼重設成功", "3秒後自動跳轉到登入畫面", "");
+                    return JavaScript(successAlert);
+                }
+                else
+                {
+                    AddErrors(result);
+                    string errorAlert = SweetAlert.initAlert() + SweetAlert.ErrorAlert("密碼重設失敗", "發生未知錯誤，請稍後再試", "");
+                    return JavaScript(errorAlert);
+                }
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
-            if (user == null)
-            {
-                //return RedirectToAction("ResetPasswordConfirmation", "Account");
-                ModelState.AddModelError("Email", "該使用者不存在或未確認");
-                return View(model);
-            }
-            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-            AddErrors(result);
-
-            ModelState.AddModelError("Password", "設定的密碼不符合規範");
-            return View();
+            string validAlert = SweetAlert.initAlert() + SweetAlert.ErrorAlert("密碼重設失敗", "欄位驗證失敗，請重新輸入", "");
+            return JavaScript(validAlert);
         }
 
         //
