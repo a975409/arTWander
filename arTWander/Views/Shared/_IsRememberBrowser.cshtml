@@ -1,34 +1,58 @@
 ﻿@*@if (Model.BrowserRemembered)
-{
-    
-    <p>
-        Browser is curently remembered for two factor:
-        <input type="submit" value="Forget Browser" class="btn btn-default" />
-    </p>
-}
-else
-{
-    <p>
-        Browser is curently not remembered for two factor:
-        <input type="submit" value="Remember Browser" class="btn btn-default" />
-    </p>
-}*@
+    {
 
-@if (Model.BrowserRemembered)
-{
-    <form method="post" action="/Manage/ForgetBrowser" id="IsRememberBrowser">
         <p>
             Browser is curently remembered for two factor:
             <input type="submit" value="Forget Browser" class="btn btn-default" />
         </p>
-    </form>
-}
-else
-{
-    <form method="post" action="/Manage/RememberBrowser" id="IsRememberBrowser">
+    }
+    else
+    {
         <p>
             Browser is curently not remembered for two factor:
             <input type="submit" value="Remember Browser" class="btn btn-default" />
         </p>
+    }*@
+
+@*if (Model.BrowserRemembered)
+    {
+        <form method="post" action="/Manage/ForgetBrowser" id="IsRememberBrowser">
+            <p>
+                Browser is curently remembered for two factor:
+                <input type="submit" value="Forget Browser" class="btn btn-default" />
+            </p>
+        </form>
+    }
+    else
+    {
+        <form method="post" action="/Manage/RememberBrowser" id="IsRememberBrowser">
+            <p>
+                Browser is curently not remembered for two factor:
+                <input type="submit" value="Remember Browser" class="btn btn-default" />
+            </p>
+        </form>
+    }*@
+
+
+
+@if (Model.BrowserRemembered)
+{
+    <form class="col-12 row justify-content-center px-0" method="post" action="/Manage/ForgetBrowser" id="IsRememberBrowser">
+        <label class="col-4 col-md-2">瀏覽器</label>
+        <div class="col-6 px-0 d-flex justify-content-start">
+            <input type="submit" value="取消瀏覽器紀錄二階段認證" class="w-100 btn btn-outline-secondary border-0 bg-gray" />
+        </div>
     </form>
 }
+else
+{
+    <form class="col-12 row justify-content-center px-0" method="post" action="/Manage/RememberBrowser" id="IsRememberBrowser">
+        <label class="col-4 col-md-2">瀏覽器</label>
+        <div class="col-6 px-0 d-flex justify-content-start">
+            <input type="submit" value="開啟瀏覽器紀錄二階段認證" class="w-100 btn btn-outline-secondary border-0 bg-gray" />
+        </div>
+    </form>
+}
+
+
+

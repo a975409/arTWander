@@ -13,3 +13,12 @@
 .bg-pink{
     background-color: rgb(197, 126, 104);
 }
+
+#aside1 a:hover {
+    text-decoration: none;
+    color: rgb(197, 126, 104);
+}
+
+.fa-cog:hover {
+    transform: rotate(180deg);
+}   

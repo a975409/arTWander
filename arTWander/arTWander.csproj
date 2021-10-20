@@ -159,6 +159,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\CommonIndex.css" />
+    <Content Include="css\css_commonPage\forum.css" />
+    <Content Include="css\css_commonPage\GalleryList.css" />
+    <Content Include="css\css_commonPage\setUpPage.css" />
+    <Content Include="css\css_commonPage\ShowList.css" />
     <Content Include="css\CustomList.css" />
     <Content Include="css\EditSingleShowPage.css" />
     <Content Include="css\index.css" />
@@ -274,6 +278,9 @@
     <Content Include="Views\Shared\_AccountLayout.cshtml" />
     <Content Include="Views\Shared\_PartialAccountDialog.cshtml" />
     <Content Include="CityCountyData.json" />
+    <Content Include="Views\Common\ManageIndex.cshtml" />
+    <Content Include="Views\Shared\CommonLayout\_AsideFalse.cshtml" />
+    <Content Include="Views\Shared\CommonLayout\_AsideTrue.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -350,6 +357,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
@@ -398,6 +406,7 @@
       <DependentUpon>202110151607074_Company-add-address-field.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
