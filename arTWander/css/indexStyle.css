@@ -49,6 +49,14 @@ header nav div:last-of-type{
 #signInBtn{
     z-index: 1003;
 }
+
+.fa-cog {
+    transition: all .3s ease-in;
+}
+
+.fa-cog:hover {
+    transform: rotate(180deg);
+}
 /* ------------- */
 header section{
     height: 90%;
