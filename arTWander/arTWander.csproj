@@ -357,13 +357,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-<<<<<<< HEAD
-    <Compile Include="Controllers\CommonController.cs" />
-=======
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
->>>>>>> feature-a975409-update_database
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
