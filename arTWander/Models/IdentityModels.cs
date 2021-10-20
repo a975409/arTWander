@@ -85,20 +85,10 @@ namespace arTWander.Models
         public virtual ICollection<LogingLog> LogingLogs { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PostComment> PostComments { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PostLike> PostLikes { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reports> ReportsList { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ResponseComment> ResponseComments { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ResponseCommentLike> ResponseCommentLikes { get; set; }
-
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ResponseShowComment> ResponseShowComments { get; set; }
 
@@ -148,16 +138,11 @@ namespace arTWander.Models
         public virtual DbSet<LogingLog> LogingLog { get; set; }
         public virtual DbSet<PageToTodays> PageToTodays { get; set; }
         public virtual DbSet<PageViewCount> PageViewCount { get; set; }
-        public virtual DbSet<PostComment> PostComment { get; set; }
-        public virtual DbSet<PostLike> PostLike { get; set; }
-        public virtual DbSet<Posts> Posts { get; set; }
-        public virtual DbSet<PostsPic> PostsPic { get; set; }
         public virtual DbSet<Reports> Reports { get; set; }
-        public virtual DbSet<ResponseComment> ResponseComment { get; set; }
-        public virtual DbSet<ResponseCommentLike> ResponseCommentLike { get; set; }
         public virtual DbSet<ResponseShowComment> ResponseShowComment { get; set; }
         public virtual DbSet<ShowComment> ShowComment { get; set; }
         public virtual DbSet<ShowPage> ShowPage { get; set; }
+        public virtual DbSet<ShowPageFile> ShowPageFile { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
 
         //設定資料表關聯
@@ -183,33 +168,9 @@ namespace arTWander.Models
                 .HasForeignKey(e => e.FK_ApplicationUser);
 
             modelBuilder.Entity<ApplicationUser>()
-                .HasMany(e => e.PostComments)
-                .WithRequired(e => e.ApplicationUser)
-                .HasForeignKey(e => e.FK_ApplicationUser)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany(e => e.PostLikes)
-                .WithRequired(e => e.ApplicationUser)
-                .HasForeignKey(e => e.FK_ApplicationUser)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<ApplicationUser>()
                 .HasMany(e => e.ReportsList)
                 .WithOptional(e => e.ApplicationUser)
                 .HasForeignKey(e => e.FK_ApplicationUser);
-
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany(e => e.ResponseComments)
-                .WithRequired(e => e.ApplicationUser)
-                .HasForeignKey(e => e.FK_ApplicationUser)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany(e => e.ResponseCommentLikes)
-                .WithRequired(e => e.ApplicationUser)
-                .HasForeignKey(e => e.FK_ApplicationUser)
-                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(e => e.ResponseShowComments)
@@ -263,12 +224,6 @@ namespace arTWander.Models
                 .HasForeignKey(e => e.FK_Company);
 
             modelBuilder.Entity<Company>()
-                .HasMany(e => e.PostsList)
-                .WithRequired(e => e.Company)
-                .HasForeignKey(e => e.FK_Company)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Company>()
                 .HasMany(e => e.ReportsList)
                 .WithOptional(e => e.Company)
                 .HasForeignKey(e => e.FK_Company);
@@ -291,51 +246,16 @@ namespace arTWander.Models
                 .HasForeignKey(e => e.FK_District)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<District>()
+                .HasMany(e => e.Companies)
+                .WithRequired(e => e.District)
+                .HasForeignKey(e => e.FK_District)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Keywords>()
                 .HasMany(e => e.ShowPages)
                 .WithMany(e => e.KeywordsList)
                 .Map(m => m.ToTable("PageToKeyword"));
-
-            modelBuilder.Entity<PostComment>()
-                .HasMany(e => e.ResponseComments)
-                .WithRequired(e => e.PostComment)
-                .HasForeignKey(e => e.FK_ResponsePost)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<PostComment>()
-                .HasMany(e => e.ResponseCommentLikes)
-                .WithRequired(e => e.PostComment)
-                .HasForeignKey(e => e.FK_ResponsePost)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Posts>()
-                .HasMany(e => e.PageViewCounts)
-                .WithOptional(e => e.Posts)
-                .HasForeignKey(e => e.FK_Posts);
-
-            modelBuilder.Entity<Posts>()
-                .HasMany(e => e.PostComments)
-                .WithRequired(e => e.Posts)
-                .HasForeignKey(e => e.FK_Posts)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Posts>()
-                .HasMany(e => e.PostLikes)
-                .WithRequired(e => e.Posts)
-                .HasForeignKey(e => e.FK_Posts)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Posts>()
-                .HasMany(e => e.ShowPages)
-                .WithRequired(e => e.Posts)
-                .HasForeignKey(e => e.FK_Post)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<PostsPic>()
-                .HasMany(e => e.PostsList)
-                .WithRequired(e => e.PostsPic)
-                .HasForeignKey(e => e.FK_PostPic)
-                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ResponseShowComment>()
                 .HasMany(e => e.ReportsList)
@@ -365,6 +285,12 @@ namespace arTWander.Models
 
             modelBuilder.Entity<ShowPage>()
                 .HasMany(e => e.ShowComments)
+                .WithRequired(e => e.ShowPage)
+                .HasForeignKey(e => e.FK_ShowPage)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ShowPage>()
+                .HasMany(e => e.ShowPageFiles)
                 .WithRequired(e => e.ShowPage)
                 .HasForeignKey(e => e.FK_ShowPage)
                 .WillCascadeOnDelete(false);

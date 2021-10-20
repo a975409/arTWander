@@ -55,7 +55,20 @@ namespace arTWander.Controllers
                 Logins = await UserManager.GetLoginsAsync(User.Identity.GetUserId<int>()),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(User.Identity.GetUserId<int>().ToString())
             };
-            return View(model);
+
+            var RoleName = await UserManager.GetRolesAsync(User.Identity.GetUserId<int>());
+
+            switch (RoleName[0]) {
+                case "Admin":
+                    return RedirectToAction("Index", "Admin", new { model = model });
+                case "Company":
+                    return RedirectToAction("Index", "Company", new { model = model });
+                case "Member":
+                    return RedirectToAction("Index", "Common", new { model = model });
+                default:
+                    return View("Error");
+            }
+            //return View(model);
         }
 
         //

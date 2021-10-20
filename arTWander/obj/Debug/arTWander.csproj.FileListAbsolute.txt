@@ -128,3 +128,6 @@ D:\MyWork\arTWander\arTWander\bin\Microsoft.Configuration.ConfigurationBuilders.
 D:\MyWork\arTWander\arTWander\bin\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.xml
 D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.Migrations.Companyaddaddressfield.resources
 D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.csproj.GenerateResource.cache
+D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.Migrations.Company_District_ForeignKey.resources
+D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.Migrations.ShowPage_ShowPageFile_ForeignKey.resources
+D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.Migrations.delete_Post.resources

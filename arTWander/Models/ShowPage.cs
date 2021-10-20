@@ -18,6 +18,7 @@ namespace arTWander.Models
             ShowComments = new HashSet<ShowComment>();
             ApplicationUsers = new HashSet<ApplicationUser>();
             KeywordsList = new HashSet<Keywords>();
+            ShowPageFiles = new HashSet<ShowPageFile>();
         }
 
         public int Id { get; set; }
@@ -29,14 +30,6 @@ namespace arTWander.Models
         [Required]
         [StringLength(255)]
         public string Description { get; set; }
-
-        [Required]
-        [StringLength(30)]
-        public string ImgFileName { get; set; }
-
-        [Required]
-        [StringLength(30)]
-        public string ImgContent { get; set; }
 
         public DateTime StartDate { get; set; }
 
@@ -68,8 +61,6 @@ namespace arTWander.Models
 
         public int FK_District { get; set; }
 
-        public int FK_Post { get; set; }
-
         public virtual City City { get; set; }
 
         public virtual Company Company { get; set; }
@@ -82,8 +73,6 @@ namespace arTWander.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PageViewCount> PageViewCounts { get; set; }
 
-        public virtual Posts Posts { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reports> ReportsList { get; set; }
 
@@ -95,5 +84,8 @@ namespace arTWander.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Keywords> KeywordsList { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ShowPageFile> ShowPageFiles { get; set; }
     }
 }
