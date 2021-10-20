@@ -13,6 +13,7 @@ namespace arTWander.Models
         public District()
         {
             ShowPage = new HashSet<ShowPage>();
+            Companies = new HashSet<Company>();
         }
 
         public int Id { get; set; }
@@ -23,6 +24,9 @@ namespace arTWander.Models
         public int FK_City { get; set; }
 
         public virtual City City { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Company> Companies { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ShowPage> ShowPage { get; set; }

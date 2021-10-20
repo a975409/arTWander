@@ -17,11 +17,7 @@ namespace arTWander.Models
 
         public int? FK_ShowPage { get; set; }
 
-        public int? FK_Posts { get; set; }
-
         public virtual Company Company { get; set; }
-
-        public virtual Posts Posts { get; set; }
 
         public virtual ShowPage ShowPage { get; set; }
     }
