@@ -262,9 +262,9 @@ namespace arTWander.Controllers
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 
                 //寄mail到新註冊使用者的帳戶
-                await UserManager.SendEmailAsync(user.Id, "確認您的帳戶", "請按一下此連結確認您的帳戶 <a href=\"" + callbackUrl + "\">這裏</a>");
+                await UserManager.SendEmailAsync(user.Id, "您的arTWander帳號已註冊完畢, 請盡速確認您的帳戶", "請按一下此連結確認您的帳戶 <a href=\"" + callbackUrl + "\">這裏</a> \n若您並未註冊本網站請忽略此信, 以確保您自身權益");
 
-                await UserManager.AddToRoleAsync(user.Id, model.AccountRoles);
+                UserManager.AddToRoleAsync(user.Id, model.AccountRoles);
 
                 //await UserManager.AddToRoleAsync(user.Id,"Admin");//系統管理員
                 //await UserManager.AddToRoleAsync(user.Id,"Company");//展演單位
@@ -331,7 +331,7 @@ namespace arTWander.Controllers
 
                 var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "重設密碼", "請按 <a href=\"" + callbackUrl + "\">這裏</a> 重設密碼");
+                await UserManager.SendEmailAsync(user.Id, "您的arTWander密碼重設確認信", "請按 <a href=\"" + callbackUrl + "\">這裏</a> 重設您的密碼 \n若您並未重置您的密碼請忽略此信");
 
                 string a_href = "或請按 <a href=\"" + callbackUrl + "\">這裏</a> 重設密碼";
                 string successAlert = SweetAlert.timeoutCloseToLinkAlert(0, Url.Action("AccountIndex", "Account")) + SweetAlert.SuccessAlert("Email寄送成功", "請至Email收密碼重設信", a_href);
