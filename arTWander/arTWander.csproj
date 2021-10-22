@@ -159,13 +159,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\CommonIndex.css" />
+    <Content Include="css\CommonLayout\_AsideFalse.css" />
+    <Content Include="css\CommonLayout\_AsideTrue.css" />
     <Content Include="css\css_commonPage\forum.css" />
     <Content Include="css\css_commonPage\GalleryList.css" />
     <Content Include="css\css_commonPage\setUpPage.css" />
     <Content Include="css\css_commonPage\ShowList.css" />
+    <Content Include="css\css_companyPage\Index.css" />
     <Content Include="css\CustomList.css" />
     <Content Include="css\EditSingleShowPage.css" />
-    <Content Include="css\index.css" />
+    <Content Include="css\indexStyle.css" />
     <Content Include="css\ManagerIndex.css" />
     <Content Include="css\SingleShowPage.css" />
     <Content Include="css\UserList.css" />
@@ -266,21 +269,21 @@
     <Content Include="Views\AsidePage\AccountAside.html" />
     <Content Include="Views\AsidePage\logInFalseAside.html" />
     <Content Include="Views\AsidePage\managerAside.html" />
-    <Content Include="Views\Shared\_AsideFalse.cshtml" />
-    <Content Include="Views\Shared\_AsideTrue.cshtml" />
-    <Content Include="Views\Shared\_PartialUserDropdowns.cshtml" />
-    <Content Include="Views\Home\homeIndexPage.cshtml" />
     <Content Include="Views\AsidePage\_logInFalseAside.cshtml" />
     <Content Include="Views\Shared\_IsRememberBrowser.cshtml" />
     <Content Include="Views\Shared\_IsTwoFactor.cshtml" />
     <Content Include="Views\Account\AccountIndex.cshtml" />
     <Content Include="Views\Home\test.cshtml" />
     <Content Include="Views\Shared\_AccountLayout.cshtml" />
-    <Content Include="Views\Shared\_PartialAccountDialog.cshtml" />
     <Content Include="CityCountyData.json" />
     <Content Include="Views\Common\ManageIndex.cshtml" />
     <Content Include="Views\Shared\CommonLayout\_AsideFalse.cshtml" />
     <Content Include="Views\Shared\CommonLayout\_AsideTrue.cshtml" />
+    <Content Include="Views\Company\Index.cshtml" />
+    <Content Include="Views\Shared\CommonPartial\Aside\_PartialLogInFalse.cshtml" />
+    <Content Include="Views\Shared\CommonPartial\Aside\_PartialLogInTrue.cshtml" />
+    <Content Include="Views\Shared\CommonPartial\Nav\_PartialLogInFalse.cshtml" />
+    <Content Include="Views\Shared\CommonPartial\Nav\_PartialLogInTrue.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -373,7 +376,6 @@
     <Compile Include="Models\BlackList.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Company.cs" />
-    <Compile Include="Models\CompanyLink.cs" />
     <Compile Include="Models\CompanyViewModel.cs" />
     <Compile Include="Models\District.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -397,8 +399,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Admin\" />
-    <Folder Include="Views\Common\" />
-    <Folder Include="Views\Company\" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

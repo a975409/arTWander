@@ -132,7 +132,6 @@ namespace arTWander.Models
         public virtual DbSet<BlackList> BlackList { get; set; }
         public virtual DbSet<City> City { get; set; }
         public virtual DbSet<Company> Company { get; set; }
-        public virtual DbSet<CompanyLink> CompanyLink { get; set; }
         public virtual DbSet<District> District { get; set; }
         public virtual DbSet<Keywords> Keywords { get; set; }
         public virtual DbSet<LogingLog> LogingLog { get; set; }
@@ -210,12 +209,6 @@ namespace arTWander.Models
                 .HasMany(e => e.ShowPages)
                 .WithRequired(e => e.City)
                 .HasForeignKey(e => e.FK_City)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Company>()
-                .HasMany(e => e.CompanyLinks)
-                .WithRequired(e => e.Company)
-                .HasForeignKey(e => e.FK_Company)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Company>()

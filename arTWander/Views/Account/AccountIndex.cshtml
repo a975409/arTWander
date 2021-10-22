@@ -127,6 +127,7 @@
 
 @section scripts
 {
+    @*sweetalert*@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="sweetalert2.min.css">
     <script src="sweetalert2.all.min.js"></script>
@@ -153,6 +154,7 @@
                 url: '@Url.Action("Login","Account")',
                 data: formData,
                 success: function (data) {
+                    @* 執行sweetalert指令 *@
                     eval(data);
                 }
             });
@@ -190,7 +192,12 @@
         });
     </script>
 
+    @*登入功能*@
     <script src="~/javascript/LoginForm.js"></script>
+
+    @*註冊功能*@
     <script src="~/javascript/RegisterForm.js"></script>
+
+    @*共用功能*@
     <script src="~/javascript/AccountIndex.js"></script>
 }

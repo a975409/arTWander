@@ -12,52 +12,55 @@ namespace arTWander.Models
     {
         public class CompanyInfoViewModel
         {
-            [Required]
-            [EmailAddress]
-            [DisplayName("電子信箱(帳號)")]
-            public string Email { get; set; }
-
-            public bool HasPassword { get; set; }
-            public IList<UserLoginInfo> Logins { get; set; }
-            public string PhoneNumber { get; set; }
-            public bool TwoFactor { get; set; }
-            public bool BrowserRemembered { get; set; }
-
-            [Required]
+            [Required(ErrorMessage = "請填寫展演單位名稱")]
             [StringLength(10)]
             [DisplayName("展演單位名稱")]
             public string CompanyName { get; set; }
 
-            [StringLength(255)]
-            [DisplayName("說明")]
+            [StringLength(300)]
+            [DisplayName("展演單位簡介")]
             public string CompanyDescription { get; set; }
 
             [DisplayName("縣市")]
-            public string CityName { get; set; }
+            public int FK_City { get; set; }
 
             [DisplayName("鄉鎮市區")]
-            public string DistrictName { get; set; }
+            public int FK_District { get; set; }
 
             [Required]
-            [StringLength(255)]
+            [StringLength(5)]
+            [DisplayName("區碼")]
+            public string LocalCode { get; set; }
+
+            [Required(ErrorMessage = "請填寫地址")]
+            [StringLength(100)]
             [DisplayName("地址")]
             public string Address { get; set; }
 
-            public CompanyLinkViewModel[] companyLinks { get; set; }
+            [StringLength(100)]
+            [EmailAddress(ErrorMessage = "請填寫有效的電子信箱")]
+            [DisplayName("電子信箱")]
+            public string Email { get; set; }
 
-        }
+            [Phone(ErrorMessage = "請填寫有效的聯絡電話")]
+            [StringLength(20)]
+            [DisplayName("聯絡電話")]
+            public string Phone { get; set; }
 
-        public class CompanyLinkViewModel
-        {
-            [Required]
-            [StringLength(10)]
-            [DisplayName("連結名稱")]
-            public string Title { get; set; }
+            [StringLength(20)]
+            [DisplayName("傳真")]
+            public string Fax { get; set; }
 
-            [Required]
-            [StringLength(255)]
-            [DisplayName("網址")]
-            public string link { get; set; }
+            [Url(ErrorMessage = "請填寫有效的網址")]
+            [StringLength(100)]
+            [DisplayName("官方網站")]
+            public string HomePage { get; set; }
+
+            [Required(ErrorMessage = "請填寫營業時間")]
+            [StringLength(100)]
+            [DisplayName("營業時間")]
+            public string BusinessHours { get; set; }
+
         }
     }
 }
