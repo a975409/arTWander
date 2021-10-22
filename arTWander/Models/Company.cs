@@ -25,12 +25,38 @@ namespace arTWander.Models
         [StringLength(10)]
         public string CompanyName { get; set; }
 
-        [StringLength(255)]
+        [StringLength(300)]
         public string CompanyDescription { get; set; }
 
         [Required]
-        [StringLength(255)]
+        [StringLength(100)]
+        public string Email { get; set; }
+
+        [Required]
+        [StringLength(20)]
+        public string Phone { get; set; }
+
+        [StringLength(20)]
+        public string Fax { get; set; }
+
+        [StringLength(100)]
+        public string HomePage { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string BusinessHours { get; set; }
+
+        [Required]
+        [StringLength(5)]
+        public string LocalCode { get; set; }
+
+        [Required]
+        [StringLength(100)]
         public string Address { get; set; }
+
+        public string PhotoSticker { get; set; }
+
+        public string PromotionalImage { get; set; }
 
         public int FK_City { get; set; }
 
@@ -59,7 +85,5 @@ namespace arTWander.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ApplicationUser> ApplicationUserSubs { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CompanyLink> CompanyLinks { get; set; }
     }
 }

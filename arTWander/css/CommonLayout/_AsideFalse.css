@@ -1,0 +1,76 @@
+﻿body {
+    position: relative;
+    overflow-x: hidden;
+}
+
+i {
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+}
+
+nav a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    transition: all .3s ease-in-out;
+}
+    
+nav a:hover {
+    text-decoration: none;
+    color: rgb(197, 126, 104);
+}
+
+.menuControlBtn span {
+    opacity: 0;
+}
+
+#menuControl {
+    position: fixed;
+    z-index: -2;
+    opacity: 0;
+}
+
+#navControl {
+    position: fixed;
+    z-index: -2;
+    opacity: 0;
+}
+
+.navbarFixed_Slide {
+    height: 48px;
+    position: absolute;
+    top: -48px;
+    left: 0;
+    right: 0;
+}
+
+.navbarFixed_active {
+    position: fixed;
+    top: 0px;
+    transition: all .3s ease;
+}
+
+/*右上方會員功能*/
+#avatarNavSet a {
+    font-size: 15px;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    transition: all .3s ease-in-out;
+}
+
+#avatarNavSet a:hover {
+    text-decoration: none;
+    color: rgb(197, 126, 104);
+}
+
+.bg-pink {
+    background-color: rgb(197, 126, 104);
+}
+
+.fa-cog:hover {
+    transform: rotate(180deg);
+}
+/*=======================================*/
+
+.bg-gray {
+    background-color: rgba(196, 196, 196, 1);
+}
