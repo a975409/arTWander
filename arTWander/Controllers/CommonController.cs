@@ -4,6 +4,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -17,106 +20,77 @@ namespace arTWander.Controllers
         // GET: Common
 
 
-        public CommonController()
+        public ActionResult SetUp()
         {
-        }
-        public CommonController(ApplicationUserManager userManager)
-        {
-            UserManager = userManager;
-        }
+            // ¨ú±omodel
+            IndexViewModel model = (IndexViewModel)TempData["model"];
+            TempData.Keep("model");
 
-        private ApplicationUserManager _userManager;
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
+            // ¨ú±ouser
+            int Userid = User.Identity.GetUserId<int>();
+            ApplicationUser user = new ApplicationUser();
+            user = new userFactory().getUserById(Userid);
 
-        public async Task<ActionResult> ManageIndex(ManageMessageId? message)
-        {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "å·²è®Šæ›´æ‚¨çš„å¯†ç¢¼ã€‚"
-                : message == ManageMessageId.SetPasswordSuccess ? "å·²è¨­å®šæ‚¨çš„å¯†ç¢¼ã€‚"
-                : message == ManageMessageId.SetTwoFactorSuccess ? "å·²è¨­å®šæ‚¨çš„é›™å› ç´ é©—è­‰ã€‚"
-                : message == ManageMessageId.Error ? "ç™¼ç”ŸéŒ¯èª¤ã€‚"
-                : message == ManageMessageId.AddPhoneSuccess ? "å·²æ–°å¢žæ‚¨çš„é›»è©±è™Ÿç¢¼ã€‚"
-                : message == ManageMessageId.RemovePhoneSuccess ? "å·²ç§»é™¤æ‚¨çš„é›»è©±è™Ÿç¢¼ã€‚"
-                : "";
+            // Âà´«user.birthay«¬§O¥H²Å¦X«eºÝ»Ý¨D
+            DateTime Birthday = (DateTime)(user.Birthday);
+            string Bday = Birthday.ToString("yyyy-MM-dd");
 
-            var model = new IndexViewModel
+
+            // ¨ú±ouser¸ê®Æ¼Ò«¬
+            CommonInfoViewModel viewModel = new CommonInfoViewModel
             {
-                HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(User.Identity.GetUserId<int>()),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(User.Identity.GetUserId<int>()),
-                Logins = await UserManager.GetLoginsAsync(User.Identity.GetUserId<int>()),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(User.Identity.GetUserId<int>().ToString())
+                HasPassword = model.HasPassword,
+                Logins = model.Logins,
+                PhoneNumber = user.PhoneNumber,
+                TwoFactor = model.TwoFactor,
+                BrowserRemembered = model.BrowserRemembered,
+                UserName = user.UserName,
+                Birthday = Bday,
+                AccountAddress = user.AccountAddress,
+                AvatarUrl = "/image/avatar/",
+                AvatarName = user.Avatar,
+                Email = user.Email
             };
-            return View(model);
-        }
 
-        #region Helpers
-        // Used for XSRF protection when adding external logins
-        private const string XsrfKey = "XsrfId";
-
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
+            // §PÂ_¬O§_¨Ï¥Î¹w³]ÀY¹³
+            if (string.IsNullOrEmpty(user.Avatar))
             {
-                return HttpContext.GetOwinContext().Authentication;
+                viewModel.AvatarUrl += "avatar_default.png";
+                viewModel.AvatarName = "avatar_default.png";
             }
-        }
-
-        private async Task SignInAsync(ApplicationUser user, bool isPersistent)
-        {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie, DefaultAuthenticationTypes.TwoFactorCookie);
-            AuthenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent }, await user.GenerateUserIdentityAsync(UserManager));
-        }
-
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
+            else
             {
-                ModelState.AddModelError("", error);
+                viewModel.AvatarUrl += user.Avatar;
+                viewModel.AvatarName = user.Avatar;
             }
+                
+            return View(viewModel);
+
         }
 
-        private bool HasPassword()
+        [HttpPost]
+        public ActionResult SetUp(CommonInfoViewModel viewModel, HttpPostedFileBase avatarFile)
         {
-            var user = UserManager.FindById(User.Identity.GetUserId<int>());
-            if (user != null)
-            {
-                return user.PasswordHash != null;
-            }
-            return false;
+            // ¨ú±oviewModel¦s¤J¸ê®Æ®w
+            ApplicationDbContext db = new ApplicationDbContext();
+            int userId = User.Identity.GetUserId<int>();
+
+            ApplicationUser user = db.Users.Where(u => u.Id == userId).FirstOrDefault();
+            user.Avatar = viewModel.AvatarName;
+            user.UserName = viewModel.UserName;
+            user.Birthday = DateTime.Parse(viewModel.Birthday);
+            user.AccountAddress = viewModel.AccountAddress;
+            user.PhoneNumber = viewModel.PhoneNumber;
+            user.TwoFactorEnabled = viewModel.TwoFactor;
+
+            db.SaveChanges();
+
+            // ¨ú±oÀÉ®×¦s¤J«ü©w¸ê®Æ§¨
+            new userFactory().saveAvatarToFolder(user, avatarFile);
+
+            return RedirectToAction("Index", "Home");
         }
 
-        private bool HasPhoneNumber()
-        {
-            var user = UserManager.FindById(User.Identity.GetUserId<int>());
-            if (user != null)
-            {
-                return user.PhoneNumber != null;
-            }
-            return false;
-        }
 
-        public enum ManageMessageId
-        {
-            AddPhoneSuccess,
-            ChangePasswordSuccess,
-            SetTwoFactorSuccess,
-            SetPasswordSuccess,
-            RemoveLoginSuccess,
-            RemovePhoneSuccess,
-            Error
-        }
-
-        #endregion
     }
 }
