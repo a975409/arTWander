@@ -134,7 +134,7 @@ namespace arTWander.Controllers
             // 這不會計算為帳戶鎖定的登入失敗
             // 若要啟用密碼失敗來觸發帳戶鎖定，請變更為 shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            
+            //var RoleName = await UserManager.GetRolesAsync(User.Identity.GetUserId<int>());
             switch (result)
             {
                 case SignInStatus.Success:
@@ -149,8 +149,20 @@ namespace arTWander.Controllers
                         //登入成功
                         //return RedirectToLocal(returnUrl);
                         //return RedirectToAction("Index", "Home");
-                        string success = SweetAlert.timeoutCloseToLinkAlert(3000, Url.Action("Index", "Home")) + SweetAlert.SuccessAlert("登入成功", "3秒後自動跳轉到首頁", "");
-                        return JavaScript(success);
+                        string success = "";
+                        
+
+                        //if (RoleName[0] == "Admin")
+                        //{
+                        //    success = SweetAlert.timeoutCloseToLinkAlert(3000, Url.Action("Index", "Admin")) +
+                        //        SweetAlert.SuccessAlert("登入成功", "3秒後自動跳轉到管理者首頁", "");
+                        //    return JavaScript(success);
+                        //}
+                        //else 
+                        //{ 
+                               success = SweetAlert.timeoutCloseToLinkAlert(3000, Url.Action("Index", "Home")) + SweetAlert.SuccessAlert("登入成功", "3秒後自動跳轉到首頁", "");
+                               return JavaScript(success);
+                        //}
                     }
                 case SignInStatus.LockedOut:
                     //return View("Lockout");
@@ -209,6 +221,7 @@ namespace arTWander.Controllers
             {
                 case SignInStatus.Success:
                     //return RedirectToLocal(model.ReturnUrl);
+
                     string successAlert = SweetAlert.timeoutCloseToLinkAlert(3000, Url.Action("Index", "Home")) + SweetAlert.SuccessAlert("驗證成功", "3秒後自動跳轉到首頁", "");
 
                     return JavaScript(successAlert);
@@ -266,7 +279,7 @@ namespace arTWander.Controllers
 
                 UserManager.AddToRoleAsync(user.Id, model.AccountRoles);
 
-                //await UserManager.AddToRoleAsync(user.Id,"Admin");//系統管理員
+                //await UserManager.AddToRoleAsync(user.Id, "Admin");//系統管理員
                 //await UserManager.AddToRoleAsync(user.Id,"Company");//展演單位
                 //await UserManager.AddToRoleAsync(user.Id,"Member");//一般會員
                 //await UserManager.AddToRoleAsync(user.Id,"Blacklist");//黑名單

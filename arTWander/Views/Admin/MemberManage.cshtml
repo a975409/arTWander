@@ -1,0 +1,90 @@
+﻿
+@{
+    Layout = null;
+}
+
+@*管理者頁面*@
+<link rel="stylesheet" href="/css/UserList.css">
+
+
+<!-- breadcrumb -->
+<div class="justify-items-start">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light">
+            <li class="breadcrumb-item"><a href="#">系統管理員</a></li>
+            <li class="breadcrumb-item active" aria-current="page">會員管理</li>
+        </ol>
+    </nav>
+</div>
+
+<!-- nav-tab -->
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-link active" id="navUserTab" data-toggle="tab" href="#nav-user" role="tab"
+           aria-controls="nav-user" aria-selected="true">一般會員</a>
+        <a class="nav-link" id="navShowCustomerTab" data-toggle="tab" href="#nav-ShowCustomer" role="tab"
+           aria-controls="nav-ShowCustomer" aria-selected="false">展演單位</a>
+        <a class="nav-link" id="navBlackListTab" data-toggle="tab" href="#nav-BlackList" role="tab"
+           aria-controls="nav-BlackList" aria-selected="false">黑名單</a>
+    </div>
+</nav>
+
+<main>
+    <!-- 主內容 -->
+    <section id="Section" class="w-100">
+        <div id="memberManageMain">
+        </div>
+    </section>
+</main>
+
+<script>
+  //一般使用者List (預設導入) (jquery ready (檔案讀取完成後導入))
+    $(document).ready(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("UserList","Admin")',
+            data: {},
+            success: function (data) {
+                $('#memberManageMain').html(data);
+            }
+        });
+    });
+</script>
+
+<script>
+  //點擊分頁連結頁面
+  //一般使用者list
+    $("#navUserTab").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("UserList","Admin")',
+            data: {},
+            success: function (data) {
+                $('#memberManageMain').html(data);
+            }
+        });
+    });
+
+  //展演單位List
+    $("#navShowCustomerTab").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("ShowCustomList", "Admin")',
+            data: {},
+            success: function (data) {
+                $('#memberManageMain').html(data);
+            }
+        });
+    });
+  //黑名單List
+    $("#navBlackListTab").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("BlackList", "Admin")',
+            data: {},
+            success: function (data) {
+                $('#memberManageMain').html(data);
+            }
+        });
+    });
+</script>

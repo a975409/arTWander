@@ -1,0 +1,87 @@
+﻿
+@{
+    Layout = null;
+}
+
+<link rel="stylesheet" href="./css/UserList.css">
+
+<article>
+    <section id="Section">
+        <div class="AllList">
+            <div class="userDetailInform mb-3">
+                <div class="container px-0">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <p>回饋日期: <span>2021-09-09</span></p>
+                            <p>回饋編號: <span>A0001</span></p>
+                            <p>回饋人: <span>弘野義郎</span></p>
+                            <p>回饋內容: <span class="form-control my-1">網頁太慢了啦 可不可以有點改進</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <!-- 處理狀態選擇 -->
+            <div class="dropdown d-flex col-12 px-0">
+                <div class="row w-100 mx-0 justify-content-start">
+                    <label class="col-6 col-md-2 px-0 my-auto">處理狀態</label>
+                    <div class="col-6 col-md-3 px-0">
+                        <select class="form-control ml-1" id="informStatus">
+                            <option value="處理完畢">待處理</option>
+                            <option value="處理中">處理中</option>
+                            <option value="待處理">處理完畢</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="col-12 px-0">
+
+                <p>回覆人員 : <span>GM</span></p>
+                <div id="reasonInput ">
+                    <label for="">請輸入處理結果: </label>
+                    <textarea class="form-control" id="reasonContent" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="userInfoUpdate d-flex justify-content-end">
+                <button id="feedBackBtn" class="btn btn-primary mx-1" href="" data-toggle="modal" data-target="#feedBack">結果通知用戶</button>
+                <button id="doneBtn" class="btn btn-primary mx-1" href="" data-toggle="modal" data-target="#done">處理完畢</button>
+            </div>
+
+        </div>
+    </section>
+</article>
+
+
+<!-- 彈出視窗顯示警告資訊 -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade px-0" id="feedBack" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- 控至彈出窗大小 -->
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">結果通知</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <main>
+                    <!-- 主內容 -->
+                    <section id="Section" class="w-100">
+                        <div id="reasonInput ">
+                            <label for="">請輸入通知內容: </label>
+                            <textarea class="form-control" id="reasonContent" rows="5"></textarea>
+                        </div>
+                    </section>
+                </main>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">確定送出</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
