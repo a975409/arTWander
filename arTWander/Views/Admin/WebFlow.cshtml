@@ -1,0 +1,61 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!-- 關鍵字查詢 start-->
+<div class="AllListTitle">
+    <div class="input-group-prepend my-1">
+        <div class="row w-100 mt-2">
+            <!-- 處理狀態選擇 -->
+            <!-- <div class="dropdown d-flex my-auto col-6 col-md-6 col-lg-4">
+                <div class="row w-100 mx-0 justify-content-between">
+                  <label class="col-12 col-md-4 px-0 my-auto">處理狀態</label>
+                  <div class="col-12 col-md-8 px-0">
+                    <select class="form-control ml-1" id="informStatus">
+                      <option value="處理完畢">待處理</option>
+                      <option value="處理中">處理中</option>
+                      <option value="待處理">處理完畢</option>
+                    </select>
+                  </div>
+                </div>
+            </div> -->
+            <!-- 時間搜尋 -->
+            <div id="timeSelect" class="d-flex col-6 col-md-6 col-lg-8 justify-content-end">
+                <div class="row w-100 justify-content-between">
+                    <label for="startDate" class="col-lg-2-text-right my-auto p-0">開始時間  </label>
+                    <input type="date" class="form-control col-lg-4" id="startDate">
+                    <label for="endDate" class="col-lg-2-text-right my-auto p-0 pr-1 ">結束時間  </label>
+                    <input type="date" class="form-control col-lg-4" id="endDate">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <!-- 用戶瀏覽數量統計 -->
+    <canvas id="webFlowLiner" class="col-12 col-lg-6"></canvas>
+    <canvas id="webFlowBar" class="col-12 col-lg-6"></canvas>
+    <canvas id="webNewLiner" class="col-12 col-lg-6"></canvas>
+    <canvas id="webNewCustomerLiner" class="col-12 col-lg-6"></canvas>
+    <canvas id="webNewShowLiner" class="col-12 col-lg-6"></canvas>
+</div>
+
+
+<script src="~/javascript/Admin/drawCanvasData.js"></script>
+<script>
+  lineChart(document.getElementById('webFlowLiner').getContext('2d'), true, 'circle', 0, true, '網頁點擊流量');
+  bar(document.getElementById('webFlowBar').getContext('2d'), true, 'circle', 0, true, '網頁點擊流量bar');
+  lineChart(document.getElementById('webNewLiner').getContext('2d'), true, 'circle', 0, true, '用戶新增量bar');
+  bar(document.getElementById('webNewCustomerLiner').getContext('2d'), true, 'circle', 0, true, '展商新增量bar');
+  bar(document.getElementById('webNewShowLiner').getContext('2d'), true, 'circle', 0, true, '新增展演數量bar');
+
+
+</script>
+
+
+
+

@@ -1,4 +1,11 @@
 ﻿@using Microsoft.AspNet.Identity
+
+@{ 
+
+    Layout = null;
+}
+
+
 <!doctype html>
 <html lang="en">
 
@@ -24,14 +31,16 @@
     <script src="https://kit.fontawesome.com/9bd3ad2735.js" crossorigin="anonymous"></script>
     <!-- css -->
     <link href="~/css/CommonLayout/_AsideTrue.css" rel="stylesheet" />
-    @*<link rel="stylesheet" type="text/css" href="/css/ManagerIndex.css">
-        <link rel="stylesheet" type="text/css" href="/css/CommonIndex.css">*@
     @RenderSection("css", required: false)
+
+    <!--統計圖表Chart.js函示庫-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+
 </head>
 
 <body>
+    <!-- 導覽列 starts -->
     <div class="container">
-        <!-- 導覽列 starts -->
         <header>
             <!-- logo及登入 starts -->
             <div id="topHeader" class="row mt-3 d-flex justify-content-end">
@@ -72,40 +81,35 @@
                 </div>
             </div>
             <!-- logo及登入 ends -->
-            <!-- fixed導覽列 starts -->
-
-            <input type="checkbox" id="navControl">
-            <nav id="navbarFixed" class="nav justify-content-center bg-white">
-                <label for="menuControl" class="menuControlBtn d-block"><span>AA</span></label>
-                <a href="#" class="d-md-none"> </a>
-                <a id="homePage" class="nav-link active" href="#">首頁</a>
-                <a id="showList" class="nav-link" href="#">全部展覽</a>
-                <a id="GalleryList" class="nav-link" href="#">展演單位</a>
-            </nav>
-            <!-- fixed導覽列 end -->
-            <!-- breadcrumb starts -->
-            <nav id="cmnPage_BreadCrumb" class="col-12 my-4" aria-label="breadcrumb">
-                <ol class="breadcrumb bg-light">
-                    <li class="breadcrumb-item">
-                        <a href="#">全部展覽</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">台北市</li>
-                </ol>
-            </nav>
-            <!-- breadcrumb ends -->
+            <hgroup>
+                <!-- fixed導覽列 starts -->
+                <input type="checkbox" id="navControl">
+                <nav id="navbarFixed" class="nav justify-content-center bg-white">
+                    <label for="menuControl" class="menuControlBtn d-block"><span>AA</span></label>
+                    <a href="#" class="d-md-none"> </a>
+                    <a class="nav-link active" href="#">首頁</a>
+                    <a class="nav-link" href="#">全部展覽</a>
+                    <a class="nav-link" href="#">展演單位</a>
+                </nav>
+                <!-- fixed導覽列 end -->
+            </hgroup>
         </header>
         <!-- 導覽列 end -->
-        <!-- 主要內容區 starts-->
-        <main>
+        <!-- 主要內容區 -->
+        <main id="main">
             <div class="container">
-                <div id="mainSection" class="row">
+                <div class="row">
                     <!-- 判斷是否開啟RWD左側邊框 -->
                     <input type="checkbox" id="menuControl">
                     <!-- 左側邊框 -->
-                    <aside id="aside1" class="col-12 col-md-3  mt-0" style="z-index: 1002;">
+                    <aside id="aside1" class="col-12 col-md-3 d-flex justify-content-center align-content-center mt-0" style="z-index: 1002;">
                         @if (Request.IsAuthenticated)
                         {
-                            Html.RenderPartial("~/Views/Shared/CommonPartial/Aside/_PartialLogInTrue.cshtml");
+                            //權限若為Admin使用該aside
+                            if (User.IsInRole("Admin"))
+                            {
+                                Html.RenderPartial("~/Views/Shared/AdminLayout/_AdminAside.cshtml");
+                            }
                         }
 
                         else
@@ -113,18 +117,16 @@
                             Html.RenderPartial("~/Views/Shared/CommonPartial/Aside/_PartialLogInFalse.cshtml");
                         }
                     </aside>
+
                     <!-- 右側主內容 -->
-                    <section id="Section" class="col-12 col-md-9 w-100">
-                        <div id="mainPage">
-                            @RenderBody()
-                        </div>
+                    <section id="Section" class="col-12 col-md-9 mx-0 w-100">
+                        <div id="mainPage" class="w-100"></div>
+                        @RenderBody()
                     </section>
                 </div>
             </div>
         </main>
-        <!-- 主要內容區 ends-->
     </div>
-
     <!-- footer strats -->
     <footer class="mt-5">
         <section class="bg-gray d-flex flex-column w-100 py-5">
@@ -205,3 +207,10 @@
 </body>
 
 </html>
+<script>
+    // Ajax導入處 於此處更改要導入頁面
+    //document.addEventListener("DOMContentLoaded", function () {
+    //    $('#mainPage').load('ManagerPage/MemberManage.html');
+    //});
+
+</script>

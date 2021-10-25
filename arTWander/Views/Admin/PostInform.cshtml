@@ -1,0 +1,185 @@
+﻿
+@{
+    Layout = null;
+}
+
+<link rel="stylesheet" href="./css/UserList.css">
+
+<!-- breadcrumb start -->
+<!-- <div class="justify-items-start">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light">
+            <li class="breadcrumb-item"><a href="#">系統管理員</a></li>
+            <li class="breadcrumb-item"><a href="#">通報管理</a></li>
+            <li class="breadcrumb-item active" aria-current="page">受檢舉展覽</li>
+        </ol>
+    </nav>
+</div> -->
+<!-- breadcrumb end -->
+<article>
+    <section id="Section">
+        <div class="AllList">
+            <!-- 關鍵字查詢 start-->
+            <div class="AllListTitle">
+                <div class="input-group-prepend my-1">
+                    <div class="row w-100 mt-2">
+                        <!-- 處理狀態選擇 -->
+                        <div class="dropdown d-flex my-auto col-6 col-md-6 col-lg-4">
+                            <div class="row w-100 mx-0 justify-content-between">
+                                <label class="col-12 col-md-4 px-0 my-auto">處理狀態</label>
+                                <div class="col-12 col-md-8 px-0">
+                                    <select class="form-control ml-1" id="informStatus">
+                                        <option value="處理完畢">待處理</option>
+                                        <option value="處理中">處理中</option>
+                                        <option value="待處理">處理完畢</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 時間搜尋 -->
+                        <div id="timeSelect" class="d-flex col-6 col-md-6 col-lg-8 justify-content-end">
+                            <div class="row w-100 justify-content-between">
+                                <label for="startDate" class="col-lg-2-text-right my-auto p-0">開始時間  </label>
+                                <input type="date" class="form-control col-lg-4" id="startDate">
+                                <label for="endDate" class="col-lg-2-text-right my-auto p-0 pr-1 ">結束時間  </label>
+                                <input type="date" class="form-control col-lg-4" id="endDate">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="AllListTitle">
+                <div class="input-group-prepend my-2 justify-content-between">
+                    <div class="row col-10 col-sm-8">
+                        <!-- <span class="col-11 col-md-4 my-auto mx-2">一般會員</span> -->
+                        <input type="text" id="textSearch" class="col-10 col-sm-8 form-control rounded-pill my-1 w-100 " style="width:180px;height:auto;" placeholder="關鍵字搜尋" aria-label="search" aria-describedby="buttonSearch">
+                        <button class="btn col-2 col-md-1 my-2" type="button" id="buttonSearch"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="my-auto">
+                        <a class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-sort-amount-down" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" id="sort">
+                            <a href="#" class="dropdown-item">編號排序</a>
+                            <a href="#" class="dropdown-item">狀態排序</a>
+                            <a href="#" class="dropdown-item">日期排序</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 關鍵字查詢 end -->
+                <div class="AllListContent">
+                    <table class="table table-hover w-100">
+                        <thead>
+                            <tr>
+                                <th scope="col-1 col-md-1">編號</th>
+                                <th scope="col-1 col-md-1">留言人</th>
+                                <th scope="col-1 col-md-1" class="d-none d-lg-table-cell">留言位置</th>
+                                <th scope="col-1 col-md-1">留言內容</th>
+                                <th scope="col-1 col-md-1" class="d-none d-lg-table-cell">檢舉人</th>
+                                <th scope="col-2 col-md-3">檢舉原因</th>
+                                <th scope="col-1" class="d-none d-lg-table-cell">檢舉日期</th>
+                                <th scope="col-1">處理回應</th>
+                                <th scope="col-1 col-md-1">處理狀態</th>
+                                <th scope="col-1" class="d-none d-lg-table-cell">處理人</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="postsReport" href="" data-toggle="modal" data-target="#staticBackdrop">
+                                <td scope="col-1 col-md-1">P0001</td>
+                                <td scope="col-1 col-md-1">小白</td>
+                                <td scope="col-1 col-md-1" class="d-none d-lg-table-cell">單飛不解</td>
+                                <td scope="col-1 col-md-1">抄襲??!</td>
+                                <td scope="col-1 col-md-1" class="d-none d-lg-table-cell">王大明</td>
+                                <td scope="col-2 col-md-3">不實言論</td>
+                                <td scope="col-1" class="d-none d-lg-table-cell">2021-10-01</td>
+                                <td scope="col-1">屬實 刪除回應</td>
+                                <td scope="col-1 col-md-1">處理完畢</td>
+                                <td scope="col-1" class="d-none d-lg-table-cell">DD</td>
+                            </tr>
+                            <tr class="postsReport" href="" data-toggle="modal" data-target="#staticBackdrop">
+                                <td scope="col-1 col-md-1">P0002</td>
+                                <td scope="col-1 col-md-1">超白</td>
+                                <td scope="col-1 col-md-1" class="d-none d-lg-table-cell">泛南</td>
+                                <td scope="col-1 col-md-1">泛藍啦</td>
+                                <td scope="col-1 col-md-1" class="d-none d-lg-table-cell">王小美</td>
+                                <td scope="col-2 col-md-3">無腦回應</td>
+                                <td scope="col-1" class="d-none d-lg-table-cell">2021-10-01</td>
+                                <td scope="col-1">刪除回應並警告</td>
+                                <td scope="col-1 col-md-1">處理完畢</td>
+                                <td scope="col-1" class="d-none d-lg-table-cell">DD</td>
+                            </tr>
+                            <tr>
+                                <td scope="col-1 col-md-1">P0003</td>
+                                <td scope="col-1 col-md-1">鯉魚王</td>
+                                <td scope="col-1 col-md-1" class="d-none d-lg-table-cell">單飛不解</td>
+                                <td scope="col-1 col-md-1">點擊連結買一送一</td>
+                                <td scope="col-1 col-md-1" class="d-none d-lg-table-cell">暴鯉龍</td>
+                                <td scope="col-2 col-md-3">詐騙</td>
+                                <td scope="col-1" class="d-none d-lg-table-cell">2021-10-01</td>
+                                <td scope="col-1">屬實 刪除回應 該員黑名單</td>
+                                <td scope="col-1 col-md-1">處理完畢</td>
+                                <td scope="col-1" class="d-none d-lg-table-cell">DD</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <nav aria-label="Page navigation example" class="mt-2">
+                    <ul class="pagination justify-content-center text-secondary">
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+</article>
+
+
+
+<!-- 彈出視窗顯示展演資訊 -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade px-0" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- 控至彈出窗大小 -->
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">展演檢舉</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <main>
+                    <!-- 主內容 -->
+                    <!-- ajax導入相關內容 -->
+                    <section id="Section" class="w-100">
+                        <div id="detailInform">
+                        </div>
+                    </section>
+                </main>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  //點擊分頁連結頁面
+  //檢舉list
+    $(".postsReport").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("PostsReport", "Admin")',
+            data: FormData,
+            success: function (data) {
+                $('#detailInform').html(data);
+            }
+        });
+    });
+</script>

@@ -1,0 +1,86 @@
+﻿
+@{
+    Layout = null;
+}
+
+<link rel="stylesheet" href="./css/UserList.css">
+<!-- breadcrumb -->
+<div class="justify-items-start">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light">
+            <li class="breadcrumb-item"><a href="#">系統管理員</a></li>
+            <li class="breadcrumb-item active" aria-current="page">通報管理</li>
+        </ol>
+    </nav>
+</div>
+
+<!-- nav-tab -->
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-link active" id="navShowInformTab" data-toggle="tab" href="#nav-ShowInform" role="tab"
+           aria-controls="nav-ShowInform" aria-selected="true">展覽檢舉</a>
+        <a class="nav-link" id="navPostInformTab" data-toggle="tab" href="#nav-PostInform" role="tab"
+           aria-controls="nav-PostInform" aria-selected="false">貼文檢舉</a>
+        <a class="nav-link" id="navFeedBackTab" data-toggle="tab" href="#nav-FeedBack" role="tab"
+           aria-controls="nav-FeedBack" aria-selected="false">意見回饋</a>
+    </div>
+</nav>
+
+<main>
+    <!-- 主內容 -->
+    <section id="Section" class="w-100">
+        <div id="InformManageMain">
+        </div>
+    </section>
+</main>
+
+<script>
+      //一般使用者List (預設導入) (jquery ready (檔案讀取完成後導入))
+    $("#navShowInformTab").ready(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("ShowInform", "Admin")',
+            data: FormData,
+            success: function (data) {
+                $('#InformManageMain').html(data);
+            }
+        });
+    });
+</script>
+
+<script>
+      //點擊分頁連結頁面
+      //一般使用者list
+    $("#navShowInformTab").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("ShowInform", "Admin")',
+            data: FormData,
+            success: function (data) {
+                $('#InformManageMain').html(data);
+            }
+        });
+    });
+      //展演單位List
+    $("#navPostInformTab").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("PostInform", "Admin")',
+            data: FormData,
+            success: function (data) {
+                $('#InformManageMain').html(data);
+            }
+        });
+    });
+      //黑名單List
+    $("#navFeedBackTab").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("FeedBack", "Admin")',
+            data: FormData,
+            success: function (data) {
+                $('#InformManageMain').html(data);
+            }
+        });
+    });
+</script>
