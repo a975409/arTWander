@@ -52,6 +52,11 @@ nav a {
 /* navbar end */
 /* aside starts */
 
+/* 取消li前預設maker點 */
+#aside1DivUl li {
+    list-style-type: none;
+}
+
 #aside1 {
     width: 20%;
 }

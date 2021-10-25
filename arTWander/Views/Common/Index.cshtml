@@ -1,0 +1,21 @@
+﻿
+@{
+    //ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/CommonLayout/_AsideTrue.cshtml";
+}
+
+<div id="mainPage" class="w-100"></div>
+
+<script>
+
+    $(document).ready(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("MyShowPage", "Common")',
+            data: {},
+            success: function (data) {
+                $('#mainPage').html(data);
+            }
+            });
+            });
+</script>
