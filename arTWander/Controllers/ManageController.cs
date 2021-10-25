@@ -66,7 +66,9 @@ namespace arTWander.Controllers
             switch (RoleName[0])
             {
                 case "Admin":
-                    return RedirectToAction("Index", "Admin");
+                    //return RedirectToAction("Index", "Admin");
+                    string success = SweetAlert.timeoutCloseToLinkAlert(3000, Url.Action("Index", "Admin")) + SweetAlert.SuccessAlert("登入成功", "3秒後自動跳轉到首頁", "");
+                    return JavaScript(success);
                 case "Company":
                     return RedirectToAction("Index", "Company");
                 case "Member":

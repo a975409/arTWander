@@ -92,5 +92,49 @@ namespace arTWander.Controllers
         }
 
 
+
+        //Common首頁畫面start
+        public ActionResult Index()
+        {
+            return View();
+        }
+        //Common首頁畫面end
+
+
+        public ActionResult MyshowPag()
+        {
+            return View();
+        }
+        
+
+        //Aside 導引畫面start
+
+        public ActionResult MyshowPage()
+        {
+            return View();
+        }
+
+        public ActionResult MyItineraryPage()
+        {
+            return View();
+        }
+
+        public ActionResult MySubscription()
+        {
+            return View();
+        }
+        //Aside 導引畫面end
+        //訂閱展演單位 畫面 start
+        public ActionResult SubscriptionDetail()
+        {
+            return View();
+        }
+        public ActionResult ShowInformDetail()
+        {
+            return View();
+        }
+        
+        //訂閱展演單位 畫面 end
+
     }
 }

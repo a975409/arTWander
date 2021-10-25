@@ -134,7 +134,7 @@ namespace arTWander.Controllers
             // 這不會計算為帳戶鎖定的登入失敗
             // 若要啟用密碼失敗來觸發帳戶鎖定，請變更為 shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            //var RoleName = await UserManager.GetRolesAsync(User.Identity.GetUserId<int>());
+            
             switch (result)
             {
                 case SignInStatus.Success:
@@ -149,20 +149,12 @@ namespace arTWander.Controllers
                         //登入成功
                         //return RedirectToLocal(returnUrl);
                         //return RedirectToAction("Index", "Home");
-                        string success = "";
-                        
 
-                        //if (RoleName[0] == "Admin")
-                        //{
-                        //    success = SweetAlert.timeoutCloseToLinkAlert(3000, Url.Action("Index", "Admin")) +
-                        //        SweetAlert.SuccessAlert("登入成功", "3秒後自動跳轉到管理者首頁", "");
-                        //    return JavaScript(success);
-                        //}
-                        //else 
-                        //{ 
-                               success = SweetAlert.timeoutCloseToLinkAlert(3000, Url.Action("Index", "Home")) + SweetAlert.SuccessAlert("登入成功", "3秒後自動跳轉到首頁", "");
-                               return JavaScript(success);
-                        //}
+                        return RedirectToAction("Index", "Manage");
+
+                        //string success = SweetAlert.timeoutCloseToLinkAlert(3000, Url.Action("Index", "Admin")) + SweetAlert.SuccessAlert("登入成功", "3秒後自動跳轉到首頁", "");
+                        //return JavaScript(success);
+                        
                     }
                 case SignInStatus.LockedOut:
                     //return View("Lockout");
