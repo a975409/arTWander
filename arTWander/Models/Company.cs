@@ -25,6 +25,7 @@ namespace arTWander.Models
         [StringLength(10)]
         public string CompanyName { get; set; }
 
+        [Required]
         [StringLength(300)]
         public string CompanyDescription { get; set; }
 
@@ -45,10 +46,6 @@ namespace arTWander.Models
         [Required]
         [StringLength(100)]
         public string BusinessHours { get; set; }
-
-        [Required]
-        [StringLength(5)]
-        public string LocalCode { get; set; }
 
         [Required]
         [StringLength(100)]

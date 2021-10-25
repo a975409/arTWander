@@ -43,7 +43,7 @@
             int areaIdx = 1;
 
             //請自行指定正確路徑，檔案已附在專案內
-            string path = @"../CityCountyData.json";
+            string path = @"D:\MyWork\arTWander\arTWander\CityCountyData.json";
 
             //重設欄位的自動增量(auto increment)的識別值，下一筆資料編號由1開始
             context.Database.ExecuteSqlCommand("dbcc checkIDENT(City, RESEED, 1)");

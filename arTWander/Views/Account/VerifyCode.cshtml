@@ -55,9 +55,6 @@
 @section Scripts {
     <!-- Sweet Alert -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="sweetalert2.min.css">
-    <script src="sweetalert2.all.min.js"></script>
-    <script src="sweetalert2.min.js"></script>
     <script>
         $('#VerifyCodeForm').submit(function (event) {
             let LoginCode = $('#Code').val();
@@ -77,6 +74,15 @@
                 data: formData,
                 success: function (data) {
                     eval(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: textStatus,
+                        text: errorThrown,
+                        showConfirmButton: false,
+                        showCancelButton: true
+                    });
                 }
              });
         });

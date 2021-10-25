@@ -8,6 +8,28 @@ i {
     color: rgb(0, 0, 0);
 }
 
+
+/*右上方會員功能*/
+
+#avatarNavSet a {
+    padding: 0px;
+    width: 30px;
+    font-size: 15px;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    transition: all .3s ease-in-out;
+}
+
+    #avatarNavSet a:hover {
+        text-decoration: none;
+        color: rgb(197, 126, 104);
+    }
+
+
+    #avatarNavSet a i {
+        font-size: 15px;
+    }
+
 nav a {
     text-decoration: none;
     color: rgb(0, 0, 0);
@@ -49,18 +71,6 @@ nav a:hover {
     transition: all .3s ease;
 }
 
-/*右上方會員功能*/
-#avatarNavSet a {
-    font-size: 15px;
-    text-decoration: none;
-    color: rgb(0, 0, 0);
-    transition: all .3s ease-in-out;
-}
-
-#avatarNavSet a:hover {
-    text-decoration: none;
-    color: rgb(197, 126, 104);
-}
 
 .bg-pink {
     background-color: rgb(197, 126, 104);

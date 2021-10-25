@@ -264,7 +264,7 @@ namespace arTWander.Controllers
                 //寄mail到新註冊使用者的帳戶
                 await UserManager.SendEmailAsync(user.Id, "您的arTWander帳號已註冊完畢, 請盡速確認您的帳戶", "請按一下此連結確認您的帳戶 <a href=\"" + callbackUrl + "\">這裏</a> \n若您並未註冊本網站請忽略此信, 以確保您自身權益");
 
-                UserManager.AddToRoleAsync(user.Id, model.AccountRoles);
+                await UserManager.AddToRoleAsync(user.Id, model.AccountRoles);
 
                 //await UserManager.AddToRoleAsync(user.Id,"Admin");//系統管理員
                 //await UserManager.AddToRoleAsync(user.Id,"Company");//展演單位

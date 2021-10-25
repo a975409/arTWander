@@ -20,8 +20,8 @@
     <!-- font-awesome -->
     <script src="https://kit.fontawesome.com/9bd3ad2735.js" crossorigin="anonymous"></script>
     <!-- css -->
-    <link href="~/css/CommonLayout/_AsideFalse.css" rel="stylesheet" />
-    @*<link rel="stylesheet" type="text/css" href="/css/ManagerIndex.css">
+    <link rel="stylesheet" type="text/css" href="~/css/CommonLayout/_AsideFalse.css"  />
+    @*<link rel="stylesheet" type="text/css" href="~/css/ManagerIndex.css">
         <link rel="stylesheet" type="text/css" href="/css/CommonIndex.css">*@
     @RenderSection("css", required: false)
 </head>
@@ -48,7 +48,7 @@
                         {
                             <a id="newMessage" class="nav-link ml-2 " href=""><i class="far fa-bell" aria-hidden="true"></i></a>
                             <a id="myShow" class="nav-link ml-2 d-none d-md-block" href=""><i class="far fa-heart" aria-hidden="true"></i></a>
-                            <a id="setUp" class="nav-link ml-2" href=""><i class="fa fa-cog" aria-hidden="true"></i></a>
+                            <a id="setUp" class="nav-link ml-2" href="~/Company/Index"><i class="fa fa-cog" aria-hidden="true"></i></a>
                         }
                         else if (User.IsInRole("Member"))
                         {
@@ -59,6 +59,7 @@
 
                         using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                         {
+                            @Html.AntiForgeryToken()
                             <a id="logOut" class="nav-link ml-2" href="javascript:document.getElementById('logoutForm').submit()">登出</a>
                         }
                     }

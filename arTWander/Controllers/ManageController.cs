@@ -58,13 +58,15 @@ namespace arTWander.Controllers
 
             var RoleName = await UserManager.GetRolesAsync(User.Identity.GetUserId<int>());
 
+            //TempData["model"] = model;
+
             switch (RoleName[0]) {
                 case "Admin":
-                    return RedirectToAction("Index", "Admin", new { model = model });
+                    return RedirectToAction("Index", "Admin");
                 case "Company":
-                    return RedirectToAction("Index", "Company", new { model = model });
+                    return RedirectToAction("Index", "Company");
                 case "Member":
-                    return RedirectToAction("Index", "Common", new { model = model });
+                    return RedirectToAction("Index", "Common");
                 default:
                     return View("Error");
             }

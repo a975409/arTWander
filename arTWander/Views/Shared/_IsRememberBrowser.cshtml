@@ -37,19 +37,19 @@
 
 @if (Model.BrowserRemembered)
 {
-    <form class="col-12 row justify-content-center px-0" method="post" action="/Manage/ForgetBrowser" id="IsRememberBrowser">
-        <label class="col-4 col-md-2">瀏覽器</label>
-        <div class="col-6 px-0 d-flex justify-content-start">
-            <input type="submit" value="取消瀏覽器紀錄二階段認證" class="w-100 btn btn-outline-secondary border-0 bg-gray" />
+    <form class="form-group row" method="post" action="/Manage/ForgetBrowser" id="IsRememberBrowser">
+        <label class="col-sm-4 col-form-label">瀏覽器：</label>
+        <div class="col-sm-8">
+            <input type="submit" value="已記住" class="btn btn-success" />
         </div>
     </form>
 }
 else
 {
-    <form class="col-12 row justify-content-center px-0" method="post" action="/Manage/RememberBrowser" id="IsRememberBrowser">
-        <label class="col-4 col-md-2">瀏覽器</label>
-        <div class="col-6 px-0 d-flex justify-content-start">
-            <input type="submit" value="開啟瀏覽器紀錄二階段認證" class="w-100 btn btn-outline-secondary border-0 bg-gray" />
+    <form class="form-group row" method="post" action="/Manage/RememberBrowser" id="IsRememberBrowser">
+        <label class="col-sm-4 col-form-label">瀏覽器：</label>
+        <div class="col-sm-8">
+            <input type="submit" value="已忘記" class="btn btn-danger" />
         </div>
     </form>
 }

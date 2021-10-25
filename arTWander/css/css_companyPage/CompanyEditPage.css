@@ -1,0 +1,67 @@
+#PromotionalImageLbl{
+  margin: 0px;
+}
+
+#PromotionalImage {
+    filter: brightness(.5);
+    height: 400px;
+    object-fit: cover;
+}
+
+#PromotionalImageDiv {
+  position: relative;
+}
+
+
+#PhotoStickerImg {
+  filter: brightness(.5);
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+#PhotoStickerDiv {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  transition: all .2s ease-in-out;
+}
+
+#PhotoStickerDiv:hover {
+  transition: all .2s ease-in-out;
+  transform: scale(1.1);
+}
+
+.fa-camera {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(255, 255, 255);
+  transition: all .2s ease-in-out;
+}
+
+.card{
+  border-bottom-left-radius:0px;
+  border-bottom-right-radius:0px;
+}
+
+.card-body{
+  border-top: 1px #DFDFDF solid;
+}
+
+#CompanyName{
+  width:100%;
+  max-width: 300px;
+  border-style: none;
+  border-bottom:1px #DFDFDF solid;
+  font-size: 25px;
+}
+
+.jumbotron{
+  border-radius: 0px;
+}
+
+.col-lg-6{
+  background-color: transparent;
+}
