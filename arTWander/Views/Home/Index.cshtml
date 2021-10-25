@@ -49,9 +49,8 @@
                         @Html.AntiForgeryToken()
 
                         @*@Html.ActionLink("您好" + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "btn btn-outline-light",style= "border-style:none" })*@
-                        <a id="setUp" c lass="nav-link ml-2 text-light d-inline" href="~/Common/ManageIndex"><i class="fa fa-cog" aria-hidden="true"></i></a>
-                        //~/Common/ManageIndex
-
+                        <a id="setUp" c lass="nav-link ml-2 text-light d-inline" href="~/Manage/Index"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                        
                         @*<a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-outline-light">登出</a>*@
                         <a href="javascript:document.getElementById('logoutForm').submit()" class="text-light text-decoration-none">登出</a>
 

@@ -56,15 +56,21 @@ namespace arTWander.Controllers
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(User.Identity.GetUserId<int>().ToString())
             };
 
+            //var r = new ManageLoginsViewModel();
+            //r.CurrentLogins
+
             var RoleName = await UserManager.GetRolesAsync(User.Identity.GetUserId<int>());
 
-            switch (RoleName[0]) {
+            TempData["model"] = model;
+
+            switch (RoleName[0])
+            {
                 case "Admin":
-                    return RedirectToAction("Index", "Admin", new { model = model });
+                    return RedirectToAction("Index", "Admin");
                 case "Company":
-                    return RedirectToAction("Index", "Company", new { model = model });
+                    return RedirectToAction("Index", "Company");
                 case "Member":
-                    return RedirectToAction("Index", "Common", new { model = model });
+                    return RedirectToAction("SetUp", "Common");
                 default:
                     return View("Error");
             }
