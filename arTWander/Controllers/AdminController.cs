@@ -1,4 +1,7 @@
 ﻿using arTWander.Models;
+using arTWander.Models.AdminFactory;
+using arTWander.Models.AdminViewModel;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
@@ -47,11 +50,11 @@ namespace arTWander.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            
+
             return View();
         }
 
-        
+
 
         //Aside導引start
         public ActionResult MemberManage()
@@ -70,7 +73,7 @@ namespace arTWander.Controllers
         {
             return View();
         }
-        
+
 
         //Aside導引end
 
@@ -101,7 +104,7 @@ namespace arTWander.Controllers
         {
             return View();
         }
-        
+
 
         //User Detail Page end
 
@@ -156,5 +159,87 @@ namespace arTWander.Controllers
             return View();
         }
         //dataStatisticsManage detail page end
+
+        //修改個人資料頁面start
+        public ActionResult AdminSetup()
+        {
+            // 取得model
+            IndexViewModel model = (IndexViewModel)TempData["model"];
+            TempData.Keep("model");
+
+            // 取得user
+            int Userid = User.Identity.GetUserId<int>();
+            var user = new AdminFactory().getUserById(Userid);
+
+            // 轉換user.birthay型別以符合前端需求
+            string Bday = "";
+            if (!string.IsNullOrEmpty(user.Birthday.ToString()))
+            {
+                DateTime Birthday = (DateTime)(user.Birthday);
+                Bday = Birthday.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                Bday = DateTime.Now.ToString("yyyy-MM-dd");
+            }
+
+
+            // 取得user資料模型
+            SetupViewModel viewModel = new SetupViewModel
+            {
+                HasPassword = model.HasPassword,
+                Logins = model.Logins,
+                TwoFactor = model.TwoFactor,
+                BrowserRemembered = model.BrowserRemembered,
+                UserName = user.UserName,
+                PhoneNumber = user.PhoneNumber,
+                AccountAddress = user.AccountAddress,
+                Birthday = Bday,
+                AvatarUrl = "~/SaveFiles/Admin/Avatar",
+                AvatarName = user.Avatar,
+                Email = user.Email
+            };
+
+            // 判斷是否使用預設頭像
+            if (string.IsNullOrEmpty(user.Avatar))
+            {
+                viewModel.AvatarUrl += "avatar_default.png";
+                viewModel.AvatarName = "avatar_default.png";
+            }
+            else
+            {
+                viewModel.AvatarUrl += user.Avatar;
+                viewModel.AvatarName = user.Avatar;
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult AdminSetup(SetupViewModel viewModel, HttpPostedFileBase avatarFile)
+        {
+            // 取得viewModel存入資料庫
+            ApplicationDbContext db = new ApplicationDbContext();
+            int userId = User.Identity.GetUserId<int>();
+
+            ApplicationUser user = db.Users.Where(u => u.Id == userId).FirstOrDefault();
+            if (user != null)
+            {
+                user.Avatar = viewModel.AvatarName;
+                Console.WriteLine(viewModel.AvatarName);
+                user.UserName = viewModel.UserName;
+                user.Birthday = DateTime.Parse(viewModel.Birthday);
+                user.AccountAddress = viewModel.AccountAddress;
+                user.PhoneNumber = viewModel.PhoneNumber;
+                user.TwoFactorEnabled = viewModel.TwoFactor;
+            }
+            db.SaveChanges();
+
+            // 取得檔案存入指定資料夾
+            new AdminFactory().saveAvatarToFolder(user, avatarFile);
+
+            return RedirectToAction("Index", "Admin");
+        }
+        //修改個人資料頁面end
     }
 }
