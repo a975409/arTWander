@@ -16,7 +16,6 @@ namespace arTWander.Models
                     where nowUser.Id == id
                     select nowUser;
             var person = q.ToList()[0];
-
             return person;
         }
 

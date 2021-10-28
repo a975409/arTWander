@@ -8,8 +8,10 @@ using System.Web;
 
 namespace arTWander.Models.AdminViewModel
 {
+    
     public class SetupViewModel
     {
+        
 
         public bool HasPassword { get; set; }
 

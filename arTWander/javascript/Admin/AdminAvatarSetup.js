@@ -17,7 +17,8 @@
         
         avatarImgDom.getAttributeNode('alt').value = avatarImg.name;
         avatarImgDom.getAttributeNode('src').value = objUrl;
-        var newDate = new Date();
-        dNoneInput.value = 123;
+        var today = new Date();
+        var date = today.getFullYear() + (today.getMonth() + 1).toString() + today.getDate() + "_" + today.getHours().toString() + today.getMinutes() + today.getSeconds();
+        dNoneInput.value = date + "." + avatarImg.name.split('.').pop();
     }, false);
 });
