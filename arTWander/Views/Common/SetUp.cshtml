@@ -1,4 +1,4 @@
-﻿@model arTWander.Models.CommonInfoViewModel
+﻿@model arTWander.Models.CommonViewModel.CommonInfoViewModel
 
 @{
     ViewBag.Title = "管理您的帳號";
@@ -6,6 +6,10 @@
 
 }
 
+@section css
+{
+    <link href="~/css/css_commonPage/setUpPage.css" rel="stylesheet" />
+}
 <!-- 註冊後修改資料頁面 -->
 <div class="container mt-5 py-5 border rounded-lg">
     <!-- 歡迎 starts -->
@@ -19,7 +23,7 @@
     <div class="tab-content">
         <!-- 初次登入設定資料 starts -->
 
-        @using (Html.BeginForm("SetUp", "Common", FormMethod.Post, new { enctype = "multipart/form-data", @class = "container p-0 w-100 rounded-lg mt-5 " }))
+        @using (Html.BeginForm("SetUp", "Common", FormMethod.Post, new { id= "mainForm", enctype = "multipart/form-data", @class = "container p-0 w-100 rounded-lg mt-5 " }))
         {
             <div class="row mt-5 justify-content-center ">
                 <!-- <label class="col-7 col-md-2 " for="userAvatar">頭像</label> -->
@@ -61,16 +65,6 @@
                     <option value="">否</option>
                 </select><br>
             </div>*@
-
-            @*<div class="row my-5 justify-content-center">
-                <input id="btnSubmit" type="submit" name="submit" class="col-4 col-md-2 btn btn-outline-secondary border-0 bg-pink text-white" value="儲存修改" />
-            </div>*@
-            <div class="row my-5 p-0">
-                <div class="col-10 d-flex justify-content-end">
-                    <input id="btnSubmit" type="submit" name="submit" class="col-4 col-md-2 btn btn-outline-secondary border-0 bg-pink text-white" value="儲存修改" />
-                </div>
-            </div>
-
         }
         <div class="row mt-4 justify-content-center" id="TwoFactor">
             @Html.Partial("_IsTwoFactor", Model)
@@ -78,7 +72,9 @@
         <div class="row mt-4 justify-content-center" id="Browser">
             @Html.Partial("_IsRememberBrowser", Model)
         </div>
-
+        <div class="row my-5 justify-content-center">
+            <input id="btnSubmit" form="mainForm" type="submit" name="submit" class="col-4 col-md-2 btn btn-outline-secondary border-0 bg-pink text-white" value="儲存修改" />
+        </div>
         <!-- 初次登入設定資料 ends -->
     </div>
 </div>
@@ -93,9 +89,9 @@
         <div class="modal-content">
             <div class="modal-header justify-content-center">
                 <h5 class="modal-title" id="staticBackdropLabel">登入失敗</h5>
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span> -->
-                </button>
+                 @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span> 
+                 </button>*@
             </div>
             <div class="modal-body">
                 <main>

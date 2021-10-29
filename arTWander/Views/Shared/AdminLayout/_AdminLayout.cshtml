@@ -52,26 +52,26 @@
                     {
                         if (User.IsInRole("Admin"))
                         {
-                            <a id="newMessage" class="nav-link ml-2 " href=""><i class="far fa-bell" aria-hidden="true"></i></a>
-                            <a id="myShow" class="nav-link ml-2 d-none d-md-block" href=""><i class="far fa-heart" aria-hidden="true"></i></a>
-                            <a id="setUp" class="nav-link ml-2" href=""><i class="fa fa-cog" aria-hidden="true"></i></a>
+                            <a id="newMessage" class="nav-link ml-3 " href=""><i class="far fa-bell" aria-hidden="true"></i></a>
+                            <a id="myShow" class="nav-link ml-3 d-none d-md-block" href=""><i class="far fa-heart" aria-hidden="true"></i></a>
+                            <a id="setUp" class="nav-link ml-3" href=""><i class="fa fa-cog" aria-hidden="true"></i></a>
                         }
                         else if (User.IsInRole("Company"))
                         {
-                            <a id="newMessage" class="nav-link ml-2 " href=""><i class="far fa-bell" aria-hidden="true"></i></a>
-                            <a id="myShow" class="nav-link ml-2 d-none d-md-block" href=""><i class="far fa-heart" aria-hidden="true"></i></a>
-                            <a id="setUp" class="nav-link ml-2" href=""><i class="fa fa-cog" aria-hidden="true"></i></a>
+                            <a id="newMessage" class="nav-link ml-3 " href=""><i class="far fa-bell" aria-hidden="true"></i></a>
+                            <a id="myShow" class="nav-link ml-3 d-none d-md-block" href=""><i class="far fa-heart" aria-hidden="true"></i></a>
+                            <a id="setUp" class="nav-link ml-3" href=""><i class="fa fa-cog" aria-hidden="true"></i></a>
                         }
                         else if (User.IsInRole("Member"))
                         {
-                            <a id="newMessage" class="nav-link ml-2 " href=""><i class="far fa-bell" aria-hidden="true"></i></a>
-                            <a id="myShow" class="nav-link ml-2 d-none d-md-block" href=""><i class="far fa-heart" aria-hidden="true"></i></a>
-                            <a id="setUp" class="nav-link ml-2" href=""><i class="fa fa-cog" aria-hidden="true"></i></a>
+                            <a id="newMessage" class="nav-link ml-3 " href=""><i class="far fa-bell" aria-hidden="true"></i></a>
+                            <a id="myShow" class="nav-link ml-3 d-none d-md-block" href=""><i class="far fa-heart" aria-hidden="true"></i></a>
+                            <a id="setUp" class="nav-link ml-3" href=""><i class="fa fa-cog" aria-hidden="true"></i></a>
                         }
 
                         using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                         {
-                            <a id="logOut" class="nav-link ml-2" href="javascript:document.getElementById('logoutForm').submit()">登出</a>
+                            <a id="logOut" class="nav-link ml-3" href="javascript:document.getElementById('logoutForm').submit()">登出</a>
                         }
                     }
                     else

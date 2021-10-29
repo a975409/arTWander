@@ -1,11 +1,15 @@
-﻿<div id="aside1Div" class="d-md-block">
+﻿
+<div id="aside1Div" class="d-md-block">
     <!-- d-flex justify-content-center -->
     <!-- 頭像starts -->
     <figure class="d-flex justify-content-center">
         <div id="asideAvatar" class="d-flex justify-content-center overflow-hidden">
-            <img src="../image/exhibiton/crenature_kv_tkg.jpg" alt="">
+            <img src="@ViewBag.avatarUrl" alt="Alternate Text" />
         </div>
     </figure>
+    <div class="d-flex justify-content-center w-100 overflow-hidden">
+        <p>@ViewBag.userName 您好!</p>
+    </div>
     <!-- 頭像end -->
     <!-- 關鍵字查詢 starts -->
     <div class="input-group input-group-sm w-100 my-4">
@@ -148,7 +152,6 @@
         });
     });
 
-  
 
     $(".MyItineraryBtn").click(function () {
         $.ajax({

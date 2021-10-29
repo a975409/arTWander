@@ -1,21 +1,50 @@
-﻿
+﻿@model List<arTWander.Models.CommonViewModel.CommonShowViewModel>
 @{
     //ViewBag.Title = "Index";
     Layout = "~/Views/Shared/CommonLayout/_AsideTrue.cshtml";
 }
 
-<div id="mainPage" class="w-100"></div>
+<div id="mainPage" class="w-100 py-5"></div>
 
 <script>
-
     $(document).ready(function () {
         $.ajax({
-            type: 'post',
-            url: '@Url.Action("MyShowPage", "Common")',
+            /*type: 'post',*/
+            url: '@Url.Action("showList", "Common", Model)',
             data: {},
             success: function (data) {
                 $('#mainPage').html(data);
             }
-            });
-            });
+        });
+
+    });
+
 </script>
+
+@*點擊分頁連結*@
+<script>
+
+    $("#showList").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("showList", "Common")',
+            data: {},
+            success: function (data) {
+                $('#mainPage').html(data);
+            }
+        });
+    });
+
+    $("#GalleryList").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("GalleryList", "Common")',
+            data: {},
+            success: function (data) {
+                $('#mainPage').html(data);
+            }
+        });
+    });
+
+</script>
+<script src="~/javascript/common_ShowList.js"></script>

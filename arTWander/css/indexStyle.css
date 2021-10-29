@@ -48,10 +48,13 @@ header nav div:last-of-type{
 
 #signInBtn{
     z-index: 1003;
+    
 }
 
 .fa-cog {
     transition: all .3s ease-in;
+    color: white;
+    margin-right: 15px;
 }
 
 .fa-cog:hover {
@@ -119,7 +122,7 @@ header>figure{
     animation-timing-function: ease;
 }
 header>figure img{
-    width: 75%;
+    width: 15%;
 }
 
 header>h3{
@@ -202,6 +205,7 @@ body>main{
 
 .aboutUs img{
     width: 150px;
+    margin-bottom: 10px;
 }
 
 .aboutUs h4{

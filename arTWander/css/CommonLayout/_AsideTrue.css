@@ -190,6 +190,7 @@ select {
     text-decoration: none;
     color: rgb(0, 0, 0);
     transition: all .3s ease-in-out;
+    padding: 0;
 }
 
     #avatarNavSet a:hover {
@@ -208,6 +209,18 @@ select {
 
 .fa-cog:hover {
     transform: rotate(180deg);
+}
+
+#avatarNavSet i {
+    font-size: 20px;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    transition: all .2s ease-in-out;
+}
+
+#avatarNavSet i:hover {
+    text-decoration: none;
+    color: rgb(197, 126, 104);
 }
 /*=======================================*/
 

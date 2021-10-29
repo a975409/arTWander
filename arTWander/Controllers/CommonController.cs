@@ -12,58 +12,25 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using static arTWander.Controllers.ManageController;
+using static arTWander.Models.CommonViewModel;
 
 namespace arTWander.Controllers
 {
     public class CommonController : Controller
     {
-        // GET: Common
 
-
+        //基本資料設定 starts
         public ActionResult SetUp()
         {
             // 取得model
             IndexViewModel model = (IndexViewModel)TempData["model"];
             TempData.Keep("model");
 
-            // 取得user
-            int Userid = User.Identity.GetUserId<int>();
-            ApplicationUser user = new ApplicationUser();
-            user = new userFactory().getUserById(Userid);
-
-            // 轉換user.birthay型別以符合前端需求
-            DateTime Birthday = (DateTime)(user.Birthday);
-            string Bday = Birthday.ToString("yyyy-MM-dd");
-
-
-            // 取得user資料模型
-            CommonInfoViewModel viewModel = new CommonInfoViewModel
-            {
-                HasPassword = model.HasPassword,
-                Logins = model.Logins,
-                PhoneNumber = user.PhoneNumber,
-                TwoFactor = model.TwoFactor,
-                BrowserRemembered = model.BrowserRemembered,
-                UserName = user.UserName,
-                Birthday = Bday,
-                AccountAddress = user.AccountAddress,
-                AvatarUrl = "/image/avatar/",
-                AvatarName = user.Avatar,
-                Email = user.Email
-            };
-
-            // 判斷是否使用預設頭像
-            if (string.IsNullOrEmpty(user.Avatar))
-            {
-                viewModel.AvatarUrl += "avatar_default.png";
-                viewModel.AvatarName = "avatar_default.png";
-            }
-            else
-            {
-                viewModel.AvatarUrl += user.Avatar;
-                viewModel.AvatarName = user.Avatar;
-            }
-                
+            // 取得viewModel
+            int userId = User.Identity.GetUserId<int>();
+            CommonInfoViewModel viewModel = new userFactory().createViewModel(model, userId);
+            
+            // return
             return View(viewModel);
 
         }
@@ -74,41 +41,98 @@ namespace arTWander.Controllers
             // 取得viewModel存入資料庫
             ApplicationDbContext db = new ApplicationDbContext();
             int userId = User.Identity.GetUserId<int>();
-
             ApplicationUser user = db.Users.Where(u => u.Id == userId).FirstOrDefault();
-            user.Avatar = viewModel.AvatarName;
-            user.UserName = viewModel.UserName;
-            user.Birthday = DateTime.Parse(viewModel.Birthday);
-            user.AccountAddress = viewModel.AccountAddress;
-            user.PhoneNumber = viewModel.PhoneNumber;
-            user.TwoFactorEnabled = viewModel.TwoFactor;
 
+            new userFactory().updateToDB(user, viewModel);
             db.SaveChanges();
 
             // 取得檔案存入指定資料夾
             new userFactory().saveAvatarToFolder(user, avatarFile);
 
+            // return
             return RedirectToAction("Index", "Home");
         }
+        //基本資料設定 ends
 
+        //=========================================================================================
 
-
-        //Common首頁畫面start
+        //Common首頁 start
         public ActionResult Index()
         {
+            // 取得使用者頭像及姓名
+            int userId = User.Identity.GetUserId<int>();
+
+            ApplicationDbContext db = new ApplicationDbContext();
+            ApplicationUser user = db.Users.Where(u => u.Id == userId).FirstOrDefault();
+
+            ViewBag.userName = user.UserName;
+            ViewBag.avatarUrl = "/image/avatar/" + user.Avatar;
+
+            // return
             return View();
         }
-        //Common首頁畫面end
+
+        [HttpPost]
+        public ActionResult Index(CommonShowViewModel viewModel)
+        {
+            // 取得使用者頭像及姓名
+            int userId = User.Identity.GetUserId<int>();
+
+            ApplicationDbContext db = new ApplicationDbContext();
+            ApplicationUser user = db.Users.Where(u => u.Id == userId).FirstOrDefault();
+
+            ViewBag.userName = user.UserName;
+            ViewBag.avatarUrl = "/image/avatar/" + user.Avatar;
+
+            //=============================================
+
+            IQueryable<CommonShowViewModel> q = new userFactory().queryAllShow();
+            List<CommonShowViewModel> viewModels = q.ToList();
+            if (viewModel.isSelectedCity == "true")
+            {
+                viewModels = q.Where(s => s.showCity == viewModel.showCity).DefaultIfEmpty().ToList();
+            }
+
+            // return
+            return View(viewModels);
+        }
+
+        public ActionResult ShowList(CommonShowViewModel viewModel)
+        {
+            IQueryable<CommonShowViewModel> q = new userFactory().queryAllShow();
+            List<CommonShowViewModel> viewModels = q.ToList();
+            if (viewModel.isSelectedCity == "true")
+            {
+                viewModels = q.Where(s => s.showCity == viewModel.showCity).DefaultIfEmpty().ToList();
+            }
+
+            return View(viewModels);
+        }
 
 
-        public ActionResult MyshowPag()
+        //[HttpPost]
+        //public ActionResult ShowList(CommonShowViewModel viewModel)
+        //{
+        //    IQueryable<CommonShowViewModel> q = new userFactory().queryAllShow();
+        //    List<CommonShowViewModel> viewModels = q.ToList();
+        //    if (viewModel.isSelectedCity == "true")
+        //    {
+        //        viewModels = q.Where(s => s.showCity == viewModel.showCity).DefaultIfEmpty().ToList();
+        //    }
+
+        //    return View(viewModels);
+        //}
+
+        public ActionResult GalleryList()
         {
             return View();
         }
-        
+
+        //Common首頁 end
+
+        //=========================================================================================
 
         //Aside 導引畫面start
-
         public ActionResult MyshowPage()
         {
             return View();

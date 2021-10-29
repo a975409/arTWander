@@ -1,0 +1,64 @@
+﻿@model List<arTWander.Models.CommonViewModel.CommonShowViewModel>
+@{
+    Layout = null;
+}
+
+
+<!-- 展覽列表 starts -->
+<div class="container ">
+    <div class="row showlistRow">
+        @foreach(var show in Model)
+        {
+            @Html.Partial("~/Views/Shared/CommonPartial/Card/_PartialShowList.cshtml", show);
+        }
+    </div>
+</div>
+<!-- 展覽列表 ends -->
+<!-- 分頁 starts -->
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link text-dark" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
+                <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
+                <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link text-dark" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<!-- 分頁 ends -->
+<script>
+    $("#showImg a").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("ShowInformDetail", "Common")',
+            data: {},
+            success: function (data) {
+                $('#detailShowInform').html(data);
+            }
+        });
+    });
+
+    //let isSelectedCitys = document.querySelectorAll('#cityForm input[name="isSelectedCity"]');
+    //let submitBtns = document.querySelectorAll('#cityForm input[name="submit"]');
+
+    //for (var item of submitBtns)
+    //{
+    //    item.addEventListener('click', function () {
+    //        for (var SelectedCityInput of isSelectedCitys)
+    //        {
+    //            SelectedCityInput.nodeValue = "true";
+    //        }
+    //    });;
+    //}
+</script>
