@@ -57,7 +57,7 @@ namespace arTWander.Models
         public string CompanyName { get; set; }
 
         [Required(ErrorMessage = "請填寫展演單位簡介")]
-        [StringLength(300, MinimumLength = 200, ErrorMessage = "填寫展演單位簡介，限字數200～300字")]
+        [StringLength(1000, ErrorMessage = "填寫展演單位簡介，限字數1000字以內")]
         [DisplayName("展演單位簡介")]
         public string CompanyDescription { get; set; }
 

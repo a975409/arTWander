@@ -262,7 +262,9 @@ namespace arTWander.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                //return View(model);
+                string validAlert = SweetAlert.initAlert() + SweetAlert.ErrorAlert("變更密碼失敗", "欄位驗證失敗!", "");
+                return JavaScript(validAlert);
             }
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId<int>(), model.OldPassword, model.NewPassword);
             if (result.Succeeded)
@@ -272,10 +274,15 @@ namespace arTWander.Controllers
                 {
                     await SignInAsync(user, isPersistent: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                //return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                string success = SweetAlert.timeoutCloseToLinkAlert(3000, Url.Action("Index", "Manage")) + SweetAlert.SuccessAlert("變更密碼成功", "3秒後自動跳轉到展演單位主頁", "");
+                return JavaScript(success);
             }
-            AddErrors(result);
-            return View(model);
+
+            //AddErrors(result);
+            //return View(model);
+            string loginFailure = SweetAlert.initAlert() + SweetAlert.ErrorAlert("變更密碼失敗", result.Errors.FirstOrDefault(), "");
+            return JavaScript(loginFailure);
         }
 
         //

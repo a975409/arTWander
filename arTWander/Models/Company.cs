@@ -26,7 +26,7 @@ namespace arTWander.Models
         public string CompanyName { get; set; }
 
         [Required]
-        [StringLength(300)]
+        [StringLength(1000)]
         public string CompanyDescription { get; set; }
 
         [Required]
@@ -51,7 +51,7 @@ namespace arTWander.Models
         [StringLength(100)]
         public string Address { get; set; }
 
-        public string PhotoSticker { get; set; }
+        public string PhotoStickerImage { get; set; }
 
         public string PromotionalImage { get; set; }
 

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js">
+  </script>
+  <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+  <style>
+    .dz-remove {
+      color: white;
+      background-color: red;
+      border-radius: 5px 5px;
+      height: 30px;
+      line-height: 30px;
+      margin-top: 5px;
+    }
+
+    .dropzone .dz-preview.dz-error .dz-error-message {
+      top: 165px;
+    }
+  </style>
+</head>
+
+<body>
+  <form action="/file-upload" class="dropzone" id="textfile" enctype="multipart/form-data">
+    <div class="fallback">
+      <input name="file" type="file" multiple />
+    </div>
+  </form>
+  <script>
+    let textfile = $('#textfile').dropzone({
+      url: '/file-upload',
+      method: 'post',
+      maxFilesize: 5,
+      uploadMultiple: true,
+      addRemoveLinks: true,
+      autoProcessQueue: false,
+      acceptedFiles: 'image/*',
+      timeout: 3000,
+      dictDefaultMessage: '請將圖檔拖曳至此',
+      dictRemoveFile: '取消上傳',
+      dictMaxFilesExceeded: '上傳的檔案超出數量',
+      dictInvalidFileType: '此檔案不是圖檔，無法上傳',
+      dictFileTooBig: '圖檔太大，無法上傳'
+    });
+  </script>
+</body>
+
+</html>

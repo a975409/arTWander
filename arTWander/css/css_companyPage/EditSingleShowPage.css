@@ -1,0 +1,16 @@
+.titlegroup{
+  font-size: 25px;
+}
+
+.tag {
+    display: inline-block;
+    padding: 5px 10px;
+    padding-right: 40px;
+}
+
+
+    .tag button {
+        padding: 0px;
+        padding-right: 10px;
+        height: 100%;
+    }

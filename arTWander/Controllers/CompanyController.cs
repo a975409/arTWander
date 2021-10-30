@@ -13,7 +13,7 @@ using System.IO;
 
 namespace arTWander.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Company")]
     public class CompanyController : Controller
     {
         //如果要在其他Controller引用DbContext來對資料表做CRUD，請參考第17~33行新增DbContext
@@ -63,7 +63,12 @@ namespace arTWander.Controllers
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
 
             //透過DbContext讀取Company資料表資料
-            var company = DbContext.Company.Where(m => m.FK_ApplicationUser == userId).FirstOrDefault() ?? new Company();
+            var company = DbContext.Company.Where(m => m.FK_ApplicationUser == userId).FirstOrDefault();
+
+
+            //如果沒有輸入展演單位資訊，就會跳到展演單位資訊編輯畫面
+            if (company == null)
+                return RedirectToAction("Edit");
 
             string CityName = City_District.getCities(DbContext).Where(m => m.Id == company.FK_City).Select(m => m.CityName).FirstOrDefault();
 
@@ -73,6 +78,7 @@ namespace arTWander.Controllers
             if (districts != null)
                 DistrictName = districts.Where(m => m.Id == company.FK_District).Select(m => m.DistrictName).FirstOrDefault();
 
+            string dirPath = $"/SaveFiles/Company/{company.Id}/Info";
 
             var viewModel = new CompanyViewModel
             {
@@ -84,8 +90,8 @@ namespace arTWander.Controllers
                 Fax = company.Fax,
                 HomePage = company.HomePage,
                 Phone = company.Phone,
-                PhotoSticker = company.PhotoSticker,
-                PromotionalImage = company.PromotionalImage,
+                PhotoSticker = string.IsNullOrEmpty(company.PhotoStickerImage) ? "" : $"{dirPath}/{company.PhotoStickerImage}",
+                PromotionalImage = string.IsNullOrEmpty(company.PromotionalImage) ? "" : $"{dirPath}/{company.PromotionalImage}",
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(User.Identity.GetUserId<int>()),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(User.Identity.GetUserId<int>()),
@@ -118,9 +124,10 @@ namespace arTWander.Controllers
             int userId = User.Identity.GetUserId<int>();
             var company = DbContext.Company.Where(m => m.FK_ApplicationUser == userId).FirstOrDefault();
             var model = new CompanyEditViewModel();
-
+            
             if (company != null)
             {
+                string dirPath = $"/SaveFiles/Company/{company.Id}/Info";
                 model.Address = company.Address;
                 model.BusinessHours = company.BusinessHours;
                 model.CompanyDescription = company.CompanyDescription;
@@ -132,8 +139,8 @@ namespace arTWander.Controllers
                 model.HomePage = company.HomePage;
                 model.Phone = company.Phone;
 
-                ViewBag.PhotoSticker = company.PhotoSticker;
-                ViewBag.PromotionalImage = company.PromotionalImage;
+                ViewBag.PhotoSticker = $"{dirPath}/{company.PhotoStickerImage}";
+                ViewBag.PromotionalImage = $"{dirPath}/{company.PromotionalImage}";
             }
 
             return View(model);
@@ -144,58 +151,12 @@ namespace arTWander.Controllers
         public async Task<ActionResult> Edit(CompanyEditViewModel model, HttpPostedFileBase Promotional, HttpPostedFileBase PhotoSticker)
         {
             if (!ModelState.IsValid)
+            {
                 return View(model);
+            }
 
             int userId = User.Identity.GetUserId<int>();
             var company = DbContext.Company.Where(m => m.FK_ApplicationUser == userId).FirstOrDefault();
-
-            string saveDir = Path.Combine(Server.MapPath("~/SaveFiles/Company"), userId.ToString(), "Info");
-            Directory.CreateDirectory(saveDir);
-            
-            if (Promotional != null && Promotional.ContentLength > 0)
-            {
-                byte[] ImageData = new byte[Promotional.ContentLength];
-                Promotional.InputStream.Read(ImageData, 0, Promotional.ContentLength);
-                MemoryStream stream = new MemoryStream(ImageData);
-
-                //判斷上傳的檔案是否為圖片檔
-                if (IsImage(stream))
-                {
-                    //取得副檔名
-                    string extension = Path.GetExtension(Promotional.FileName);
-                    
-                    //設定檔名
-                    string fileName = DateTime.Now.ToString("yyyyMMdd_HHmmss") + extension;
-
-                    //完整另存路徑
-                    string savePath = Path.Combine(saveDir, fileName);
-
-                    //server端下載檔案
-                    Promotional.SaveAs(savePath);
-                }
-            }
-
-            if (PhotoSticker != null && PhotoSticker.ContentLength > 0)
-            {
-                byte[] ImageData = new byte[PhotoSticker.ContentLength];
-                PhotoSticker.InputStream.Read(ImageData, 0, PhotoSticker.ContentLength);
-                MemoryStream stream = new MemoryStream(ImageData);
-
-                if (IsImage(stream))
-                {
-                    //取得副檔名
-                    string extension = Path.GetExtension(PhotoSticker.FileName);
-
-                    //設定檔名
-                    string fileName = DateTime.Now.ToString("yyyyMMdd_HHmmss") + extension;
-
-                    //完整另存路徑
-                    string savePath = Path.Combine(saveDir, fileName);
-
-                    //server端下載檔案
-                    Promotional.SaveAs(savePath);
-                }
-            }
 
             if (company == null)
             {
@@ -211,9 +172,7 @@ namespace arTWander.Controllers
                     FK_City = model.FK_City,
                     FK_District = model.FK_District,
                     HomePage = model.HomePage,
-                    Phone = model.Phone,
-                    PromotionalImage = Promotional?.FileName,
-                    PhotoSticker = PhotoSticker?.FileName
+                    Phone = model.Phone
                 };
                 DbContext.Company.Add(company);
             }
@@ -230,26 +189,98 @@ namespace arTWander.Controllers
                 company.FK_District = model.FK_District;
                 company.HomePage = model.HomePage;
                 company.Phone = model.Phone;
-                company.PromotionalImage = Promotional?.FileName;
-                company.PhotoSticker = PhotoSticker?.FileName;
             }
             await DbContext.SaveChangesAsync();
 
+            string saveDir = Path.Combine(Server.MapPath("~/SaveFiles/Company"), company.Id.ToString(), "Info");
+            Directory.CreateDirectory(saveDir);
+
+            if (Promotional != null && Promotional.ContentLength > 0)
+            {
+                byte[] ImageData = new byte[Promotional.ContentLength];
+                Promotional.InputStream.Read(ImageData, 0, Promotional.ContentLength);
+
+                using (MemoryStream stream = new MemoryStream(ImageData))
+                {
+                    //判斷上傳的檔案是否為圖片檔
+                    if (IsImage(stream))
+                    {
+                        //移除原先儲存在Server上的封面圖
+                        var PromotionalImages = Directory.GetFiles(saveDir).Where(m => Path.GetFileNameWithoutExtension(m) == "PromotionalImage");
+
+                        foreach(var item in PromotionalImages)
+                        {
+                            FileInfo info = new FileInfo(item);
+
+                            if (info.Exists)
+                            {
+                                try
+                                {
+                                    info.Delete();
+                                }
+                                catch { }
+                            }
+                        }
+
+                        //取得副檔名
+                        string extension = Path.GetExtension(Promotional.FileName);
+
+                        //設定檔名
+                        company.PromotionalImage = "PromotionalImage" + extension;
+
+                        //完整另存路徑
+                        string savePath = Path.Combine(saveDir, company.PromotionalImage);
+
+                        //server端下載檔案
+                        Promotional.SaveAs(savePath);
+                        await DbContext.SaveChangesAsync();
+                    }
+                }
+            }
+
+            if (PhotoSticker != null && PhotoSticker.ContentLength > 0)
+            {
+                byte[] ImageData = new byte[PhotoSticker.ContentLength];
+                PhotoSticker.InputStream.Read(ImageData, 0, PhotoSticker.ContentLength);
+
+                using (MemoryStream stream = new MemoryStream(ImageData))
+                {
+                    if (IsImage(stream))
+                    {
+                        //移除原先儲存在Server上的大頭照
+                        var PhotoStickerImages = Directory.GetFiles(saveDir).Where(m => Path.GetFileNameWithoutExtension(m) == "PhotoStickerImg");
+
+                        foreach (var item in PhotoStickerImages)
+                        {
+                            FileInfo info = new FileInfo(item);
+
+                            if (info.Exists)
+                            {
+                                try
+                                {
+                                    info.Delete();
+                                }
+                                catch { }
+                            }
+                        }
+
+                        //取得副檔名
+                        string extension = Path.GetExtension(PhotoSticker.FileName);
+
+                        //設定檔名
+                        company.PhotoStickerImage = "PhotoStickerImg" + extension;
+
+                        //完整另存路徑
+                        string savePath = Path.Combine(saveDir, company.PhotoStickerImage);
+
+                        //server端下載檔案
+                        PhotoSticker.SaveAs(savePath);
+                        await DbContext.SaveChangesAsync();
+                    }
+                }
+            }
+
             return RedirectToAction("Index");
-        }
-
-        public ActionResult GetCities()
-        {
-            ViewCity[] cities = City_District.getCities(DbContext);
-
-            return Json(cities, JsonRequestBehavior.AllowGet);
-        }
-
-        public async Task<ActionResult> GetDistricts(int cityId)
-        {
-            var districts = await City_District.getDistricts(cityId, DbContext);
-
-            return Json(districts, JsonRequestBehavior.AllowGet);
         }
 
         private bool IsImage(Stream stream)

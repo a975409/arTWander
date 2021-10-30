@@ -165,7 +165,9 @@
     <Content Include="css\css_commonPage\setUpPage.css" />
     <Content Include="css\css_commonPage\ShowList.css" />
     <Content Include="css\css_companyPage\CompanyEditPage.css" />
+    <Content Include="css\css_companyPage\EditSingleShowPage.css" />
     <Content Include="css\css_companyPage\Index.css" />
+    <Content Include="css\css_companyPage\SingleShowPage.css" />
     <Content Include="css\CustomList.css" />
     <Content Include="css\EditSingleShowPage.css" />
     <Content Include="css\indexStyle.css" />
@@ -258,8 +260,10 @@
     <Content Include="image\nav\notify.png" />
     <Content Include="javascript\AccountIndex.js" />
     <Content Include="javascript\AsideTrue.js" />
+    <Content Include="javascript\Company.js" />
     <Content Include="javascript\EditSingleShowPage.js" />
     <Content Include="javascript\index.js" />
+    <Content Include="javascript\jquery.MultiFile.min.js" />
     <Content Include="javascript\LoginForm.js" />
     <Content Include="javascript\MyShowPage.js" />
     <Content Include="javascript\RegisterForm.js" />
@@ -290,6 +294,12 @@
     <Content Include="Views\Shared\CommonPartial\Nav\_PartialLogInFalse.cshtml" />
     <Content Include="Views\Shared\CommonPartial\Nav\_PartialLogInTrue.cshtml" />
     <Content Include="Views\Company\Edit.cshtml" />
+    <Content Include="Views\Shared\CompanyPartial\_IsRememberBrowser.cshtml" />
+    <Content Include="Views\Shared\CompanyPartial\_IsTwoFactor.cshtml" />
+    <Content Include="Views\ShowPageManage\Index.cshtml" />
+    <Content Include="Views\Shared\CompanyPartial\_ShowPagePartial.cshtml" />
+    <Content Include="Views\ShowPageManage\Create.cshtml" />
+    <Content Include="Views\ShowPageManage\DisplayInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -371,7 +381,9 @@
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MethodController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
+    <Compile Include="Controllers\ShowPageManageController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -394,6 +406,7 @@
     <Compile Include="Models\Reports.cs" />
     <Compile Include="Models\ResponseShowComment.cs" />
     <Compile Include="Models\ShowComment.cs" />
+    <Compile Include="Models\ShowPageViewModel.cs" />
     <Compile Include="Models\ShowPage.cs" />
     <Compile Include="Models\ShowPageFile.cs" />
     <Compile Include="Models\SweetAlert.cs" />
@@ -407,6 +420,7 @@
   <ItemGroup>
     <Folder Include="SaveFiles\Company\" />
     <Folder Include="Views\Admin\" />
+    <Folder Include="Views\Method\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -12,120 +12,99 @@
         }
         else
         {
-            <img src="/image/exhibiton/@Model.PromotionalImage" id="PromotionalImage" class="card-img-top" alt="...">
+            <img src="@Model.PromotionalImage" id="PromotionalImage" class="card-img-top" alt="...">
         }
 
 
-        <div id="titleGroup" class="card-body d-flex align-items-end justify-content-between">
-            <div class=" d-flex align-items-end">
-                @if (string.IsNullOrEmpty(Model.PhotoSticker))
-                {
-                    <img src="~/image/avatar/頭像_展演單位.png" height="100" width="100" alt="...">
-                }
-                else
-                {
-                    <img src="/image/avatar/@Model.PhotoSticker" height="100" width="100" alt="...">
-                }
-                <h3 class="text-body ml-3">@Model.CompanyName</h3>
-            </div>
-            <nav>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-link" id="nav-MyShow" data-toggle="tab" href="#nav-MyShow-tab" role="tab" aria-controls="nav-MyShow-tab" aria-selected="false">我的展演</a>
-                    <a class="nav-link active" id="nav-info" data-toggle="tab" href="#nav-info-tab" role="tab" aria-controls="nav-info-tab" aria-selected="true">展演單位資訊</a>
-                </div>
-            </nav>
+    <div id="titleGroup" class="card-body d-flex align-items-end justify-content-between row">
+        <div class="col-lg-6 d-flex align-items-end">
+            @if (string.IsNullOrEmpty(Model.PhotoSticker))
+            {
+                <img src="~/image/avatar/頭像_展演單位.png" height="100" width="100" alt="...">
+            }
+            else
+            {
+                <img src="@Model.PhotoSticker" height="100" width="100" alt="...">
+            }
+            <h3 class="text-body ml-3">@Model.CompanyName</h3>
         </div>
+        <div class="btn-group col-lg-6" role="group" aria-label="Basic example">
+            <a href="~/Manage/ChangePassword" class="btn btn-warning">變更密碼</a>
+            <a href="~/Company/Edit" class="btn btn-primary">編輯展演資料</a>
+            <a href="~/ShowPageManage/Index" class="btn btn-success">展演管理</a>
+        </div>
+    </div>
     </div>
     <div class="jumbotron">
         <p class="lead">@Model.CompanyDescription</p>
     </div>
-    <div class="tab-content" id="nav-tabContent">
-        <div id="nav-MyShow-tab" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-MyShow-tab">...</div>
-
-        <div class="tab-pane fade show active" id="nav-info-tab" role="tabpanel" aria-labelledby="nav-info-tab">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div>
-                        <h3>帳戶功能</h3>
-                        <div id="TwoFactor">
-                            @Html.Partial("_IsTwoFactor", Model)
-                        </div>
-
-                        <div id="Browser">
-                            @Html.Partial("_IsRememberBrowser", Model)
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="inputTel" class="col-sm-4 col-form-label">編輯展演資料：</label>
-                            <div class="col-sm-8">
-                                <a href="~/Company/Edit" class="btn btn-primary">編輯</a>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="inputTel" class="col-sm-4 col-form-label">變更密碼：</label>
-                            <div class="col-sm-8">
-                                <a href="~/Account/ChangePassword" class="btn btn-primary">點擊變更</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mainField">
-                        <h3>聯繫方式</h3>
-                        <div class="form-group row">
-                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "col-sm-4 col-form-label" })
-                            <div class="col-sm-8">
-                                @if (!string.IsNullOrEmpty(Model.Email))
-                                {
-                                    <a href="mailto:@Model.Email" class="form-control">@Model.Email</a>
-                                }
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "col-sm-4 col-form-label" })
-                            <div class="col-sm-8">
-                                <input type="tel" class="form-control" id="Phone" name="Phone" value="@Model.Phone" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            @Html.LabelFor(model => model.Fax, htmlAttributes: new { @class = "col-sm-4 col-form-label" })
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="Fax" name="Fax" value="@Model.Fax" readonly>
-                            </div>
-                        </div>
-                    </div>
-
+    <div class="row">
+        <div class="col-sm-6">
+            <div>
+                <h3>帳戶功能</h3>
+                <div id="TwoFactor">
+                    @Html.Partial("~/Views/Shared/CompanyPartial/_IsTwoFactor.cshtml", Model)
                 </div>
-                <div class="col-sm-6">
-                    <div class="mainField">
-                        <h3> @Html.LabelFor(model => model.HomePage)</h3>
-                        <div class="form-group row">
-                            <div class="col">
-                                <a href="@Model.HomePage" class="form-control">@Model.HomePage</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mainField">
-                        <h3>@Html.LabelFor(model => model.Address)</h3>
-                        <div class="form-group row">
 
-                            <div class="col">
-                                <input type="text" class="form-control" id="Address" name="Address" value="@Model.Address" readonly>
-                            </div>
-                        </div>
+                <div id="Browser">
+                    @Html.Partial("~/Views/Shared/CompanyPartial/_IsRememberBrowser.cshtml", Model)
+                </div>
+            </div>
+            <div class="mainField">
+                <h3>聯繫方式</h3>
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-sm-8">
+                        @if (!string.IsNullOrEmpty(Model.Email))
+                        {
+                            <a href="mailto:@Model.Email" class="form-control">@Model.Email</a>
+                        }
                     </div>
-                    <div class="mainField">
-                        <h3>@Html.LabelFor(model => model.BusinessHours)</h3>
-                        <div class="form-group row">
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-sm-8">
+                        <input type="tel" class="form-control" id="Phone" name="Phone" value="@Model.Phone" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Fax, htmlAttributes: new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="Fax" name="Fax" value="@Model.Fax" readonly>
+                    </div>
+                </div>
+            </div>
 
-                            <div class="col">
-                                <input type="text" class="form-control" id="BusinessHours" name="BusinessHours" value="@Model.BusinessHours" readonly>
-                            </div>
-                        </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="mainField">
+                <h3> @Html.LabelFor(model => model.HomePage)</h3>
+                <div class="form-group row">
+                    <div class="col">
+                        <a href="@Model.HomePage" class="form-control">@Model.HomePage</a>
+                    </div>
+                </div>
+            </div>
+            <div class="mainField">
+                <h3>@Html.LabelFor(model => model.Address)</h3>
+                <div class="form-group row">
+
+                    <div class="col">
+                        <input type="text" class="form-control" id="Address" name="Address" value="@Model.Address" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="mainField">
+                <h3>@Html.LabelFor(model => model.BusinessHours)</h3>
+                <div class="form-group row">
+
+                    <div class="col">
+                        <input type="text" class="form-control" id="BusinessHours" name="BusinessHours" value="@Model.BusinessHours" readonly>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
 @section css
 {
@@ -157,6 +136,6 @@
                     $('#TwoFactor').html(data);
                 }
             })
-        })
+        });
     </script>
 }

@@ -28,7 +28,7 @@ namespace arTWander.Models
         public string Title { get; set; }
 
         [Required]
-        [StringLength(255)]
+        [StringLength(1000)]
         public string Description { get; set; }
 
         public DateTime StartDate { get; set; }
@@ -41,7 +41,7 @@ namespace arTWander.Models
 
         public bool Cost { get; set; }
 
-        public int? Price { get; set; }
+        public int Price { get; set; }
 
         public bool AgeRange { get; set; }
 
@@ -49,11 +49,10 @@ namespace arTWander.Models
         [StringLength(255)]
         public string Address { get; set; }
 
-        [Required]
         [StringLength(255)]
         public string Remark { get; set; }
 
-        public DateTime? Created_At { get; set; }
+        public DateTime Created_At { get; set; }
 
         public int FK_Company { get; set; }
 

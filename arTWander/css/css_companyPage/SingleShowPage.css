@@ -1,0 +1,42 @@
+
+.dropdown-menu>.dropdown-item {
+  font-size: 16px;
+}
+
+.dropdown-menu>.dropdown-item>i {
+  font-size: 16px;
+}
+
+/*右側各星號評論百分比*/
+.progress {
+  height: 20px;
+}
+
+.progress>span {
+  line-height: 20px;
+  font-size: large;
+}
+
+.star {
+  font-size: 40px;
+}
+
+/*所有用戶評論*/
+.usercommentImg {
+  vertical-align: top;
+  margin-right: 10px;
+}
+
+.usercommentImg>img {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}
+
+.usercommentStar i {
+  font-size: 16px;
+}
+
+.userCommentName {
+  font-size: 20px;
+}

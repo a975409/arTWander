@@ -34,20 +34,14 @@
         <h1>主視覺</h1>
         <br>
         <div class="form-group">
-          <div class="custom-file">
-            <input type="file" class="custom-file-input" id="customFile">
-            <label class="custom-file-label" for="customFile">上傳主視覺</label>
-          </div>
+          <label for="customFile">請將圖片拖曳到下方上傳</label>
+          <div id="dropDIV" ondragover="dragoverHandler(event)" ondrop="dropHandler(event)"></div>
+          <!-- <input type="file" multiple class="custom-file-input dropzone" id="customFile"> -->
         </div>
+
         <div class="form-group row">
-          <label for="introduce" class="col-sm-2 col-form-label">主視覺介紹</label>
-          <div class="col-sm-10">
-            <input type="email" class="form-control" id="introduce">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="searchKeyword" class="col-sm-2 col-form-label">設定關鍵字</label>
-          <div class="col-sm-10">
+          <label for="searchKeyword" class="col-md-3 col-lg-2 col-form-label">設定關鍵字</label>
+          <div class="col-md-9 col-lg-10">
             <input type="email" class="form-control" id="searchKeyword">
           </div>
         </div>
@@ -58,29 +52,48 @@
         <h1>展演開放時間</h1>
         <br>
         <div class="form-group row">
-          <label for="startDate" class="col-sm-2 col-form-label">開放日期</label>
-          <div class="col-sm-4">
+          <label for="startDate" class="col-md-2 col-form-label">開放日期</label>
+          <div class="col-md-4">
             <input type="date" class="form-control" id="startDate">
           </div>
-          <label for="endDate" class="col-sm-2 col-form-label">結束日期</label>
-          <div class="col-sm-4">
+          <label for="endDate" class="col-md-2 col-form-label">結束日期</label>
+          <div class="col-md-4">
             <input type="date" class="form-control" id="endDate">
           </div>
         </div>
         <div class="form-group row">
-          <div class="form-group col-sm-3">
-            <label class="col-form-label" for="days">開放時段(按住Ctrl鍵多選)</label>
-            <select multiple class="form-control" id="days">
-              <option value="1">星期日</option>
-              <option value="2">星期一</option>
-              <option value="3">星期二</option>
-              <option value="4">星期三</option>
-              <option value="5">星期四</option>
-              <option value="6">星期五</option>
-              <option value="7">星期六</option>
-            </select>
+          <div class="form-group col-md-2">
+            <label class="col-form-label" for="days">開放時段</label>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" name="days" id="day1" value="1">
+              <label for="day1" class="form-check-label">星期日</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" name="days" id="day2" value="2">
+              <label for="day2" class="form-check-label">星期一</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" name="days" id="day3" value="3">
+              <label for="day3" class="form-check-label">星期二</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" name="days" id="day4" value="4">
+              <label for="day4" class="form-check-label">星期三</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" name="days" id="day5" value="5">
+              <label for="day5" class="form-check-label">星期四</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" name="days" id="day6" value="6">
+              <label for="day6" class="form-check-label">星期五</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" name="days" id="day7" value="7">
+              <label for="day7" class="form-check-label">星期六</label>
+            </div>
           </div>
-          <div class="form-group col-sm-3">
+          <div class="form-group col-md-4">
             <label for="startTime" class="col-form-label">開放時間</label>
             <div>
               <input type="time" class="form-control" id="startTime">
@@ -90,7 +103,7 @@
               <input type="time" class="form-control" id="endTime">
             </div>
           </div>
-          <div class="form-group col-sm-6">
+          <div class="form-group col-md-6">
             <label for="" class="col-form-label">是否收費？</label>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="charge" id="yes" value="true">
@@ -104,15 +117,24 @@
         </div>
       </div>
 
-      <div class="form-group row align-items-center">
-        <label for="address" class="col-sm-3 col-form-label titlegroup">展演地點：</label>
-        <div class="col-sm-9">
-          <input type="email" class="form-control" id="address">
+      <div class="jumbotron bg-light">
+        <h1>展演地點</h1>
+        <br>
+        <div class="row">
+          <div class="form-group col-md-3">
+            <label for="startDate">縣市</label>
+            <select class="form-control" id="FK_City" name="FK_City" value="@Model.FK_City"></select>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="startDate">鄉鎮市區</label>
+            <select class="form-control" id="FK_District" name="FK_District" value="@Model.FK_District"></select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="startDate">地址</label>
+            <input type="text" class="form-control" id="address">
+          </div>
         </div>
-      </div>
-
-      <div class="form-group">
-        <div class="col-12">
+        <div class="form-group col-12">
           <img src="./image/map.png" alt="展演地點" style="width: 100%;">
         </div>
       </div>
@@ -134,8 +156,73 @@
 <script>
   document.getElementById('BtnNextReView').addEventListener('click', function () {
     $('#mainPage').load('CompanyPage/ReviewPage.html');
-    $('html,body').animate({ scrollTop: 0 }, 'slow');
+    $('html,body').animate({
+      scrollTop: 0
+    }, 'slow');
   })
+
+  function dragoverHandler(evt) {
+    evt.preventDefault();
+  }
+
+  function dropHandler(evt) { //evt 為 DragEvent 物件
+    evt.preventDefault();
+    var files = evt.dataTransfer.files; //由DataTransfer物件的files屬性取得檔案物件
+    let errMsg = ''
+
+    for (var i in files) {
+      if (i > 6)
+        break;
+
+      if (files[i].type.startsWith("image/")) {
+        if (files[i].size > 5000000) {
+          errMsg += files[i].name + '\n';
+          continue;
+        }
+
+        //將圖片在頁面預覽
+        var fr = new FileReader();
+        fr.onload = openfile;
+        fr.readAsDataURL(files[i]);
+
+      }
+    }
+
+    if (files.length > 6) {
+      alert("檔案上傳的數量超出限制，故多餘的檔案不上傳");
+    }
+
+    if (errMsg.length > 0) {
+      errMsg = '下列檔案超出大小，無法上傳：\n' + errMsg;
+      alert(errMsg);
+    }
+  }
+
+  function openfile(evt) {
+    var img = evt.target.result;
+    let imgdiv = document.createElement('div');
+    imgdiv.className = 'alert alert-light alert-dismissible fade show';
+    imgdiv.setAttribute('role', 'alert');
+    imgdiv.style.display = 'inline-block';
+    imgdiv.style.paddingLeft = '12px';
+    imgdiv.style.paddingRight = '54px';
+    imgdiv.style.backgroundColor = '#E8EAEA';
+
+    var imgx = document.createElement('img');
+    imgx.src = img;
+    imgx.style.height = '100px';
+    imgdiv.appendChild(imgx);
+
+    let closebtn = document.createElement('button');
+    closebtn.classList.add('close');
+    closebtn.setAttribute('type', 'button');
+    closebtn.setAttribute('data-dismiss', 'alert');
+    closebtn.setAttribute('aria-label', 'Close');
+    closebtn.innerHTML = '<span aria-hidden="true">&times;</span>';
+    imgdiv.appendChild(closebtn);
+
+    document.getElementById('dropDIV').appendChild(imgdiv);
+  }
 
   // $('#ReviewPage').load('CompanyPage/ReviewPage.html');
 </script>
