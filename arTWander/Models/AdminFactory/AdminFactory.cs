@@ -52,7 +52,7 @@ namespace arTWander.Models.AdminFactory
                     File.Delete(deletePath);
                 }
             }
-            
+
         }
 
 
@@ -68,46 +68,150 @@ namespace arTWander.Models.AdminFactory
             var AllUserId = db.Users.Select(m => m.Id).ToList();
 
             //判斷是否有搜尋字串
-            
-                foreach (var userId in AllUserId)
-                {
-                    if (string.IsNullOrEmpty(blackList.ToString())) { blist = "正常"; }
-                    else { blist = "黑名單"; }
-                    //left join +into ps from login in ps.DefaultIfEmpty()
-                    var q = from users in db.Users
-                            join login in db.LogingLog on users.Id equals login.FK_ApplicationUser into ps
-                            from login in ps.DefaultIfEmpty()
-                            join sComment in db.ShowComment on users.Id equals sComment.FK_ApplicationUser into pt
-                            from sComment in pt.DefaultIfEmpty()
-                            join sPage in db.ShowPage on sComment.FK_ShowPage equals sPage.Id
-                            join bList in db.BlackList on users.Id equals bList.FK_ApplicationUser into pu
-                            from bList in pu.DefaultIfEmpty()
-                            where users.Id == userId
-                            select new UserListViewModel
-                            {
-                                FK_ApplicationUser = users.Id,
-                                users = users,
-                                PhoneNumber = users.PhoneNumber,
-                                UserName = users.UserName,
-                                Birthday = Bday,
-                                AccountAddress = users.AccountAddress,
-                                AvatarUrl = "/SaveFiles/Admin/Avatar/",
-                                AvatarName = users.Avatar,
-                                Email = users.Email,
-                                RegisterTime = login.RegisterTime,
-                                LastloginTime = login.LastloginTime,
-                                LoginOutTime = login.LoginOutTime,
-                                LogingCount = login.LogingCount,
-                                IsBlackList = blist,
-                                Title = sPage.Title,
-                                Comment = sComment.Comment,
-                                Star = sComment.Star
-                            };
-                    List<UserListViewModel> viewmodel = q.ToList();
-                    model.AddRange(viewmodel);
-                }
+
+            foreach (var userId in AllUserId)
+            {
+                if (string.IsNullOrEmpty(blackList.ToString())) { blist = "正常"; }
+                else { blist = "黑名單"; }
+                //left join +into ps from login in ps.DefaultIfEmpty()
+                var q = from users in db.Users
+                        join login in db.LogingLog on users.Id equals login.FK_ApplicationUser into ps
+                        from login in ps.DefaultIfEmpty()
+                        join sComment in db.ShowComment on users.Id equals sComment.FK_ApplicationUser into pt
+                        from sComment in pt.DefaultIfEmpty()
+                        join sPage in db.ShowPage on sComment.FK_ShowPage equals sPage.Id
+                        join bList in db.BlackList on users.Id equals bList.FK_ApplicationUser into pu
+                        from bList in pu.DefaultIfEmpty()
+                        where users.Id == userId
+                        select new UserListViewModel
+                        {
+                            FK_ApplicationUser = users.Id,
+                            users = users,
+                            PhoneNumber = users.PhoneNumber,
+                            UserName = users.UserName,
+                            Birthday = Bday,
+                            AccountAddress = users.AccountAddress,
+                            AvatarUrl = "/SaveFiles/Admin/Avatar/",
+                            AvatarName = users.Avatar,
+                            Email = users.Email,
+                            RegisterTime = login.RegisterTime,
+                            LastloginTime = login.LastloginTime,
+                            LoginOutTime = login.LoginOutTime,
+                            LogingCount = login.LogingCount,
+                            IsBlackList = blist,
+                            Title = sPage.Title,
+                            Comment = sComment.Comment,
+                            Star = sComment.Star
+                        };
+                List<UserListViewModel> viewmodel = q.ToList();
+                model.AddRange(viewmodel);
+            }
             return model;
         }
+
+
+        public IEnumerable<UserListViewModel> GetUserListBySearch(string searchWord)
+        {
+            var db = new ApplicationDbContext();
+            BlackList blackList = new BlackList();
+            List<UserListViewModel> model = new List<UserListViewModel>();
+
+            string Bday = "";
+            string nodata = "";
+            string blist = "";
+            //判斷是否有搜尋字串
+            if (string.IsNullOrEmpty(blackList.ToString())) { blist = "正常"; }
+            else { blist = "黑名單"; }
+            //left join +into ps from login in ps.DefaultIfEmpty()
+            var q = from users in db.Users
+                    join login in db.LogingLog on users.Id equals login.FK_ApplicationUser into ps
+                    from login in ps.DefaultIfEmpty()
+                    join sComment in db.ShowComment on users.Id equals sComment.FK_ApplicationUser into pt
+                    from sComment in pt.DefaultIfEmpty()
+                    join sPage in db.ShowPage on sComment.FK_ShowPage equals sPage.Id
+                    join bList in db.BlackList on users.Id equals bList.FK_ApplicationUser into pu
+                    from bList in pu.DefaultIfEmpty()
+                    where users.UserName.Contains(searchWord) || 
+                    users.Email.Contains(searchWord)
+                    //login.RegisterTime.ToString().Contains(searchWord)||
+                    //users.Id.ToString().Contains(searchWord)
+                    select new UserListViewModel
+                    {
+                        FK_ApplicationUser = users.Id,
+                        users = users,
+                        PhoneNumber = users.PhoneNumber,
+                        UserName = users.UserName,
+                        Birthday = Bday,
+                        AccountAddress = users.AccountAddress,
+                        AvatarUrl = "/SaveFiles/Admin/Avatar/",
+                        AvatarName = users.Avatar,
+                        Email = users.Email,
+                        RegisterTime = login.RegisterTime,
+                        LastloginTime = login.LastloginTime,
+                        LoginOutTime = login.LoginOutTime,
+                        LogingCount = login.LogingCount,
+                        IsBlackList = blist,
+                        Title = sPage.Title,
+                        Comment = sComment.Comment,
+                        Star = sComment.Star
+                    };
+            List<UserListViewModel> viewmodel = q.ToList();
+            model.AddRange(viewmodel);
+            return model;
+        }
+
+
+
+        public IEnumerable<UserListViewModel> GetUserInformById(string searchWord)
+        {
+            var db = new ApplicationDbContext();
+            List<UserListViewModel> model = new List<UserListViewModel>();
+            string nodata;
+            //string Bday = "";
+            string blist = "";
+            //判斷是否有搜尋字串
+            var black = from b in db.BlackList where b.FK_ApplicationUser.ToString() == searchWord select new { nodata = b.FK_ApplicationUser.ToString() };
+            
+            if (string.IsNullOrEmpty(black.ToString())) 
+            { blist = "正常"; }
+            else { blist = "黑名單"; }
+            //left join +into ps from login in ps.DefaultIfEmpty()
+            var q = from users in db.Users
+                    join login in db.LogingLog on users.Id equals login.FK_ApplicationUser into ps
+                    from login in ps.DefaultIfEmpty()
+                    join sComment in db.ShowComment on users.Id equals sComment.FK_ApplicationUser into pt
+                    from sComment in pt.DefaultIfEmpty()
+                    join sPage in db.ShowPage on sComment.FK_ShowPage equals sPage.Id
+                    join bList in db.BlackList on users.Id equals bList.FK_ApplicationUser into pu
+                    from bList in pu.DefaultIfEmpty()
+                    where users.Id.ToString() == searchWord
+                    //login.RegisterTime.ToString().Contains(searchWord)||
+                    //users.Id.ToString().Contains(searchWord)
+                    select new UserListViewModel
+                    {
+                        FK_ApplicationUser = users.Id,
+                        users = users,
+                        PhoneNumber = users.PhoneNumber,
+                        UserName = users.UserName,
+                        Birthday = users.Birthday.ToString(),
+                        AccountAddress = users.AccountAddress,
+                        AvatarUrl = "/SaveFiles/Admin/Avatar/",
+                        AvatarName = users.Avatar,
+                        Email = users.Email,
+                        RegisterTime = login.RegisterTime,
+                        LastloginTime = login.LastloginTime,
+                        LoginOutTime = login.LoginOutTime,
+                        LogingCount = login.LogingCount,
+                        IsBlackList = blist,
+                        Title = sPage.Title,
+                        Comment = sComment.Comment,
+                        Star = sComment.Star
+                    };
+            List<UserListViewModel> viewmodel = q.ToList();
+            model.AddRange(viewmodel);
+            return model;
+        }
+
 
         //public List<UserListViewModel> GetUserInform()
         //{

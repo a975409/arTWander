@@ -17,7 +17,7 @@ namespace arTWander.Models.AdminViewModel
 
         [Required]
         [StringLength(40)]
-        [DisplayName("ID")]
+        [DisplayName("用戶")]
         public string UserName { get; set; }
 
         [DisplayName("生日")]
@@ -45,7 +45,7 @@ namespace arTWander.Models.AdminViewModel
         public DateTime? LoginOutTime { get; set; }
         [DisplayName("登入次數")]
         public int? LogingCount { get; set; }
-        [DisplayName("登入狀態")]
+        [DisplayName("在線狀態")]
         public bool Statue { get; set; }
         [DisplayName("用戶ID")]
         public int? FK_ApplicationUser { get; set; }
@@ -62,5 +62,9 @@ namespace arTWander.Models.AdminViewModel
         //blacklist
         [DisplayName("狀態")]
         public string IsBlackList { get; set; }
+
+        //jason 讀取
+        public string userId{ get; set;}
+        
     }
 }
