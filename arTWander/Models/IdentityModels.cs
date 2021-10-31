@@ -62,6 +62,10 @@ namespace arTWander.Models
             return userIdentity;
         }
 
+        public ApplicationUser() {
+            PageViewCounts = new HashSet<PageViewCount>();
+        }
+
         //建立與Posts一對多的關聯，Posts是額外建立的Model
         //public ICollection<Posts> Posts { get; set; }
 
@@ -100,6 +104,9 @@ namespace arTWander.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Company> CompanySubs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PageViewCount> PageViewCounts { get; set; }
     }
 
     //=========================Model資料表===============================
@@ -153,7 +160,7 @@ namespace arTWander.Models
                 .HasMany(e => e.BlackLists)
                 .WithRequired(e => e.ApplicationUser)
                 .HasForeignKey(e => e.FK_ApplicationUser)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(e => e.Companies)
@@ -175,13 +182,13 @@ namespace arTWander.Models
                 .HasMany(e => e.ResponseShowComments)
                 .WithRequired(e => e.ApplicationUser)
                 .HasForeignKey(e => e.FK_ApplicationUser)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(e => e.ShowComments)
                 .WithRequired(e => e.ApplicationUser)
                 .HasForeignKey(e => e.FK_ApplicationUser)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(e => e.ShowPage)
@@ -192,6 +199,11 @@ namespace arTWander.Models
                 .HasMany(e => e.CompanySubs)
                 .WithMany(e => e.ApplicationUserSubs)
                 .Map(m => m.ToTable("Subscription").MapLeftKey("AccountUserSub_Id").MapRightKey("CompanySub_Id"));
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(e => e.PageViewCounts)
+                .WithOptional(e => e.ApplicationUser)
+                .HasForeignKey(e => e.FK_ApplicationUser);
 
             modelBuilder.Entity<City>()
                 .HasMany(e => e.Companies)
@@ -212,11 +224,6 @@ namespace arTWander.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Company>()
-                .HasMany(e => e.PageViewCounts)
-                .WithOptional(e => e.Company)
-                .HasForeignKey(e => e.FK_Company);
-
-            modelBuilder.Entity<Company>()
                 .HasMany(e => e.ReportsList)
                 .WithOptional(e => e.Company)
                 .HasForeignKey(e => e.FK_Company);
@@ -225,13 +232,13 @@ namespace arTWander.Models
                 .HasMany(e => e.ResponseShowComments)
                 .WithRequired(e => e.Company)
                 .HasForeignKey(e => e.FK_Company)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Company>()
                 .HasMany(e => e.ShowPages)
                 .WithRequired(e => e.Company)
                 .HasForeignKey(e => e.FK_Company)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<District>()
                 .HasMany(e => e.ShowPage)
@@ -264,7 +271,7 @@ namespace arTWander.Models
                 .HasMany(e => e.PageToTodaysList)
                 .WithRequired(e => e.ShowPage)
                 .HasForeignKey(e => e.FK_ShowPage)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<ShowPage>()
                 .HasMany(e => e.PageViewCounts)
@@ -280,13 +287,13 @@ namespace arTWander.Models
                 .HasMany(e => e.ShowComments)
                 .WithRequired(e => e.ShowPage)
                 .HasForeignKey(e => e.FK_ShowPage)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<ShowPage>()
                 .HasMany(e => e.ShowPageFiles)
                 .WithRequired(e => e.ShowPage)
                 .HasForeignKey(e => e.FK_ShowPage)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
         }
     }
 

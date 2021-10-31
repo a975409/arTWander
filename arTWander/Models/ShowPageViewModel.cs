@@ -38,7 +38,7 @@ namespace arTWander.Models
         [DisplayName("結束日期")]
         public DateTime EndDate { get; set; }
 
-        [DisplayName("開放時間")]
+        [DisplayName("展出時間")]
         public DateTime StartTime { get; set; }
 
         [DisplayName("結束時間")]
@@ -50,7 +50,7 @@ namespace arTWander.Models
         [DisplayName("收費金額($TW)")]
         public int Price { get; set; }
 
-        [DisplayName("未滿18可觀看？")]
+        [DisplayName("未滿18歲可觀看？")]
         public bool AgeRange { get; set; }
 
         [DisplayName("地址")]
@@ -62,10 +62,36 @@ namespace arTWander.Models
         [DisplayName("關鍵字")]
         public string[] Keywords { get; set; }
 
-        [DisplayName("開放時段")]
+        [DisplayName("展出時段")]
         public int[] Todays { get; set; }
 
         public string[] images { get; set; }
+
+        public ulong ViewCount { get; set; }
+
+        public ShowComment[] showComments { get; set; }
+    }
+
+    public class ShowCommentViewModel { 
+        
+        public int showCommentId { get; set; }
+        
+        public string userName { get; set; }
+
+        public string userComment { get; set; }
+
+        public int userStar { get; set; }
+
+        public string PicImg { get; set; }
+
+        public DateTime? CommentDate { get; set; }
+
+        public string CompanyName { get; set; }
+
+        public string CompanyComment { get; set; }
+
+        public DateTime? ResponseDate { get; set; }
+
     }
 
     public class ShowPageEditViewModel
@@ -129,8 +155,8 @@ namespace arTWander.Models
         [DisplayName("關鍵字")]
         public string searchKeyword { get; set; }
 
-        [Required(ErrorMessage = "請選擇開放時段")]
-        [DisplayName("開放時段")]
+        [Required(ErrorMessage = "請選擇展出時段")]
+        [DisplayName("展出時段")]
         public int[] Todays { get; set; }
     }
 }

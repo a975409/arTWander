@@ -9,7 +9,6 @@
 ////}
 $('#Cost').change(function () {
     let result = $(this).val();
-    console.log(result);
     if (result == 'true') {
         $('#displayPrice').css({ "display": "block" });
     } else {

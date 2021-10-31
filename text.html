@@ -1,97 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <title>HTML5拖曳多檔案上傳</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-  <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
-  </script>
-  <style>
-    #dropDIV {
-      text-align: center;
-      width: 100%;
-      height: 300px;
-      margin: auto;
-      border: dashed 2px gray;
-      overflow: auto;
-    }
-  </style>
-  <script>
-    function dragoverHandler(evt) {
-      evt.preventDefault();
-    }
-
-    function dropHandler(evt) { //evt 為 DragEvent 物件
-      evt.preventDefault();
-      var files = evt.dataTransfer.files; //由DataTransfer物件的files屬性取得檔案物件
-      let errMsg = ''
-
-      for (var i in files) {
-        if (i > 6)
-          break;
-
-        if (files[i].type.startsWith("image/")) {
-          if (files[i].size > 5000000) {
-            errMsg += files[i].name + '\n';
-            continue;
-          }
-
-          //將圖片在頁面預覽
-          var fr = new FileReader();
-          fr.onload = openfile;
-          fr.readAsDataURL(files[i]);
-        }
-      }
-
-      if (files.length > 6) {
-        alert("檔案上傳的數量超出限制，故多餘的檔案不上傳");
-      }
-
-      if (errMsg.length > 0) {
-        errMsg = '下列檔案超出大小，無法上傳：\n' + errMsg;
-        alert(errMsg);
-      }
-    }
-
-    function openfile(evt) {
-      var img = evt.target.result;
-      let imgdiv = document.createElement('div');
-      imgdiv.className = 'alert alert-light alert-dismissible fade show';
-      imgdiv.setAttribute('role', 'alert');
-      imgdiv.style.display = 'inline-block';
-      imgdiv.style.paddingLeft = '12px';
-      imgdiv.style.paddingRight = '54px';
-      imgdiv.style.backgroundColor = '#E8EAEA';
-
-      var imgx = document.createElement('img');
-      imgx.src = img;
-      imgx.style.height = '100px';
-      imgdiv.appendChild(imgx);
-
-      let closebtn = document.createElement('button');
-      closebtn.classList.add('close');
-      closebtn.setAttribute('type', 'button');
-      closebtn.setAttribute('data-dismiss', 'alert');
-      closebtn.setAttribute('aria-label', 'Close');
-      closebtn.innerHTML = '<span aria-hidden="true">&times;</span>';
-      imgdiv.appendChild(closebtn);
-
-      document.getElementById('dropDIV').appendChild(imgdiv);
-    }
-  </script>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
-  <div id="dropDIV" ondragover="dragoverHandler(event)" ondrop="dropHandler(event)">
-    拖曳圖片到此處上傳
-  </div>
+  <script>
+    Swal.fire({
+      title: '移除展覽?',
+      text: "是否要移除此展覽？",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: '是！確定移除',
+      cancelButtonText: '否！不要移除',
+    }).then((result) => {
+      console.log('success');
+      if (result.isConfirmed) {
+
+        $.ajax({
+          type: 'post',
+          url: '@Url.Action("responseComment","ShowPageManage")',
+          data: {showId:showId},
+          success: function (data) {
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            Swal.fire({
+              icon: 'error',
+              title: textStatus,
+              text: errorThrown,
+              showConfirmButton: false,
+              showCancelButton: true
+            });
+          }
+        });
+      }
+    })
+  </script>
 </body>
 
 </html>

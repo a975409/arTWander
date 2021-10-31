@@ -12,7 +12,6 @@ namespace arTWander.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Company()
         {
-            PageViewCounts = new HashSet<PageViewCount>();
             ReportsList = new HashSet<Reports>();
             ResponseShowComments = new HashSet<ResponseShowComment>();
             ShowPages = new HashSet<ShowPage>();
@@ -66,9 +65,6 @@ namespace arTWander.Models
         public virtual City City { get; set; }
 
         public virtual District District { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PageViewCount> PageViewCounts { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reports> ReportsList { get; set; }

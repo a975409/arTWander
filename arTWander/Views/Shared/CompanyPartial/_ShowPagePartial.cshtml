@@ -18,7 +18,7 @@
         </div>
         <div class="d-flex align-items-center ">
             <a class="mr-2" href="#">@Model.Comment comment</a>
-            <a href="@Url.Action("DisplayInfo","ShowPageManage",new { showId=Model.Id})"><i style="font-size:16px" class="fas fa-minus text-danger"> 移除展覽</i></a>
+            <button type="button" class="btn btn-link" onclick="removeShowPage(@Model.Id)" style="border-style:none;padding:0px;background-color:transparent;"><i style="font-size:16px" class="fas fa-minus text-danger"> 移除展覽</i></button>
         </div>
     </div>
     <!-- 展覽敘述卡 ends -->

@@ -69,3 +69,6 @@ D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.csproj.CopyComplete
 D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.dll
 D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.pdb
 D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.csproj.AssemblyReference.cache
+D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.Migrations.initdb.resources
+D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.csproj.GenerateResource.cache
+D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.Migrations.initdb1.resources

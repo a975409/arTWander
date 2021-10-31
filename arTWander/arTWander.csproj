@@ -300,6 +300,8 @@
     <Content Include="Views\Shared\CompanyPartial\_ShowPagePartial.cshtml" />
     <Content Include="Views\ShowPageManage\Create.cshtml" />
     <Content Include="Views\ShowPageManage\DisplayInfo.cshtml" />
+    <Content Include="Views\Shared\CompanyPartial\_ShowCommentPartial.cshtml" />
+    <Content Include="Views\ShowPageManage\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -388,6 +390,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110310636367_initdb.cs" />
+    <Compile Include="Migrations\202110310636367_initdb.Designer.cs">
+      <DependentUpon>202110310636367_initdb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110311506595_initdb1.cs" />
+    <Compile Include="Migrations\202110311506595_initdb1.Designer.cs">
+      <DependentUpon>202110311506595_initdb1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -421,6 +431,14 @@
     <Folder Include="SaveFiles\Company\" />
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\Method\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202110310636367_initdb.resx">
+      <DependentUpon>202110310636367_initdb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110311506595_initdb1.resx">
+      <DependentUpon>202110311506595_initdb1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

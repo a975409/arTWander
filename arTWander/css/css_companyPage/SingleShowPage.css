@@ -1,42 +1,86 @@
-
-.dropdown-menu>.dropdown-item {
-  font-size: 16px;
+﻿
+.dropdown-menu > .dropdown-item {
+    font-size: 16px;
 }
 
-.dropdown-menu>.dropdown-item>i {
-  font-size: 16px;
-}
+    .dropdown-menu > .dropdown-item > i {
+        font-size: 16px;
+    }
 
-/*右側各星號評論百分比*/
+
 .progress {
-  height: 20px;
+    height: 20px;
 }
 
-.progress>span {
-  line-height: 20px;
-  font-size: large;
-}
+    .progress > span {
+        line-height: 20px;
+        font-size: large;
+    }
 
 .star {
-  font-size: 40px;
+    font-size: 40px;
 }
 
-/*所有用戶評論*/
 .usercommentImg {
-  vertical-align: top;
-  margin-right: 10px;
+    vertical-align: top;
+    margin-right: 10px;
 }
 
-.usercommentImg>img {
-  border-radius: 50%;
-  height: 50px;
-  width: 50px;
-}
+    .usercommentImg > img {
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+    }
 
 .usercommentStar i {
-  font-size: 16px;
+    font-size: 16px;
 }
 
 .userCommentName {
-  font-size: 20px;
+    font-size: 20px;
 }
+
+#carouselExampleIndicators {
+    height: 500px;
+    margin: 0px auto;
+}
+
+.carousel-inner>div {
+    height: 500px;
+    line-height: 500px;
+}
+
+    .carousel-inner div > img {
+        max-height: 500px;
+    }
+
+#infoDiv label {
+    font-size: 27px;
+}
+#infoDiv p {
+    font-size: 20px;
+}
+
+    #infoDiv p a {
+        font-size: 20px;
+    }
+
+#infoDiv span > i {
+    font-size: 20px;
+}
+
+#infoDiv a > i {
+    font-size: 20px;
+}
+
+
+.badge {
+    height: 30px;
+    line-height: 30px;
+    margin: 2px;
+}
+
+    .badge i {
+        font-size: 14px;
+        color: white;
+    }

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<arTWander.Models.ShowCommentViewModel>
+<!--第一位用戶評論-->
+@foreach (var item in Model)
+{
+    <div class="col-11 mt-3 px-0 d-flex justify-content-between">
+        <div class="usercommentImg">
+            <img src="CompanyPage/img/4c1fe5_9a74d3a863254665a34f7c7b4fa9696d_mv2.jpg" alt="">
+        </div>
+        <div>
+            <span class="userCommentName">@item.userName</span>
+            <div class="usercommentStar">
+                @for (int i = 1; i <= 5; i++)
+                {
+                    if (i < item.userStar)
+                    {
+                        <span><i class="fas fa-star text-warning"></i></span>
+                    }
+                    else
+                    {
+                        <span><i class="far fa-star"></i></span>
+                    }
+                }
+            </div>
+            <div class="jumbotron pt-4 pb-0 bg-transparent">
+                <p>@item.userComment</p>
+            </div>
+            <div class="jumbotron pt-4 pb-0">
+                <h4>@item.CompanyName 回覆：</h4>
+                <div class="jumbotron py-4">
+                    <p>@item.CompanyComment</p>
+                </div>
+            </div>
+        </div>
+        <div class="dropright">
+            <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <div class="dropdown-menu">
+                <a href="" class="dropdown-item" data-toggle="modal" onclick="responseComment(@Json.Encode(item))">
+                    <i class="fas fa-pencil-alt mr-3" style="vertical-align: middle;"></i>回覆評論
+                </a>
+                <a href="" class="dropdown-item" data-toggle="modal" onclick="reportComment(@Json.Encode(item))">
+                    <i class="fas fa-trash-alt mr-3" style="vertical-align: middle;"></i>檢舉評論
+                </a>
+            </div>
+        </div>
+    </div>
+}

@@ -80,6 +80,11 @@ namespace arTWander.Controllers
         {
             var show = DbContext.ShowPage.Find(showId);
 
+            if (show == null)
+            {
+                return HttpNotFound("該展覽不存在或已被移除");
+            }
+
             ShowPageViewModel model = new ShowPageViewModel
             {
                 Address = $"{show.City.CityName}{show.District.DistrictName}{show.Address}",
@@ -96,10 +101,44 @@ namespace arTWander.Controllers
                 Title = show.Title,
                 Todays = show.PageToTodaysList?.Select(m => m.Today).ToArray(),
                 Keywords = show.KeywordsList?.Select(m => m.Name).ToArray(),
-                images = show.ShowPageFiles?.Select(m => $"/SaveFiles/Company/{show.Company.Id}/show/{show.Id}/{m.fileName}").ToArray()
+                images = show.ShowPageFiles?.Select(m => $"/SaveFiles/Company/{show.Company.Id}/show/{show.Id}/{m.fileName}").ToArray(),
+                ViewCount = (ulong)show.PageViewCounts?.Select(m => m.Count).Sum()
             };
-            
+
             return View(model);
+        }
+
+        public ActionResult getShowPageComment(int showPageId)
+        {
+            var showPage = DbContext.ShowPage.Find(showPageId);
+
+            if (showPage.ShowComments.Count <= 0)
+            {
+                return new EmptyResult();
+            }
+
+            var model = showPage.ShowComments.Select(m => new ShowCommentViewModel
+            {
+                showCommentId = m.Id,
+                userComment = m.Comment,
+                userName = m.ApplicationUser.UserName,
+                userStar = m.Star,
+                CommentDate = m.CommentDate
+            });
+
+            for (int i = 0; i < model.Count(); i++)
+            {
+                var response = DbContext.ResponseShowComment.Where(m => m.FK_ShowComment == model.ElementAt(i).showCommentId).FirstOrDefault();
+
+                if (response != null)
+                {
+                    model.ElementAt(i).ResponseDate = response.ResponseDate;
+                    model.ElementAt(i).CompanyComment = response.Comment;
+                    model.ElementAt(i).CompanyName = response.Company.CompanyName;
+                }
+            }
+
+            return PartialView("~/Views/Shared/CompanyPartial/_ShowCommentPartial.cshtml", model);
         }
 
         public ActionResult Create()
@@ -157,11 +196,9 @@ namespace arTWander.Controllers
                         showPage.KeywordsList.Add(new Keywords { Name = item });
                     }
                 }
-
-                DbContext.ShowPage.Add(showPage);
                 await DbContext.SaveChangesAsync();
             }
-
+            
             //新增該展演對應的開放時段
             foreach (int item in model.Todays)
             {
@@ -175,11 +212,9 @@ namespace arTWander.Controllers
 
             if (imgFiles != null && imgFiles.Length > 0)
             {
-                //圖片檔名
-                int count = 1;
                 foreach (var item in imgFiles)
                 {
-                    if (item != null && item.ContentLength > 0)
+                    if (item != null && item.ContentLength > 0 && item.FileName.Length <= 20)
                     {
                         byte[] ImageData = new byte[item.ContentLength];
                         item.InputStream.Read(ImageData, 0, item.ContentLength);
@@ -189,21 +224,13 @@ namespace arTWander.Controllers
                             //判斷上傳的檔案是否為圖片檔
                             if (IsImage(stream))
                             {
-                                //取得副檔名
-                                string extension = Path.GetExtension(item.FileName);
-
-                                //設定檔名
-                                string img = count + extension;
-
                                 //完整另存路徑
-                                string savePath = Path.Combine(saveDir, img);
+                                string savePath = Path.Combine(saveDir, Path.GetFileName(item.FileName));
 
                                 //server端下載檔案
                                 item.SaveAs(savePath);
 
-                                DbContext.ShowPageFile.Add(new ShowPageFile { fileName = img, FK_ShowPage = showPage.Id });
-
-                                count++;
+                                DbContext.ShowPageFile.Add(new ShowPageFile { fileName = Path.GetFileName(item.FileName), FK_ShowPage = showPage.Id });
                             }
                         }
                     }
@@ -235,7 +262,9 @@ namespace arTWander.Controllers
                 Remark = show.Remark,
                 StartDate = show.StartDate,
                 StartTime = show.StartTime,
-                Title = show.Title
+                Title = show.Title,
+                Todays = show.PageToTodaysList?.Select(m => m.Today).ToArray(),
+                searchKeyword = string.Join(",", show.KeywordsList?.Select(m => m.Name).ToArray())
             };
             string dirPath = $"/SaveFiles/Company/{show.Company.Id}/show/{show.Id}";
 
@@ -273,16 +302,57 @@ namespace arTWander.Controllers
             showPage.Title = model.Title;
             await DbContext.SaveChangesAsync();
 
+            //新增該展演對應的關鍵字
+            showPage.KeywordsList.Clear();
+            await DbContext.SaveChangesAsync();
+
+            if (!string.IsNullOrEmpty(model.searchKeyword))
+            {
+                foreach (string item in model.searchKeyword.Split(','))
+                {
+                    if (DbContext.Keywords.Where(m => m.Name == item).Any())
+                    {
+                        var keyword = DbContext.Keywords.Where(m => m.Name == item).FirstOrDefault();
+                        showPage.KeywordsList.Add(keyword);
+                    }
+                    else
+                    {
+                        showPage.KeywordsList.Add(new Keywords { Name = item });
+                    }
+                }
+            }
+            await DbContext.SaveChangesAsync();
+
             string saveDir = Path.Combine(Server.MapPath("~/SaveFiles/Company"), company.Id.ToString(), "show", showPage.Id.ToString());
+
             Directory.CreateDirectory(saveDir);
 
             if (imgFiles != null && imgFiles.Length > 0)
             {
-                //圖片檔名
-                int count = 1;
-                foreach (var item in imgFiles)
+                //移除被標記的資料庫的圖檔
+                foreach (var item in showPage.ShowPageFiles)
                 {
-                    if (item != null && item.ContentLength > 0)
+                    if(!imgFiles.Any(m=> Path.GetFileName(m.FileName) == item.fileName))
+                    {
+                        string path = Path.Combine(saveDir, item.fileName);
+
+                        FileInfo finfo = new FileInfo(path);
+
+                        if (finfo.Exists)
+                        {
+                            finfo.Delete();
+                        }
+
+                        DbContext.ShowPageFile.Remove(item);
+                    }
+                }
+
+                await DbContext.SaveChangesAsync();
+
+                //儲存新增的圖檔
+                foreach(var item in imgFiles)
+                {
+                    if (item != null && item.ContentLength > 0 && item.FileName.Length <= 20)
                     {
                         byte[] ImageData = new byte[item.ContentLength];
                         item.InputStream.Read(ImageData, 0, item.ContentLength);
@@ -292,21 +362,17 @@ namespace arTWander.Controllers
                             //判斷上傳的檔案是否為圖片檔
                             if (IsImage(stream))
                             {
-                                //取得副檔名
-                                string extension = Path.GetExtension(item.FileName);
-
-                                //設定檔名
-                                string img = count + extension;
+                                //查看該檔名如果已存在於資料庫，就不在資料庫新增資料
+                                if (!showPage.ShowPageFiles.Any(m => m.fileName == Path.GetFileName(item.FileName)))
+                                {
+                                    DbContext.ShowPageFile.Add(new ShowPageFile { fileName = Path.GetFileName(item.FileName), FK_ShowPage = showPage.Id });
+                                }
 
                                 //完整另存路徑
-                                string savePath = Path.Combine(saveDir, img);
+                                string savePath = Path.Combine(saveDir, Path.GetFileName(item.FileName));
 
                                 //server端下載檔案
                                 item.SaveAs(savePath);
-
-                                DbContext.ShowPageFile.Add(new ShowPageFile { fileName = img, FK_ShowPage = showPage.Id });
-
-                                count++;
                             }
                         }
                     }
@@ -314,6 +380,42 @@ namespace arTWander.Controllers
                 await DbContext.SaveChangesAsync();
             }
             return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> Delete(int showPageId)
+        {
+            var show = DbContext.ShowPage.Find(showPageId);
+
+            if (show == null)
+            {
+                return HttpNotFound("該展覽不存在或已被移除");
+            }
+
+            string saveDir = Path.Combine(Server.MapPath("~/SaveFiles/Company"), show.Company.Id.ToString(), "show", show.Id.ToString());
+
+            if (Directory.Exists(saveDir))
+            {
+                try
+                {
+                    Directory.Delete(saveDir, true);
+                }
+                catch
+                {
+                    return new HttpStatusCodeResult(500, "移除失敗!");
+                }
+            }
+
+            DbContext.ShowPage.Remove(show);
+
+            try
+            {
+                await DbContext.SaveChangesAsync();
+            }
+            catch(Exception ex) {
+                Console.WriteLine(ex.Message);
+                return new HttpStatusCodeResult(500, "移除失敗!");
+            }
+            return new HttpStatusCodeResult(200, "移除成功!");
         }
 
         private bool IsImage(Stream stream)
