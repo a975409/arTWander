@@ -57,7 +57,8 @@ namespace arTWander.Controllers
         //=========================================================================================
 
         //Common首頁 start
-        public ActionResult Index()
+
+        public ActionResult Index(string city)
         {
             // 取得使用者頭像及姓名
             int userId = User.Identity.GetUserId<int>();
@@ -67,61 +68,35 @@ namespace arTWander.Controllers
 
             ViewBag.userName = user.UserName;
             ViewBag.avatarUrl = "/image/avatar/" + user.Avatar;
+            ViewBag.city = city;
 
             // return
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Index(CommonShowViewModel viewModel)
+
+        public ActionResult ShowList(string city)
         {
-            // 取得使用者頭像及姓名
-            int userId = User.Identity.GetUserId<int>();
-
-            ApplicationDbContext db = new ApplicationDbContext();
-            ApplicationUser user = db.Users.Where(u => u.Id == userId).FirstOrDefault();
-
-            ViewBag.userName = user.UserName;
-            ViewBag.avatarUrl = "/image/avatar/" + user.Avatar;
-
-            //=============================================
-
-            IQueryable<CommonShowViewModel> q = new userFactory().queryAllShow();
-            List<CommonShowViewModel> viewModels = q.ToList();
-            if (viewModel.isSelectedCity == "true")
+            ViewBag.errorMsg = "";
+            if (String.IsNullOrEmpty(city))
             {
-                viewModels = q.Where(s => s.showCity == viewModel.showCity).DefaultIfEmpty().ToList();
+                IQueryable<CommonShowViewModel> q = new userFactory().queryAllShow();
+                List<CommonShowViewModel> viewModels = q.ToList();
+
+                return View(viewModels);
+
+            }else
+            {
+                IQueryable<CommonShowViewModel> q = new userFactory().queryAllShow();
+                List<CommonShowViewModel>  viewModels = q.Where(s => s.showCity == city).DefaultIfEmpty().ToList();
+                if (viewModels[0] != null)
+                    return View(viewModels);
+                else
+                    ViewBag.errorMsg = "1此區域本檔期暫無展覽";
+                    return View(viewModels);
             }
 
-            // return
-            return View(viewModels);
         }
-
-        public ActionResult ShowList(CommonShowViewModel viewModel)
-        {
-            IQueryable<CommonShowViewModel> q = new userFactory().queryAllShow();
-            List<CommonShowViewModel> viewModels = q.ToList();
-            if (viewModel.isSelectedCity == "true")
-            {
-                viewModels = q.Where(s => s.showCity == viewModel.showCity).DefaultIfEmpty().ToList();
-            }
-
-            return View(viewModels);
-        }
-
-
-        //[HttpPost]
-        //public ActionResult ShowList(CommonShowViewModel viewModel)
-        //{
-        //    IQueryable<CommonShowViewModel> q = new userFactory().queryAllShow();
-        //    List<CommonShowViewModel> viewModels = q.ToList();
-        //    if (viewModel.isSelectedCity == "true")
-        //    {
-        //        viewModels = q.Where(s => s.showCity == viewModel.showCity).DefaultIfEmpty().ToList();
-        //    }
-
-        //    return View(viewModels);
-        //}
 
         public ActionResult GalleryList()
         {

@@ -1,30 +1,48 @@
-﻿@model List<arTWander.Models.CommonViewModel.CommonShowViewModel>
-@{
+﻿@{
     //ViewBag.Title = "Index";
     Layout = "~/Views/Shared/CommonLayout/_AsideTrue.cshtml";
+    string selectedCity = ViewBag.city;
 }
 
-<div id="mainPage" class="w-100 py-5"></div>
 
-<script>
+<div id="mainPage" class="w-100 py-5"></div>
+@*<div class="container ">
+    <div class="row showlistRow justify-content-center">
+        <h3>此區域本檔期暫無展覽</h3>
+    </div>
+</div>*@
+
+    <script>
+
     $(document).ready(function () {
+        
+
         $.ajax({
-            /*type: 'post',*/
-            url: '@Url.Action("showList", "Common", Model)',
+            type: 'post',
+            url: '@Url.Action("ShowList", "Common", new { city = selectedCity })',
             data: {},
             success: function (data) {
                 $('#mainPage').html(data);
+            },
+            error: (XMLHttpRequest, textStatus, errorThrown) => {
+                $('#mainPage').html(
+                    '<div class="container"><div class="row showlistRow justify-content-center"><h3>此區域本檔期暫無展覽</h3></div></div>'
+                );
+                /*$('#mainPage').html();*/
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
             }
         });
 
     });
 
-</script>
+    </script>
 
-@*點擊分頁連結*@
-<script>
+    @*點擊分頁連結*@
+    <script>
 
-    $("#showList").click(function () {
+    @*$("#showList").click(function () {
         $.ajax({
             type: 'post',
             url: '@Url.Action("showList", "Common")',
@@ -33,7 +51,7 @@
                 $('#mainPage').html(data);
             }
         });
-    });
+    });*@
 
     $("#GalleryList").click(function () {
         $.ajax({
@@ -46,5 +64,5 @@
         });
     });
 
-</script>
-<script src="~/javascript/common_ShowList.js"></script>
+    </script>
+

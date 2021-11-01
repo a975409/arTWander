@@ -12,17 +12,16 @@
     <!-- 展覽敘述卡 strats -->
     <div class="shortDetail">
         <div class="d-flex align-items-center">
-            @using (Html.BeginForm("Index", "Common", FormMethod.Post, new { id="cityForm"}))
+            @*@using (Html.BeginForm("Index", "Common", FormMethod.Post, new { id="cityForm"}))
             {
                 <input type="text" name="showCity" class="d-none" value="@Model.showCity">
                 <input type="text" name="isSelectedCity" class="d-none" value="@Model.isSelectedCity">
-                @*<a href="/Common/Index">@Model.showCity*@
-                    <input type="submit" name="submit" class="border-0 bg-transparent " value="@Model.showCity">
-                @*</a>*@
+               
+                <input type="submit" name="submit" class="border-0 bg-transparent " value="@Model.showCity">
                 <a href="">@Model.showTitle</a>
-            }
-            @*<a href="/Common/Index">@Model.showCity</a>／
-            <a href="">@Model.showTitle</a>*@
+            }*@
+            <a name="showCity" href="/Common/Index?city=@Model.showCity">@Model.showCity</a>／
+            <a href="">@Model.showTitle</a>
         </div>
         <div class="description">
             <a href="#">@Model.showDiscription</a>

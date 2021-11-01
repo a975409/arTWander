@@ -2,7 +2,7 @@
 @{
     Layout = null;
 }
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- 展覽列表 starts -->
 <div class="container ">
@@ -11,7 +11,23 @@
         {
             @Html.Partial("~/Views/Shared/CommonPartial/Card/_PartialShowList.cshtml", show);
         }
+
+        @*@if (Model[0] != null)
+        {
+            @foreach (var show in Model)
+            {
+                @Html.Partial("~/Views/Shared/CommonPartial/Card/_PartialShowList.cshtml", show);
+            }
+        }
+        else
+        {
+            <div class="col-12 w-100">
+                <p>@ViewBag.errorMsg</p>
+            </div>
+        }*@
+
     </div>
+    
 </div>
 <!-- 展覽列表 ends -->
 <!-- 分頁 starts -->
@@ -38,27 +54,44 @@
 </div>
 <!-- 分頁 ends -->
 <script>
-    $("#showImg a").click(function () {
-        $.ajax({
-            type: 'post',
-            url: '@Url.Action("ShowInformDetail", "Common")',
-            data: {},
-            success: function (data) {
-                $('#detailShowInform').html(data);
-            }
+
+    $(document).ready(function () {
+
+        @*$('#cityForm input[name="submit"]').click(function () {
+            var city = { myCity: $('input[name="submit"]').val };
+
+            $.ajax({
+                type: 'post',
+                dataType: 'JSON',
+                contentType: 'application/json;charset=utf-8',
+                url: '@Url.Action("Index", "Common")',
+                data: JSON.stringify(city),
+                success: function (data) {
+                    /*$('#mainPage').html(data);*/
+                },
+                error: (XMLHttpRequest, textStatus, errorThrown) => {
+                    $("#detailInform").innerHTML = "there is something wrong!";
+                    alert(XMLHttpRequest.status); //200
+                    alert(XMLHttpRequest.readyState); //4
+                    alert(textStatus); //parsererror
+                }
+            });
+        });*@
+
+        $("#showImg a").click(function () {
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("ShowInformDetail", "Common")',
+                data: {},
+                success: function (data) {
+                    $('#detailShowInform').html(data)
+                }
+            });
         });
+
+
     });
 
-    //let isSelectedCitys = document.querySelectorAll('#cityForm input[name="isSelectedCity"]');
-    //let submitBtns = document.querySelectorAll('#cityForm input[name="submit"]');
 
-    //for (var item of submitBtns)
-    //{
-    //    item.addEventListener('click', function () {
-    //        for (var SelectedCityInput of isSelectedCitys)
-    //        {
-    //            SelectedCityInput.nodeValue = "true";
-    //        }
-    //    });;
-    //}
 </script>
+<script src="~/javascript/common_ShowList.js"></script>

@@ -88,7 +88,7 @@
             </nav>
             <!-- fixed導覽列 end -->
             <!-- breadcrumb starts -->
-            @if (!User.IsInRole("Member"))
+            @if (User.IsInRole("Member"))
             {
                 <nav id="cmnPage_BreadCrumb" class="col-12 my-4" aria-label="breadcrumb">
                     <ol class="breadcrumb bg-light">
