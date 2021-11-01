@@ -259,10 +259,15 @@
     <Content Include="image\map.png" />
     <Content Include="image\nav\notify.png" />
     <Content Include="javascript\AccountIndex.js" />
+    <Content Include="javascript\Admin\AdminAvatarSetup.js" />
+    <Content Include="javascript\Admin\drawCanvasData.js" />
     <Content Include="javascript\AsideTrue.js" />
+    <Content Include="javascript\common_SetUp.js" />
+    <Content Include="javascript\common_ShowList.js" />
     <Content Include="javascript\Company.js" />
     <Content Include="javascript\EditSingleShowPage.js" />
     <Content Include="javascript\index.js" />
+    <Content Include="javascript\index1014.js" />
     <Content Include="javascript\jquery.MultiFile.min.js" />
     <Content Include="javascript\LoginForm.js" />
     <Content Include="javascript\MyShowPage.js" />
@@ -338,6 +343,7 @@
     <Content Include="Views\Shared\AdminLayout\_AdminAside.cshtml" />
     <Content Include="Views\Shared\AdminLayout\_AdminLayout.cshtml" />
     <Content Include="Views\Shared\CommonPartial\Card\_PartialShowList.cshtml" />
+    <Content Include="Views\Shared\CompanyPartial\_showPageImagePartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

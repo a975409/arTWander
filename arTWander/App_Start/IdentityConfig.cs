@@ -72,8 +72,8 @@ namespace arTWander.Models
             manager.RegisterTwoFactorProvider("電子郵件代碼",
                 new EmailTokenProvider<ApplicationUser, int>
                 {
-                    Subject = "安全碼",
-                    BodyFormat = "您的安全碼為 {0}"
+                    Subject = "artwander.art帳戶登入驗證碼",
+                    BodyFormat = "您的登入驗證碼為 {0}"
                 });
 
             manager.EmailService = new EmailService();
@@ -87,7 +87,7 @@ namespace arTWander.Models
                         dataProtectionProvider.Create("ASP.NET Identity"))
                     {
                         //設定忘記密碼或mail確認的timeout時間
-                        TokenLifespan = TimeSpan.FromHours(3)
+                        TokenLifespan = TimeSpan.FromMinutes(15)
                     };
             }
             return manager;
@@ -116,42 +116,42 @@ namespace arTWander.Models
 
     public class EmailService : IIdentityMessageService
     {
-        public Task SendAsync(IdentityMessage message)
-        {
-            //Console.WriteLine("SendAsync");
-            ////將您的電子郵件服務外掛到這裡以傳送電子郵件。
-            //var apiKey = "EGFc5oRB4A7RBfsY45EHYio2";
-            //var client = new SendGridClient(apiKey);//admin@artwander.art
-            //var from = new EmailAddress("admin@artwander.art", "arTWander");
-            //var subject = "Sending with SendGrid is Fun";
-            //var to = new EmailAddress(message.Destination, "Example User");
-            //var plainTextContent = "請按一下此連結確認您的帳戶";
-            //var htmlContent = message.Body;
-            //var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            //return client.SendEmailAsync(msg);
-            return Task.FromResult(0);
-        }
-
-        //public async Task SendAsync(IdentityMessage message)
+        //public Task SendAsync(IdentityMessage message)
         //{
-        //    MailMessage mail = new MailMessage();
-        //    NetworkCredential cred = new NetworkCredential("admin@artwander.art", "ZZzz1122334");
-        //    //收件者
-        //    mail.To.Add(message.Destination);
-        //    mail.Subject = message.Subject;
-        //    //寄件者
-        //    mail.From = new System.Net.Mail.MailAddress("admin@artwander.art");
-        //    mail.IsBodyHtml = true;
-        //    mail.Body = message.Body;
-        //    //設定SMTP
-        //    SmtpClient smtp = new SmtpClient("mail.gandi.net");
-        //    smtp.UseDefaultCredentials = false;
-        //    smtp.EnableSsl = true;
-        //    smtp.Credentials = cred;
-        //    smtp.Port = 587;
-        //    //送出Mail
-        //    await smtp.SendMailAsync(mail);
+        //    Console.WriteLine("SendAsync");
+        //    //將您的電子郵件服務外掛到這裡以傳送電子郵件。
+        //    var apiKey = "EGFc5oRB4A7RBfsY45EHYio2";
+        //    var client = new SendGridClient(apiKey);//admin@artwander.art
+        //    var from = new EmailAddress("admin@artwander.art", "arTWander");
+        //    var subject = "Sending with SendGrid is Fun";
+        //    var to = new EmailAddress(message.Destination, "Example User");
+        //    var plainTextContent = "請按一下此連結確認您的帳戶";
+        //    var htmlContent = message.Body;
+        //    var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+        //    return client.SendEmailAsync(msg);
+        //    return Task.FromResult(0);
         //}
+
+        public async Task SendAsync(IdentityMessage message)
+        {
+            MailMessage mail = new MailMessage();
+            NetworkCredential cred = new NetworkCredential("admin@artwander.art", "ZZzz1122334");
+            //收件者
+            mail.To.Add(message.Destination);
+            mail.Subject = message.Subject;
+            //寄件者
+            mail.From = new System.Net.Mail.MailAddress("admin@artwander.art");
+            mail.IsBodyHtml = true;
+            mail.Body = message.Body;
+            //設定SMTP
+            SmtpClient smtp = new SmtpClient("mail.gandi.net");
+            smtp.UseDefaultCredentials = false;
+            smtp.EnableSsl = true;
+            smtp.Credentials = cred;
+            smtp.Port = 587;
+            //送出Mail
+            await smtp.SendMailAsync(mail);
+        }
     }
 
 
