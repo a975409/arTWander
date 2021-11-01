@@ -1,10 +1,10 @@
-﻿
+﻿@model arTWander.Models.AdminViewModel.SetupViewModel
 
 <div id="aside1Div" class=" d-md-block">
     <!-- 頭像starts -->
     <figure>
         <div id="asideAvatar" class="d-flex justify-content-center overflow-hidden">
-            <img class="" src="../image/exhibiton/crenature_kv_tkg.jpg" alt="">
+            <img class="" src="@Model.AvatarUrl@Model.AvatarName" alt="">
         </div>
         <!-- <a class="just-content-center my-2 text-center">Dear <span>Manager</span>,<br>
             start to manage !
@@ -37,7 +37,7 @@
             <hr>
         </li>
         <!-- 數據分析end -->
-        
+
     </ul>
     <!-- 條件查詢 end -->
 </div>

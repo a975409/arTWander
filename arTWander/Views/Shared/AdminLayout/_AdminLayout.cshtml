@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
+@model arTWander.Models.AdminViewModel.SetupViewModel
 
-@{ 
+@{
 
     Layout = null;
 }
@@ -15,14 +16,14 @@
     <title>arTWander</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-    </script>
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+        </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
-    </script>
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
+        </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js">
     </script>
 
@@ -52,26 +53,24 @@
                     {
                         if (User.IsInRole("Admin"))
                         {
-                            <a id="newMessage" class="nav-link ml-3 " href=""><i class="far fa-bell" aria-hidden="true"></i></a>
-                            <a id="myShow" class="nav-link ml-3 d-none d-md-block" href=""><i class="far fa-heart" aria-hidden="true"></i></a>
-                            <a id="setUp" class="nav-link ml-3" href=""><i class="fa fa-cog" aria-hidden="true"></i></a>
-                        }
-                        else if (User.IsInRole("Company"))
-                        {
-                            <a id="newMessage" class="nav-link ml-3 " href=""><i class="far fa-bell" aria-hidden="true"></i></a>
-                            <a id="myShow" class="nav-link ml-3 d-none d-md-block" href=""><i class="far fa-heart" aria-hidden="true"></i></a>
-                            <a id="setUp" class="nav-link ml-3" href=""><i class="fa fa-cog" aria-hidden="true"></i></a>
-                        }
-                        else if (User.IsInRole("Member"))
-                        {
-                            <a id="newMessage" class="nav-link ml-3 " href=""><i class="far fa-bell" aria-hidden="true"></i></a>
-                            <a id="myShow" class="nav-link ml-3 d-none d-md-block" href=""><i class="far fa-heart" aria-hidden="true"></i></a>
-                            <a id="setUp" class="nav-link ml-3" href=""><i class="fa fa-cog" aria-hidden="true"></i></a>
+                            <a id="newMessage" class="nav-link ml-2 " href=""><i class="far fa-bell" aria-hidden="true"></i></a>
+                            <a id="myShow" class="nav-link ml-2 d-none d-md-block" href=""><i class="far fa-heart"
+                            aria-hidden="true"></i></a>
+                            <a id="setUp" class="nav-link ml-2" href="~/Admin/AdminSetup"><i class="fa fa-cog"
+                            aria-hidden="true"></i></a>
                         }
 
-                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new
                         {
-                            <a id="logOut" class="nav-link ml-3" href="javascript:document.getElementById('logoutForm').submit()">登出</a>
+                            id = "logoutForm",
+                            @class =
+                        "navbar-right"
+                        }))
+                        {
+                            @Html.AntiForgeryToken()
+                            ;
+                            <a id="logOut" class="nav-link ml-2"
+                        href="javascript:document.getElementById('logoutForm').submit()">登出</a>
                         }
                     }
                     else
@@ -102,13 +101,14 @@
                     <!-- 判斷是否開啟RWD左側邊框 -->
                     <input type="checkbox" id="menuControl">
                     <!-- 左側邊框 -->
-                    <aside id="aside1" class="col-12 col-md-3 d-flex justify-content-center align-content-center mt-0" style="z-index: 1002;">
+                    <aside id="aside1" class="col-12 col-md-3 d-flex justify-content-center align-content-center mt-0"
+                        style="z-index: 1002;">
                         @if (Request.IsAuthenticated)
                         {
                             //權限若為Admin使用該aside
                             if (User.IsInRole("Admin"))
                             {
-                                Html.RenderPartial("~/Views/Shared/AdminLayout/_AdminAside.cshtml");
+                                Html.RenderPartial("~/Views/Shared/AdminLayout/_AdminAside.cshtml", Model);
                             }
                         }
 
@@ -165,7 +165,8 @@
                                     <br>
                                     <input type="text" class="form-control" placeholder="請留下您的email，讓我們回信給您">
                                 </div>
-                                <button class="btn btn-outline-secondary border-0 bg-pink text-white" type="input" id="btnFeedback">送出</button>
+                                <button class="btn btn-outline-secondary border-0 bg-pink text-white" type="input"
+                                    id="btnFeedback">送出</button>
                             </form>
                         </div>
                         <!-- 意見回饋 ends -->
@@ -180,9 +181,11 @@
                             <h5 class="font-weight-bold">想收到第一手展演資訊嗎?</h5>
                             <p>請留下您的email，接收本站的電子報！</p>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="email" aria-label="suscribeEmail" aria-describedby="btnSuscribe">
+                                <input type="text" class="form-control" placeholder="email" aria-label="suscribeEmail"
+                                    aria-describedby="btnSuscribe">
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary border-0 bg-pink text-white" type="submit" id="btnSuscribe">訂閱</button>
+                                    <button class="btn btn-outline-secondary border-0 bg-pink text-white" type="submit"
+                                        id="btnSuscribe">訂閱</button>
                                 </div>
                             </div>
                         </form>
@@ -192,7 +195,7 @@
                 <!-- row2 ends -->
                 <!-- row3 starts -->
                 <div class="row justify-content-center mt-5">
-                    <p>Copyright© 2021 arTWander Inc.  </p>
+                    <p>Copyright© 2021 arTWander Inc. </p>
                 </div>
                 <!-- row3 ends -->
             </section>
@@ -207,10 +210,3 @@
 </body>
 
 </html>
-<script>
-    // Ajax導入處 於此處更改要導入頁面
-    //document.addEventListener("DOMContentLoaded", function () {
-    //    $('#mainPage').load('ManagerPage/MemberManage.html');
-    //});
-
-</script>
