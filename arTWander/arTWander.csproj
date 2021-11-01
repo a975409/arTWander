@@ -302,6 +302,42 @@
     <Content Include="Views\ShowPageManage\DisplayInfo.cshtml" />
     <Content Include="Views\Shared\CompanyPartial\_ShowCommentPartial.cshtml" />
     <Content Include="Views\ShowPageManage\Edit.cshtml" />
+    <Content Include="Views\Shared\MemberLayout\_LoginAside.cshtml" />
+    <Content Include="Views\Shared\MemberLayout\_LoginNav.cshtml" />
+    <Content Include="Views\Common\MyItineraryPage.cshtml" />
+    <Content Include="Views\Common\MyshowPage.cshtml" />
+    <Content Include="Views\Common\MySubscription.cshtml" />
+    <Content Include="Views\Common\SetUp.cshtml" />
+    <Content Include="Views\Common\ShowInformDetail.cshtml" />
+    <Content Include="Views\Common\ShowList.cshtml" />
+    <Content Include="Views\Common\SubscriptionDetail.cshtml" />
+    <Content Include="Views\Common\Index.cshtml" />
+    <Content Include="Views\Common\GalleryList.cshtml" />
+    <Content Include="Views\Admin\AdminSetup.cshtml" />
+    <Content Include="Views\Admin\AllShowList.cshtml" />
+    <Content Include="Views\Admin\BlackInform.cshtml" />
+    <Content Include="Views\Admin\BlackList.cshtml" />
+    <Content Include="Views\Admin\CustomerInform.cshtml" />
+    <Content Include="Views\Admin\dataStatisticsManage.cshtml" />
+    <Content Include="Views\Admin\FeedBack.cshtml" />
+    <Content Include="Views\Admin\feedBackPage.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\InformMange.cshtml" />
+    <Content Include="Views\Admin\MemberManage.cshtml" />
+    <Content Include="Views\Admin\PostInform.cshtml" />
+    <Content Include="Views\Admin\PostsReport.cshtml" />
+    <Content Include="Views\Admin\ShowCustomList.cshtml" />
+    <Content Include="Views\Admin\ShowFlow.cshtml" />
+    <Content Include="Views\Admin\ShowInform.cshtml" />
+    <Content Include="Views\Admin\ShowInformPage.cshtml" />
+    <Content Include="Views\Admin\ShowReport.cshtml" />
+    <Content Include="Views\Admin\UserFlow.cshtml" />
+    <Content Include="Views\Admin\UserInform.cshtml" />
+    <Content Include="Views\Admin\UserList.cshtml" />
+    <Content Include="Views\Admin\WebFlow.cshtml" />
+    <Content Include="Views\Shared\AdminLayout\_AdminAside.cshtml" />
+    <Content Include="Views\Shared\AdminLayout\_AdminLayout.cshtml" />
+    <Content Include="Views\Shared\CommonPartial\Card\_PartialShowList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -390,20 +426,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202110310636367_initdb.cs" />
-    <Compile Include="Migrations\202110310636367_initdb.Designer.cs">
-      <DependentUpon>202110310636367_initdb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202110311506595_initdb1.cs" />
-    <Compile Include="Migrations\202110311506595_initdb1.Designer.cs">
-      <DependentUpon>202110311506595_initdb1.cs</DependentUpon>
+    <Compile Include="Migrations\202111011038249_initdb.cs" />
+    <Compile Include="Migrations\202111011038249_initdb.Designer.cs">
+      <DependentUpon>202111011038249_initdb.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AdminFactory\AdminFactory.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
+    <Compile Include="Models\AdminViewModel\SetupViewModel.cs" />
+    <Compile Include="Models\AdminViewModel\UserListViewModel.cs" />
     <Compile Include="Models\BlackList.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\City_District.cs" />
+    <Compile Include="Models\CommonViewModel.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\CompanyViewModel.cs" />
     <Compile Include="Models\District.cs" />
@@ -421,6 +457,7 @@
     <Compile Include="Models\ShowPageFile.cs" />
     <Compile Include="Models\SweetAlert.cs" />
     <Compile Include="Models\sysdiagrams.cs" />
+    <Compile Include="Models\userFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -429,15 +466,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SaveFiles\Company\" />
-    <Folder Include="Views\Admin\" />
     <Folder Include="Views\Method\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202110310636367_initdb.resx">
-      <DependentUpon>202110310636367_initdb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110311506595_initdb1.resx">
-      <DependentUpon>202110311506595_initdb1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202111011038249_initdb.resx">
+      <DependentUpon>202111011038249_initdb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

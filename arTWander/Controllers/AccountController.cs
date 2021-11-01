@@ -150,11 +150,11 @@ namespace arTWander.Controllers
                         //return RedirectToLocal(returnUrl);
                         //return RedirectToAction("Index", "Home");
 
-                        return RedirectToAction("Index", "Manage");
+                        //return RedirectToAction("Index", "Manage");
 
-                        //string success = SweetAlert.timeoutCloseToLinkAlert(3000, Url.Action("Index", "Admin")) + SweetAlert.SuccessAlert("登入成功", "3秒後自動跳轉到首頁", "");
-                        //return JavaScript(success);
-                        
+                        string success = SweetAlert.timeoutCloseToLinkAlert(3000, Url.Action("Index", "Manage")) + SweetAlert.SuccessAlert("登入成功", "3秒後自動跳轉到首頁", "");
+                        return JavaScript(success);
+
                     }
                 case SignInStatus.LockedOut:
                     //return View("Lockout");

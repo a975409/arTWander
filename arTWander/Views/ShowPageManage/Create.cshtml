@@ -71,14 +71,14 @@
                     @Html.LabelFor(model => model.StartDate, new { @class = "col-md-2 col-form-label" })
                     <div class="col-md-4">
                         @*<input type="date" class="form-control" id="StartDate" name="StartDate">*@
-                        @Html.TextBoxFor(model => model.StartDate, "{0:yyyy/MM/dd}", new { type = "date", @class = "form-control", @Value = Model.StartDate.ToString("yyyy-MM-dd") })
+                        @Html.TextBoxFor(model => model.StartDate, "{0:yyyy/MM/dd}", new { type = "date", @class = "form-control", @Value = DateTime.Now.ToString("yyyy-MM-dd") })
                         @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
                     </div>
                     @*<label for="EndDate" class="col-md-2 col-form-label">結束日期</label>*@
                     @Html.LabelFor(model => model.EndDate, new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-4">
                     @*<input type="date" class="form-control" id="EndDate" name="EndDate">*@
-                    @Html.TextBoxFor(model => model.EndDate, "{0:yyyy/MM/dd}", new { type = "date", @class = "form-control", @Value = Model.EndDate.ToString("yyyy-MM-dd") })
+                    @Html.TextBoxFor(model => model.EndDate, "{0:yyyy/MM/dd}", new { type = "date", @class = "form-control", @Value = DateTime.Now.ToString("yyyy-MM-dd") })
                     @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
                 </div>
                 </div>
@@ -121,14 +121,14 @@
                         @Html.LabelFor(model => model.StartTime, new { @class = "col-form-label" })
                         <div>
                             @*<input type="time" class="form-control" id="StartTime" name="StartTime">*@
-                            @Html.TextBoxFor(model => model.StartTime, "{0:HH:mm}", new { type = "time", @class = "form-control", @Value = Model.StartTime.ToString("HH:mm") })
+                            @Html.TextBoxFor(model => model.StartTime, "{0:HH:mm}", new { type = "time", @class = "form-control", @Value = DateTime.Now.ToString("HH:mm") })
                             @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
                         </div>
                         @*<label for="EndTime" class="col-form-label">結束時間</label>*@
                         @Html.LabelFor(model => model.EndTime, new { @class = "col-form-label" })
                     <div>
                         @*<input type="time" class="form-control" id="EndTime" name="EndTime">*@
-                        @Html.TextBoxFor(model => model.EndTime, "{0:HH:mm}", new { type = "time", @class = "form-control", @Value = Model.EndTime.ToString("HH:mm") })
+                        @Html.TextBoxFor(model => model.EndTime, "{0:HH:mm}", new { type = "time", @class = "form-control", @Value = DateTime.Now.ToString("HH:mm") })
                         @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
                     </div>
                     </div>

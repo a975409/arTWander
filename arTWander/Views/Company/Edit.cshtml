@@ -70,7 +70,7 @@
             <h2>@Html.LabelFor(model => model.CompanyDescription)</h2>
             <hr>
             <textarea class="form-control" id="CompanyDescription" name="CompanyDescription" rows="5"
-                      placeholder="填寫展演單位簡介，限字數200～300字">@Model.CompanyDescription</textarea>
+                      placeholder="填寫展演單位簡介，限字數1000字以內">@Model.CompanyDescription</textarea>
             @Html.ValidationMessageFor(model => model.CompanyDescription, "", new { @class = "text-danger", id = "CompanyDescriptionMsg" })
         </div>
         <div class="row">
