@@ -1,0 +1,18 @@
+﻿@model IEnumerable<arTWander.Models.ShowPageFile>
+@{
+    if (Model.Count() > 0)
+    {
+        string dir = ViewBag.ImgDir;
+        foreach (var item in Model)
+        {
+            string path = Path.Combine(dir, item.fileName);
+
+            <div class="card bg-transparent" style="width:200px;border-style:none;">
+                <img src="@path" class="card-img" alt="...">
+                <div class="card-body" style="padding: 5px;">
+                    <button type="button" onclick="removeShowImage(@(item.Id),@(item.FK_ShowPage))" class="btn btn-danger btn-sm w-100">移除圖片</button>
+                </div>
+            </div>
+        }
+    }
+}

@@ -20,6 +20,7 @@
          class="scrollspy-example mt-3 col-12" style="position: relative;">
         <form id="CreateShowForm" method="post" action="~/ShowPageManage/Edit" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
+            <input id="Id" name="Id" type="hidden" value="@Model.Id"/>
             <div class="form-group">
                 <label for="Title" class="titlegroup">@Html.LabelFor(model => model.Title)</label>
                 <input type="text" class="form-control" id="Title" name="Title" value="@Model.Title">
@@ -46,18 +47,8 @@
 
                 <div class="form-group">
                     <input type="text" class="form-control" id="searchKeyword" name="searchKeyword" hidden readonly>
-                    <label class="">在伺服器上的圖片：</label>
-                    <div class="bg-white d-flex justify-content-center">
-                        @foreach (string item in ViewBag.Images)
-                        {
-                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                            <img src="@item" style="height:100px;" alt="...">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        }
-                    </div>
+                    <label class="">已上傳的圖片：</label>
+                    <div id="showImgs" class="d-flex flex-wrap w-100"></div>
                 </div>
 
                 <div class="form-group row">
@@ -310,14 +301,14 @@
                 });
             });
 
+            getShowImages(@(Model.Id));
+
             //將原先設定好的關鍵字顯示在"已添加的關鍵字"的欄位
             @foreach (var item in Model.searchKeyword.Split(','))
             {
                 @Html.Raw("$('#inputKeyword').val('" + item + "');");
                 @Html.Raw("$('#inputKeywordBtn').trigger('click');");
             }
-
-
 
             $('#Cost').trigger('change');
 
