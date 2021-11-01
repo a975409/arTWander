@@ -1,0 +1,353 @@
+﻿@model arTWander.Models.ShowPageEditViewModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/CommonLayout/_AsideFalse.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="~/Company/Index">會員功能</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="~/ShowPageManage/Index">我的展演</a>
+        </li>
+        <li class="breadcrumb-item">編輯展演</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div id="scrollContent" data-spy="scroll" data-target="#list-example" data-offset="0"
+         class="scrollspy-example mt-3 col-12" style="position: relative;">
+        <form id="CreateShowForm" method="post" action="~/ShowPageManage/Edit" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label for="Title" class="titlegroup">@Html.LabelFor(model => model.Title)</label>
+                <input type="text" class="form-control" id="Title" name="Title" value="@Model.Title">
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <label for="Description" class="titlegroup">@Html.LabelFor(model => model.Description)</label>
+                <textarea class="form-control" id="Description" name="Description" rows="10">@Model.Description</textarea>
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+
+            <!--主視覺-->
+            <div class="jumbotron bg-light">
+                <h1>主視覺</h1>
+                <br>
+                <div class="form-group row">
+                    <label for="imgFiles" class="col-md-3 col-lg-2 col-form-label">上傳主視覺</label>
+                    <div class="col-md-9 col-lg-10">
+                        <input type="file" id="imgFiles" accept="image/*" name="imgFiles" class="with-preview" multiple>
+                    </div>
+                </div>
+                <div class="form-group" id="showImg"></div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword" hidden readonly>
+                    <label class="">在伺服器上的圖片：</label>
+                    <div class="bg-white d-flex justify-content-center">
+                        @foreach (string item in ViewBag.Images)
+                        {
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <img src="@item" style="height:100px;" alt="...">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="inputKeyword" class="col-md-3 col-lg-2 col-form-label">設定關鍵字</label>
+                    <div class="inputkwdDIV row col-md-9 col-lg-10 mb-3">
+                        <div class="input-group col-12">
+                            <input type="text" class="form-control" id="inputKeyword" name="inputKeyword" placeholder="輸入關鍵字" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" id="inputKeywordBtn">新增關鍵字</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword" hidden readonly>
+                    <label class="">已添加的關鍵字：</label>
+                    <div id="taglist" class="bg-white"></div>
+                </div>
+            </div>
+
+            <!--展演開放時間-->
+            <div class="jumbotron bg-light">
+                <h1>開放展演資訊</h1>
+                <br>
+                <div class="form-group row">
+                    @*<label for="StartDate" class="col-md-2 col-form-label">開放日期</label>*@
+                    @Html.LabelFor(model => model.StartDate, new { @class = "col-md-2 col-form-label" })
+                    <div class="col-md-4">
+                        @*<input type="date" class="form-control" id="StartDate"  name="StartDate">*@
+                        @Html.TextBoxFor(model => model.StartDate, "{0:yyyy/MM/dd}", new { type = "date", @class = "form-control", @Value = Model.StartDate.ToString("yyyy-MM-dd") })
+                        @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                    </div>
+                    @*<label for="EndDate" class="col-md-2 col-form-label">結束日期</label>*@
+                    @Html.LabelFor(model => model.EndDate, new { @class = "col-md-2 col-form-label" })
+                    <div class="col-md-4">
+                        @*<input type="date" class="form-control" id="EndDate" name="EndDate">*@
+                        @Html.TextBoxFor(model => model.EndDate, "{0:yyyy/MM/dd}", new { type = "date", @class = "form-control", @Value = Model.EndDate.ToString("yyyy-MM-dd") })
+                        @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="form-group col-md-2">
+                        @*<label class="col-form-label" for="days">開放時段</label>*@
+                        @Html.LabelFor(model => model.Todays, new { @class = "col-form-label" })
+
+                        @{
+                            string[] todayNames = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
+                            string[] todays = { "day1", "day2", "day3", "day4", "day5", "day6", "day7" };
+
+                            for (int i = 1; i <= 7; i++)
+                            {
+                                <div class="form-check">
+                                    @if (Model.Todays.Contains(i))
+                                    {
+                                        <input type="checkbox" class="form-check-input" name="Todays" id="@todays[i - 1]" value="@i" checked>
+                                        <label for="@todays[i - 1]" class="form-check-label">@todayNames[i - 1]</label>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" class="form-check-input" name="Todays" id="@todays[i - 1]" value="@i">
+                                        <label for="@todays[i - 1]" class="form-check-label">@todayNames[i - 1]</label>
+
+                                    }
+                                </div>
+                            }
+                        }
+                        @Html.ValidationMessageFor(model => model.Todays, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        @*<label for="StartTime" class="col-form-label">開放時間</label>*@
+                        @Html.LabelFor(model => model.StartTime, new { @class = "col-form-label" })
+                        <div>
+                            @*<input type="time" class="form-control" id="StartTime" name="StartTime">*@
+                            @Html.TextBoxFor(model => model.StartTime, "{0:HH:mm}", new { type = "time", @class = "form-control", @Value = Model.StartTime.ToString("HH:mm") })
+                            @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+                        </div>
+                        @*<label for="EndTime" class="col-form-label">結束時間</label>*@
+                        @Html.LabelFor(model => model.EndTime, new { @class = "col-form-label" })
+                        <div>
+                            @*<input type="time" class="form-control" id="EndTime" name="EndTime">*@
+                            @Html.TextBoxFor(model => model.EndTime, "{0:HH:mm}", new { type = "time", @class = "form-control", @Value = Model.EndTime.ToString("HH:mm") })
+                            @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        @*<label for="Cost" class="col-form-label">是否收費？</label>*@
+                        @Html.LabelFor(model => model.Cost, new { @class = "col-form-label" })
+                        <select class="form-control" id="Cost" name="Cost">
+                            @if (Model.Cost)
+                            {
+                                <option value="true" selected>是</option>
+                                <option value="false">否</option>
+                            }
+                            else
+                            {
+                                <option value="true">是</option>
+                                <option value="false" selected>否</option>
+                            }
+                        </select>
+                        <div id="displayPrice">
+                            @*<label for="Price" class="col-form-label">收費金額($TW)</label>*@
+                            @Html.LabelFor(model => model.Price, new { @class = "col-form-label" })
+                            <div>
+                                <input type="number" class="form-control" id="Price" name="Price" value="@Model.Price">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        @*<label for="AgeRange" class="col-form-label">未滿18可觀看？</label>*@
+                        @Html.LabelFor(model => model.AgeRange, new { @class = "col-form-label" })
+                        <select class="form-control" id="AgeRange" name="AgeRange">
+
+                            @if (Model.AgeRange)
+                            {
+                                <option value="true" selected>是</option>
+                                <option value="false">否</option>
+                            }
+                            else
+                            {
+                                <option value="true">是</option>
+                                <option value="false" selected>否</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="jumbotron bg-light">
+                <h1>展演地點</h1>
+                <br>
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        @*<label for="FK_City">縣市</label>*@
+                        @Html.LabelFor(model => model.FK_City)
+                        <select class="form-control" id="FK_City" name="FK_City" value="@Model.FK_City"></select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        @*<label for="FK_District">鄉鎮市區</label>*@
+                        @Html.LabelFor(model => model.FK_District)
+                        <select class="form-control" id="FK_District" name="FK_District" value="@Model.FK_District"></select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        @*<label for="Address">地址</label>*@
+                        @Html.LabelFor(model => model.Address)
+                        <input type="text" class="form-control" id="Address" name="Address" value="@Model.Address">
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @*<label for="Remark" class="titlegroup">備註：</label>*@
+                @Html.LabelFor(model => model.Remark, new { @class = "titlegroup" })
+                <textarea class="form-control" id="Remark" name="Remark" rows="3">@Model.Remark</textarea>
+                @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">儲存變更</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section css{
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .titlegroup {
+            font-size: 25px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 5px 10px;
+            padding-right: 40px;
+        }
+
+            .tag button {
+                padding: 0px;
+                padding-right: 10px;
+                height: 100%;
+            }
+
+        #taglist {
+            overflow: auto;
+            height: 100px;
+        }
+    </style>
+    <script src="~/javascript/jquery.MultiFile.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+}
+
+@section scripts {
+    <script>
+        $(function () {
+            //取得縣市
+            $.ajax({
+                method: 'get',
+                dataType: 'json',
+                url: '@Url.Action("GetCities", "Method")',
+                success: function (data) {
+                    for (var item of data) {
+                        if (@Model.FK_City== item.Id)
+                            $('#FK_City').append(`<option value="${item.Id}" selected>${item.CityName}</option>`);
+                        else
+                            $('#FK_City').append(`<option value="${item.Id}">${item.CityName}</option>`);
+                    }
+
+                    $('#FK_City').trigger('change');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: textStatus,
+                        text: errorThrown,
+                        showConfirmButton: false,
+                        showCancelButton: true
+                    });
+                }
+            });
+
+            //取得該縣市底下的鄉鎮市區
+            $('#FK_City').change(function () {
+                var cityId = $(this).val();
+
+                $.ajax({
+                    method: 'get',
+                    dataType: 'json',
+                    url: '@Url.Action("GetDistricts", "Method")',
+                    data: { cityId: cityId },
+                    success: function (data) {
+                        $('#FK_District').html('');
+                        for (var item of data) {
+
+                            if (@Model.FK_District== item.Id)
+                                $('#FK_District').append(`<option value="${item.Id}" selected>${item.DistrictName}</option>`);
+                            else
+                                $('#FK_District').append(`<option value="${item.Id}">${item.DistrictName}</option>`);
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: textStatus,
+                            text: errorThrown,
+                            showConfirmButton: false,
+                            showCancelButton: true
+                        });
+                    }
+                });
+            });
+
+            //將原先設定好的關鍵字顯示在"已添加的關鍵字"的欄位
+            @foreach (var item in Model.searchKeyword.Split(','))
+            {
+                @Html.Raw("$('#inputKeyword').val('" + item + "');");
+                @Html.Raw("$('#inputKeywordBtn').trigger('click');");
+            }
+
+
+
+            $('#Cost').trigger('change');
+
+            //當使用者輸入關鍵字，就自動回傳資料庫現有的關鍵字
+            $('#inputKeyword').change(function () {
+                getKeywords();
+            });
+
+            getKeywords();
+        });
+
+        function getKeywords() {
+            $("#inputKeyword").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        type: 'get',
+                        url: '@Url.Action("AutocompleteKeywords", "Method")',
+                        data: { keyword: request.term },
+                        dataType: 'json',
+                        success: function (data) {
+                            console.log(data);
+                            response(data);
+                        }
+                    })
+                }
+            });
+        }
+
+    </script>
+    <script type="text/javascript" charset="UTF-8" src="~/javascript/EditSingleShowPage.js"></script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+}

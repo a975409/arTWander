@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace arTWander.Controllers
 {
@@ -28,9 +29,18 @@ namespace arTWander.Controllers
 
         public ActionResult test() {
 
-
-            ModelState.AddModelError("error", "錯誤訊息測試");
             return View();
         }
+
+        [HttpPost]
+        public ActionResult test(List<Service> Service) {
+
+            return Json(Service);
+        }
+    }
+
+    public class Service { 
+        public string Name { get; set; }
+        public string Price { get; set; }
     }
 }

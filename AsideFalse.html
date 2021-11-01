@@ -25,7 +25,32 @@
     <script src="https://kit.fontawesome.com/9bd3ad2735.js" crossorigin="anonymous"></script>
     <!-- css -->
     <link rel="stylesheet" type="text/css" href="./css/ManagerIndex.css">
+    <link rel="stylesheet" type="text/css" href="CommonPage/mainPage/CompanyEditPage.css">
 
+    <style>
+        .dz-remove {
+            color: white;
+            background-color: red;
+            border-radius: 5px 5px;
+            height: 30px;
+            line-height: 30px;
+            margin-top: 5px;
+        }
+
+
+        .dropzone .dz-preview.dz-error .dz-error-message {
+            top: 165px;
+        }
+
+        #dropDIV {
+            text-align: center;
+            width: 100%;
+            height: 300px;
+            margin: auto;
+            border: dashed 2px gray;
+            overflow: auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -87,7 +112,8 @@
     <script>
         // mainPage Ajax導入處 於此處更改要導入頁面
         document.addEventListener("DOMContentLoaded", function () {
-            $('#mainPage').load('CompanyPage/EditSingleShowPage.html');
+            // $('#mainPage').load('CommonPage/mainPage/CompanyInfoPage.html');
+            $('#mainPage').load('CompanyPage/SingleShowPage.html');
         });
 
         //下面這幾串使用按鍵觸發導入Ajax功能需一併帶到有該按鍵的html頁面! Ex範例managerAside.html內最下面

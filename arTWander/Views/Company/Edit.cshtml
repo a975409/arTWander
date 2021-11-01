@@ -1,0 +1,203 @@
+﻿@using arTWander.Models
+@using Newtonsoft.Json
+@model arTWander.Models.CompanyEditViewModel
+@{
+    Layout = "~/Views/Shared/CommonLayout/_AsideFalse.cshtml";
+
+    //int cityIndex = 0;
+    //City[] cities = JsonConvert.DeserializeObject<City[]>(ViewBag.Cities);
+
+    //int districtIndex = 0;
+    //District[] districts = JsonConvert.DeserializeObject<District[]>(ViewBag.Districts);
+
+}
+
+<div class="container">
+    <br>
+    <br>
+    <h1>展演單位資料</h1>
+    <hr>
+    <br>
+    <form action="~/Company/Edit" method="post" enctype="multipart/form-data" id="CompanyEdit">
+        @Html.AntiForgeryToken()
+
+        <div class="card">
+            <label for="Promotional" id="PromotionalImageLbl" role="button">
+                <div id="PromotionalImageDiv">
+                    @*<img id="PromotionalImageImg" class="card-img-top" src="/image/exhibiton/文心藝所.jpg" alt="">*@
+
+                    @if (string.IsNullOrEmpty(ViewBag.PromotionalImage))
+                    {
+                        <img src="~/image/exhibiton/Null.png" class="card-img-top" id="PromotionalImage" alt="...">
+                    }
+                    else
+                    {
+                        <img src="@ViewBag.PromotionalImage" id="PromotionalImage" class="card-img-top" alt="...">
+                    }
+                    <i class="fa fa-camera" aria-hidden="true"></i>
+                </div>
+                <input class="d-none" name="Promotional" id="Promotional" type="file" accept="image/*">
+            </label>
+
+            <div class="card-body">
+                <div class="d-flex justify-content-start align-items-end">
+                    <!-- 消除input type="file" UI的方法 https://www.wfublog.com/2017/10/input-type-file-upload-css-skill.html -->
+
+                    <label for="PhotoSticker" role="button">
+                        <div id="PhotoStickerDiv">
+                            @*<img id="PhotoStickerImg" class="rounded-circle position-absolute" src="/image/exhibiton/dav.png" alt="">*@
+
+                            @if (string.IsNullOrEmpty(ViewBag.PhotoSticker))
+                            {
+                                <img src="~/image/avatar/頭像_展演單位.png" class="rounded-circle position-absolute" id="PhotoStickerImg" alt="...">
+                            }
+                            else
+                            {
+                                <img src="@ViewBag.PhotoSticker" id="PhotoStickerImg" class="card-img-top" alt="...">
+                            }
+                            <i class="fa fa-camera" aria-hidden="true"></i>
+                        </div>
+                        <input class="d-none" name="PhotoSticker" id="PhotoSticker" type="file" accept="image/*">
+                    </label>
+
+                    <label for="CompanyName"><i class="fas fa-pen"></i></label>
+                    <input type="text" id="CompanyName" name="CompanyName" value="@Model.CompanyName" placeholder="填寫展演單位名稱">
+                    @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger", id = "CompanyNameMsg" })
+                </div>
+            </div>
+        </div>
+        <div class="jumbotron">
+            <h2>@Html.LabelFor(model => model.CompanyDescription)</h2>
+            <hr>
+            <textarea class="form-control" id="CompanyDescription" name="CompanyDescription" rows="5"
+                      placeholder="填寫展演單位簡介，限字數200～300字">@Model.CompanyDescription</textarea>
+            @Html.ValidationMessageFor(model => model.CompanyDescription, "", new { @class = "text-danger", id = "CompanyDescriptionMsg" })
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.HomePage)
+                    <input type="url" class="form-control" id="HomePage" name="HomePage" value="@Model.HomePage" placeholder="填寫網址">
+                    @Html.ValidationMessageFor(model => model.HomePage, "", new { @class = "text-danger", id = "HomePageMsg" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BusinessHours)
+                    <input type="text" class="form-control" id="BusinessHours" name="BusinessHours" value="@Model.BusinessHours"
+                           placeholder="填寫營業時間，例：每週二至週五 10：00～18：00">
+                    @Html.ValidationMessageFor(model => model.BusinessHours, "", new { @class = "text-danger", id = "BusinessHoursMsg" })
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-6 form-group">
+                            @Html.LabelFor(model => model.FK_City)
+                            <select class="form-control" id="FK_City" name="FK_City" value="@Model.FK_City"></select>
+                        </div>
+                        <div class="col-6 form-group">
+                            @Html.LabelFor(model => model.FK_District)
+                            <select class="form-control" id="FK_District" name="FK_District" value="@Model.FK_District"></select>
+                        </div>
+                        <div class="col-12 form-group">
+                            @Html.LabelFor(model => model.Address)
+                            <input type="text" class="form-control" id="Address" name="Address" value="@Model.Address" placeholder="填寫地址">
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger", id = "AddressMsg" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email)
+                    <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email" placeholder="請填寫Email，格式：name@example.com">
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger", id = "EmailMsg" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Phone)
+                    <input type="tel" class="form-control" id="Phone" name="Phone" value="@Model.Phone" placeholder="請填寫聯絡電話">
+                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger", id = "PhoneMsg" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Fax)
+                    <input type="text" class="form-control" id="Fax" name="Fax" value="@Model.Fax">
+                    @Html.ValidationMessageFor(model => model.Fax, "", new { @class = "text-danger", id = "FaxMsg" })
+                </div>
+
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <button class="col-6 btn btn-outline-secondary border-0 bg-pink text-white" type="submit"
+                    id="btnSuscribe">
+                儲存修改
+            </button>
+        </div>
+    </form>
+</div>
+@section css{
+    <link href="~/css/css_companyPage/CompanyEditPage.css" rel="stylesheet" />
+
+    @*sweetalert*@
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+}
+
+@section scripts{
+    <script>
+        $(function () {
+            $.ajax({
+                method: 'get',
+                dataType: 'json',
+                url: '@Url.Action("GetCities", "Method")',
+                success: function (data) {
+                    for (var item of data) {
+                        if (@Model.FK_City== item.Id)
+                            $('#FK_City').append(`<option value="${item.Id}" selected>${item.CityName}</option>`);
+                        else
+                            $('#FK_City').append(`<option value="${item.Id}">${item.CityName}</option>`);
+                    }
+
+                    $('#FK_City').trigger('change');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: textStatus,
+                        text: errorThrown,
+                        showConfirmButton: false,
+                        showCancelButton: true
+                    });
+                }
+            });
+
+            $('#FK_City').change(function () {
+                var cityId = $(this).val();
+
+                $.ajax({
+                    method: 'get',
+                    dataType: 'json',
+                    url: '@Url.Action("GetDistricts", "Method")',
+                    data: { cityId: cityId },
+                    success: function (data) {
+                        $('#FK_District').html('');
+                        for (var item of data) {
+
+                            if (@Model.FK_District== item.Id)
+                                $('#FK_District').append(`<option value="${item.Id}" selected>${item.DistrictName}</option>`);
+                            else
+                                $('#FK_District').append(`<option value="${item.Id}">${item.DistrictName}</option>`);
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: textStatus,
+                            text: errorThrown,
+                            showConfirmButton: false,
+                            showCancelButton: true
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script src="~/javascript/Company.js"></script>
+}

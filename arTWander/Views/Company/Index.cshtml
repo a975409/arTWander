@@ -1,79 +1,141 @@
-﻿@*@model arTWander.Models.CompanyViewModel.CompanyInfoViewModel*@
+﻿@model arTWander.Models.CompanyViewModel
 @{
     Layout = "~/Views/Shared/CommonLayout/_AsideFalse.cshtml";
 }
 
 <div class="container">
 
-    <div class="card" style="border-bottom-left-radius:0px ;border-bottom-right-radius:0px ;">
-        <img src="/image/exhibiton/文心藝所.jpg" class="card-img-top" alt="...">
-        <div class="card-body d-flex align-items-end justify-content-between" style="border-top: 1px #DFDFDF solid;">
-            <div class=" d-flex align-items-end">
-                <img src="/image/avatar/頭像_展演單位.png" height="100px" width="100" alt="...">
-                <h3 class="text-body ml-3">文心藝所</h3>
-            </div>
-            <div class="btn-group">
-                <a href="" class="btn btn-primary">修改展演資料</a>
-                <a href="" class="btn btn-success">變更密碼</a>
-            </div>
+    <div id="titleCard" class="card">
+        @if (string.IsNullOrEmpty(Model.PromotionalImage))
+        {
+            <img src="~/image/exhibiton/Null.png" class="card-img-top" id="PromotionalImage" alt="...">
+        }
+        else
+        {
+            <img src="@Model.PromotionalImage" id="PromotionalImage" class="card-img-top" alt="...">
+        }
+
+
+    <div id="titleGroup" class="card-body d-flex align-items-end justify-content-between row">
+        <div class="col-lg-6 d-flex align-items-end">
+            @if (string.IsNullOrEmpty(Model.PhotoSticker))
+            {
+                <img src="~/image/avatar/頭像_展演單位.png" height="100" width="100" alt="...">
+            }
+            else
+            {
+                <img src="@Model.PhotoSticker" height="100" width="100" alt="...">
+            }
+            <h3 class="text-body ml-3">@Model.CompanyName</h3>
+        </div>
+        <div class="btn-group col-lg-6" role="group" aria-label="Basic example">
+            <a href="~/Manage/ChangePassword" class="btn btn-warning">變更密碼</a>
+            <a href="~/Company/Edit" class="btn btn-primary">編輯展演資料</a>
+            <a href="~/ShowPageManage/Index" class="btn btn-success">展演管理</a>
         </div>
     </div>
-    <div class="jumbotron" style="border-radius: 0px;">
-        <p class="lead">
-            本站宗旨為增強台灣藝文展演資訊之能見度，透過蒐集四散於網路各角落的台灣展演資訊，打造一個可供展演單位宣傳精心之作、 同時方便使用者探索全台藝文展覽的平台。
-            本站於2021年起始營運至今，歡迎透過以下連絡方式與我們取得聯繫。
-        </p>
     </div>
-    <div class="row" style="margin:0px ;">
+    <div class="jumbotron">
+        <p class="lead">@Model.CompanyDescription</p>
+    </div>
+    <div class="row">
         <div class="col-sm-6">
             <div>
-                <h3>聯繫方式</h3>
-                <div class="form-group row">
-                    <label for="inputEmail" class="col-sm-3 col-form-label">電子郵件：</label>
-                    <div class="col-sm-9">
-                        <a href="mailto:a13256@gmail.com" class="form-control"
-                           style="border-style: none;background-color: transparent;">a13256@gmail.com</a>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inputTel" class="col-sm-3 col-form-label">聯絡電話：</label>
-                    <div class="col-sm-9">
-                        <input type="tel" class="form-control" style="border-style: none;background-color: transparent;"
-                               id="inputTel" value="07-6691895" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inputFax" class="col-sm-3 col-form-label">傳真：</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" style="border-style: none;background-color: transparent;"
-                               id="inputFax" value="07-6691895" readonly>
-                    </div>
+                <h3>帳戶功能</h3>
+                <div id="TwoFactor">
+                    @Html.Partial("~/Views/Shared/CompanyPartial/_IsTwoFactor.cshtml", Model)
                 </div>
 
+                <div id="Browser">
+                    @Html.Partial("~/Views/Shared/CompanyPartial/_IsRememberBrowser.cshtml", Model)
+                </div>
             </div>
-        </div>
-        <div class="col-sm-6">
-            <div>
-                <h3>官方網站</h3>
+            <div class="mainField">
+                <h3>聯繫方式</h3>
                 <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">網址：</label>
-                    <div class="col-sm-9">
-                        <a href="https://www.google.com/" class="form-control"
-                           style="border-style: none;background-color: transparent;">https://www.google.com/</a>
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-sm-8">
+                        @if (!string.IsNullOrEmpty(Model.Email))
+                        {
+                            <a href="mailto:@Model.Email" class="form-control">@Model.Email</a>
+                        }
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-sm-8">
+                        <input type="tel" class="form-control" id="Phone" name="Phone" value="@Model.Phone" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Fax, htmlAttributes: new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="Fax" name="Fax" value="@Model.Fax" readonly>
                     </div>
                 </div>
             </div>
-            <div>
-                <h3>地址</h3>
+
+        </div>
+        <div class="col-sm-6">
+            <div class="mainField">
+                <h3> @Html.LabelFor(model => model.HomePage)</h3>
                 <div class="form-group row">
-                    <label for="inputAddress" class="col-sm-3 col-form-label">地址：</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" style="border-style: none;background-color: transparent;"
-                               id="inputAddress" value="821高雄市路竹區中山路475號" readonly>
+                    <div class="col">
+                        <a href="@Model.HomePage" class="form-control">@Model.HomePage</a>
+                    </div>
+                </div>
+            </div>
+            <div class="mainField">
+                <h3>@Html.LabelFor(model => model.Address)</h3>
+                <div class="form-group row">
+
+                    <div class="col">
+                        <input type="text" class="form-control" id="Address" name="Address" value="@Model.Address" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="mainField">
+                <h3>@Html.LabelFor(model => model.BusinessHours)</h3>
+                <div class="form-group row">
+
+                    <div class="col">
+                        <input type="text" class="form-control" id="BusinessHours" name="BusinessHours" value="@Model.BusinessHours" readonly>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@section css
+{
+    <link href="~/css/css_companyPage/Index.css" rel="stylesheet" />
+}
 
+@section scripts
+{
+    <script>
+        $("#Browser").on("submit", "#IsRememberBrowser", function (event) {
+            event.preventDefault();
+            $.ajax({
+                method: 'post',
+                url: $(this).attr("action"),
+                data: '@Model',
+                success: function (data) {
+                    $("#Browser").html(data);
+                }
+            });
+        });
+
+        $('#TwoFactor').on('submit', '#IsEnableTFA', function (event) {
+            event.preventDefault();
+            $.ajax({
+                method: 'post',
+                url: $(this).attr('action'),
+                data: '@Model',
+                success: function (data) {
+                    $('#TwoFactor').html(data);
+                }
+            })
+        });
+    </script>
+}

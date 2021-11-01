@@ -198,6 +198,10 @@ select {
         color: rgb(197, 126, 104);
     }
 
+#avatarNavSet > a i {
+    font-size: 22px;
+}
+
 .bg-pink {
     background-color: rgb(197, 126, 104);
 }

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+  <script>
+    Swal.fire({
+      title: '移除展覽?',
+      text: "是否要移除此展覽？",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: '是！確定移除',
+      cancelButtonText: '否！不要移除',
+    }).then((result) => {
+      console.log('success');
+      if (result.isConfirmed) {
+
+        $.ajax({
+          type: 'post',
+          url: '@Url.Action("responseComment","ShowPageManage")',
+          data: {showId:showId},
+          success: function (data) {
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            Swal.fire({
+              icon: 'error',
+              title: textStatus,
+              text: errorThrown,
+              showConfirmButton: false,
+              showCancelButton: true
+            });
+          }
+        });
+      }
+    })
+  </script>
+</body>
+
+</html>

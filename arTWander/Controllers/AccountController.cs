@@ -269,7 +269,7 @@ namespace arTWander.Controllers
                 //寄mail到新註冊使用者的帳戶
                 await UserManager.SendEmailAsync(user.Id, "您的arTWander帳號已註冊完畢, 請盡速確認您的帳戶", "請按一下此連結確認您的帳戶 <a href=\"" + callbackUrl + "\">這裏</a> \n若您並未註冊本網站請忽略此信, 以確保您自身權益");
 
-                UserManager.AddToRoleAsync(user.Id, model.AccountRoles);
+                await UserManager.AddToRoleAsync(user.Id, model.AccountRoles);
 
                 //await UserManager.AddToRoleAsync(user.Id, "Admin");//系統管理員
                 //await UserManager.AddToRoleAsync(user.Id,"Company");//展演單位
@@ -285,12 +285,12 @@ namespace arTWander.Controllers
                 string success = SweetAlert.timeoutCloseToLinkAlert(0, Url.Action("Index", "Home")) + SweetAlert.SuccessAlert("註冊成功", "請至信箱收驗證信", "或點擊 <a href=" + callbackUrl + ">此連結</a>");
                 return JavaScript(success);
             }
-            AddErrors(result);
+            //AddErrors(result);
             //TempData["LoginPage"] = false;
             //TempData["Status"] = "註冊失敗";
             //TempData["DialogMsg"] = "<p>註冊失敗！！</p><br><br>";
             //return RedirectToAction("AccountIndex");
-            string failure = SweetAlert.initAlert() + SweetAlert.ErrorAlert("註冊失敗", "欄位驗證失敗!", "");
+            string failure = SweetAlert.initAlert() + SweetAlert.ErrorAlert("註冊失敗", result.Errors.FirstOrDefault(), "");
             return JavaScript(failure);
         }
 
@@ -390,8 +390,8 @@ namespace arTWander.Controllers
                 }
                 else
                 {
-                    AddErrors(result);
-                    string errorAlert = SweetAlert.initAlert() + SweetAlert.ErrorAlert("密碼重設失敗", "發生未知錯誤，請稍後再試", "");
+                    //AddErrors(result);
+                    string errorAlert = SweetAlert.initAlert() + SweetAlert.ErrorAlert("密碼重設失敗", result.Errors.FirstOrDefault(), "");
                     return JavaScript(errorAlert);
                 }
             }

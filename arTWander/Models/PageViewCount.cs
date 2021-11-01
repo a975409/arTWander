@@ -13,11 +13,11 @@ namespace arTWander.Models
 
         public int? Count { get; set; }
 
-        public int? FK_Company { get; set; }
+        public int? FK_ApplicationUser { get; set; }
 
         public int? FK_ShowPage { get; set; }
 
-        public virtual Company Company { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
         public virtual ShowPage ShowPage { get; set; }
     }

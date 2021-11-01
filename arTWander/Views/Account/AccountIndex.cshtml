@@ -124,15 +124,12 @@
         <!-- 註冊欄位 ends -->
     </div>
 </div>
-
-@section scripts
-{
+@section css{
     @*sweetalert*@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="sweetalert2.min.css">
-    <script src="sweetalert2.all.min.js"></script>
-    <script src="sweetalert2.min.js"></script>
-
+}
+@section scripts
+{
     <script>
         //提交表單時，驗證Email和密碼欄位，如果驗證失敗，則取消提交表單
         $('#loginForm').submit(function (event) {
@@ -156,6 +153,15 @@
                 success: function (data) {
                     @* 執行sweetalert指令 *@
                     eval(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: textStatus,
+                        text: errorThrown,
+                        showConfirmButton: false,
+                        showCancelButton: true
+                    });
                 }
             });
         });
@@ -187,6 +193,15 @@
                 data: formData,
                 success: function (data) {
                     eval(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: textStatus,
+                        text: errorThrown,
+                        showConfirmButton: false,
+                        showCancelButton: true
+                    });
                 }
             });
         });
