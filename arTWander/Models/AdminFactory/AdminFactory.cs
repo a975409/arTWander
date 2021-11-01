@@ -55,7 +55,7 @@ namespace arTWander.Models.AdminFactory
 
         }
 
-
+        //取得所有user
         public IEnumerable<UserListViewModel> GetUserListAll()
         {
             var db = new ApplicationDbContext();
@@ -117,7 +117,6 @@ namespace arTWander.Models.AdminFactory
             List<UserListViewModel> model = new List<UserListViewModel>();
 
             string Bday = "";
-            string nodata = "";
             string blist = "";
             //判斷是否有搜尋字串
             if (string.IsNullOrEmpty(blackList.ToString())) { blist = "正常"; }
@@ -133,8 +132,6 @@ namespace arTWander.Models.AdminFactory
                     from bList in pu.DefaultIfEmpty()
                     where users.UserName.Contains(searchWord) || 
                     users.Email.Contains(searchWord)
-                    //login.RegisterTime.ToString().Contains(searchWord)||
-                    //users.Id.ToString().Contains(searchWord)
                     select new UserListViewModel
                     {
                         FK_ApplicationUser = users.Id,
@@ -167,12 +164,12 @@ namespace arTWander.Models.AdminFactory
             var db = new ApplicationDbContext();
             List<UserListViewModel> model = new List<UserListViewModel>();
             string nodata;
-            //string Bday = "";
             string blist = "";
-            //判斷是否有搜尋字串
-            var black = from b in db.BlackList where b.FK_ApplicationUser.ToString() == searchWord select new { nodata = b.FK_ApplicationUser.ToString() };
             
-            if (string.IsNullOrEmpty(black.ToString())) 
+            //判斷是否黑名單
+            var black = db.BlackList.Where(m=>m.FK_ApplicationUser.ToString() == searchWord).FirstOrDefault();
+            
+            if (black == null) 
             { blist = "正常"; }
             else { blist = "黑名單"; }
             //left join +into ps from login in ps.DefaultIfEmpty()

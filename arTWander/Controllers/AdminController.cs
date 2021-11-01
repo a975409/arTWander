@@ -3,6 +3,7 @@ using arTWander.Models.AdminFactory;
 using arTWander.Models.AdminViewModel;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -14,30 +15,30 @@ namespace arTWander.Controllers
 {
     public class AdminController : Controller
     {
-        //如果要在其他Controller引用DbContext來對資料表做CRUD，請參考第17~33行新增DbContext
-        //詳細用法請參考底下 Index 這個 Action
-        public AdminController()
-        {
-        }
+        ////如果要在其他Controller引用DbContext來對資料表做CRUD，請參考第17~33行新增DbContext
+        ////詳細用法請參考底下 Index 這個 Action
+        //public AdminController()
+        //{
+        //}
 
-        public AdminController(ApplicationUserManager userManager, ApplicationDbContext dbContext)
-        {
-            UserManager = userManager;
-            DbContext = dbContext;
-        }
+        //public AdminController(ApplicationUserManager userManager, ApplicationDbContext dbContext)
+        //{
+        //    UserManager = userManager;
+        //    DbContext = dbContext;
+        //}
 
-        private ApplicationDbContext _dbContext;
-        public ApplicationDbContext DbContext
-        {
-            get
-            {
-                return _dbContext ?? HttpContext.GetOwinContext().Get<ApplicationDbContext>();
-            }
-            private set
-            {
-                _dbContext = value;
-            }
-        }
+        //private ApplicationDbContext _dbContext;
+        //public ApplicationDbContext DbContext
+        //{
+        //    get
+        //    {
+        //        return _dbContext ?? HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+        //    }
+        //    private set
+        //    {
+        //        _dbContext = value;
+        //    }
+        //}
 
         private ApplicationUserManager _userManager;
         public ApplicationUserManager UserManager
@@ -107,62 +108,68 @@ namespace arTWander.Controllers
         //User Detail Page start
         public ActionResult UserList()
         {
-
+            var db = new ApplicationDbContext();
+            var userSearch = from users in db.Users select users.UserName;
+            List<UserListViewModel> model = null;
             //判斷是否有搜尋字串
             var searchWord = Request.Form["txtKeyword"];
             if (string.IsNullOrEmpty(searchWord))
             {
-                List<UserListViewModel> model = (List<UserListViewModel>)new AdminFactory().GetUserListAll();
-                    return View(model);
+                model = (List<UserListViewModel>)new AdminFactory().GetUserListAll();
             }
             else
             {
-                //var searchData =from p in db.Users where p.UserName.Contains(searchWord) select p;
-                //foreach (ApplicationUser userName in searchData)
-                //{
-
-                //    if (!string.IsNullOrEmpty(userName.Birthday.ToString()))
-                //    {
-                //        DateTime Birthday = (DateTime)(userName.Birthday);
-                //        Bday = Birthday.ToString("yyyy-MM-dd");
-                //    }
-                //    else
-                //    {
-                //        Bday = DateTime.Now.ToString("yyyy-MM-dd");
-                //    }
-
-                //    model.Add(new UserListViewModel()
-                //    {
-                //        FK_ApplicationUser = userName.Id,
-                //        users = userName,
-                //        PhoneNumber = userName.PhoneNumber,
-                //        UserName = userName.UserName,
-                //        Birthday = Bday,
-                //        AccountAddress = userName.AccountAddress,
-                //        AvatarUrl = "/SaveFiles/Admin/Avatar/",
-                //        AvatarName = userName.Avatar,
-                //        Email = userName.Email,
-                //        RegisterTime = loginLog.RegisterTime,
-                //        LastloginTime = loginLog.LastloginTime,
-                //        LoginOutTime = loginLog.LoginOutTime,
-                //        LogingCount = loginLog.LogingCount,
-                //        Statue = loginLog.Statue,
-                //        Title = showPage.Title,
-                //        Comment = showComment.Comment,
-                //        Star = showComment.Star
-                //    });
-
-                //}
-                return View();
+                model = (List<UserListViewModel>)new AdminFactory().GetUserListBySearch(searchWord);
             }
-
+            return View(model);
         }
 
+ 
+        //用戶詳細資訊
 
-        public ActionResult UserInform()
+        //public ActionResult UserInform()
+        //{
+        //    return View();
+        //}
+
+        public ActionResult UserInform(string userId)
         {
-            return View();
+            List<UserListViewModel> model = null;
+            //取json對應userId data
+            var userSearch = JsonConvert.DeserializeObject<UserListViewModel>(userId);
+            //取得該id詳細資訊
+            model = (List<UserListViewModel>)new AdminFactory().GetUserInformById(userSearch.userId);
+            return View(model);
         }
+
+        //User 加入黑名單
+        [HttpPost]
+        public ActionResult UserAddBlack(string blackAdd)
+        {
+            var db = new ApplicationDbContext();
+            //取json對應blackAdd data
+            var BlackSearch = JsonConvert.DeserializeObject<BlackList>(blackAdd);
+            var BlackSuccess = JsonConvert.DeserializeObject<ApplicationUser>(blackAdd);
+            //取json對應userId data
+            var black = db.BlackList.Where(m=>m.FK_ApplicationUser == BlackSearch.FK_ApplicationUser).FirstOrDefault();
+            //新增黑名單
+            if (black == null)
+            {
+                db.BlackList.Add(new BlackList()
+                    {
+                        FK_ApplicationUser= BlackSearch.FK_ApplicationUser,
+                        Created_At= DateTime.Now,
+                        Reason= BlackSearch.Reason
+                });
+                db.SaveChanges();
+            }
+            
+            SweetAlert.SuccessAlert("黑名單", $"{BlackSuccess.UserName} 已加入黑名單", "");
+            //重新導向
+            return RedirectToAction("UserList", "Admin");
+        }
+
+
         public ActionResult ShowCustomList()
         {
             return View();
