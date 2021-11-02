@@ -45,13 +45,13 @@ namespace arTWander.Models
         [DisplayName("結束時間")]
         public DateTime EndTime { get; set; }
 
-        [DisplayName("是否收費？")]
+        [DisplayName("是否收費：")]
         public bool Cost { get; set; }
 
-        [DisplayName("收費金額($TW)")]
+        [DisplayName("收費金額($TW)：")]
         public int Price { get; set; }
 
-        [DisplayName("未滿18歲可觀看？")]
+        [DisplayName("未滿18歲可觀看：")]
         public bool AgeRange { get; set; }
 
         [DisplayName("地址")]
