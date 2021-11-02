@@ -53,7 +53,7 @@ namespace arTWander.Controllers
         public ActionResult Index()
         {
             int userId = User.Identity.GetUserId<int>();
-            var company = DbContext.Company.Where(m => m.FK_ApplicationUser == userId).FirstOrDefault();
+            var company = new CompanyFactory(DbContext).GetCompany(userId);
 
             if (company == null)
                 return RedirectToAction("Edit", "Company");
@@ -164,7 +164,7 @@ namespace arTWander.Controllers
             }
 
             int userId = User.Identity.GetUserId<int>();
-            var company = DbContext.Company.Where(m => m.FK_ApplicationUser == userId).FirstOrDefault();
+            var company = new CompanyFactory(DbContext).GetCompany(userId);
 
             //將展演資料新增至資料庫
             var showPage = new ShowPage
@@ -190,61 +190,17 @@ namespace arTWander.Controllers
             await DbContext.SaveChangesAsync();
 
             //新增該展演對應的關鍵字
-            if (!string.IsNullOrEmpty(model.searchKeyword))
-            {
-                foreach (string item in model.searchKeyword.Split(','))
-                {
-                    if (DbContext.Keywords.Where(m => m.Name == item).Any())
-                    {
-                        var keyword = DbContext.Keywords.Where(m => m.Name == item).FirstOrDefault();
-                        showPage.KeywordsList.Add(keyword);
-                    }
-                    else
-                    {
-                        showPage.KeywordsList.Add(new Keywords { Name = item });
-                    }
-                }
-                await DbContext.SaveChangesAsync();
-            }
-            
+            await new ShowPageFactory(DbContext).insertKeywords(model.searchKeyword, showPage);
+
             //新增該展演對應的開放時段
-            foreach (int item in model.Todays)
-            {
-                DbContext.PageToTodays.Add(new PageToTodays { FK_ShowPage = showPage.Id, Today = item });
-            }
-            await DbContext.SaveChangesAsync();
+            await new ShowPageFactory(DbContext).setOpenTodays(model.Todays, showPage);
 
             //上傳主視覺圖檔
             string saveDir = Path.Combine(Server.MapPath("~/SaveFiles/Company"), company.Id.ToString(), "show", showPage.Id.ToString());
             Directory.CreateDirectory(saveDir);
 
-            if (imgFiles != null && imgFiles.Length > 0)
-            {
-                foreach (var item in imgFiles)
-                {
-                    if (item != null && item.ContentLength > 0 && item.FileName.Length <= 20)
-                    {
-                        byte[] ImageData = new byte[item.ContentLength];
-                        item.InputStream.Read(ImageData, 0, item.ContentLength);
+            await new ShowPageFactory(DbContext).SaveShowPageFiles(imgFiles, saveDir, showPage);
 
-                        using (MemoryStream stream = new MemoryStream(ImageData))
-                        {
-                            //判斷上傳的檔案是否為圖片檔
-                            if (IsImage(stream))
-                            {
-                                //完整另存路徑
-                                string savePath = Path.Combine(saveDir, Path.GetFileName(item.FileName));
-
-                                //server端下載檔案
-                                item.SaveAs(savePath);
-
-                                DbContext.ShowPageFile.Add(new ShowPageFile { fileName = Path.GetFileName(item.FileName), FK_ShowPage = showPage.Id });
-                            }
-                        }
-                    }
-                }
-                await DbContext.SaveChangesAsync();
-            }
             return RedirectToAction("Index");
         }
 
@@ -319,59 +275,13 @@ namespace arTWander.Controllers
             showPage.KeywordsList.Clear();
             await DbContext.SaveChangesAsync();
 
-            if (!string.IsNullOrEmpty(model.searchKeyword))
-            {
-                foreach (string item in model.searchKeyword.Split(','))
-                {
-                    if (DbContext.Keywords.Where(m => m.Name == item).Any())
-                    {
-                        var keyword = DbContext.Keywords.Where(m => m.Name == item).FirstOrDefault();
-                        showPage.KeywordsList.Add(keyword);
-                    }
-                    else
-                    {
-                        showPage.KeywordsList.Add(new Keywords { Name = item });
-                    }
-                }
-            }
-            await DbContext.SaveChangesAsync();
+            await new ShowPageFactory(DbContext).insertKeywords(model.searchKeyword, showPage);
 
             string saveDir = Path.Combine(Server.MapPath("~/SaveFiles/Company"), showPage.Company.Id.ToString(), "show", showPage.Id.ToString());
 
             Directory.CreateDirectory(saveDir);
 
-            if (imgFiles != null && imgFiles.Length > 0)
-            {
-                //儲存新增的圖檔
-                foreach(var item in imgFiles)
-                {
-                    if (item != null && item.ContentLength > 0 && item.FileName.Length <= 20)
-                    {
-                        byte[] ImageData = new byte[item.ContentLength];
-                        item.InputStream.Read(ImageData, 0, item.ContentLength);
-
-                        using (MemoryStream stream = new MemoryStream(ImageData))
-                        {
-                            //判斷上傳的檔案是否為圖片檔
-                            if (IsImage(stream))
-                            {
-                                //查看該檔名如果已存在於資料庫，就不在資料庫新增資料
-                                if (!showPage.ShowPageFiles.Any(m => m.fileName == Path.GetFileName(item.FileName)))
-                                {
-                                    DbContext.ShowPageFile.Add(new ShowPageFile { fileName = Path.GetFileName(item.FileName), FK_ShowPage = showPage.Id });
-                                }
-
-                                //完整另存路徑
-                                string savePath = Path.Combine(saveDir, Path.GetFileName(item.FileName));
-
-                                //server端下載檔案，檔名重複則直接覆蓋
-                                item.SaveAs(savePath);
-                            }
-                        }
-                    }
-                }
-                await DbContext.SaveChangesAsync();
-            }
+            await new ShowPageFactory(DbContext).AddOrUpdateShowPageFiles(imgFiles, saveDir, showPage);
             return RedirectToAction("Index");
         }
 
@@ -459,19 +369,6 @@ namespace arTWander.Controllers
                 return new HttpStatusCodeResult(500, "移除失敗!");
             }
             return new HttpStatusCodeResult(200, "移除成功!");
-        }
-
-        private bool IsImage(Stream stream)
-        {
-            try
-            {
-                System.Drawing.Image img = System.Drawing.Image.FromStream(stream);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
         }
     }
 }

@@ -458,11 +458,13 @@
     <Compile Include="Models\Keywords.cs" />
     <Compile Include="Models\LogingLog.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\OtherMethod.cs" />
     <Compile Include="Models\PageToTodays.cs" />
     <Compile Include="Models\PageViewCount.cs" />
     <Compile Include="Models\Reports.cs" />
     <Compile Include="Models\ResponseShowComment.cs" />
     <Compile Include="Models\ShowComment.cs" />
+    <Compile Include="Models\ShowPageFactory.cs" />
     <Compile Include="Models\ShowPageViewModel.cs" />
     <Compile Include="Models\ShowPage.cs" />
     <Compile Include="Models\ShowPageFile.cs" />

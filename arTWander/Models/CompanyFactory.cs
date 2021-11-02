@@ -44,7 +44,7 @@ namespace arTWander.Models
                 using (MemoryStream stream = new MemoryStream(ImageData))
                 {
                     //判斷上傳的檔案是否為圖片檔
-                    if (IsImage(stream))
+                    if (OtherMethod.IsImage(stream))
                     {
                         //移除原先儲存在Server上的封面圖
                         var PromotionalImages = Directory.GetFiles(saveDir).Where(m => Path.GetFileNameWithoutExtension(m) == Path.GetFileNameWithoutExtension(savefileName));
@@ -76,19 +76,6 @@ namespace arTWander.Models
                 }
             }
             return false;
-        }
-
-        private bool IsImage(Stream stream)
-        {
-            try
-            {
-                System.Drawing.Image img = System.Drawing.Image.FromStream(stream);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
         }
     }
 }

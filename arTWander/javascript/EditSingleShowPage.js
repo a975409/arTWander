@@ -53,11 +53,54 @@ $('#imgFiles').MultiFile({
                 showCancelButton: true
             });
         }
+
+        if (checkImgFileName(value)) {
+
+            let imgFiles = document.querySelectorAll('.MultiFile-remove+span>.MultiFile-label');
+            let a_remove = document.getElementsByClassName('MultiFile-remove');
+
+            for (let i in imgFiles) {
+                if (imgFiles[i].nodeType == 1) {
+                    //    console.log(imgFiles[i].title);
+
+                    if (imgFiles[i].title == value) {
+                        a_remove[i].click();
+                        break;
+                    }
+                }
+            }
+
+            Swal.fire({
+                icon: 'error',
+                title: '無法指定檔案',
+                text: '檔名裡面有特殊符號，請重新命名',
+                showConfirmButton: false,
+                showCancelButton: true
+            });
+        }
     }
 });
 
+function checkImgFileName(fileName) {
+    var regex = new RegExp(/^[^\/\:\*\?\""\<\>\|\,]+$/, "g");
+
+    return !fileName.match(regex);
+}
+
 $('#inputKeywordBtn').click(function () {
     let inputKeyword = $('#inputKeyword').val();
+
+    if (inputKeyword.search(',') > 0) {
+        Swal.fire({
+            icon: 'error',
+            title: '無法新增關鍵字',
+            text: '關鍵字裡面不能有半形逗號","',
+            showConfirmButton: false,
+            showCancelButton: true
+        });
+        $('#inputKeyword').val('');
+        return;
+    }
 
     if (inputKeyword != '') {
         $('#taglist').append(`<div class="tag alert alert-primary alert-dismissible fade show" role="alert"><div class="d-flex justify-content-between align-items-center"><span name="keywordSpan">${inputKeyword}</span><button type="button" class="close d-flex align-items-center" data-dismiss="alert" aria-label="Close"><i class="fas fa-times"></i></button></div></div>`);
