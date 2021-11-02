@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace arTWander.Models
 {
@@ -44,13 +45,13 @@ namespace arTWander.Models
         [DisplayName("結束時間")]
         public DateTime EndTime { get; set; }
 
-        [DisplayName("是否收費？")]
+        [DisplayName("是否收費：")]
         public bool Cost { get; set; }
 
-        [DisplayName("收費金額($TW)")]
+        [DisplayName("收費金額($TW)：")]
         public int Price { get; set; }
 
-        [DisplayName("未滿18歲可觀看？")]
+        [DisplayName("未滿18歲可觀看：")]
         public bool AgeRange { get; set; }
 
         [DisplayName("地址")]
@@ -103,9 +104,9 @@ namespace arTWander.Models
         [StringLength(30,ErrorMessage = "展演主題不得超過30個字")]
         public string Title { get; set; }
 
+        [AllowHtml]
         [Required(ErrorMessage = "請填寫展演內容")]
         [DisplayName("展演內容：")]
-        [StringLength(1000, ErrorMessage = "展演內容不得超過1000個字")]
         public string Description { get; set; }
 
         [Required(ErrorMessage = "請填寫開放日期")]

@@ -4,12 +4,6 @@
 @{
     Layout = "~/Views/Shared/CommonLayout/_AsideFalse.cshtml";
 
-    //int cityIndex = 0;
-    //City[] cities = JsonConvert.DeserializeObject<City[]>(ViewBag.Cities);
-
-    //int districtIndex = 0;
-    //District[] districts = JsonConvert.DeserializeObject<District[]>(ViewBag.Districts);
-
 }
 
 <div class="container">
@@ -68,9 +62,7 @@
         </div>
         <div class="jumbotron">
             <h2>@Html.LabelFor(model => model.CompanyDescription)</h2>
-            <hr>
-            <textarea class="form-control" id="CompanyDescription" name="CompanyDescription" rows="5"
-                      placeholder="填寫展演單位簡介，限字數1000字以內">@Model.CompanyDescription</textarea>
+            <textarea class="form-control" id="CompanyDescription" name="CompanyDescription">@Model.CompanyDescription</textarea>
             @Html.ValidationMessageFor(model => model.CompanyDescription, "", new { @class = "text-danger", id = "CompanyDescriptionMsg" })
         </div>
         <div class="row">
@@ -137,6 +129,10 @@
 
     @*sweetalert*@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 }
 
 @section scripts{
@@ -195,6 +191,24 @@
                         });
                     }
                 });
+            });
+
+            $('#CompanyDescription').summernote({
+                placeholder: '請填寫展演單位簡介...',
+                height: 500, // set editor height
+                minHeight: null, // set minimum height of editor
+                maxHeight: null, // set maximum height of editor
+                focus: true, // set focus to editable area after initializing summernote
+                toolbar: [
+                    ['style', ['style']],
+                    ['fontname', ['fontname', 'fontsize']],
+                    ['font', ['bold', 'italic', 'underline', 'color', 'clear']],
+                    ['para', ['ul', 'ol', 'paragraph', 'height']],
+                    ['insert', ['hr', 'link']],
+                    ['view', ['undo', 'redo']]
+                ],
+                fontSizeUnits: ['px'],
+                dialogsFade: true
             });
         });
     </script>

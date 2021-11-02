@@ -155,6 +155,14 @@ namespace arTWander.Controllers
                 return View(model);
             }
 
+            string temp = model.CompanyDescription.ToLower();
+
+            if (temp.Contains("<script>") || temp.Contains("</script>"))
+            {
+                ModelState.AddModelError("Description", "該欄位疑似有出現不安全的程式碼");
+                return View(model);
+            }
+
             int userId = User.Identity.GetUserId<int>();
             var company = DbContext.Company.Where(m => m.FK_ApplicationUser == userId).FirstOrDefault();
 

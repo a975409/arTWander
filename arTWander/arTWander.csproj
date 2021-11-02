@@ -436,6 +436,10 @@
     <Compile Include="Migrations\202111011038249_initdb.Designer.cs">
       <DependentUpon>202111011038249_initdb.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111020704123_initdb1.cs" />
+    <Compile Include="Migrations\202111020704123_initdb1.Designer.cs">
+      <DependentUpon>202111020704123_initdb1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminFactory\AdminFactory.cs" />
@@ -477,6 +481,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202111011038249_initdb.resx">
       <DependentUpon>202111011038249_initdb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111020704123_initdb1.resx">
+      <DependentUpon>202111020704123_initdb1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -20,7 +20,7 @@
          class="scrollspy-example mt-3 col-12" style="position: relative;">
         <form id="CreateShowForm" method="post" action="~/ShowPageManage/Edit" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
-            <input id="Id" name="Id" type="hidden" value="@Model.Id"/>
+            <input id="Id" name="Id" type="hidden" value="@Model.Id" />
             <div class="form-group">
                 <label for="Title" class="titlegroup">@Html.LabelFor(model => model.Title)</label>
                 <input type="text" class="form-control" id="Title" name="Title" value="@Model.Title">
@@ -236,6 +236,9 @@
             height: 100px;
         }
     </style>
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <script src="~/javascript/jquery.MultiFile.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
@@ -311,6 +314,24 @@
             }
 
             $('#Cost').trigger('change');
+
+            $('#Description').summernote({
+                placeholder: '請填寫展演內容...',
+                height: 500, // set editor height
+                minHeight: null, // set minimum height of editor
+                maxHeight: null, // set maximum height of editor
+                focus: true, // set focus to editable area after initializing summernote
+                toolbar: [
+                    ['style', ['style']],
+                    ['fontname', ['fontname', 'fontsize']],
+                    ['font', ['bold', 'italic', 'underline', 'color', 'clear']],
+                    ['para', ['ul', 'ol', 'paragraph', 'height']],
+                    ['insert', ['hr', 'link']],
+                    ['view', ['undo', 'redo']]
+                ],
+                fontSizeUnits: ['px'],
+                dialogsFade: true
+            });
 
             //當使用者輸入關鍵字，就自動回傳資料庫現有的關鍵字
             $('#inputKeyword').change(function () {

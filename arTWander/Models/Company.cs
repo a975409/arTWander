@@ -25,7 +25,6 @@ namespace arTWander.Models
         public string CompanyName { get; set; }
 
         [Required]
-        [StringLength(1000)]
         public string CompanyDescription { get; set; }
 
         [Required]

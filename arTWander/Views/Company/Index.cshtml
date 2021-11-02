@@ -5,7 +5,7 @@
 
 <div class="container">
 
-    <div id="titleCard" class="card">
+    <div class="card">
         @if (string.IsNullOrEmpty(Model.PromotionalImage))
         {
             <img src="~/image/exhibiton/Null.png" class="card-img-top" id="PromotionalImage" alt="...">
@@ -14,30 +14,28 @@
         {
             <img src="@Model.PromotionalImage" id="PromotionalImage" class="card-img-top" alt="...">
         }
-
-
-    <div id="titleGroup" class="card-body d-flex align-items-end justify-content-between row">
-        <div class="col-lg-6 d-flex align-items-end">
-            @if (string.IsNullOrEmpty(Model.PhotoSticker))
-            {
-                <img src="~/image/avatar/頭像_展演單位.png" height="100" width="100" alt="...">
-            }
-            else
-            {
-                <img src="@Model.PhotoSticker" height="100" width="100" alt="...">
-            }
-            <h3 class="text-body ml-3">@Model.CompanyName</h3>
+        <hr />
+        <div class="card-body d-flex align-items-end justify-content-between row">
+            <div class="col-lg-6 d-flex align-items-end">
+                @if (string.IsNullOrEmpty(Model.PhotoSticker))
+                {
+                    <img src="~/image/avatar/頭像_展演單位.png" height="100" width="100" alt="...">
+                }
+                else
+                {
+                    <img src="@Model.PhotoSticker" height="100" width="100" alt="...">
+                }
+                <h3 class="text-body ml-3">@Model.CompanyName</h3>
+            </div>
+            <div class="btn-group col-lg-6" role="group" aria-label="Basic example">
+                <a href="~/Manage/ChangePassword" class="btn btn-warning">變更密碼</a>
+                <a href="~/Company/Edit" class="btn btn-primary">編輯展演資料</a>
+                <a href="~/ShowPageManage/Index" class="btn btn-success">展演管理</a>
+            </div>
         </div>
-        <div class="btn-group col-lg-6" role="group" aria-label="Basic example">
-            <a href="~/Manage/ChangePassword" class="btn btn-warning">變更密碼</a>
-            <a href="~/Company/Edit" class="btn btn-primary">編輯展演資料</a>
-            <a href="~/ShowPageManage/Index" class="btn btn-success">展演管理</a>
-        </div>
     </div>
-    </div>
-    <div class="jumbotron">
-        <pre class="lead" style="white-space: pre-wrap; word-wrap: break-word;">@Model.CompanyDescription</pre>
-    </div>
+    <br />
+    <br />
     <div class="row">
         <div class="col-sm-6">
             <div>
@@ -74,7 +72,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="col-sm-6">
             <div class="mainField">
@@ -104,6 +101,11 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <br />
+    <div class="jumbotron">
+        <pre class="lead" style="white-space: pre-wrap; word-wrap: break-word;">@Html.Raw(Model.CompanyDescription)</pre>
     </div>
 </div>
 @section css

@@ -68,6 +68,9 @@ $('#inputKeywordBtn').click(function () {
 
 $('#CreateShowForm').submit(function () {
 
+    let Description = $('#Description').summernote('code');
+    $('#Description').val()
+
     //先將選取的關鍵字新增至searchKeyword
     let keywords = document.getElementsByName('keywordSpan');
     let result = '';
