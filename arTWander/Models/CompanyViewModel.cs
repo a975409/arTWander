@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace arTWander.Models
 {
@@ -56,8 +57,8 @@ namespace arTWander.Models
         [DisplayName("展演單位名稱")]
         public string CompanyName { get; set; }
 
+        [AllowHtml]
         [Required(ErrorMessage = "請填寫展演單位簡介")]
-        [StringLength(1000, ErrorMessage = "填寫展演單位簡介，限字數1000字以內")]
         [DisplayName("展演單位簡介")]
         public string CompanyDescription { get; set; }
 

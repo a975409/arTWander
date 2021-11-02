@@ -28,7 +28,6 @@ namespace arTWander.Models
         public string Title { get; set; }
 
         [Required]
-        [StringLength(1000)]
         public string Description { get; set; }
 
         public DateTime StartDate { get; set; }

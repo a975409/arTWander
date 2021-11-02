@@ -137,7 +137,7 @@
 
             @*展演介紹*@
             <div class="jumbotron w-100 p-5 mb-4 bg-transparent">
-                <pre style="white-space: pre-wrap; word-wrap: break-word;font-size:20px">@Model.Description</pre>
+                <pre style="white-space: pre-wrap; word-wrap: break-word;font-size:20px">@Html.Raw(Model.Description)</pre>
             </div>
 
             @*關鍵字標籤*@
@@ -152,7 +152,7 @@
             </div>
             <hr>
             <!--評論功能列-->
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <!--<nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="#">評論</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -169,12 +169,12 @@
                         </li>
                     </ul>
                 </div>
-            </nav>
+            </nav>-->
 
             <!--展演評論資訊-->
-            <div class="row">
+            <!--<div class="row">-->
                 <!--左側總評分星數-->
-                <div class="col-12 col-lg-3">
+                <!--<div class="col-12 col-lg-3">
                     <p class="text-center display-4 my-4">3.1</p>
                     <div class="text-center my-3">
                         <span><i class="fas fa-star text-warning"></i></span>
@@ -184,10 +184,10 @@
                         <span><i class="far fa-star"></i></span>
                     </div>
                     <p class="text-center">共1,735,245則評分</p>
-                </div>
+                </div>-->
 
                 <!--右側各星號評論百分比-->
-                <div class="col-12 col-lg-9 d-flex flex-column align-self-center">
+                <!--<div class="col-12 col-lg-9 d-flex flex-column align-self-center">
                     <div class="progress mb-3">
                         <span class="bg-white">五星評論：</span>
                         <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50"
@@ -215,10 +215,10 @@
                     </div>
                 </div>
             </div>
-            <hr>
+            <hr>-->
             <!--所有用戶評論-->
-            <p class="ml-4">所有評論</p>
-            <div class="row d-flex justify-content-center"></div>
+            <!--<p class="ml-4">所有評論</p>
+            <div class="row d-flex justify-content-center"></div>-->
         
     </div>
 </div>
