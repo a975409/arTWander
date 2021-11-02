@@ -32,17 +32,17 @@ i{
 
 
 /* section start*/
-.AllList{
-    border: solid;
-    border-color: black;
+/*.AllList{*/
+    /*border: solid;*/
+    /*border-color: black;
     border-radius:5px;
 }
-.AllListContent{
-    border: solid;
-    border-color: rgb(196, 196, 196);
+.AllListContent{*/
+    /*border: solid;*/
+    /*border-color: rgb(196, 196, 196);
     border-radius:5px;
     margin: 10px;
-}
+}*/
 .AllListTitle input{
     height: auto;
     min-height: 20px;

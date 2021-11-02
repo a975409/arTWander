@@ -4,7 +4,7 @@
     ViewBag.Title = "UserList";
     Layout = null;
 }
-<link rel="stylesheet" href="../css/UserList.css">
+<link rel="stylesheet" href="./css/UserList.css">
 <article>
     <section id="Section">
         <div class="AllList">
@@ -35,19 +35,19 @@
             </div>
             <!-- 關鍵字查詢 end -->
 
-            <div class="AllListContent">
-                <table class="table table-hover w-100">
-                    <thead>
+            <div class="AllListContent w-100">
+                <table id="tableSet" class="table table-hover" >
+                    <thead class="w-100">
                         <tr>
                             <th scope="col-1 col-md-1">編號</th>
-                            <th scope="col-1 col-md-1">@Html.DisplayNameFor(model => model.UserName)</th>
-                            <th scope="col-1 " class="d-none d-lg-table-cell">@Html.DisplayNameFor(model => model.Email)</th>
+                            <th scope="col-1 col-md-1" class="tableInd">@Html.DisplayNameFor(model => model.UserName)</th>
+                            <th scope="col-1 " class="tableInd">@Html.DisplayNameFor(model => model.Email)</th>
                             <th scope="col-2 col-md-2">@Html.DisplayNameFor(model => model.RegisterTime)</th>
                             <th scope="col-1 col-md-1">@Html.DisplayNameFor(model => model.LogingCount)</th>
                             <th scope="col-1 col-md-1">@Html.DisplayNameFor(model => model.Statue)</th>
                         </tr>
                     </thead>
-                    @{ int count = 0;
+                    @{ 
 
                         foreach (var item in Model)
                         {
@@ -55,8 +55,8 @@
                                 <!-- 製作連結點擊後彈出資訊窗 -->
                                 <tr class="userInform" name="userInform" @*data-href='@Url.Action("UserInform", "Admin", new { id = item.FK_ApplicationUser })'*@ data-toggle="modal" data-target="#staticBackdrop">
                                     <th scope="row"><span class="userId">@Html.DisplayFor(modelItem => item.FK_ApplicationUser) </span></th>
-                                    <td scope="col-1 col-md-1">@Html.DisplayFor(modelItem => item.UserName)</td>
-                                    <td scope="col-1" class="d-none d-sm-table-cell">@Html.DisplayFor(modelItem => item.Email)</td>
+                                    <td scope="col-1 col-md-1" class="tableInd">@Html.DisplayFor(modelItem => item.UserName)</td>
+                                    <td scope="col-1" class="tableInd">@Html.DisplayFor(modelItem => item.Email)</td>
                                     <td scope="col-2 col-md-2">@Html.DisplayFor(modelItem => item.RegisterTime)</td>
                                     <td scope="col-1 col-md-1">@Html.DisplayFor(modelItem => item.LogingCount)</td>
                                     <td scope="col-1 col-md-1">@Html.DisplayFor(modelItem => item.Statue)</td>
@@ -115,21 +115,6 @@
     </div>
 </div>
 
-<script>
-      //點擊分頁連結頁面
-      //一般使用者list
-
-        @*$(".userInform").click(function () {
-            $.ajax({
-                type: 'get',
-                url: '@Url.Action("UserInform", "Admin")',
-                data: FormData,
-                success: function (data) {
-                    $('#detailInform').html(data);
-                }
-            });
-        });*@
-</script>
 <script>
     //搜尋關鍵字
     $('#uploadForm').submit(function (event) {

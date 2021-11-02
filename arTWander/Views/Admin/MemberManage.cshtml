@@ -4,7 +4,7 @@
 }
 
 @*管理者頁面*@
-<link rel="stylesheet" href="/css/UserList.css">
+@*<link rel="stylesheet" href="~/css/UserList.css">*@
 
 
 <!-- breadcrumb -->
@@ -62,6 +62,7 @@
             success: function (data) {
                 $('#memberManageMain').html(data);
             }
+
         });
     });
 
@@ -73,6 +74,12 @@
             data: {},
             success: function (data) {
                 $('#memberManageMain').html(data);
+            },
+            error: (XMLHttpRequest, textStatus, errorThrown) => {
+                $("#detailInform").innerHTML = "there is something wrong!";
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
             }
         });
     });

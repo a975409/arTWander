@@ -2,6 +2,7 @@
 using arTWander.Models.AdminFactory;
 using arTWander.Models.AdminViewModel;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Newtonsoft.Json;
 using System;
@@ -164,20 +165,73 @@ namespace arTWander.Controllers
                 db.SaveChanges();
             }
             
-            SweetAlert.SuccessAlert("黑名單", $"{BlackSuccess.UserName} 已加入黑名單", "");
+            string success = SweetAlert.SuccessAlert("黑名單", $"{BlackSuccess.UserName} 已加入黑名單", "");
             //重新導向
-            return RedirectToAction("UserList", "Admin");
+            return JavaScript(success);
         }
 
-
+        //展演單位清單
         public ActionResult ShowCustomList()
         {
-            return View();
+            var db = new ApplicationDbContext();
+            //var userSearch = from users in db.Users where role.RoleId.ToString() == "2" select users.UserName;
+            List < CustomerListViewModel > model = null;
+            //判斷是否有搜尋字串
+            var searchWord = Request.Form["txtKeyword"];
+            //= Request.Form["txtKeyword"];
+            if (string.IsNullOrEmpty(searchWord))
+            {
+                model = (List<CustomerListViewModel>)new AdminFactory().GetCustomerListAll();
+            }
+            else
+            {
+                model = (List<CustomerListViewModel>)new AdminFactory().GetCustomerBySearch(searchWord);
+            }
+            return View(model);
+
         }
-        public ActionResult CustomerInform()
+
+        //展演單位詳細資訊
+        public ActionResult CustomerInform(string userId)
         {
-            return View();
+            List<CustomerListViewModel> model = null;
+            //取json對應userId data
+            var userSearch = JsonConvert.DeserializeObject<CustomerListViewModel>(userId);
+            //取得該id詳細資訊
+            model = (List<CustomerListViewModel>)new AdminFactory().GetCustomerInformById(userSearch.userId);
+            return View(model);
         }
+
+        //User 加入黑名單
+        [HttpPost]
+        public ActionResult CustomerAddBlack(string blackAdd)
+        {
+            var db = new ApplicationDbContext();
+            //取json對應blackAdd data
+            var BlackSearch = JsonConvert.DeserializeObject<BlackList>(blackAdd);
+            var BlackSuccess = JsonConvert.DeserializeObject<ApplicationUser>(blackAdd);
+
+            //取json對應userId data
+            var black = db.BlackList.Where(m => m.FK_ApplicationUser == BlackSearch.FK_ApplicationUser).FirstOrDefault();
+            //新增黑名單
+            if (black == null)
+            {
+                db.BlackList.Add(new BlackList()
+                {
+                    FK_ApplicationUser = BlackSearch.FK_ApplicationUser,
+                    Created_At = DateTime.Now,
+                    Reason = BlackSearch.Reason
+                });
+                db.SaveChanges();
+            }
+
+            //sweetalert無用
+            string success = SweetAlert.SuccessAlert("黑名單", $"{BlackSuccess.UserName} 已加入黑名單", "");
+            //重新導向
+            return JavaScript(success);
+        }
+
+
         public ActionResult BlackList()
         {
             return View();
@@ -307,6 +361,7 @@ namespace arTWander.Controllers
             var delAvatar="";
             if (user != null)
             {
+                //取得Avatar圖檔舊名
                 if (user.Avatar != viewModel.AvatarName)
                 {
                     delAvatar = user.Avatar;

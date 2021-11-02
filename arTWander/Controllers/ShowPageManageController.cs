@@ -266,6 +266,9 @@ namespace arTWander.Controllers
                 Todays = show.PageToTodaysList?.Select(m => m.Today).ToArray(),
                 searchKeyword = string.Join(",", show.KeywordsList?.Select(m => m.Name).ToArray())
             };
+            string dirPath = $"/SaveFiles/Company/{show.Company.Id}/show/{show.Id}";
+
+            ViewBag.Images = show.ShowPageFiles.Select(m => $"{dirPath}/{m.fileName}");
 
             return View(model);
         }
@@ -279,9 +282,10 @@ namespace arTWander.Controllers
                 return View(model);
             }
 
+            int userId = User.Identity.GetUserId<int>();
+            var company = DbContext.Company.Where(m => m.FK_ApplicationUser == userId).FirstOrDefault();
             var showPage = DbContext.ShowPage.Find(model.Id);
 
-            //更新展演資料
             showPage.Address = model.Address;
             showPage.AgeRange = model.AgeRange;
             showPage.Cost = model.Cost;
@@ -289,14 +293,13 @@ namespace arTWander.Controllers
             showPage.EndDate = model.EndDate;
             showPage.EndTime = model.EndTime;
             showPage.FK_City = model.FK_City;
-            showPage.FK_Company = showPage.Company.Id;
+            showPage.FK_Company = company.Id;
             showPage.FK_District = model.FK_District;
             showPage.Price = model.Price;
             showPage.Remark = model.Remark;
             showPage.StartDate = model.StartDate;
             showPage.StartTime = model.StartTime;
             showPage.Title = model.Title;
-            showPage.Created_At = DateTime.Now;
             await DbContext.SaveChangesAsync();
 
             //新增該展演對應的關鍵字
@@ -320,12 +323,32 @@ namespace arTWander.Controllers
             }
             await DbContext.SaveChangesAsync();
 
-            string saveDir = Path.Combine(Server.MapPath("~/SaveFiles/Company"), showPage.Company.Id.ToString(), "show", showPage.Id.ToString());
+            string saveDir = Path.Combine(Server.MapPath("~/SaveFiles/Company"), company.Id.ToString(), "show", showPage.Id.ToString());
 
             Directory.CreateDirectory(saveDir);
 
             if (imgFiles != null && imgFiles.Length > 0)
             {
+                //移除被標記的資料庫的圖檔
+                foreach (var item in showPage.ShowPageFiles)
+                {
+                    if(!imgFiles.Any(m=> Path.GetFileName(m.FileName) == item.fileName))
+                    {
+                        string path = Path.Combine(saveDir, item.fileName);
+
+                        FileInfo finfo = new FileInfo(path);
+
+                        if (finfo.Exists)
+                        {
+                            finfo.Delete();
+                        }
+
+                        DbContext.ShowPageFile.Remove(item);
+                    }
+                }
+
+                await DbContext.SaveChangesAsync();
+
                 //儲存新增的圖檔
                 foreach(var item in imgFiles)
                 {
@@ -348,7 +371,7 @@ namespace arTWander.Controllers
                                 //完整另存路徑
                                 string savePath = Path.Combine(saveDir, Path.GetFileName(item.FileName));
 
-                                //server端下載檔案，檔名重複則直接覆蓋
+                                //server端下載檔案
                                 item.SaveAs(savePath);
                             }
                         }
@@ -357,56 +380,6 @@ namespace arTWander.Controllers
                 await DbContext.SaveChangesAsync();
             }
             return RedirectToAction("Index");
-        }
-
-        public ActionResult getShowImages(int showPageId) {
-
-            var showPage = DbContext.ShowPage.Find(showPageId);
-            var model = showPage.ShowPageFiles.Select(m => m);
-            ViewBag.ImgDir = $"/SaveFiles/Company/{showPage.Company.Id}/show/{showPage.Id}/";
-
-            return PartialView("~/Views/Shared/CompanyPartial/_showPageImagePartial.cshtml", model);
-        }
-
-        public async Task<ActionResult> removeShowImage(int imgId,int showPageId)
-        {
-            var showPage = DbContext.ShowPage.Find(showPageId);
-
-            if(showPage==null)
-                return HttpNotFound("該展覽不存在或已被移除");
-
-            string saveDir = Path.Combine(Server.MapPath("~/SaveFiles/Company"), showPage.Company.Id.ToString(), "show", showPage.Id.ToString());
-
-            var img = showPage.ShowPageFiles.Where(m => m.Id == imgId).FirstOrDefault();
-
-            string imgPath = Path.Combine(saveDir, img.fileName);
-
-            if (!Directory.Exists(saveDir))
-            {
-                return new HttpStatusCodeResult(200, "移除成功!");
-            }
-
-            if (img != null)
-            {
-                DbContext.ShowPageFile.Remove(img);
-                await DbContext.SaveChangesAsync();
-            }
-
-            FileInfo fileInfo = new FileInfo(imgPath);
-
-            if (fileInfo.Exists)
-            {
-                try
-                {
-                    fileInfo.Delete();
-                    return new HttpStatusCodeResult(200, "移除成功!");
-                }
-                catch
-                {
-                    return new HttpStatusCodeResult(500);
-                }
-            }
-            return new HttpStatusCodeResult(200, "移除成功!");
         }
 
         public async Task<ActionResult> Delete(int showPageId)
