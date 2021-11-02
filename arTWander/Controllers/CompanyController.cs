@@ -53,36 +53,27 @@ namespace arTWander.Controllers
                 _userManager = value;
             }
         }
+
         // GET: Company
         public async Task<ActionResult> Index()
         {
-            //IndexViewModel model = (IndexViewModel)TempData["model"];
-            //TempData.Keep("model");
             //取得登入的用戶Id
             int userId = User.Identity.GetUserId<int>();
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
 
             //透過DbContext讀取Company資料表資料
-            var company = DbContext.Company.Where(m => m.FK_ApplicationUser == userId).FirstOrDefault();
-
+            var company = new CompanyFactory(DbContext).GetCompany(userId);
 
             //如果沒有輸入展演單位資訊，就會跳到展演單位資訊編輯畫面
             if (company == null)
                 return RedirectToAction("Edit");
 
-            string CityName = City_District.getCities(DbContext).Where(m => m.Id == company.FK_City).Select(m => m.CityName).FirstOrDefault();
-
-            string DistrictName = "";
-            var districts = await City_District.getDistricts(company.FK_City, DbContext);
-
-            if (districts != null)
-                DistrictName = districts.Where(m => m.Id == company.FK_District).Select(m => m.DistrictName).FirstOrDefault();
+            string address = await new CompanyFactory(DbContext).GetFullAddress(company.FK_City, company.FK_District, company.Address);
 
             string dirPath = $"/SaveFiles/Company/{company.Id}/Info";
-
+            
             var viewModel = new CompanyViewModel
             {
-                Address = $"{CityName}{DistrictName}{company.Address}",
+                Address = address,
                 CompanyDescription = company.CompanyDescription,
                 CompanyName = company.CompanyName,
                 Email = company.Email,
@@ -122,7 +113,7 @@ namespace arTWander.Controllers
         public ActionResult Edit()
         {
             int userId = User.Identity.GetUserId<int>();
-            var company = DbContext.Company.Where(m => m.FK_ApplicationUser == userId).FirstOrDefault();
+            var company = new CompanyFactory(DbContext).GetCompany(userId);
             var model = new CompanyEditViewModel();
             
             if (company != null)
@@ -155,6 +146,8 @@ namespace arTWander.Controllers
                 return View(model);
             }
 
+            CompanyFactory factory = new CompanyFactory(DbContext);
+
             string temp = model.CompanyDescription.ToLower();
 
             if (temp.Contains("<script>") || temp.Contains("</script>"))
@@ -164,7 +157,7 @@ namespace arTWander.Controllers
             }
 
             int userId = User.Identity.GetUserId<int>();
-            var company = DbContext.Company.Where(m => m.FK_ApplicationUser == userId).FirstOrDefault();
+            var company = factory.GetCompany(userId);
 
             if (company == null)
             {
@@ -203,105 +196,28 @@ namespace arTWander.Controllers
             string saveDir = Path.Combine(Server.MapPath("~/SaveFiles/Company"), company.Id.ToString(), "Info");
             Directory.CreateDirectory(saveDir);
 
-            if (Promotional != null && Promotional.ContentLength > 0)
+            //設定宣傳圖
+            if (Promotional != null)
             {
-                byte[] ImageData = new byte[Promotional.ContentLength];
-                Promotional.InputStream.Read(ImageData, 0, Promotional.ContentLength);
+                company.PromotionalImage = "PromotionalImage" + Path.GetExtension(Promotional.FileName);
 
-                using (MemoryStream stream = new MemoryStream(ImageData))
+                if (factory.SaveCompanyPageImage(Promotional, saveDir, company.PromotionalImage))
                 {
-                    //判斷上傳的檔案是否為圖片檔
-                    if (IsImage(stream))
-                    {
-                        //移除原先儲存在Server上的封面圖
-                        var PromotionalImages = Directory.GetFiles(saveDir).Where(m => Path.GetFileNameWithoutExtension(m) == "PromotionalImage");
-
-                        foreach(var item in PromotionalImages)
-                        {
-                            FileInfo info = new FileInfo(item);
-
-                            if (info.Exists)
-                            {
-                                try
-                                {
-                                    info.Delete();
-                                }
-                                catch { }
-                            }
-                        }
-
-                        //取得副檔名
-                        string extension = Path.GetExtension(Promotional.FileName);
-
-                        //設定檔名
-                        company.PromotionalImage = "PromotionalImage" + extension;
-
-                        //完整另存路徑
-                        string savePath = Path.Combine(saveDir, company.PromotionalImage);
-
-                        //server端下載檔案
-                        Promotional.SaveAs(savePath);
-                        await DbContext.SaveChangesAsync();
-                    }
+                    await DbContext.SaveChangesAsync();
                 }
             }
 
-            if (PhotoSticker != null && PhotoSticker.ContentLength > 0)
-            {
-                byte[] ImageData = new byte[PhotoSticker.ContentLength];
-                PhotoSticker.InputStream.Read(ImageData, 0, PhotoSticker.ContentLength);
+            //設定大頭照
+            if (PhotoSticker != null) {
+                company.PhotoStickerImage = "PhotoStickerImg" + Path.GetExtension(PhotoSticker.FileName);
 
-                using (MemoryStream stream = new MemoryStream(ImageData))
+                if (factory.SaveCompanyPageImage(PhotoSticker, saveDir, company.PhotoStickerImage))
                 {
-                    if (IsImage(stream))
-                    {
-                        //移除原先儲存在Server上的大頭照
-                        var PhotoStickerImages = Directory.GetFiles(saveDir).Where(m => Path.GetFileNameWithoutExtension(m) == "PhotoStickerImg");
-
-                        foreach (var item in PhotoStickerImages)
-                        {
-                            FileInfo info = new FileInfo(item);
-
-                            if (info.Exists)
-                            {
-                                try
-                                {
-                                    info.Delete();
-                                }
-                                catch { }
-                            }
-                        }
-
-                        //取得副檔名
-                        string extension = Path.GetExtension(PhotoSticker.FileName);
-
-                        //設定檔名
-                        company.PhotoStickerImage = "PhotoStickerImg" + extension;
-
-                        //完整另存路徑
-                        string savePath = Path.Combine(saveDir, company.PhotoStickerImage);
-
-                        //server端下載檔案
-                        PhotoSticker.SaveAs(savePath);
-                        await DbContext.SaveChangesAsync();
-                    }
+                    await DbContext.SaveChangesAsync();
                 }
             }
 
             return RedirectToAction("Index");
-        }
-
-        private bool IsImage(Stream stream)
-        {
-            try
-            {
-                System.Drawing.Image img = System.Drawing.Image.FromStream(stream);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
         }
     }
 }

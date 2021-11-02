@@ -451,6 +451,7 @@
     <Compile Include="Models\City_District.cs" />
     <Compile Include="Models\CommonViewModel.cs" />
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\CompanyFactory.cs" />
     <Compile Include="Models\CompanyViewModel.cs" />
     <Compile Include="Models\District.cs" />
     <Compile Include="Models\IdentityModels.cs" />
