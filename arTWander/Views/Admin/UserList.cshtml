@@ -44,7 +44,7 @@
                             <th scope="col-1 " class="tableInd">@Html.DisplayNameFor(model => model.Email)</th>
                             <th scope="col-2 col-md-2">@Html.DisplayNameFor(model => model.RegisterTime)</th>
                             <th scope="col-1 col-md-1">@Html.DisplayNameFor(model => model.LogingCount)</th>
-                            <th scope="col-1 col-md-1">@Html.DisplayNameFor(model => model.Statue)</th>
+                            @*<th scope="col-1 col-md-1">@Html.DisplayNameFor(model => model.Statue)</th>*@
                         </tr>
                     </thead>
                     @{ 
@@ -54,12 +54,12 @@
                             <tbody>
                                 <!-- 製作連結點擊後彈出資訊窗 -->
                                 <tr class="userInform" name="userInform" @*data-href='@Url.Action("UserInform", "Admin", new { id = item.FK_ApplicationUser })'*@ data-toggle="modal" data-target="#staticBackdrop">
-                                    <th scope="row"><span class="userId">@Html.DisplayFor(modelItem => item.FK_ApplicationUser) </span></th>
+                                    <th scope="row">U000<span class="userId">@Html.DisplayFor(modelItem => item.FK_ApplicationUser) </span></th>
                                     <td scope="col-1 col-md-1" class="tableInd">@Html.DisplayFor(modelItem => item.UserName)</td>
                                     <td scope="col-1" class="tableInd">@Html.DisplayFor(modelItem => item.Email)</td>
                                     <td scope="col-2 col-md-2">@Html.DisplayFor(modelItem => item.RegisterTime)</td>
                                     <td scope="col-1 col-md-1">@Html.DisplayFor(modelItem => item.LogingCount)</td>
-                                    <td scope="col-1 col-md-1">@Html.DisplayFor(modelItem => item.Statue)</td>
+                                    @*<td scope="col-1 col-md-1">@Html.DisplayFor(modelItem => item.Statue)</td>*@
                                 </tr>
                             </tbody>
                         }
@@ -108,9 +108,9 @@
                     </section>
                 </main>
             </div>
-            <div class="modal-footer">
+            @*<div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+            </div>*@
         </div>
     </div>
 </div>

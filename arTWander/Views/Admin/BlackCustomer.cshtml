@@ -1,7 +1,7 @@
-﻿@model IEnumerable<arTWander.Models.AdminViewModel.CustomerListViewModel>
+﻿@model IEnumerable<arTWander.Models.AdminViewModel.BlackListViewModel>
 
 @{
-    Layout = "CustomerList";
+    Layout = "BlackCustomer";
     Layout = null;
 }
 
@@ -13,7 +13,7 @@
             <!-- 關鍵字查詢 start-->
             <div class="AllListTitle">
                 <div class="input-group-prepend my-2 justify-content-between">
-                    <form id="uploadCustomerForm" enctype="multipart/form-data" class="w-100">
+                    <form id="blackCustomerForm" enctype="multipart/form-data" class="w-100">
                         <div class="row col-10 col-sm-8">
 
                             <!-- <span class="col-11 col-md-4 my-auto mx-2">一般會員</span> -->
@@ -43,7 +43,7 @@
                             <th scope="col col-md-1">編號</th>
                             <th scope="col-1 col-md-1" class="tableInd">@Html.DisplayNameFor(model => model.CompanyName)</th>
                             <th scope="col col-md-1" class="tableInd">@Html.DisplayNameFor(model => model.Email)</th>
-                            <th scope="col-2 col-md-2" >@Html.DisplayNameFor(model => model.RegisterTime)</th>
+                            <th scope="col-2 col-md-2">@Html.DisplayNameFor(model => model.RegisterTime)</th>
                             <th scope="col col-md-1">@Html.DisplayNameFor(model => model.ShowCount)</th>
                             @*<th scope="col col-md-1">@Html.DisplayNameFor(model => model.Statue)</th>*@
                         </tr>
@@ -54,7 +54,7 @@
                         {
                             <tbody>
                                 <tr class="CustomInform" name="CustomInform" data-toggle="modal" data-target="#staticBackdrop">
-                                    <th scope="row">M000<span class="userId">@Html.DisplayFor(model => item.FK_ApplicationUser)</span></th>
+                                    <th scope="row">B000<span class="userId">@Html.DisplayFor(model => item.FK_ApplicationUser)</span></th>
                                     <td scope="col-md-1" class="tableInd">@Html.DisplayFor(model => item.CompanyName)</td>
                                     <td scope="col col-md-1" class="tableInd">@Html.DisplayFor(model => item.Email)</td>
                                     <td scope="col-2 col-md-2">@Html.DisplayFor(model => item.RegisterTime)</td>
@@ -81,7 +81,6 @@
     </section>
 
 </article>
-
 
 
 <!-- 彈出視窗顯示用戶資訊 -->
@@ -111,15 +110,16 @@
     </div>
 </div>
 
+
 <script>
     //搜尋關鍵字
-    $('#uploadCustomerForm').submit(function (event) {
+    $('#blackCustomerForm').submit(function (event) {
         event.preventDefault();
         let formData = $(this).serialize();
         $.ajax({
             type: 'post',
             //dataType: 'script',
-            url: '@Url.Action("ShowCustomList", "Admin")',
+            url: '@Url.Action("BlackCustomer", "Admin")',
             data: formData,
             success: function (data) {
             $('#memberManageMain').html(data);
@@ -136,19 +136,19 @@
 </script>
 
 @*<script>
-  //點擊分頁連結頁面
-  //使用者list
-    $(".uploadCustomerForm").click(function () {
-        $.ajax({
-            type: 'post',
-            url: '@Url.Action("CustomerInform", "Admin")',
-            data: FormData,
-            success: function (data) {
-                $('#detailInform').html(data);
-            }
+      //點擊分頁連結頁面
+      //使用者list
+        $(".uploadCustomerForm").click(function () {
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("CustomerInform", "Admin")',
+                data: FormData,
+                success: function (data) {
+                    $('#detailInform').html(data);
+                }
+            });
         });
-    });
-</script>*@
+    </script>*@
 <script>
     //取得對應customer ID詳細資訊
     $('.CustomInform').click(function (event) {
@@ -157,7 +157,7 @@
         myFormData.append("userID", JSON.stringify(userID));
 
         $.ajax({
-            url: '@Url.Action("CustomerInform", "Admin")',
+            url: '@Url.Action("BlackCustomerInfo", "Admin")',
             type: 'POST',
             data: myFormData,
             //contentType: "application/json; charset=utf-8",

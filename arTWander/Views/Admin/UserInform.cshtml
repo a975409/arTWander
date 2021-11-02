@@ -37,7 +37,7 @@
                                             <p>@Html.DisplayNameFor(m => m.RegisterTime) : <span>@Html.DisplayFor(m => item.RegisterTime)</span></p>
                                             <p>@Html.DisplayNameFor(m => m.LastloginTime) : <span>@Html.DisplayFor(m => item.LastloginTime)</span></p>
                                             <p>@Html.DisplayNameFor(m => m.LogingCount) : <span>@Html.DisplayFor(m => item.LogingCount)</span></p>
-                                            <p>@Html.DisplayNameFor(m => m.Statue) : <span>@Html.DisplayFor(m => item.Statue)</span></p>
+                                            @*<p>@Html.DisplayNameFor(m => m.Statue) : <span>@Html.DisplayFor(m => item.Statue)</span></p>*@
                                         </div>
                                     </div>
                                 </div>
@@ -45,14 +45,13 @@
                             <hr>
 
                             <div class="userInfoUpdate d-flex justify-content-end">
-                                @*<button class="btn btn-primary mx-1">發送密碼重置</button>*@
                                 <!-- 新增彈出視窗 輸入黑名單原因 -->
                                 <button class="btn btn-primary mx-1" id="blackReason" href="" data-toggle="modal" data-target="#inputBlackReason">加入黑名單</button>
                             </div>
 
                         </div>
                     </div>
-                    <div class="userActivity">
+                    @*<div class="userActivity">
                         <p>近期活動</p>
                         <hr>
                         <nav>
@@ -126,7 +125,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>*@
 
             </section>
 
@@ -190,7 +189,7 @@
             processData: false,
             success: function (data) {
                 console.log("GOODGOOD")
-                
+                alert($("#userName").text() + "已加入黑名單");
                 //modal關閉導向引入bs/jquery
                 event.preventDefault();
                 jQuery.noConflict();

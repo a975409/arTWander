@@ -232,6 +232,7 @@ namespace arTWander.Controllers
         }
 
 
+        //黑名單
         public ActionResult BlackList()
         {
             return View();
@@ -241,12 +242,99 @@ namespace arTWander.Controllers
             return View();
         }
 
+        //黑名單用戶
+        public ActionResult BlackUser()
+        {
+            var db = new ApplicationDbContext();
+            var userSearch = from users in db.Users select users.UserName;
+            List<BlackListViewModel> model = null;
+            //判斷是否有搜尋字串
+            var searchWord = Request.Form["txtKeyword"];
+            if (string.IsNullOrEmpty(searchWord))
+            {
+                model = (List<BlackListViewModel>)new AdminFactory().GetBlackUserAll();
+            }
+            else
+            {
+                model = (List<BlackListViewModel>)new AdminFactory().GetBlackUserBySearch(searchWord);
+            }
+            return View(model);
+        }
 
-        //User Detail Page end
+        public ActionResult BlackUserInform(string userId)
+        {
+            List<BlackListViewModel> model = null;
+            //取json對應userId data
+            var userSearch = JsonConvert.DeserializeObject<BlackListViewModel>(userId);
+            //取得該id詳細資訊
+            model = (List<BlackListViewModel>)new AdminFactory().GetBlackUserInformById(userSearch.userId);
+            return View(model);
+        }
+
+        //User 加入黑名單
+        [HttpPost]
+        public ActionResult ReleaseBlack(string blackAdd)
+        {
+            var db = new ApplicationDbContext();
+
+            //取json對應blackAdd data
+            var BlackSearch = JsonConvert.DeserializeObject<BlackList>(blackAdd);
+            var BlackSuccess = JsonConvert.DeserializeObject<ApplicationUser>(blackAdd);
+            //取json對應userId data
+            BlackList blackRls = db.BlackList.FirstOrDefault(b => b.FK_ApplicationUser == BlackSearch.FK_ApplicationUser);
+            //黑名單移除
+            if (blackRls != null)
+            {
+                db.BlackList.Remove(blackRls);
+                db.SaveChanges();
+            }
+
+            string success = SweetAlert.SuccessAlert("黑名單", $"{BlackSuccess.UserName} 已加入黑名單", "");
+            //重新導向
+            return JavaScript(success);
+        }
 
 
-        //Show detail page start
-        public ActionResult ShowInformPage()
+        public ActionResult BlackCustomer()
+        {
+            var db = new ApplicationDbContext();
+            //var userSearch = from users in db.Users where role.RoleId.ToString() == "2" select users.UserName;
+            List<BlackListViewModel> model = null;
+            //判斷是否有搜尋字串
+            var searchWord = Request.Form["txtKeyword"];
+            //= Request.Form["txtKeyword"];
+            if (string.IsNullOrEmpty(searchWord))
+            {
+                model = (List<BlackListViewModel>)new AdminFactory().GetBlackCustomerAll();
+            }
+            else
+            {
+                model = (List<BlackListViewModel>)new AdminFactory().GetCustomerBySearch(searchWord);
+            }
+            return View(model);
+
+        }
+
+        public ActionResult BlackCustomerInfo(string userId)
+        {
+            List<BlackListViewModel> model = null;
+            //取json對應userId data
+            var userSearch = JsonConvert.DeserializeObject<BlackListViewModel>(userId);
+            //取得該id詳細資訊
+            model = (List<BlackListViewModel>)new AdminFactory().GetBlackCustomerInformById(userSearch.userId);
+            return View(model);
+        }
+
+
+
+
+
+
+            //User Detail Page end
+
+
+            //Show detail page start
+            public ActionResult ShowInformPage()
         {
             return View();
         }
