@@ -19,6 +19,43 @@ namespace arTWander.Controllers
     public class CommonController : Controller
     {
 
+        public CommonController()
+        {
+        }
+        public CommonController(ApplicationUserManager userManager, ApplicationDbContext dbContext)
+        {
+            UserManager = userManager;
+            DbContext = dbContext;
+        }
+
+        private ApplicationDbContext _dbContext;
+
+        public ApplicationDbContext DbContext
+        {
+            get
+            {
+                return _dbContext ?? HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+            }
+            private set
+            {
+                _dbContext = value;
+            }
+        }
+
+        private ApplicationUserManager _userManager;
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
         //基本資料設定 starts
         public ActionResult SetUp()
         {
@@ -65,10 +102,15 @@ namespace arTWander.Controllers
 
             ApplicationDbContext db = new ApplicationDbContext();
             ApplicationUser user = db.Users.Where(u => u.Id == userId).FirstOrDefault();
-
+            
             ViewBag.userName = user.UserName;
-            ViewBag.avatarUrl = "/image/avatar/" + user.Avatar;
+            ViewBag.avatarUrl = "/image/avatar/";
             ViewBag.city = city;
+
+            if (string.IsNullOrEmpty(user.Avatar))
+                ViewBag.avatarUrl += "avatar_default.png";
+            else
+                ViewBag.avatarUrl += user.Avatar;
 
             // return
             return View();
@@ -92,7 +134,7 @@ namespace arTWander.Controllers
                 if (viewModels[0] != null)
                     return View(viewModels);
                 else
-                    ViewBag.errorMsg = "1此區域本檔期暫無展覽";
+                    ViewBag.errorMsg = "此區域本檔期暫無展覽";
                     return View(viewModels);
             }
 
@@ -101,6 +143,18 @@ namespace arTWander.Controllers
         public ActionResult GalleryList()
         {
             return View();
+        }
+
+        public ActionResult addToMyShow(int showId)
+        {
+            int userId = User.Identity.GetUserId<int>();
+            var user = UserManager.FindById(userId);
+
+            var b = DbContext.ShowPage.Where(p => p.Id == showId).FirstOrDefault();
+            //user.ShowPage.Add();
+
+            //return RedirectToAction("Index", "Home");
+            return Content("success", "text/plain");
         }
 
         //Common首頁 end

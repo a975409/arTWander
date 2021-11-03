@@ -111,7 +111,8 @@ namespace arTWander.Models
                 showDiscription = show.Description,
                 showCompany = company.CompanyName,
                 showImg = showImg.fileName,
-                isSelectedCity = "false"
+                showId = show.Id
+                //isSelectedCity = "false"
               };
 
       return q;

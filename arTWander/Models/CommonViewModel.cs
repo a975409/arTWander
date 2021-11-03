@@ -50,7 +50,14 @@ namespace arTWander.Models
             public string showDiscription { get; set; }
             public string showCompany { get; set; }
             public string showImg { get; set; }
-            public string isSelectedCity { get; set; }
+            public int showId { get; set; }
+            //public string isSelectedCity { get; set; }
+        }
+
+        public class CommonMyshowViewModel
+        {
+            public int FK_userId { get; set; }
+            public int FK_showPageId { get; set; }
         }
     }
 }

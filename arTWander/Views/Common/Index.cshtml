@@ -6,17 +6,11 @@
 
 
 <div id="mainPage" class="w-100 py-5"></div>
-@*<div class="container ">
-    <div class="row showlistRow justify-content-center">
-        <h3>此區域本檔期暫無展覽</h3>
-    </div>
-</div>*@
 
     <script>
 
     $(document).ready(function () {
         
-
         $.ajax({
             type: 'post',
             url: '@Url.Action("ShowList", "Common", new { city = selectedCity })',
@@ -28,7 +22,6 @@
                 $('#mainPage').html(
                     '<div class="container"><div class="row showlistRow justify-content-center"><h3>此區域本檔期暫無展覽</h3></div></div>'
                 );
-                /*$('#mainPage').html();*/
                 alert(XMLHttpRequest.status);
                 alert(XMLHttpRequest.readyState);
                 alert(textStatus);

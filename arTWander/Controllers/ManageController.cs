@@ -70,7 +70,7 @@ namespace arTWander.Controllers
                 case "Company":
                     return RedirectToAction("Index", "Company");
                 case "Member":
-                    return RedirectToAction("Index", "Common");
+                    return RedirectToAction("SetUp", "Common");
                 default:
                     return View("Error");
             }

@@ -70,6 +70,7 @@ a {
     background-color: rgba(196, 196, 196, 1);
 }
 
+
 /* shortDetail 白色敘述卡 starts*/
 .shortDetail {
     background-color: rgb(255, 255, 255);
@@ -90,8 +91,7 @@ a {
     }
 
         .shortDetail a:hover {
-            /* font-weight: bold; */
-            color: rgb(0, 0, 0);
+            color: rgb(197, 126, 104);
         }
 
 .description {
@@ -107,6 +107,7 @@ a {
         font-size: 15px;
         color: black;
     }
+
 
 .showImg {
     max-width: 100%;
@@ -125,6 +126,20 @@ a {
             transform: scale(1.2);
         }
 
+.marqee {
+    height: 24px;
+    width: 65%;
+    overflow: hidden;
+    position: relative;
+}
+
+    .marqee a {
+        /*display: flex;*/
+        position:absolute;
+        top: 2px;
+        animation: marqee 8s linear infinite;
+        white-space: nowrap;
+    }
 
 
 @media screen and (max-width: 992px) {
@@ -263,3 +278,16 @@ a {
         line-height: 16px;
         font-size: 16px;
     }
+
+
+@keyframes marqee {
+    0% {
+        left: 100%;
+        transform: translateX(0%);
+    }
+
+    100% {
+        left: 0;
+        transform: translateX(-100%);
+    }
+}

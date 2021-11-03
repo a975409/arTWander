@@ -29,13 +29,16 @@
     display: none;
 }
 
-/* 移除mainPage(影響整個主頁) input css */
-/* 
-#mainPage input{
-    height: 32px;
-} */
+#passwordModifyBtn {
+    text-decoration: none;
+    color: black;
+    transition: all .3s ease-in-out;
+}
 
-/* 更改日期字體大小 */
-#userBDay{
+#passwordModifyBtn:hover{
+    color: #C57E68;
+}
+    
+#userBDay {
     font-size: 16px;
 }
