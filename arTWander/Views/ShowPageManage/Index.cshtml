@@ -1,11 +1,14 @@
-﻿@model IEnumerable<arTWander.Models.ShowMinViewModel>
+﻿@*引入PagedList.Mvc分頁套件*@
+@using PagedList
+@using PagedList.Mvc
+@model IPagedList<arTWander.Models.ShowMinViewModel>
 @{
     Layout = "~/Views/Shared/CommonLayout/_AsideTrue.cshtml";
 }
 <!-- 展覽列表 starts -->
 <div class="container">
     <article class="d-flex justify-content-between">
-        <a href="@Url.Action("Create","ShowPageManage")" class="btn btn-outline-primary">
+        <a href="@Url.Action("Create", "ShowPageManage")" class="btn btn-outline-primary">
             <i class="fas fa-plus"
                style="vertical-align: middle; color: dodgerblue;"></i>新增展演
         </a>
@@ -15,45 +18,77 @@
             <a href="#" id="DateSort" class="btn btn-outline-dark"></a>
         </article>
     </article>
-    <div class="row showlistRow">
-        <!-- 展覽starts -->
-        @foreach (var item in Model)
-        {
-            Html.RenderPartial("~/Views/Shared/CompanyPartial/_ShowPagePartial.cshtml", item);
-        }
-        <!-- 展覽 ends -->
+
+    <!-- 展覽列表 -->
+    <div id="showPages">
+        @{Html.RenderPartial("~/Views/Shared/CompanyPartial/_ShowPagePartial.cshtml", Model); }
     </div>
 </div>
 <!-- 展覽列表 ends -->
-<!-- 分頁 starts -->
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link text-dark" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
-                <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-                <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link text-dark" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>
-<!-- 分頁 ends -->
+
 @section css{
     <link href="~/css/css_commonPage/ShowList.css" rel="stylesheet" />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @*PagedList.Mvc分頁切換css & jquery函示庫*@
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 }
 
 @section scripts{
+    <script>
+        function removeShowPage(showPageId) {
+            Swal.fire({
+                title: '移除展覽?',
+                text: "是否要移除此展覽？",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: '是！確定移除',
+                cancelButtonText: '否！不要移除',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'post',
+                        url: './ShowPageManage/Delete',
+                        data: { showPageId: showPageId },
+                        success: function () {
+                            updateShowPages();
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: textStatus,
+                                text: errorThrown,
+                                showConfirmButton: false,
+                                showCancelButton: true
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+        function updateShowPages() {
+            $.ajax({
+                type: 'get',
+                url: './ShowPageManage/getShowPages',
+                success: function (data) {
+                    $('#showPages').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: textStatus,
+                        text: errorThrown,
+                        showConfirmButton: false,
+                        showCancelButton: true
+                    });
+                }
+            })
+        }
+    </script>
     <script src="~/javascript/MyShowPage.js"></script>
-    <script src="~/javascript/SingleShowPage.js"></script>
 }

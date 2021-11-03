@@ -136,7 +136,7 @@ $('#CreateShowForm').submit(function () {
 function getShowImages(showPageId) {
     $.ajax({
         type: 'get',
-        url: './getShowImages/ShowPageManage',
+        url: './ShowPageManage/getShowImages',
         data: { showPageId: showPageId },
         success: function (data) {
             $('#showImgs').html('');
@@ -168,7 +168,7 @@ function removeShowImage(imgId, showPageId) {
         if (result.isConfirmed) {
             $.ajax({
                 type: 'post',
-                url: './removeShowImage/ShowPageManage',
+                url: './ShowPageManage/removeShowImage',
                 data: { imgId: imgId, showPageId: showPageId},
                 success: function (data) {
                     Swal.fire(

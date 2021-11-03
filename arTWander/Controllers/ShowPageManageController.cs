@@ -50,7 +50,7 @@ namespace arTWander.Controllers
             }
         }
         // GET: ShowPageManage
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
             int userId = User.Identity.GetUserId<int>();
             var company = new CompanyFactory(DbContext).GetCompany(userId);
@@ -58,22 +58,21 @@ namespace arTWander.Controllers
             if (company == null)
                 return RedirectToAction("Edit", "Company");
 
-            if (company.ShowPages == null || company.ShowPages.Count <= 0)
-            {
-                return View(new List<ShowMinViewModel>());
-            }
+            var model = new ShowPageFactory(DbContext).getCompanyShowPages(company, page);
 
-            var shows = company.ShowPages.Select(m => new ShowMinViewModel
-            {
-                Description = m.Description,
-                cityName = m.City.CityName,
-                Id = m.Id,
-                Title = m.Title,
-                Comment = m.ShowComments.Count(),
-                fileName = m.ShowPageFiles.Count() <= 0 ? "/image/exhibiton/Null.png" : $"/SaveFiles/Company/{m.Company.Id}/show/{m.Id}/{m.ShowPageFiles.FirstOrDefault().fileName}"
-            });
+            return View(model);
+        }
 
-            return View(shows);
+        public ActionResult getShowPages(int page = 1)
+        {
+            int userId = User.Identity.GetUserId<int>();
+            var company = new CompanyFactory(DbContext).GetCompany(userId);
+
+            if (company == null)
+                return RedirectToAction("Edit", "Company");
+
+            var model = new ShowPageFactory(DbContext).getCompanyShowPages(company, page);
+            return PartialView("~/Views/Shared/CompanyPartial/_ShowPagePartial.cshtml", model);
         }
 
         public ActionResult DisplayInfo(int showId)
@@ -365,7 +364,6 @@ namespace arTWander.Controllers
                 await DbContext.SaveChangesAsync();
             }
             catch(Exception ex) {
-                Console.WriteLine(ex.Message);
                 return new HttpStatusCodeResult(500, "移除失敗!");
             }
             return new HttpStatusCodeResult(200, "移除成功!");

@@ -1,4 +1,5 @@
 ﻿
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,9 +13,35 @@ namespace arTWander.Models
     {
         private ApplicationDbContext _dbContext;
 
+        private const int pageSize = 3;
+
         public ShowPageFactory(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public IPagedList<ShowMinViewModel> getCompanyShowPages(Company company,int page=1)
+        {
+            if (company.ShowPages == null || company.ShowPages.Count <= 0)
+            {
+                return null;
+            }
+
+            int currentPage = page < 1 ? 1 : page;
+
+            var shows = company.ShowPages.OrderByDescending(m => m.Created_At).Select(m => new ShowMinViewModel
+            {
+                Description = m.Description,
+                cityName = m.City.CityName,
+                Id = m.Id,
+                Title = m.Title,
+                Comment = m.ShowComments.Count(),
+                fileName = m.ShowPageFiles.Count() <= 0 ? "/image/exhibiton/Null.png" : $"/SaveFiles/Company/{m.Company.Id}/show/{m.Id}/{m.ShowPageFiles.FirstOrDefault().fileName}"
+            });
+
+            var showPages = shows.ToPagedList(currentPage, pageSize);
+
+            return showPages;
         }
 
         /// <summary>

@@ -1,25 +1,57 @@
-﻿@model arTWander.Models.ShowMinViewModel
-<div class="col-12 col-lg-4 position-relative  mb-lg-5">
-    <!-- 展覽圖片 starts -->
-    <div class="showImg">
-        <a href="@Url.Action("DisplayInfo","ShowPageManage",new { showId=Model.Id})">
-            <img class="w-100 rounded-sm img-fluid " src="@Model.fileName" alt="">
-        </a>
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<arTWander.Models.ShowMinViewModel>
+
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="row showlistRow">
+        @foreach (var item in Model)
+        {
+            <div class="col-12 col-lg-4 position-relative  mb-lg-5">
+                <!-- 展覽圖片 starts -->
+                <div class="showImg">
+                    <a href="@Url.Action("DisplayInfo", "ShowPageManage", new { showId = item.Id })">
+                        <img class="w-100 rounded-sm img-fluid " src="@item.fileName" alt="">
+                    </a>
+                </div>
+                <!-- 展覽圖片 ends -->
+                <!-- 展覽敘述卡 strats -->
+                <div class="shortDetail">
+                    <div class="d-flex align-items-center">
+                        <a href="">@item.cityName</a>／
+                        <a href="@Url.Action("DisplayInfo", "ShowPageManage", new { showId = item.Id })">@item.Title</a>
+                    </div>
+                    <div class="description">
+                        <a href="@Url.Action("DisplayInfo", "ShowPageManage", new { showId = item.Id })">@Html.Raw(HttpUtility.HtmlDecode(item.Description))</a>
+                    </div>
+                    <div class="d-flex align-items-center ">
+                        <a class="mr-2" href="#">@item.Comment comment</a>
+                        <button type="button" class="btn btn-link" onclick="removeShowPage(@item.Id)" style="border-style:none;padding:0px;background-color:transparent;"><i style="font-size:16px" class="fas fa-minus text-danger"> 移除展覽</i></button>
+                    </div>
+                </div>
+                <!-- 展覽敘述卡 ends -->
+            </div>
+        }
     </div>
-    <!-- 展覽圖片 ends -->
-    <!-- 展覽敘述卡 strats -->
-    <div class="shortDetail">
-        <div class="d-flex align-items-center">
-            <a href="">@Model.cityName</a>／
-            <a href="@Url.Action("DisplayInfo","ShowPageManage",new { showId=Model.Id})">@Model.Title</a>
-        </div>
-        <div class="description">
-            <a href="@Url.Action("DisplayInfo","ShowPageManage",new { showId=Model.Id})">@Html.Raw(HttpUtility.HtmlDecode(Model.Description))</a>
-        </div>
-        <div class="d-flex align-items-center ">
-            <a class="mr-2" href="#">@Model.Comment comment</a>
-            <button type="button" class="btn btn-link" onclick="removeShowPage(@Model.Id)" style="border-style:none;padding:0px;background-color:transparent;"><i style="font-size:16px" class="fas fa-minus text-danger"> 移除展覽</i></button>
-        </div>
-    </div>
-    <!-- 展覽敘述卡 ends -->
+}
+
+<!-- 分頁 starts -->
+@*樣式設定參考：https://kevintsengtw.blogspot.com/2013/10/aspnet-mvc-pagedlistmvc_17.html*@
+@*PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing：用ajax更新資料
+PagedListRenderOptions：設定樣式
+AjaxOptions：設定ajax傳遞參數*@
+<div class="d-flex justify-content-center">
+    @Html.PagedListPager(Model, page => Url.Action("getShowPages", "ShowPageManage", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions
+{
+    LinkToFirstPageFormat = "<< 第一頁",
+    LinkToPreviousPageFormat = "< 前一頁",
+    LinkToNextPageFormat = "後一頁 >",
+    LinkToLastPageFormat = "最後一頁 >>",
+    DisplayPageCountAndCurrentLocation = true,
+    PageCountAndCurrentLocationFormat = "第 {0} 頁/共 {1} 頁"
+}, new AjaxOptions()
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "showPages"
+}))
 </div>
