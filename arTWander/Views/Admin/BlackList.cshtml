@@ -4,249 +4,64 @@
 }
 
 
-<link rel="stylesheet" href="./css/UserList.css">
-
-<!-- breadcrumb start (已取代)-->
-<!-- <div class="justify-items-start">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb bg-light">
-            <li class="breadcrumb-item"><a href="#">系統管理員</a></li>
-            <li class="breadcrumb-item"><a href="#">會員管理</a></li>
-            <li class="breadcrumb-item active" aria-current="page">黑名單</li>
-        </ol>
-    </nav>
-</div> -->
-<!-- breadcrumb end  (已取代)-->
-<article>
-    <section id="Section">
-        <div class="AllList">
-            <!-- 一般使用者黑名單start -->
-            <!-- 關鍵字查詢 start-->
-            <div class="AllListTitle">
-                <div class="ListTitle">
-                    <div class="row w-100 mx-0 my-3">
-                        <label class="col-lg-2-text-right my-auto">一般會員</label>
-                    </div>
-                    <hr>
-                </div>
-                <div class="input-group-prepend my-2 justify-content-between">
-                    <div class="row col-10 col-sm-8">
-                        <!-- <span class="col-11 col-md-4 my-auto mx-2">一般會員</span> -->
-                        <input type="text" id="textSearch" class="col-10 col-sm-8 form-control rounded-pill my-1 w-100 " style="width:180px;height:auto;" placeholder="關鍵字搜尋" aria-label="search" aria-describedby="buttonSearch">
-                        <button class="btn col-2 col-md-1 my-2" type="button" id="buttonSearch"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="my-auto">
-                        <a class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-sort-amount-down" aria-hidden="true"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" id="sort">
-                            <a href="#" class="dropdown-item">編號排序</a>
-                            <a href="#" class="dropdown-item">日期排序</a>
-                            <a href="#" class="dropdown-item">執行者排序</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 關鍵字查詢 end -->
-            <div class="AllListContent">
-                <table class="table table-hover w-100">
-                    <thead>
-                        <tr>
-                            <th scope="col-1 col-md-1">編號</th>
-                            <th scope="col-1 col-md-1" class="d-none d-sm-table-cell">姓名</th>
-                            <th scope="col-1 col-md-1">帳號</th>
-                            <th scope="col-7 col-md-7">黑名單原因</th>
-                            <th scope="col-1 col-md-1">黑名單日期</th>
-                            <th scope="col-1 col-md-1" class="d-none d-sm-table-cell">執行人</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="BlackInform" href="" data-toggle="modal" data-target="#staticBackdrop">
-                            <th scope="row">U0001</th>
-                            <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">陳品宏</td>
-                            <td scope="col-1 col-md-1">didi333</td>
-                            <td scope="col-7 col-md-7">亂版 不實評分</td>
-                            <td scope="col-1 col-md-1">2021-07-19</td>
-                            <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">GM</td>
-
-                        </tr>
-                        <tr class="BlackInform" href="" data-toggle="modal" data-target="#staticBackdrop">
-                            <th scope="row">U0002</th>
-                            <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">王小名</td>
-                            <td scope="col-1 col-md-1">ming3</td>
-                            <td scope="col-7 col-md-7">亂版</td>
-                            <td scope="col-1 col-md-1">2021-07-19</td>
-                            <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">GM</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">U0003</th>
-                            <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">李大白</td>
-                            <td scope="col-1 col-md-1">dbai2</td>
-                            <td scope="col-7 col-md-7">亂版</td>
-                            <td scope="col-1 col-md-1">2021-09-19</td>
-                            <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">PH</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">U0004</th>
-                            <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">葉大雄</td>
-                            <td scope="col-1 col-md-1">dbai2</td>
-                            <td scope="col-7 col-md-7">不當發言</td>
-                            <td scope="col-1 col-md-1">2021-09-19</td>
-                            <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">PH</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">U0005</th>
-                            <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">黃小米</td>
-                            <td scope="col-1 col-md-1">dbai2</td>
-                            <td scope="col-7 col-md-7">不實帳號</td>
-                            <td scope="col-1 col-md-1">2021-09-19</td>
-                            <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">GM</td>
-                        </tr>
-
-                    </tbody>
-                </table>
+<link rel="stylesheet" href="~/css/UserList.css">
 
 
-            </div>
-            <nav aria-label="Page navigation example" class="mt-2">
-                <ul class="pagination justify-content-center text-secondary">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
-            </nav>
-            <!-- 一般使用者黑名單end -->
+<!-- nav-tab -->
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-link active" id="navBlackUserTab" data-toggle="tab" href="#nav-Blackuser" role="tab"
+           aria-controls="nav-Blackuser" aria-selected="true">一般會員</a>
+        <a class="nav-link" id="navBlackCustomerTab" data-toggle="tab" href="#nav-BlackCustomer" role="tab"
+           aria-controls="nav-BlackCustomer" aria-selected="false">展演單位</a>
 
-            <hr>
-            <!-- 展演單位黑名單start -->
-            <!-- 關鍵字查詢 start-->
-            <div class="AllListTitle">
-                <!-- 展演單位 -->
-                <div class="ListTitle">
-                    <div class="row w-100 mx-0 my-3">
-                        <label class="col-lg-2-text-right my-auto">展演單位</label>
-                    </div>
-                    <hr>
-                </div>
-                <div class="input-group-prepend my-2 justify-content-between">
-                    <div class="row col-10 col-sm-8">
-                        <!-- <span class="col-11 col-md-4 my-auto mx-2">一般會員</span> -->
-                        <input type="text" id="textSearch" class="col-10 col-sm-8 form-control rounded-pill my-1 w-100 " style="width:180px;height:auto;" placeholder="關鍵字搜尋" aria-label="search" aria-describedby="buttonSearch">
-                        <button class="btn col-2 col-md-1 my-2" type="button" id="buttonSearch"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="my-auto">
-                        <a class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-sort-amount-down" aria-hidden="true"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" id="sort">
-                            <a href="#" class="dropdown-item">編號排序</a>
-                            <a href="#" class="dropdown-item">日期排序</a>
-                            <a href="#" class="dropdown-item">執行人排序</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 關鍵字查詢 end -->
-            <div class="AllListContent">
-                <table class="table table-hover w-100">
-                    <thead>
-                        <tr>
-                            <th scope="col-1 col-md-1">編號</th>
-                            <th scope="col-1 col-md-1">單位名稱</th>
-                            <th scope="col-1 col-md-1" class="d-none d-sm-table-cell">帳號</th>
-                            <th scope="col-7 col-md-7">黑名單原因</th>
-                            <th scope="col-1 col-md-1">黑名單日期</th>
-                            <th scope="col-1 col-md-1" class="d-none d-sm-table-cell">執行人</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="col-1 col-md-1">C0001</th>
-                            <td scope="col-1 col-md-1">高美館</td>
-                            <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">KMS</td>
-                            <td scope="col-7 col-md-7">多次爭議展出受檢舉</td>
-                            <td scope="col-1 col-md-1">2021/09/22</td>
-                            <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">GM</td>
-                        </tr>
-                        <tr>
-                            <th scope="col-1 col-md-1">C0002</th>
-                            <td scope="col-1 col-md-1">衛武營</td>
-                            <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">KSKK</td>
-                            <td scope="col-7 col-md-7">多次假展演</td>
-                            <td scope="col-1 col-md-1">2021/09/28</td>
-                            <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">DD</td>
-                        </tr>
-                        <tr>
-                            <th scope="col-1 col-md-1">C0003</th>
-                            <td scope="col-1 col-md-1">中美館</td>
-                            <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">TMSS</td>
-                            <td scope="col-7 col-md-7">就是想下架他</td>
-                            <td scope="col-1 col-md-1">2021/09/30</td>
-                            <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">GM</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-
-            </div>
-            <nav aria-label="Page navigation example" class="mt-2">
-                <ul class="pagination justify-content-center text-secondary">
-                    <li class="page-item "><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
-            </nav>
-            <!-- 展演單位黑名單end -->
-        </div>
-
-    </section>
-
-</article>
-
-
-
-<!-- 彈出視窗顯示用戶資訊 -->
-<!-- Button trigger modal -->
-<!-- Modal -->
-<div class="modal fade px-0" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <!-- 控至彈出窗大小 -->
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">黑名單詳細資訊</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <main>
-                    <!-- 主內容 -->
-                    <!-- ajax導入相關內容 -->
-                    <section id="Section" class="w-100">
-                        <div id="detailInform">
-                        </div>
-                    </section>
-                </main>
-            </div>
-
-        </div>
     </div>
-</div>
+</nav>
+
+<main>
+    <!-- 主內容 -->
+    <section id="Section" class="w-100">
+        <div id="blackMain">
+        </div>
+    </section>
+</main>
+
+
+<script>
+  //BlackList (預設導入) (jquery ready (檔案讀取完成後導入))
+    $(document).ready(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("BlackUser", "Admin")',
+            data: {},
+            success: function (data) {
+                $('#blackMain').html(data);
+            }
+        });
+    });
+</script>
 
 <script>
   //點擊分頁連結頁面
-  //一般使用者list
-    $(".BlackInform").click(function () {
+  //BlackUserlist
+    $("#navBlackUserTab").click(function () {
         $.ajax({
             type: 'post',
-            url: '@Url.Action("BlackInform", "Admin")',
+            url: '@Url.Action("BlackUser", "Admin")',
             data: FormData,
             success: function (data) {
-                $('#detailInform').html(data);
+                $('#blackMain').html(data);
+            }
+        });
+    });
+      //BlackCustomer
+    $("#navBlackCustomerTab").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("BlackCustomer", "Admin")',
+            data: FormData,
+            success: function (data) {
+                $('#blackMain').html(data);
             }
         });
     });

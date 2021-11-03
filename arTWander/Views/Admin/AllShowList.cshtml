@@ -1,5 +1,7 @@
-﻿
+﻿@model IEnumerable<arTWander.Models.AdminViewModel.ShowListViewModel>
+
 @{
+    ViewBag.Title = "AllShowList";
     Layout = null;
 }
 
@@ -59,11 +61,14 @@
             </div>
             <div class="AllListTitle">
                 <div class="input-group-prepend my-2 justify-content-between">
-                    <div class="row col-10 col-sm-8">
-                        <!-- <span class="col-11 col-md-4 my-auto mx-2">一般會員</span> -->
-                        <input type="text" id="textSearch" class="col-10 col-sm-8 form-control rounded-pill my-1 w-100 " style="width:180px;height:auto;" placeholder="關鍵字搜尋" aria-label="search" aria-describedby="buttonSearch">
-                        <button class="btn col-2 col-md-1 my-2" type="button" id="buttonSearch"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </div>
+                    <form id="uploadShowForm" enctype="multipart/form-data" class="w-100">
+                        <div class="row col-10 col-sm-8">
+                            @*關鍵字巡展演*@
+                            <input type="text" id="txtKeyword" name="txtKeyword" value="@Request.Form["txtKeyword"]" class="col-10 col-sm-8 form-control rounded-pill my-1 w-100 " style="width:180px;height:auto;" placeholder="關鍵字搜尋" aria-label="search" aria-describedby="buttonSearch">
+                            <button class="btn col-2 col-md-1 my-2" type="submit" id="buttonSearch"><i class="fa fa-search" aria-hidden="true"></i></button>
+
+                        </div>
+                    </form>
                     <div class="my-auto">
                         <a class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-sort-amount-down" aria-hidden="true"></i>
@@ -80,62 +85,29 @@
                     <table class="table table-hover w-100">
                         <thead>
                             <tr>
-                                <th scope="col-1 col-md-1">編號</th>
-                                <th scope="col-3 col-md-3">展演名稱</th>
-                                <th scope="col-1 col-md-1">單位</th>
-                                <th scope="col-1 col-md-1">縣市</th>
-                                <th scope="col-1 col-md-1" class="d-none d-sm-table-cell">鄉鎮</th>
-                                <th scope="col-2 col-md-2">開始日</th>
-                                <th scope="col-2" class="d-none d-lg-table-cell">結束日</th>
+                                <th scope="col-1 col-md-1" class="d-none d-md-table-cell">編號</th>
+                                <th scope="col-3 col-md-3">@Html.DisplayNameFor(model => model.Title)</th>
+                                <th scope="col-1 col-md-3" class="d-none d-lg-table-cell">@Html.DisplayNameFor(model => model.CompanyName)</th>
+                                <th scope="col-1 col-md-1">@Html.DisplayNameFor(model => model.CityName)</th>
+                                <th scope="col-1 col-md-1">@Html.DisplayNameFor(model => model.StartDate)</th>
+                                <th scope="col-1 col-md-1">@Html.DisplayNameFor(model => model.EndDate)</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr class="showInform" href="" data-toggle="modal" data-target="#staticBackdrop">
-                                <td scope="col-1 col-md-1">S0001</td>
-                                <td scope="col-3 col-md-3">晚安，待會見</td>
-                                <td scope="col-1 col-md-1">蘇育賢</td>
-                                <td scope="col-1 col-md-1">台北市</td>
-                                <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">不知</td>
-                                <td scope="col-2 col-md-2">2021/06/06</td>
-                                <td scope="col-2" class="d-none d-lg-table-cell">2021/09/13</td>
-                            </tr>
-                            <tr class="showInform" href="" data-toggle="modal" data-target="#staticBackdrop">
-                                <td scope="col-1 col-md-1">S0002</td>
-                                <td scope="col-3 col-md-3">黎志文個展</td>
-                                <td scope="col-1 col-md-1">黎志文</td>
-                                <td scope="col-1 col-md-1">台北市</td>
-                                <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">不知</td>
-                                <td scope="col-2 col-md-2">2021/07/06</td>
-                                <td scope="col-2" class="d-none d-lg-table-cell">2021/09/13</td>
-                            </tr>
-                            <tr class="showInform" href="" data-toggle="modal" data-target="#staticBackdrop">
-                                <td scope="col-1 col-md-1">S0003</td>
-                                <td scope="col-3 col-md-3">單飛不解散，你怎麼說</td>
-                                <td scope="col-1 col-md-1">紅野畫廊</td>
-                                <td scope="col-1 col-md-1">台北市</td>
-                                <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">中山區</td>
-                                <td scope="col-2 col-md-2">2021/06/06</td>
-                                <td scope="col-2" class="d-none d-lg-table-cell">2021/09/13</td>
-                            </tr>
-                            <tr>
-                                <td scope="col-1 col-md-1">S0004</td>
-                                <td scope="col-3 col-md-3">單飛不解散，你怎麼說</td>
-                                <td scope="col-1 col-md-1">紅野畫廊</td>
-                                <td scope="col-1 col-md-1">台北市</td>
-                                <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">中山區</td>
-                                <td scope="col-2 col-md-2">2021/06/06</td>
-                                <td scope="col-2" class="d-none d-lg-table-cell">2021/09/13</td>
-                            </tr>
-                            <tr>
-                                <td scope="col-1 col-md-1">S0005</td>
-                                <td scope="col-3 col-md-3">單飛不解散，你怎麼說</td>
-                                <td scope="col-1 col-md-1">紅野畫廊</td>
-                                <td scope="col-1 col-md-1">台北市</td>
-                                <td scope="col-1 col-md-1" class="d-none d-sm-table-cell">中山區</td>
-                                <td scope="col-2 col-md-2">2021/06/06</td>
-                                <td scope="col-2" class="d-none d-lg-table-cell">2021/09/13</td>
-                            </tr>
-                        </tbody>
+                        @{
+                            foreach (var item in Model)
+                            {
+                                <tbody>
+                                    <tr class="showInform" href="" data-toggle="modal" data-target="#staticBackdrop">
+                                        <td scope="col-1 col-md-1" class="d-none d-md-table-cell">S<span class="showId">@Html.DisplayFor(model => item.Id)</span></td>
+                                        <td scope="col-3 col-md-3">@Html.DisplayFor(model => item.Title)</td>
+                                        <td scope="col-1 col-md-1" class="d-none d-lg-table-cell">@Html.DisplayFor(model => item.CompanyName)</td>
+                                        <td scope="col-1 col-md-1">@Html.DisplayFor(model => item.CityName)</td>
+                                        <td scope="col-1 col-md-1">@Html.DisplayFor(model => item.StartDate)</td>
+                                        <td scope="col-1 col-md-1">@Html.DisplayFor(model => item.EndDate)</td>
+                                    </tr>
+                                </tbody>
+                            }
+                        }
                     </table>
 
 
@@ -180,23 +152,63 @@
                     </section>
                 </main>
             </div>
-            <div class="modal-footer">
-            </div>
         </div>
     </div>
 </div>
 
+
 <script>
-  //點擊分頁連結頁面
-  //一般使用者list
-    $(".showInform").click(function () {
+    //搜尋關鍵字
+    $('#uploadShowForm').submit(function (event) {
+        event.preventDefault();
+        let formData = $(this).serialize();
         $.ajax({
             type: 'post',
-            url: '@Url.Action("ShowInformPage", "Admin")',
-            data: {},
+            //dataType: 'script',
+            url: '@Url.Action("AllShowList", "Admin")',
+            data: formData,
             success: function (data) {
-                $('#detailInform').html(data);
+                console.log("good");
+                $('#mainPage').html(data);
+            }
+            ,
+            error: (XMLHttpRequest, textStatus, errorThrown) => {
+                $("#detailInform").innerHTML = "there is something wrong!";
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
             }
         });
+    });
+</script>
+<script>
+    //取得對應ID詳細資訊
+    $('.showInform').click(function (event) {
+        var showID = { Id: $(this).find(".showId").text() };
+        var myFormData = new FormData();
+        myFormData.append("showID", JSON.stringify(showID));
+
+        $.ajax({
+            url: '@Url.Action("ShowInformPage", "Admin")',
+            type: 'POST',
+            data: myFormData,
+            //contentType: "application/json; charset=utf-8",
+            enctype: "multipart/form-data",
+            cache: false,
+            contentType: false,
+            processData: false,
+            //dataType: "json",
+            success: function (data) {
+                console.log("Good");
+                $('#detailInform').html(data);
+            },
+            //錯誤訊息
+            error: (XMLHttpRequest, textStatus, errorThrown)=>{
+              $("#detailInform").innerHTML = "there is something wrong!";
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
+         });
     });
 </script>

@@ -1,52 +1,51 @@
-body{
+body {
     position: relative;
     overflow-x: hidden;
 }
-i{
+
+i {
     font-size: 20px;
     color: rgb(0, 0, 0);
 }
 
-#showTitle{
-line-height: 50px;
+
+
+#showTitle {
+    line-height: 50px;
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 768px) {
 
     /* breadcrumb start */
-    .breadcrumb{
-        display:none;
+    .breadcrumb {
+        display: none;
     }
     /* breadcrumb end */
-    /* section邊框 */
-    /* .AllListTitle .row{
-        justify-content: center;
-    } */
-    /* .AllList{
-        margin-left: -10%;
-        margin-right: -10%;
-        border: solid;
-        border-color: black;
-        border-radius:5px;
-    } */
-    /* section邊框end */
-    
+
 }
 
 
 /* section start*/
-/* .AllList{
-    border: solid;
-    border-color: black;
-    border-radius:5px;
-} */
-.AllListContent{
+
+div.AllListContent {
     border: solid;
     border-color: rgb(196, 196, 196);
-    border-radius:5px;
+    border-radius: 5px;
     /* margin: 10px; */
 }
-.AllListTitle input{
+
+#tableSet {
+    table-layout: fixed;
+    width: 100%;
+    height: 100%;
+}
+#tableset > .tableInd {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.AllListTitle input {
     height: auto;
     min-height: 20px;
     padding: 2px;
@@ -55,29 +54,23 @@ line-height: 50px;
 
 
 /* pagination 控制顏色 */
-.page-link
-{
+.page-link {
     color: #333;
-} 
+}
 
 /* section end */
 
-hr{
+hr {
     border-top: 2px solid rgba(0,0,0,.1);
     width: 95%;
 }
 
 /* breadcrumb color */
-.breadcrumb .active{
+.breadcrumb .active {
     color: #C57E68;
 }
 
-/* #timeSelect{
-    padding: 0px;
-} */
-
 /* sort標籤 */
-#sort{
+#sort {
     padding: 0px;
-    
 }

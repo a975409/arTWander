@@ -1,19 +1,17 @@
-﻿@model IEnumerable<arTWander.Models.AdminViewModel.CustomerListViewModel>
+﻿@model IEnumerable<arTWander.Models.AdminViewModel.BlackListViewModel>
 
 @{
-    ViewBag.Title = "CustomerList";
+    ViewBag.Title = "BlackUser";
     Layout = null;
 }
-
 <link rel="stylesheet" href="./css/UserList.css">
-
 <article>
     <section id="Section">
         <div class="AllList">
             <!-- 關鍵字查詢 start-->
             <div class="AllListTitle">
                 <div class="input-group-prepend my-2 justify-content-between">
-                    <form id="uploadCustomerForm" enctype="multipart/form-data" class="w-100">
+                    <form id="blackUserForm" enctype="multipart/form-data" class="w-100">
                         <div class="row col-10 col-sm-8">
 
                             <!-- <span class="col-11 col-md-4 my-auto mx-2">一般會員</span> -->
@@ -29,23 +27,22 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" id="sort">
                             <a href="#" class="dropdown-item">編號排序</a>
-                            <a href="#" class="dropdown-item">帳號排序</a>
                             <a href="#" class="dropdown-item">註冊日排序</a>
+                            <a href="#" class="dropdown-item">ID排序</a>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- 關鍵字查詢 end -->
-            <div class="AllListContent">
-                <table id="tableSet" class="table table-hover w-100">
-                    <thead>
+
+            <div class="AllListContent w-100">
+                <table id="tableSet" class="table table-hover">
+                    <thead class="w-100">
                         <tr>
-                            <th scope="col col-md-1">編號</th>
-                            <th scope="col-1 col-md-1" class="tableInd">@Html.DisplayNameFor(model => model.CompanyName)</th>
-                            <th scope="col col-md-1" class="tableInd d-none d-md-table-cell">@Html.DisplayNameFor(model => model.Email)</th>
-                            <th scope="col-2 col-md-2" >@Html.DisplayNameFor(model => model.RegisterTime)</th>
-                            <th scope="col col-md-1">@Html.DisplayNameFor(model => model.ShowCount)</th>
-                            @*<th scope="col col-md-1">@Html.DisplayNameFor(model => model.Statue)</th>*@
+                            <th scope="col-1 col-md-1" class="tableInd d-none d-md-table-cell">編號</th>
+                            <th scope="col-1 col-md-1" class="tableInd">@Html.DisplayNameFor(model => model.UserName)</th>
+                            <th scope="col-2 col-md-2">@Html.DisplayNameFor(model => model.Reason)</th>
+                            <th scope="col-1 col-md-1">@Html.DisplayNameFor(model => model.Created_At)</th>
                         </tr>
                     </thead>
                     @{
@@ -53,20 +50,19 @@
                         foreach (var item in Model)
                         {
                             <tbody>
-                                <tr class="CustomInform" name="CustomInform" data-toggle="modal" data-target="#staticBackdrop">
-                                    <th scope="row">M000<span class="userId">@Html.DisplayFor(model => item.FK_ApplicationUser)</span></th>
-                                    <td scope="col-md-1" class="tableInd">@Html.DisplayFor(model => item.CompanyName)</td>
-                                    <td scope="col col-md-1" class="tableInd d-none d-md-table-cell">@Html.DisplayFor(model => item.Email)</td>
-                                    <td scope="col-2 col-md-2">@Html.DisplayFor(model => item.RegisterTime)</td>
-                                    <td scope="col col-md-1">@Html.DisplayFor(model => item.ShowCount)</td>
-                                    @*<td scope="col col-md-1">@Html.DisplayFor(model => item.Statue)</td>*@
+                                <!-- 製作連結點擊後彈出資訊窗 -->
+                                <tr class="blackUserInform" name="blackUserInform" @*data-href='@Url.Action("UserInform", "Admin", new { id = item.FK_ApplicationUser })'*@ data-toggle="modal" data-target="#staticBackdrop">
+                                    <th scope="row" class="tableInd d-none d-md-table-cell">B000<span class="blackUserId">@Html.DisplayFor(modelItem => item.FK_ApplicationUser) </span></th>
+                                    <td scope="col-1 col-md-1" class="tableInd">@Html.DisplayFor(modelItem => item.UserName)</td>
+                                    <td scope="col-2 col-md-2">@Html.DisplayFor(modelItem => item.Reason)</td>
+                                    <td scope="col-1 col-md-1">@Html.DisplayFor(modelItem => item.Created_At)</td>
                                 </tr>
                             </tbody>
                         }
                     }
                 </table>
-
             </div>
+
             <nav aria-label="Page navigation example" class="mt-2">
                 <ul class="pagination justify-content-center text-secondary">
                     <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -79,7 +75,6 @@
         </div>
 
     </section>
-
 </article>
 
 
@@ -92,34 +87,39 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">用戶詳細資訊</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">黑名單詳細資訊</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <main>
-                    <!-- 主內容 -->
-                    <!-- ajax導入相關內容 -->
+                    @*主內容*@
+                    @*ajax導入相關內容*@
                     <section id="Section" class="w-100">
                         <div id="detailInform">
                         </div>
                     </section>
                 </main>
             </div>
+            @*<div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>*@
         </div>
     </div>
 </div>
 
+
+
 <script>
     //搜尋關鍵字
-    $('#uploadCustomerForm').submit(function (event) {
+    $('#blackUserForm').submit(function (event) {
         event.preventDefault();
         let formData = $(this).serialize();
         $.ajax({
             type: 'post',
             //dataType: 'script',
-            url: '@Url.Action("ShowCustomList", "Admin")',
+            url: '@Url.Action("BlackUser", "Admin")',
             data: formData,
             success: function (data) {
             $('#memberManageMain').html(data);
@@ -134,30 +134,15 @@
         });
     });
 </script>
-
-@*<script>
-  //點擊分頁連結頁面
-  //使用者list
-    $(".uploadCustomerForm").click(function () {
-        $.ajax({
-            type: 'post',
-            url: '@Url.Action("CustomerInform", "Admin")',
-            data: FormData,
-            success: function (data) {
-                $('#detailInform').html(data);
-            }
-        });
-    });
-</script>*@
 <script>
-    //取得對應customer ID詳細資訊
-    $('.CustomInform').click(function (event) {
-        var userID = { userId: $(this).find(".userId").text() };
+    //取得對應ID詳細資訊
+    $('.blackUserInform').click(function (event) {
+        var userID = { userId: $(this).find(".blackUserId").text() };
         var myFormData = new FormData();
         myFormData.append("userID", JSON.stringify(userID));
 
         $.ajax({
-            url: '@Url.Action("CustomerInform", "Admin")',
+            url: '@Url.Action("BlackUserInform", "Admin")',
             type: 'POST',
             data: myFormData,
             //contentType: "application/json; charset=utf-8",

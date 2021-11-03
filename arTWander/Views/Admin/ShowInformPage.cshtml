@@ -1,71 +1,74 @@
-﻿
+﻿@model IEnumerable<arTWander.Models.AdminViewModel.ShowListViewModel>
+
 @{
+    ViewBag.Title = "ShowInformPage";
     Layout = null;
 }
 
-<link rel="stylesheet" href="./css/UserList.css">
 
-<article>
-    <section id="Section">
-        <div class="AllList">
-            <div class="userDetailInform mb-3">
-                <div class="container px-0">
-                    <p class="text-right">帳號狀態: <span class="isBlock">正常</span></p>
-                    <hr>
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <img src="https://picsum.photos/500/500?random=8" class="d-flex w-100" alt="">
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label for="">展演描述</label>
-                            <p id="showDescript">
-                                紐約當代藝術家，奧普海姆（Peter Opheim
-                                b.1961-），有著斯堪地那維亞血統（Scandinavia）。他最新的作品帶著一些北歐神話與色彩，無論你知不知道北歐神話，其實都沒關係，奧普海姆的作品始終擁有純粹、天馬行空及療癒感，這正是步調緊湊、生活壓抑的現代人所缺少的。
-                            </p>
+<link rel="stylesheet" href="~/css/UserList.css">
+@{
+    foreach (var item in Model)
+    {
+        <article>
+            <section id="Section">
+                <div class="AllList">
+                    <div class="userDetailInform mb-3">
+                        <div class="container px-0">
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+
+                                    <img src="https://picsum.photos/500/500?random=8" class="d-flex w-100" alt="">
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label for="">@Html.DisplayNameFor(m => m.Description)</label>
+                                    <p id="showDescript">
+                                        @Html.DisplayFor(m => item.Description)
+                                    </p>
+                                </div>
+                                <hr>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <p>@Html.DisplayNameFor(m => m.Id) : S<span id="Id">@Html.DisplayFor(m => item.Id)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.Title) : <span id="Title">@Html.DisplayFor(m => item.Title)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.CompanyName) : <span id="CompanyName">@Html.DisplayFor(m => item.CompanyName)</span></p>
+                                    @*<p>@Html.DisplayNameFor(m => m.)Email : <span>@Html.DisplayFor(m => item.)dKMS@art.com</span></p>*@
+                                    <p>@Html.DisplayNameFor(m => m.PhoneNumber) : <span>@Html.DisplayFor(m => item.PhoneNumber)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.CityName) : <span>@Html.DisplayFor(m => item.CityName)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.DistrictName) : <span>@Html.DisplayFor(m => item.DistrictName)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.Address) : <span>@Html.DisplayFor(m => item.Address)</span></p>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <p>@Html.DisplayNameFor(m => m.StartDate) : <span>@Html.DisplayFor(m => item.StartDate)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.EndDate) : <span>@Html.DisplayFor(m => item.EndDate)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.StartTime) : <span>@Html.DisplayFor(m => item.StartTime)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.EndTime) : <span>@Html.DisplayFor(m => item.EndTime)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.Cost) : <span>@Html.DisplayFor(m => item.Cost)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.Price) : <span> @Html.DisplayFor(m => item.Price)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.AgeRange) : <span>@Html.DisplayFor(m => item.AgeRange)</span></p>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <p>@Html.DisplayNameFor(m => m.Created_At) : <span>@Html.DisplayFor(m => item.Created_At)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.ViewCount) : <span>@Html.DisplayFor(m => item.ViewCount)</span></p>
+                                    @*<p>@Html.DisplayNameFor(m => m.ViewCount)訂閱人數 : <span>@Html.DisplayFor(m => item.ViewCount)125</span></p>*@
+                                    @*<p>@Html.DisplayNameFor(m => m.)檢舉次數: <span>5</span></p>*@
+                                </div>
+                            </div>
                         </div>
                         <hr>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <p>展演編號: <span>S0001</span></p>
-                            <p>展演名稱: <span>噬山者們</span></p>
-                            <p>展演單位名稱: <span>弘野義郎</span></p>
-                            <p>Email: <span>dKMS@art.com</span></p>
-                            <p>連絡電話: <span>0973000123</span></p>
-                            <p>縣市: <span>高雄市</span></p>
-                            <p>地區: <span>鼓山區</span></p>
-                            <p>地址: <span>美術館路</span></p>
-                        </div>
-                        <div class="col-12 col-md-3">
-                            <p>開始日期: <span>2021-09-09</span></p>
-                            <p>結束日期: <span>2021-09-30</span></p>
-                            <p>開放時間: <span>一三五七九</span></p>
-                            <p>閉館時間: <span>17:30</span></p>
-                            <p>收費: <span>是</span></p>
-                            <p>價格: <span> NT. 200</span></p>
-                            <p>年齡限制: <span>12</span></p>
-                        </div>
-                        <div class="col-12 col-md-3">
-                            <p>登錄日期: <span>2021-09-18</span></p>
-                            <p>點閱人數: <span>3334</span></p>
-                            <p>訂閱人數: <span>125</span></p>
-                            <p>檢舉次數: <span>5</span></p>
+                        <div class="modal-footer">
+                            <div class="userInfoUpdate d-flex justify-content-end">
+                                <button class="btn btn-primary mx-1" id="showReason" href="" data-toggle="modal" data-target="#inputBlackReason">展演下架與通知</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <hr>
 
-                <div class="userInfoUpdate d-flex justify-content-end">
-                    <button class="btn btn-primary mx-1" id="blackReason" href="" data-toggle="modal" data-target="#inputBlackReason">展演下架與通知</button>
-                </div>
-            </div>
-        </div>
-        </div>
+            </section>
 
-    </section>
-
-</article>
-
+        </article>
+    }
+}
 
 <!-- 彈出視窗顯示下架資訊 -->
 <!-- Button trigger modal -->
@@ -92,9 +95,47 @@
                 </main>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">確定送出</button>
+                <button id="DeleteShow" type="submit" class="btn btn-primary">確定送出</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
+
+
+
+<script>
+    //搜尋關鍵字
+    $('#DeleteShow').click(function (event) {
+        var showDele = { Id: $("#Id").text(), Title: $("#Title").text(), CompanyName: $("#CompanyName").text()};
+        var myFormData = new FormData();
+        myFormData.append("showDele", JSON.stringify(showDele));
+        $.ajax({
+            type: 'post',
+            //dataType: 'script',
+            url: '@Url.Action("ShowDelete", "Admin")',
+            data: myFormData,
+            enctype: "multipart/form-data",
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log("GOODGOOD")
+                alert($("#CompanyName").text() + $("#Title").text() + "展演已下架");
+                //modal關閉導向引入bs/jquery
+                event.preventDefault();
+                jQuery.noConflict();
+                $('#inputBlackReason').modal('hide');
+                $('#staticBackdrop').modal('hide');
+                location.reload();
+            }
+            ,
+            error: (XMLHttpRequest, textStatus, errorThrown) => {
+                $("#detailInform").innerHTML = "there is something wrong!";
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
+        });
+    });
+</script>
