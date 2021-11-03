@@ -2,12 +2,14 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web;
 
 namespace arTWander.Models.AdminFactory
 {
+
     public class AdminFactory
     {
         //取得當前user資料 in ApplicationUser
@@ -77,9 +79,9 @@ namespace arTWander.Models.AdminFactory
                 var q = from users in db.Users
                         join login in db.LogingLog on users.Id equals login.FK_ApplicationUser into ps
                         from login in ps.DefaultIfEmpty()
-                        //join sComment in db.ShowComment on users.Id equals sComment.FK_ApplicationUser into pt
-                        //from sComment in pt.DefaultIfEmpty()
-                        //join sPage in db.ShowPage on sComment.FK_ShowPage equals sPage.Id
+                            //join sComment in db.ShowComment on users.Id equals sComment.FK_ApplicationUser into pt
+                            //from sComment in pt.DefaultIfEmpty()
+                            //join sPage in db.ShowPage on sComment.FK_ShowPage equals sPage.Id
                         join bList in db.BlackList on users.Id equals bList.FK_ApplicationUser into pu
                         from bList in pu.DefaultIfEmpty()
                         join cCompany in db.Company on users.Id equals cCompany.FK_ApplicationUser into cu
@@ -134,7 +136,7 @@ namespace arTWander.Models.AdminFactory
                     from bList in pu.DefaultIfEmpty()
                     join cCompany in db.Company on users.Id equals cCompany.FK_ApplicationUser into cu
                     from cCompany in cu.DefaultIfEmpty()
-                    where users.UserName.Contains(searchWord) || 
+                    where users.UserName.Contains(searchWord) ||
                     users.Email.Contains(searchWord)
                     select new UserListViewModel
                     {
@@ -168,11 +170,11 @@ namespace arTWander.Models.AdminFactory
             var db = new ApplicationDbContext();
             List<UserListViewModel> model = new List<UserListViewModel>();
             string blist = "";
-            
+
             //判斷是否黑名單
-            var black = db.BlackList.Where(m=>m.FK_ApplicationUser.ToString() == searchWord).FirstOrDefault();
-            
-            if (black == null) 
+            var black = db.BlackList.Where(m => m.FK_ApplicationUser.ToString() == searchWord).FirstOrDefault();
+
+            if (black == null)
             { blist = "正常"; }
             else { blist = "黑名單"; }
             //left join +into ps from login in ps.DefaultIfEmpty()
@@ -225,9 +227,9 @@ namespace arTWander.Models.AdminFactory
             //foreach (var c in roles.RoleId)
             //    string s = c;
             //    Console.WriteLine(c);
-                //var list = from ls in roles.RoleId select ls;
-                //list.ToList();
-                string Bday = "";
+            //var list = from ls in roles.RoleId select ls;
+            //list.ToList();
+            string Bday = "";
             string blist = "";
             var AllUserId = db.Users.OrderBy(m => m.Id).Select(m => m.Id).ToList();
             //判斷是否有搜尋字串
@@ -238,17 +240,17 @@ namespace arTWander.Models.AdminFactory
                 else { blist = "黑名單"; }
                 //left join +into ps from login in ps.DefaultIfEmpty()
                 //var roleId = from r in role where r.UserId == userId select r;
-                var companyId = db.Company.Where(m => m.FK_ApplicationUser == userId).Select(m=>m.Id).FirstOrDefault();
-                var count = db.ShowPage.Where(m => m.FK_Company == companyId).Select(m=>m.Id).Count();
+                var companyId = db.Company.Where(m => m.FK_ApplicationUser == userId).Select(m => m.Id).FirstOrDefault();
+                var count = db.ShowPage.Where(m => m.FK_Company == companyId).Select(m => m.Id).Count();
                 var q = from cCompany in db.Company
                         join users in db.Users on cCompany.FK_ApplicationUser equals users.Id
                         join login in db.LogingLog on users.Id equals login.FK_ApplicationUser into ps
                         from login in ps.DefaultIfEmpty()
-                        //join sComment in db.ShowComment on users.Id equals sComment.FK_ApplicationUser
-                        //join sPage in db.ShowPage on cCompany.Id equals sPage.FK_Company
+                            //join sComment in db.ShowComment on users.Id equals sComment.FK_ApplicationUser
+                            //join sPage in db.ShowPage on cCompany.Id equals sPage.FK_Company
                         join bList in db.BlackList on users.Id equals bList.FK_ApplicationUser into pu
                         from bList in pu.DefaultIfEmpty()
-                        
+
                             //join uRole in roles on users.Id equals roles.UserId
                             //join roles in db.Roles on 
                         where users.Id == userId && bList.FK_ApplicationUser == null && cCompany.FK_ApplicationUser == userId
@@ -328,7 +330,7 @@ namespace arTWander.Models.AdminFactory
                             LogingCount = login.LogingCount,
                             IsBlackList = blist,
                             CityName = City.CityName,
-                            DistrictName=District.DistrictName,
+                            DistrictName = District.DistrictName,
                             ShowCount = count
                         };
                 List<CustomerListViewModel> viewmodel = q.ToList();
@@ -353,7 +355,7 @@ namespace arTWander.Models.AdminFactory
             //left join +into ps from login in ps.DefaultIfEmpty()
             var companyId = db.Company.Where(m => m.FK_ApplicationUser.ToString() == searchWord).Select(m => m.Id).FirstOrDefault();
             var count = db.ShowPage.Where(m => m.FK_Company == companyId).Select(m => m.Id).Count();
-            
+
             var q = from cCompany in db.Company
                     join users in db.Users on cCompany.FK_ApplicationUser equals users.Id
                     join login in db.LogingLog on users.Id equals login.FK_ApplicationUser into ps
@@ -385,22 +387,6 @@ namespace arTWander.Models.AdminFactory
                         ShowCount = count
                     };
             List<CustomerListViewModel> viewmodel = q.ToList();
-
-            //展演數量
-            //var showPageId = db.ShowPage.Where(m => m.FK_Company == companyId).Select(m => m.Id).ToList();
-            //foreach (var showpageId in showPageId)
-            //{
-            //    var sp = from show in db.ShowPage where show.Id == showpageId
-            //             select new CustomerListViewModel
-            //             {
-            //                 Title = show.Title,
-            //                //Comment = show.Comment,
-            //                // Star = sComment.Star,
-            //                // ShowCount = count
-            //             };
-            //    viewmodel.AddRange(sp.ToList());
-            //}
-
             model.AddRange(viewmodel);
             return model;
         }
@@ -453,8 +439,8 @@ namespace arTWander.Models.AdminFactory
                             LogingCount = login.LogingCount,
                             IsBlackList = blist,
                             Id = bList.Id,
-                            Reason=bList.Reason,
-                            Created_At=bList.Created_At
+                            Reason = bList.Reason,
+                            Created_At = bList.Created_At
                         };
                 List<BlackListViewModel> viewmodel = q.ToList();
                 model.AddRange(viewmodel);
@@ -671,6 +657,129 @@ namespace arTWander.Models.AdminFactory
                     };
             List<BlackListViewModel> viewmodel = q.ToList();
             model.AddRange(viewmodel);
+            return model;
+        }
+
+
+        //取得展演資訊
+        //取得所有user
+        public IEnumerable<ShowListViewModel> GetShowListAll()
+        {
+            var db = new ApplicationDbContext();
+            List<ShowListViewModel> model = new List<ShowListViewModel>();
+            //var showId = db.ShowPage.Select(m => m.Id).ToList();
+            //foreach (var showid in showId)
+            //{
+                var showPage = from show in db.ShowPage
+                               join cCompany in db.Company on show.FK_Company equals cCompany.Id
+                               join sShowPageFile in db.ShowPageFile on show.Id equals sShowPageFile.FK_ShowPage
+                               orderby show.Id
+                               select new ShowListViewModel
+                               {
+                                   Address = show.Address,
+                                   CityName = show.City.CityName,
+                                   DistrictName = show.District.DistrictName,
+                                   AgeRange = show.AgeRange,
+                                   Cost = show.Cost,
+                                   Description = show.Description,
+                                   EndDate = show.EndDate,
+                                   EndTime = show.EndTime,
+                                   Id = show.Id,
+                                   Price = show.Price,
+                                   Remark = show.Remark,
+                                   StartDate = show.StartDate,
+                                   StartTime = show.StartTime,
+                                   Title = show.Title,
+                                   Created_At = show.Created_At,
+                                   CompanyName = cCompany.CompanyName,
+                                   PhoneNumber = cCompany.Phone,
+                                   UserName = cCompany.ApplicationUser.UserName
+                               };
+                List<ShowListViewModel> showInfo = showPage.ToList();
+                model.AddRange(showInfo);
+            //}
+            return model;
+        }
+
+
+        public IEnumerable<ShowListViewModel> GetShowListBySearch(string searchWord)
+        {
+            var db = new ApplicationDbContext();
+            List<ShowListViewModel> model = new List<ShowListViewModel>();
+            var showId = db.ShowPage.OrderBy(m=>m.Id).Select(m => m.Id).ToList();
+            var showPage = from show in db.ShowPage
+                               join cCompany in db.Company on show.FK_Company equals cCompany.Id
+                               join sShowPageFile in db.ShowPageFile on show.Id equals sShowPageFile.FK_ShowPage
+                               where show.Title.Contains(searchWord) || cCompany.CompanyName.Contains(searchWord) || show.City.CityName.Contains(searchWord)
+                               orderby show.Id
+                               select new ShowListViewModel
+                               {
+                                   Address = show.Address,
+                                   CityName = show.City.CityName,
+                                   DistrictName = show.District.DistrictName,
+                                   AgeRange = show.AgeRange,
+                                   Cost = show.Cost,
+                                   Description = show.Description,
+                                   EndDate = show.EndDate,
+                                   EndTime = show.EndTime,
+                                   Id = show.Id,
+                                   Price = show.Price,
+                                   Remark = show.Remark,
+                                   StartDate = show.StartDate,
+                                   StartTime = show.StartTime,
+                                   Title = show.Title,
+                                   Created_At = show.Created_At,
+                                   //Todays = show.PageToTodaysList.Select(m => m.Today).ToArray(),
+                                   //Keywords = show.KeywordsList.Select(m => m.Name).ToArray(),
+                                   //images = show.ShowPageFiles.Select(m => $"/SaveFiles/Company/{show.Company.Id}/show/{show.Id}/{m.fileName}").ToArray(),
+                                   //ViewCount = (ulong)show.PageViewCounts.Select(m => m.Count).Sum(),
+                                   CompanyName = cCompany.CompanyName,
+                                   PhoneNumber = cCompany.Phone,
+                                   UserName = cCompany.ApplicationUser.UserName
+                               };
+                List<ShowListViewModel> showInfo = showPage.ToList();
+                model.AddRange(showInfo);
+            
+            return model;
+        }
+
+
+        //取得展演詳細資訊
+        public IEnumerable<ShowListViewModel> GetShowInformById(string searchWord)
+        {
+            var db = new ApplicationDbContext();
+            List<ShowListViewModel> model = new List<ShowListViewModel>();
+            var showId = db.ShowPage.OrderBy(m => m.Id).Select(m => m.Id).ToList();
+            var showPage = from show in db.ShowPage
+                           join cCompany in db.Company on show.FK_Company equals cCompany.Id
+                           join sShowPageFile in db.ShowPageFile on show.Id equals sShowPageFile.FK_ShowPage
+                           where show.Id.ToString() == searchWord
+                           orderby show.Id
+                           select new ShowListViewModel
+                           {
+                               Address = show.Address,
+                               CityName = show.City.CityName,
+                               DistrictName = show.District.DistrictName,
+                               AgeRange = show.AgeRange,
+                               Cost = show.Cost,
+                               Description = show.Description,
+                               EndDate = show.EndDate,
+                               EndTime = show.EndTime,
+                               Id = show.Id,
+                               Price = show.Price,
+                               Remark = show.Remark,
+                               StartDate = show.StartDate,
+                               StartTime = show.StartTime,
+                               Title = show.Title,
+                               Created_At = show.Created_At,
+                               CompanyName = cCompany.CompanyName,
+                               PhoneNumber = cCompany.Phone,
+                               UserName = cCompany.ApplicationUser.UserName,
+                               //ViewCount = (ulong)show.PageViewCounts.Select(m => m.Count).Sum(),
+                           };
+            List<ShowListViewModel> showInfo = showPage.ToList();
+            model.AddRange(showInfo);
+
             return model;
         }
     }

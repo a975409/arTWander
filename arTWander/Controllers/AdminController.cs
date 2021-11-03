@@ -90,10 +90,29 @@ namespace arTWander.Controllers
 
             return View();
         }
-        public ActionResult AllShowList()
+
+        public ActionResult ShowManage()
         {
             return View();
         }
+
+        //展演列表
+        public ActionResult AllShowList()
+        {
+            List<ShowListViewModel> model = null;
+            //判斷是否有搜尋字串
+            var searchWord = Request.Form["txtKeyword"];
+            if (string.IsNullOrEmpty(searchWord))
+            {
+                model = (List<ShowListViewModel>)new AdminFactory().GetShowListAll();
+            }
+            else
+            {
+                model = (List<ShowListViewModel>)new AdminFactory().GetShowListBySearch(searchWord);
+            }
+            return View(model);
+        }
+
         public ActionResult InformMange()
         {
             return View();
@@ -174,7 +193,6 @@ namespace arTWander.Controllers
         public ActionResult ShowCustomList()
         {
             var db = new ApplicationDbContext();
-            //var userSearch = from users in db.Users where role.RoleId.ToString() == "2" select users.UserName;
             List < CustomerListViewModel > model = null;
             //判斷是否有搜尋字串
             var searchWord = Request.Form["txtKeyword"];
@@ -237,10 +255,10 @@ namespace arTWander.Controllers
         {
             return View();
         }
-        public ActionResult BlackInform()
-        {
-            return View();
-        }
+        //public ActionResult BlackInform()
+        //{
+        //    return View();
+        //}
 
         //黑名單用戶
         public ActionResult BlackUser()
@@ -271,7 +289,40 @@ namespace arTWander.Controllers
             return View(model);
         }
 
-        //User 加入黑名單
+       
+
+        public ActionResult BlackCustomer()
+        {
+            var db = new ApplicationDbContext();
+            //var userSearch = from users in db.Users where role.RoleId.ToString() == "2" select users.UserName;
+            List<BlackListViewModel> model = null;
+            //判斷是否有搜尋字串
+            var searchWord = Request.Form["txtKeyword"];
+            //= Request.Form["txtKeyword"];
+            if (string.IsNullOrEmpty(searchWord))
+            {
+                model = (List<BlackListViewModel>)new AdminFactory().GetBlackCustomerAll();
+            }
+            else
+            {
+                model = (List<BlackListViewModel>)new AdminFactory().GetCustomerBySearch(searchWord);
+            }
+            return View(model);
+
+        }
+
+
+        public ActionResult BlackCustomerInfo(string userId)
+        {
+            List<BlackListViewModel> model = null;
+            //取json對應userId data
+            var userSearch = JsonConvert.DeserializeObject<BlackListViewModel>(userId);
+            //取得該id詳細資訊
+            model = (List<BlackListViewModel>)new AdminFactory().GetBlackCustomerInformById(userSearch.userId);
+            return View(model);
+        }
+
+        //User 取消黑名單
         [HttpPost]
         public ActionResult ReleaseBlack(string blackAdd)
         {
@@ -295,49 +346,40 @@ namespace arTWander.Controllers
         }
 
 
-        public ActionResult BlackCustomer()
+        //User Detail Page end
+
+
+        //Show detail page start
+        public ActionResult ShowInformPage(string showID)
+        {
+            List<ShowListViewModel> model = null;
+            //取json對應userId data
+            var userSearch = JsonConvert.DeserializeObject<ShowListViewModel>(showID);
+            //取得該id詳細資訊
+            model = (List<ShowListViewModel>)new AdminFactory().GetShowInformById(userSearch.Id.ToString());
+              return View(model);
+        }
+
+        public ActionResult ShowDelete(string showDele)
         {
             var db = new ApplicationDbContext();
-            //var userSearch = from users in db.Users where role.RoleId.ToString() == "2" select users.UserName;
-            List<BlackListViewModel> model = null;
-            //判斷是否有搜尋字串
-            var searchWord = Request.Form["txtKeyword"];
-            //= Request.Form["txtKeyword"];
-            if (string.IsNullOrEmpty(searchWord))
-            {
-                model = (List<BlackListViewModel>)new AdminFactory().GetBlackCustomerAll();
-            }
-            else
-            {
-                model = (List<BlackListViewModel>)new AdminFactory().GetCustomerBySearch(searchWord);
-            }
-            return View(model);
 
-        }
-
-        public ActionResult BlackCustomerInfo(string userId)
-        {
-            List<BlackListViewModel> model = null;
+            //取json對應blackAdd data
+            var userSearch = JsonConvert.DeserializeObject<ShowListViewModel>(showDele);
             //取json對應userId data
-            var userSearch = JsonConvert.DeserializeObject<BlackListViewModel>(userId);
-            //取得該id詳細資訊
-            model = (List<BlackListViewModel>)new AdminFactory().GetBlackCustomerInformById(userSearch.userId);
-            return View(model);
+            ShowPage showpageDel = db.ShowPage.FirstOrDefault(b => b.Id == userSearch.Id);
+            //黑名單移除
+            if (showpageDel != null)
+            {
+                db.ShowPage.Remove(showpageDel);
+                db.SaveChanges();
+            }
+
+            string success = SweetAlert.SuccessAlert("黑名單", $"{userSearch.Title} 已下架", "");
+            //重新導向
+            return JavaScript(success);
         }
-
-
-
-
-
-
-            //User Detail Page end
-
-
-            //Show detail page start
-            public ActionResult ShowInformPage()
-        {
-            return View();
-        }
+        
 
         //Show detail page end
 
@@ -383,6 +425,7 @@ namespace arTWander.Controllers
             return View();
         }
         //dataStatisticsManage detail page end
+
 
         //修改個人資料頁面start
         public ActionResult AdminSetup()

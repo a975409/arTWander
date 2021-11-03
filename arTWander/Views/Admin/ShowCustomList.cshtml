@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<arTWander.Models.AdminViewModel.CustomerListViewModel>
 
 @{
-    Layout = "CustomerList";
+    ViewBag.Title = "CustomerList";
     Layout = null;
 }
 
-<link rel="stylesheet" href="~/css/UserList.css">
+<link rel="stylesheet" href="./css/UserList.css">
 
 <article>
     <section id="Section">
@@ -37,7 +37,7 @@
             </div>
             <!-- 關鍵字查詢 end -->
             <div class="AllListContent">
-                <table class="table table-hover w-100">
+                <table id="tableSet" class="table table-hover w-100">
                     <thead>
                         <tr>
                             <th scope="col col-md-1">編號</th>
