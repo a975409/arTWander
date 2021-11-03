@@ -72,3 +72,7 @@ D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.csproj.AssemblyReference.cache
 D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.Migrations.initdb.resources
 D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.csproj.GenerateResource.cache
 D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.Migrations.initdb1.resources
+D:\MyWork\arTWander\arTWander\bin\PagedList.dll
+D:\MyWork\arTWander\arTWander\bin\PagedList.Mvc.dll
+D:\MyWork\arTWander\arTWander\bin\PagedList.xml
+D:\MyWork\arTWander\arTWander\bin\PagedList.Mvc.xml

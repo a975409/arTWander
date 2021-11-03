@@ -106,6 +106,12 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="SendGrid, Version=9.24.3.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
       <HintPath>..\packages\SendGrid.9.24.3\lib\net452\SendGrid.dll</HintPath>
     </Reference>
@@ -157,6 +163,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\PagedList.css" />
     <Content Include="css\CommonIndex.css" />
     <Content Include="css\CommonLayout\_AsideFalse.css" />
     <Content Include="css\CommonLayout\_AsideTrue.css" />
@@ -344,6 +351,10 @@
     <Content Include="Views\Shared\AdminLayout\_AdminLayout.cshtml" />
     <Content Include="Views\Shared\CommonPartial\Card\_PartialShowList.cshtml" />
     <Content Include="Views\Shared\CompanyPartial\_showPageImagePartial.cshtml" />
+    <Content Include="Views\Shared\CommonLayout\Aside\_PartialLogInFalse.cshtml" />
+    <Content Include="Views\Shared\CommonLayout\Aside\_PartialLogInTrue.cshtml" />
+    <Content Include="Views\Shared\CompanyPartial\Aside\_PartialLogInFalse.cshtml" />
+    <Content Include="Views\Shared\CompanyPartial\Aside\_PartialLogInTrue.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

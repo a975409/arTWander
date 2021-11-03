@@ -70,7 +70,7 @@ function removeShowPage(showPageId) {
         if (result.isConfirmed) {
             $.ajax({
                 type: 'post',
-                url: './Delete/ShowPageManage',
+                url: './ShowPageManage/Delete',
                 data: { showPageId: showPageId },
                 success: function (data) {
                     Swal.fire(

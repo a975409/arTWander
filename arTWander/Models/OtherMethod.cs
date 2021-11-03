@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -35,6 +36,23 @@ namespace arTWander.Models
             Match m = regex.Match(fileName);
 
             return m.Success;
+        }
+
+        /// <summary>
+        /// 依據指定頁數，以及指定單一頁面的數量，列出範圍內的資料
+        /// </summary>
+        /// <typeparam name="T">限定只有參考型態（class）可使用</typeparam>
+        /// <param name="datalist">list資料</param>
+        /// <param name="page">指定頁數</param>
+        /// <param name="pageSize">單頁呈現多少資料筆數</param>
+        /// <returns></returns>
+        public static IPagedList<T> getCurrentPagedList<T>(IEnumerable<T> datalist, int page = 1 ,int pageSize=3) where T : class
+        {
+            int currentPage = page < 1 ? 1 : page;
+
+            var showPages = datalist.ToPagedList(currentPage, pageSize);
+
+            return showPages;
         }
     }
 }
