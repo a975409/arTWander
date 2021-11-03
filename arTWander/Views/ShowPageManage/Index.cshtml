@@ -52,7 +52,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: 'post',
-                        url: './ShowPageManage/Delete',
+                        url: '@Url.Action("Delete", "ShowPageManage")',
                         data: { showPageId: showPageId },
                         success: function () {
                             updateShowPages();
@@ -74,7 +74,7 @@
         function updateShowPages() {
             $.ajax({
                 type: 'get',
-                url: './ShowPageManage/getShowPages',
+                url: '@Url.Action("getShowPages", "ShowPageManage")',
                 success: function (data) {
                     $('#showPages').html(data);
                 },

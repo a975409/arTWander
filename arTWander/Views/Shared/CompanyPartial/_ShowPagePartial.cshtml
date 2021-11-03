@@ -37,9 +37,11 @@
 
 <!-- 分頁 starts -->
 @*樣式設定參考：https://kevintsengtw.blogspot.com/2013/10/aspnet-mvc-pagedlistmvc_17.html*@
-@*PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing：用ajax更新資料
-PagedListRenderOptions：設定樣式
-AjaxOptions：設定ajax傳遞參數*@
+@*
+    PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing：用ajax更新資料
+    PagedListRenderOptions：設定樣式
+    AjaxOptions：設定ajax傳遞參數，參考網站：https://docs.microsoft.com/zh-tw/dotnet/api/system.web.mvc.ajax.ajaxoptions.tounobtrusivehtmlattributes?view=aspnet-mvc-5.2
+*@
 <div class="d-flex justify-content-center">
     @Html.PagedListPager(Model, page => Url.Action("getShowPages", "ShowPageManage", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions
 {

@@ -27,8 +27,6 @@ namespace arTWander.Models
                 return null;
             }
 
-            int currentPage = page < 1 ? 1 : page;
-
             var shows = company.ShowPages.OrderByDescending(m => m.Created_At).Select(m => new ShowMinViewModel
             {
                 Description = m.Description,
@@ -39,7 +37,7 @@ namespace arTWander.Models
                 fileName = m.ShowPageFiles.Count() <= 0 ? "/image/exhibiton/Null.png" : $"/SaveFiles/Company/{m.Company.Id}/show/{m.Id}/{m.ShowPageFiles.FirstOrDefault().fileName}"
             });
 
-            var showPages = shows.ToPagedList(currentPage, pageSize);
+            var showPages = OtherMethod.getCurrentPagedList(shows, page, pageSize);
 
             return showPages;
         }
