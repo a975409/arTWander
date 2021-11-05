@@ -1,4 +1,5 @@
-﻿<div id="aside1Div" class="d-md-block">
+﻿
+<div id="aside1Div" class="d-md-block">
     <!-- d-flex justify-content-center -->
     <!-- 頭像starts -->
     <figure class="d-flex justify-content-center">
@@ -27,100 +28,61 @@
                 <i class="fa fa-chevron-down" aria-hidden="true"></i>
             </a>
             <hr>
-            <ul id="search" class="collapse show list-group list-group-flush ">
-                <!-- 地點 starts -->
-                <li class="list-group-item bg-transparent">
-                    <p class="font-weight-bold">地點</p>
-                    <ul class="list-group list-group-flush bg-transparent">
-                        <li class="list-group-item bg-transparent">
-                            <!-- 縣市start -->
-                            <a data-toggle="collapse" href="#city" aria-expanded="false" aria-controls="city">
-                                縣市
-                                <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                            </a>
-                            <form action="" id="city" class="collapse list-group list-group-flush">
-                                <br>
-                                <div>
-                                    <input type="radio" name="location" value="taipei"> 台北市<br>
-                                </div><br>
-                                <div>
-                                    <input type="radio" name="location" value="taichung"> 台中市<br>
-                                </div><br>
-                                <div>
-                                    <input type="radio" name="location" value="kaohsiung"> 高雄市<br>
-                                </div><br>
-                            </form>
-                        </li>
-                        <li class="list-group-item bg-transparent">
-                            <a class="" data-toggle="collapse" href="#town" aria-expanded="false" aria-controls="town">
-                                鄉鎮
-                                <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                            </a>
-                            <form action="" id="town" class="collapse list-group list-group-flush">
-                                <br>
-                                <div>
-                                    <input class="font-size" type="radio" name="location" value="taipei"> 某區<br>
-                                </div><br>
-                                <div>
-                                    <input type="radio" name="location" value="taichung"> 某鄉<br>
-                                </div><br>
-                                <div>
-                                    <input type="radio" name="location" value="kaohsiung"> 某鄉<br>
-                                </div><br>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
-                <!-- 地點 end -->
-                <!-- 展覽期間 starts -->
-                <li class="list-group-item bg-transparent">
-                    <p class="font-weight-bold">展覽期間</p>
-                    <ul class="list-group list-group-flush bg-transparent ">
-                        <li class="list-group-item bg-transparent p-1 p-lg-0">
-                            <div class="form-group">
-                                <label for="startDate">開始時間</label>
-                                <input type="date" class="form-control" id="startDate">
-                            </div>
-                        </li>
-                        <li class="list-group-item bg-transparent p-1 p-lg-0">
-                            <div class="form-group">
-                                <label for="endDate">結束時間</label>
-                                <input type="date" class="form-control" id="endDate">
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-                <!-- 展覽期間 end -->
-                <!-- 費用 starts -->
-                <li class="list-group-item bg-transparent">
-                    <div class="form-group">
-                        <label class="font-weight-bold" for="cost">費用</label>
-                        <br>
-                        <select class="form-control" id="cost">
-                            <option value="true">是</option>
-                            <option value="false">否</option>
-                        </select>
-                    </div>
-                </li>
-                <!-- 費用 end -->
-                <!-- 按鈕 starts -->
-                <button type="button" class="btn my-2 bg-gray">清除篩選</button>
-                <button type="button" class="btn my-2 bg-gray">搜尋展覽</button>
-                <!-- 按鈕 end -->
-            </ul>
+            <form id="searchMode" method="post" action="@Url.Action("getShowPages","ShowPageManage")">
+                <ul id="search" class="collapse show list-group list-group-flush ">
+                    <!-- 地點 starts -->
+                    <li class="list-group-item bg-transparent">
+                        <p class="font-weight-bold">地點</p>
+                        <div class="form-group">
+                            <label for="FK_City">縣市</label>
+                            <select class="form-control" id="FK_City" name="FK_City"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="FK_District">鄉鎮市區</label>
+                            <select class="form-control" id="FK_District" name="FK_District"></select>
+                        </div>
+
+                    </li>
+                    <!-- 地點 end -->
+                    <!-- 展覽期間 starts -->
+                    <li class="list-group-item bg-transparent">
+                        <p class="font-weight-bold">展覽期間</p>
+                        <ul class="list-group list-group-flush bg-transparent ">
+                            <li class="list-group-item bg-transparent p-1 p-lg-0">
+                                <div class="form-group">
+                                    <label for="StartDate">開始時間</label>
+                                    <input type="date" class="form-control" id="StartDate" name="StartDate">
+                                </div>
+                            </li>
+                            <li class="list-group-item bg-transparent p-1 p-lg-0">
+                                <div class="form-group">
+                                    <label for="endDate">結束時間</label>
+                                    <input type="date" class="form-control" id="EndDate" name="EndDate">
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- 展覽期間 end -->
+                    <!-- 費用 starts -->
+                    <li class="list-group-item bg-transparent">
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="cost">費用</label>
+                            <br>
+                            <select class="form-control" id="Cost" name="Cost">
+                                <option value="0">選擇全部</option>
+                                <option value="1">是</option>
+                                <option value="2">否</option>
+                            </select>
+                        </div>
+                    </li>
+                    <!-- 費用 end -->
+                    <!-- 按鈕 starts -->
+                    @*<button type="button" class="btn my-2 bg-gray">清除篩選</button>
+                    <button type="submit" class="btn my-2 bg-gray">搜尋展覽</button>*@
+                    <!-- 按鈕 end -->
+                </ul>
+            </form>
         </li>
     </ul>
-
     <!-- 條件查詢 end -->
 </div>
-
-
-<script>
-
-    $(".userListBtn").click(function(){
-        // $('#mainPage').load('ManagerPage/UserList.html');
-    });
-    $(".showCustomerListBtn").click(function(){
-        // $('#mainPage').load('ManagerPage/ShowCustomList.html');
-    });
-</script>

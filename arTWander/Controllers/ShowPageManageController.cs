@@ -53,6 +53,7 @@ namespace arTWander.Controllers
         public ActionResult Index(int page = 1)
         {
             int userId = User.Identity.GetUserId<int>();
+
             var company = new CompanyFactory(DbContext).GetCompany(userId);
 
             if (company == null)
@@ -63,7 +64,8 @@ namespace arTWander.Controllers
             return View(model);
         }
 
-        public ActionResult getShowPages(int page = 1)
+        [HttpPost]
+        public ActionResult getShowPages(SearchShowPagesViewModel searchModel, int page = 1)
         {
             int userId = User.Identity.GetUserId<int>();
             var company = new CompanyFactory(DbContext).GetCompany(userId);
@@ -71,7 +73,10 @@ namespace arTWander.Controllers
             if (company == null)
                 return RedirectToAction("Edit", "Company");
 
-            var model = new ShowPageFactory(DbContext).getCompanyShowPages(company, page);
+            TempData["SearchModel"] = searchModel;
+            TempData.Keep("SearchModel");
+
+            var model = new ShowPageFactory(DbContext).getCompanyShowPages(company, page, searchModel);
             return PartialView("~/Views/Shared/CompanyPartial/_ShowPagePartial.cshtml", model);
         }
 

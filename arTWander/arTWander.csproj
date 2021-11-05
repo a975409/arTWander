@@ -164,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\spinkit.min.css" />
     <Content Include="css\CommonIndex.css" />
     <Content Include="css\CommonLayout\_AsideFalse.css" />
     <Content Include="css\CommonLayout\_AsideTrue.css" />
@@ -284,6 +285,8 @@
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\spin.js" />
+    <Content Include="Scripts\spin.min.js" />
     <Content Include="Sweetalert2\sweetalert2.all.min.js" />
     <Content Include="Sweetalert2\sweetalert2.min.css" />
     <Content Include="Sweetalert2\sweetalert2.min.js" />

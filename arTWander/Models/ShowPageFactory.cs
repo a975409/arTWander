@@ -20,24 +20,79 @@ namespace arTWander.Models
             _dbContext = dbContext;
         }
 
-        public IPagedList<ShowMinViewModel> getCompanyShowPages(Company company,int page=1)
+        public IPagedList<ShowMinViewModel> getCompanyShowPages(Company company, int page = 1, SearchShowPagesViewModel model = null)
         {
             if (company.ShowPages == null || company.ShowPages.Count <= 0)
             {
                 return null;
             }
 
-            var shows = company.ShowPages.OrderByDescending(m => m.Created_At).Select(m => new ShowMinViewModel
+            //依據搜尋條件取得該展演單位的展演
+            var shows = searchShowPage(company.ShowPages, model).Select(m => new ShowMinViewModel
             {
                 Description = m.Description,
                 cityName = m.City.CityName,
                 Id = m.Id,
                 Title = m.Title,
                 Comment = m.ShowComments.Count(),
-                fileName = m.ShowPageFiles.Count() <= 0 ? "/image/exhibiton/Null.png" : $"/SaveFiles/Company/{m.Company.Id}/show/{m.Id}/{m.ShowPageFiles.FirstOrDefault().fileName}"
-            });
+                fileName = m.ShowPageFiles.Count() <= 0 ? "/image/exhibiton/Null.png" : $"/SaveFiles/Company/{m.Company.Id}/show/{m.Id}/{m.ShowPageFiles.FirstOrDefault().fileName}",
+                cityId = m.FK_City
+            }); ;
 
             var showPages = OtherMethod.getCurrentPagedList(shows, page, pageSize);
+
+            return showPages;
+        }
+
+        private IEnumerable<ShowPage> searchShowPage(IEnumerable<ShowPage> showPages, SearchShowPagesViewModel model)
+        {
+            if (model == null)
+            {
+                return showPages.OrderByDescending(m => m.Created_At);
+            }
+            else {
+
+                if (model.FK_City > 0)
+                {
+                    showPages = showPages.Where(m => m.FK_City == model.FK_City);
+
+                    if(model.FK_District>0)
+                        showPages = showPages.Where(m => m.FK_District == model.FK_District);
+                }
+
+                //找出在開始日期與結束日期範圍內的展演
+                if (model.StartDate != null && model.EndDate != null && !model.EndDate.Equals(DateTime.MinValue))
+                {
+                    showPages = showPages.Where(m => DateTime.Compare(model.StartDate, m.StartDate) >= 0 && DateTime.Compare(m.EndDate, model.EndDate) >= 0);
+                }
+
+                if (model.Cost != CostStatus.none) {
+
+                    if (model.Cost == CostStatus.yes)
+                        showPages = showPages.Where(m => m.Cost);
+                    else
+                        showPages = showPages.Where(m => !m.Cost);
+                }
+
+                //熱門展演，以好評數＆留言數做判斷
+                if (model.OrderSortField == OrderSortField.HotSort)
+                {
+                    //先取得平均好評數做排序，再取得留言數做排序
+
+                    showPages = showPages.OrderByDescending(m => {
+
+                        if (m.ShowComments.Count() > 0)
+                            return m.ShowComments.Sum(s => s.Star) / m.ShowComments.Count();
+                        else
+                            return 0;
+                    }).ThenByDescending(m => m.ShowComments.Count());
+                }
+                else
+                {
+                    //最新展演
+                    showPages = showPages.OrderByDescending(m => m.Created_At);
+                }
+            }
 
             return showPages;
         }

@@ -56,7 +56,7 @@
             <div class="row mt-5 mb-2 justify-content-center">
                 <div class="col-6 col-md-3 mx-auto d-flex justify-content-center">
                     <button id="loginBtn" type="submit"
-                            class="btn btn-outline-secondary border-0 bg-pink text-white w-100">
+                            class="btn btn-secondary border-0 bg-pink text-white w-100">
                         登入
                     </button>
                 </div>
@@ -115,7 +115,7 @@
             <div class="row mt-5 mb-2 justify-content-center">
                 <div class="col-6 col-md-3 mx-auto d-flex justify-content-center">
                     <button id="register" type="submit"
-                            class="btn btn-outline-secondary border-0 bg-pink text-white w-100">
+                            class="btn btn-secondary border-0 bg-pink text-white w-100">
                         註冊
                     </button>
                 </div>
@@ -131,6 +131,7 @@
 @section scripts
 {
     <script>
+       
         //提交表單時，驗證Email和密碼欄位，如果驗證失敗，則取消提交表單
         $('#loginForm').submit(function (event) {
             let LoginEmail = $('#LoginEmail').val();
@@ -144,6 +145,8 @@
 
             event.preventDefault();
             let formData = $(this).serialize();
+            $('#loginBtn').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>登入中...');
+            $('#loginBtn').attr("disabled", true);
 
             $.ajax({
                 type: 'post',
@@ -153,8 +156,12 @@
                 success: function (data) {
                     @* 執行sweetalert指令 *@
                     eval(data);
+                    $('#loginBtn').html('登入');
+                    $('#loginBtn').removeAttr("disabled");
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
+                    $('#loginBtn').html('登入');
+                    $('#loginBtn').removeAttr("disabled");
                     Swal.fire({
                         icon: 'error',
                         title: textStatus,
@@ -185,6 +192,8 @@
 
             event.preventDefault();
             let formData = $(this).serialize();
+            $('#register').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>註冊中...');
+            $('#register').attr("disabled", true);
 
             $.ajax({
                 type: 'post',
@@ -193,8 +202,12 @@
                 data: formData,
                 success: function (data) {
                     eval(data);
+                    $('#register').html('註冊');
+                    $('#register').removeAttr("disabled");
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
+                    $('#register').html('註冊');
+                    $('#register').removeAttr("disabled");
                     Swal.fire({
                         icon: 'error',
                         title: textStatus,

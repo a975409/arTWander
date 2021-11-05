@@ -306,13 +306,6 @@
 
             getShowImages(@(Model.Id));
 
-            //將原先設定好的關鍵字顯示在"已添加的關鍵字"的欄位
-            @foreach (var item in Model.searchKeyword.Split(','))
-            {
-                @Html.Raw("$('#inputKeyword').val('" + item + "');");
-                @Html.Raw("$('#inputKeywordBtn').trigger('click');");
-            }
-
             $('#Cost').trigger('change');
 
             $('#Description').summernote({
@@ -339,6 +332,17 @@
             });
 
             getKeywords();
+
+            //將原先設定好的關鍵字顯示在"已添加的關鍵字"的欄位
+            let searchKeyword = '@Model.searchKeyword';
+
+            if (searchKeyword != '') {
+
+                for (let item of searchKeyword.split(',')) {
+                    $('#inputKeyword').val(item);
+                    $('#inputKeywordBtn').trigger('click');
+                }
+            }
         });
 
         function getKeywords() {
@@ -350,15 +354,74 @@
                         data: { keyword: request.term },
                         dataType: 'json',
                         success: function (data) {
-                            console.log(data);
                             response(data);
                         }
                     })
                 }
             });
         }
+        function getShowImages(showPageId) {
+            $.ajax({
+                type: 'get',
+                url: '@Url.Action("getShowImages", "ShowPageManage")',
+                data: { showPageId: showPageId },
+                success: function (data) {
+                    $('#showImgs').html('');
+                    $('#showImgs').append(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: textStatus,
+                        text: errorThrown,
+                        showConfirmButton: false,
+                        showCancelButton: true
+                    });
+                }
+            })
+        }
+
+        function removeShowImage(imgId, showPageId) {
+            Swal.fire({
+                title: '移除圖片?',
+                text: "是否要移除這張已上傳的圖片？",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: '是！確定移除',
+                cancelButtonText: '否！不要移除',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'post',
+                        url: '@Url.Action("removeShowImage", "ShowPageManage")',
+                        data: { imgId: imgId, showPageId: showPageId },
+                        success: function (data) {
+                            Swal.fire(
+                                '移除成功!',
+                                '已移除圖片',
+                                'success'
+                            ).then(function () {
+                                getShowImages(showPageId);
+                            });
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: textStatus,
+                                text: errorThrown,
+                                showConfirmButton: false,
+                                showCancelButton: true
+                            });
+                        }
+                    });
+                }
+            });
+        }
 
     </script>
+
     <script type="text/javascript" charset="UTF-8" src="~/javascript/EditSingleShowPage.js"></script>
 
     @Scripts.Render("~/bundles/jqueryval")

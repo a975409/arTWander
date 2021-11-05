@@ -57,6 +57,19 @@
     transform: scale(1.2);
 }
 
+.marqee {
+    height: 24px;
+    width: 65%;
+    overflow: hidden;
+    position: relative;
+}
+
+    .marqee a {
+        position: absolute;
+        top: 2px;
+        animation: marqee 8s linear infinite;
+        white-space: nowrap;
+    }
 
 
 @media screen and (max-width: 992px){
