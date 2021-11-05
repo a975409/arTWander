@@ -55,6 +55,7 @@ namespace arTWander.Controllers
             int userId = User.Identity.GetUserId<int>();
 
             var company = new CompanyFactory(DbContext).GetCompany(userId);
+            ViewBag.PhotoStickerImage = string.IsNullOrEmpty(company.PhotoStickerImage) ? "/image/avatar/頭像_展演單位.png" : $"/SaveFiles/Company/{company.Id}/Info/{company.PhotoStickerImage}";
 
             if (company == null)
                 return RedirectToAction("Edit", "Company");

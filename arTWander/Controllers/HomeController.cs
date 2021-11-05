@@ -27,16 +27,6 @@ namespace arTWander.Controllers
             return View();
         }
 
-        public ActionResult test() {
-
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult test(List<Service> Service) {
-
-            return Json(Service);
-        }
     }
 
     public class Service { 
