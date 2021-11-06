@@ -200,17 +200,44 @@ namespace arTWander.Controllers
             //設定宣傳圖
             if (Promotional != null)
             {
-                company.PromotionalImage = "PromotionalImage" + Path.GetExtension(Promotional.FileName);
+                var files = Directory.GetFiles(saveDir).Where(m => Path.GetFileName(m).StartsWith("PromotionalImage"));
+
+                if (files.Count() > 0)
+                {
+                    foreach(var filePath in files)
+                    {
+                        FileInfo file = new FileInfo(filePath);
+
+                        if (file.Exists)
+                            file.Delete();
+                    }
+                }
+
+                company.PromotionalImage = $"PromotionalImage_{company.Id}_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + Path.GetExtension(Promotional.FileName);
 
                 if (factory.SaveCompanyPageImage(Promotional, saveDir, company.PromotionalImage))
                 {
                     await DbContext.SaveChangesAsync();
                 }
             }
-
+            
             //設定大頭照
             if (PhotoSticker != null) {
-                company.PhotoStickerImage = "PhotoStickerImg" + Path.GetExtension(PhotoSticker.FileName);
+
+                var files = Directory.GetFiles(saveDir).Where(m => Path.GetFileName(m).StartsWith("PhotoStickerImg"));
+
+                if (files.Count() > 0)
+                {
+                    foreach (var filePath in files)
+                    {
+                        FileInfo file = new FileInfo(filePath);
+
+                        if (file.Exists)
+                            file.Delete();
+                    }
+                }
+
+                company.PhotoStickerImage = $"PhotoStickerImg_{company.Id}_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + Path.GetExtension(PhotoSticker.FileName);
 
                 if (factory.SaveCompanyPageImage(PhotoSticker, saveDir, company.PhotoStickerImage))
                 {

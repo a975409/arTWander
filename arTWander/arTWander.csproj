@@ -279,6 +279,7 @@
     <Content Include="javascript\jquery.MultiFile.min.js" />
     <Content Include="javascript\LoginForm.js" />
     <Content Include="javascript\MyShowPage.js" />
+    <Content Include="javascript\PreviewShowPage.js" />
     <Content Include="javascript\RegisterForm.js" />
     <Content Include="javascript\SingleShowPage.js" />
     <Content Include="javascript\sweetalert2%4011.js" />
@@ -358,6 +359,7 @@
     <Content Include="Views\Shared\CommonLayout\Aside\_PartialLogInTrue.cshtml" />
     <Content Include="Views\Shared\CompanyPartial\Aside\_PartialLogInFalse.cshtml" />
     <Content Include="Views\Shared\CompanyPartial\Aside\_PartialLogInTrue.cshtml" />
+    <Content Include="Views\Shared\CompanyPartial\_DisplayShowPagePartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -454,6 +456,10 @@
     <Compile Include="Migrations\202111020704123_initdb1.Designer.cs">
       <DependentUpon>202111020704123_initdb1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111060752599_initdb2.cs" />
+    <Compile Include="Migrations\202111060752599_initdb2.Designer.cs">
+      <DependentUpon>202111060752599_initdb2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminFactory\AdminFactory.cs" />
@@ -501,6 +507,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111020704123_initdb1.resx">
       <DependentUpon>202111020704123_initdb1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111060752599_initdb2.resx">
+      <DependentUpon>202111060752599_initdb2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

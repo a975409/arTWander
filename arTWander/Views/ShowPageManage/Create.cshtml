@@ -197,14 +197,35 @@
                 @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
             </div>
             <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary">下一步：預覽展演</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick=" PreviewShowPage()">下一步：預覽展演</button>
             </div>
         </form>
     </div>
 </div>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">預覽展演</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="PreviewShowPage">
+                @Html.Partial("~/Views/Shared/CompanyPartial/_DisplayShowPagePartial.cshtml")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">繼續編輯</button>
+                <button type="submit" form="#CreateShowForm" class="btn btn-primary" onclick="submitCreateForm()">發佈展演</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section css{
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="~/css/css_companyPage/SingleShowPage.css" rel="stylesheet" />
     <style>
         .titlegroup {
             font-size: 25px;
@@ -366,5 +387,6 @@
     }
 
     <script type="text/javascript" charset="UTF-8" src="~/javascript/EditSingleShowPage.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="~/javascript/PreviewShowPage.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
 }

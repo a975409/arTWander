@@ -126,28 +126,11 @@
                     <span>@(Model.AgeRange ? "是":"否")</span>
                 </div>
             </div>
-            @*<br />
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label>@Html.DisplayNameFor(model => model.Cost)</label>
-                        <p>@(Model.Cost ? "是":"否")</p>
-                    </div>
-                    <div class="col-4">
-                        <label>@Html.DisplayNameFor(model => model.Price)</label>
-                        <p>@Model.Price 元</p>
-                    </div>
-                    <div class="col-4">
-                        <label>@Html.DisplayNameFor(model => model.AgeRange)</label>
-                        <p>@(Model.AgeRange ? "是":"否")</p>
-                    </div>
-                </div>
-                <br />
-                <div class="form-group">
-                    <label>@Html.DisplayNameFor(model => model.Remark)</label>
-                    <p class="form-text">
-                        @Model.Remark
-                    </p>
-                </div>*@
+            <br />
+            <div class="form-group" style="font-size:20px;">
+                <label>@Html.DisplayNameFor(model => model.Remark)</label>
+                <pre class="form-text w-100">@Model.Remark</pre>
+            </div>
         </div>
         <hr />
 

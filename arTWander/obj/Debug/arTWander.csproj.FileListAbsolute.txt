@@ -76,3 +76,4 @@ D:\MyWork\arTWander\arTWander\bin\PagedList.dll
 D:\MyWork\arTWander\arTWander\bin\PagedList.Mvc.dll
 D:\MyWork\arTWander\arTWander\bin\PagedList.xml
 D:\MyWork\arTWander\arTWander\bin\PagedList.Mvc.xml
+D:\MyWork\arTWander\arTWander\obj\Debug\arTWander.Migrations.initdb2.resources

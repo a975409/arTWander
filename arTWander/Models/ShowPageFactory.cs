@@ -149,6 +149,7 @@ namespace arTWander.Models
         {
             if (imgFiles != null && imgFiles.Length > 0)
             {
+                int count = 1;
                 foreach (var item in imgFiles)
                 {
                     if (item != null && item.ContentLength > 0 && item.FileName.Length <= 20 && OtherMethod.checkFileName(item.FileName))
@@ -161,13 +162,18 @@ namespace arTWander.Models
                             //判斷上傳的檔案是否為圖片檔
                             if (OtherMethod.IsImage(stream))
                             {
+                                //重新命名圖片檔名
+                                string fileName = $"ShowImage_{showPage.Id}_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + $"_{count}" + Path.GetExtension(item.FileName);
+
                                 //完整另存路徑
-                                string savePath = Path.Combine(saveDir, Path.GetFileName(item.FileName));
+                                string savePath = Path.Combine(saveDir, fileName);
 
                                 //server端下載檔案
                                 item.SaveAs(savePath);
 
-                                _dbContext.ShowPageFile.Add(new ShowPageFile { fileName = Path.GetFileName(item.FileName), FK_ShowPage = showPage.Id });
+                                _dbContext.ShowPageFile.Add(new ShowPageFile { fileName = fileName, FK_ShowPage = showPage.Id });
+
+                                count++;
                             }
                         }
                     }
@@ -187,6 +193,8 @@ namespace arTWander.Models
         {
             if (imgFiles != null && imgFiles.Length > 0)
             {
+                int count = 1;
+
                 //儲存新增的圖檔
                 foreach (var item in imgFiles)
                 {
@@ -200,17 +208,18 @@ namespace arTWander.Models
                             //判斷上傳的檔案是否為圖片檔
                             if (OtherMethod.IsImage(stream))
                             {
-                                //查看該檔名如果已存在於資料庫，就不在資料庫新增資料
-                                if (!showPage.ShowPageFiles.Any(m => m.fileName == Path.GetFileName(item.FileName)))
-                                {
-                                    _dbContext.ShowPageFile.Add(new ShowPageFile { fileName = Path.GetFileName(item.FileName), FK_ShowPage = showPage.Id });
-                                }
+                                //重新命名圖片檔名
+                                string fileName = $"ShowImage_{showPage.Id}_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + $"_{count}" + Path.GetExtension(item.FileName);
 
                                 //完整另存路徑
-                                string savePath = Path.Combine(saveDir, Path.GetFileName(item.FileName));
+                                string savePath = Path.Combine(saveDir, fileName);
 
                                 //server端下載檔案，檔名重複則直接覆蓋
                                 item.SaveAs(savePath);
+
+                                _dbContext.ShowPageFile.Add(new ShowPageFile { fileName = fileName, FK_ShowPage = showPage.Id });
+
+                                count++;
                             }
                         }
                     }

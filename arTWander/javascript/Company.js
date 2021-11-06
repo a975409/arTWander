@@ -30,19 +30,54 @@
     }
 });
 
-$('#Promotional').change(function () {
-    let ImgFile = document.getElementById('Promotional').files[0];
-    let objUrl = URL.createObjectURL(ImgFile);
+$('#Promotional').change(function (event) {
 
-    document.getElementById('PromotionalImage').src = objUrl;
+    if (checkfile(this)) {
+        let ImgFile = document.getElementById('Promotional').files[0];
+        let objUrl = URL.createObjectURL(ImgFile);
+        document.getElementById('PromotionalImage').src = objUrl;
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: '錯誤',
+            text: '請選擇圖檔',
+            showConfirmButton: false,
+            showCancelButton: true
+        });
+    }
 });
 
 $('#PhotoSticker').change(function () {
-    let ImgFile = document.getElementById('PhotoSticker').files[0];
-    let objUrl = URL.createObjectURL(ImgFile);
 
-    document.getElementById('PhotoStickerImg').src = objUrl;
+    if (checkfile(this)) {
+        let ImgFile = document.getElementById('PhotoSticker').files[0];
+        let objUrl = URL.createObjectURL(ImgFile);
+        document.getElementById('PhotoStickerImg').src = objUrl;
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: '錯誤',
+            text: '請選擇圖檔',
+            showConfirmButton: false,
+            showCancelButton: true
+        });
+    }
 });
+
+function checkfile(sender) {
+
+    // 可接受的附檔名
+    var validExts = new Array(".gif", ".jpeg", ".jpg", ".png", ".webp", ".svg", ".tiff", ".icon");
+
+    var fileExt = sender.value;
+    fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+    if (validExts.indexOf(fileExt) < 0) {
+        //alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+        sender.value = null;
+        return false;
+    }
+    else return true;
+}
 
 $('#CompanyName').change(function () {
     let data = $(this).val();
