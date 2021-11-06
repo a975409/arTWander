@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>arTWander 暫時首頁</title>
+    <title>arTWander 藝文漫步</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
@@ -55,12 +55,16 @@
                     {
                         @Html.AntiForgeryToken()
 
-                        <a id="setUp" c lass="nav-link ml-2 text-light d-inline" href="~/Manage/Index"><i class="fa fa-cog"
-                        aria-hidden="true"></i></a>
+                        if (User.IsInRole("Member"))
+                        {
+                            <a id="setUp" class="nav-link text-light d-inline p-0" href="~/Common/SetUp?firstLogIn=false"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                        }
+                        else
+                        {
+                            <a id="setUp" class="nav-link text-light d-inline p-5" href="~/Manage/Index"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                        }
 
-                        <a href="javascript:document.getElementById('logoutForm').submit()"
-                    class="text-light text-decoration-none">登出</a>
-
+                        <a href="javascript:document.getElementById('logoutForm').submit()" class="text-light text-decoration-none">登出</a>
                     }
                 }
                 else

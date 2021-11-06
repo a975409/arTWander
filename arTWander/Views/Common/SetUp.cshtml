@@ -9,6 +9,8 @@
 @section css
 {
     <link href="~/css/css_commonPage/setUpPage.css" rel="stylesheet" />
+    @*sweetalert*@
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 }
 <!-- 註冊後修改資料頁面 -->
 <div class="container mt-5 py-5 border rounded-lg">
@@ -23,10 +25,9 @@
     <div class="tab-content">
         <!-- 初次登入設定資料 starts -->
 
-        @using (Html.BeginForm("SetUp", "Common", FormMethod.Post, new { id= "mainForm", enctype = "multipart/form-data", @class = "container p-0 w-100 rounded-lg mt-5 " }))
+        @using (Html.BeginForm("SetUp", "Common", FormMethod.Post, new { id = "mainForm", enctype = "multipart/form-data", @class = "container p-0 w-100 rounded-lg mt-5 " }))
         {
             <div class="row mt-5 justify-content-center ">
-                <!-- <label class="col-7 col-md-2 " for="userAvatar">頭像</label> -->
                 <!-- 消除input type="file" UI的方法 https://www.wfublog.com/2017/10/input-type-file-upload-css-skill.html -->
                 <label class=" col-3 col-md-1 p-0" for="avatarUploader" role="button">
                     <div id="userAvatarDiv">
@@ -59,12 +60,12 @@
                 <input class="col-6" name="PhoneNumber" id="PhoneNumber" type="text" value="@Model.PhoneNumber"><br>
             </div>
             @*<div class="row mt-4 justify-content-center">
-                <label class="col-4 col-md-2" for="userSuscribe">訂閱電子報</label>
-                <select class="col-6" name="" id="">
-                    <option value="">是</option>
-                    <option value="">否</option>
-                </select><br>
-            </div>*@
+                    <label class="col-4 col-md-2" for="userSuscribe">訂閱電子報</label>
+                    <select class="col-6" name="" id="">
+                        <option value="">是</option>
+                        <option value="">否</option>
+                    </select><br>
+                </div>*@
         }
         <div class="row mt-4 justify-content-center" id="TwoFactor">
             @Html.Partial("_IsTwoFactor", Model)
@@ -89,9 +90,9 @@
         <div class="modal-content">
             <div class="modal-header justify-content-center">
                 <h5 class="modal-title" id="staticBackdropLabel">登入失敗</h5>
-                 @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span> 
-                 </button>*@
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                    </button>*@
             </div>
             <div class="modal-body">
                 <main>
@@ -107,6 +108,17 @@
         </div>
     </div>
 </div>
+
+@*<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <p>為展示適合您年齡區間的展覽及使用行程安排功能，請提供您的出生年月日及一組常用地址</p>
+        </div>
+    </div>
+</div>*@
+
+
+
 
 @section scripts{
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -138,6 +150,15 @@
                     }
                 })
             })
+
+            if (@ViewBag.firstLogIn) {
+                Swal.fire({
+                    title: '<h5 style="color: rgb(197, 126, 104); font-weight: bold;">歡迎您加入arTwander !</h5>',
+                    icon: 'info',
+                    html: '<div class="container"><div class="row justify-content-center"><div class="col-12"><p style="font-size:16px;">為展示適合您年齡區間的展覽及使用行程安排功能<br>請提供您的出生年月日及一組常用地址</p></div></div></div>',
+                    
+                })
+            }
         })
 
 
@@ -145,10 +166,10 @@
     </script>
 
     <script>
-        //密碼變更
-        //$('#passwordModifyBtn').click(function () {
-        //    $('#mainPage').load('/AccountPage/PasswordModify.html');
-        //})
+            //密碼變更
+            //$('#passwordModifyBtn').click(function () {
+            //    $('#mainPage').load('/AccountPage/PasswordModify.html');
+            //})
     </script>
 }
 

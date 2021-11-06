@@ -60,6 +60,7 @@ namespace arTWander.Controllers
             //r.CurrentLogins
 
             var RoleName = await UserManager.GetRolesAsync(User.Identity.GetUserId<int>());
+            var nowUser = UserManager.FindById(User.Identity.GetUserId<int>());
 
             TempData["model"] = model;
 
@@ -70,7 +71,10 @@ namespace arTWander.Controllers
                 case "Company":
                     return RedirectToAction("Index", "Company");
                 case "Member":
-                    return RedirectToAction("Index", "Common");
+                    if (nowUser.AccountAddress == null || nowUser.Birthday == null)
+                        return RedirectToAction("SetUp", "Common", new { firstLogIn = "true" });
+                    else
+                        return RedirectToAction("Index", "Common");
                 default:
                     return View("Error");
             }
