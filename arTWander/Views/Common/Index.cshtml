@@ -4,58 +4,58 @@
     string selectedCity = ViewBag.city;
 }
 
-
 <div id="mainPage" class="w-100 py-5"></div>
+    
 
-    <script>
+<script>
 
-    $(document).ready(function () {
+$(document).ready(function () {
         
-        $.ajax({
-            type: 'post',
-            url: '@Url.Action("ShowList", "Common", new { city = selectedCity })',
-            data: {},
-            success: function (data) {
-                $('#mainPage').html(data);
-            },
-            error: (XMLHttpRequest, textStatus, errorThrown) => {
-                $('#mainPage').html(
-                    '<div class="container"><div class="row showlistRow justify-content-center"><h3>此區域本檔期暫無展覽</h3></div></div>'
-                );
-                alert(XMLHttpRequest.status);
-                alert(XMLHttpRequest.readyState);
-                alert(textStatus);
-            }
-        });
-
+    $.ajax({
+        type: 'post',
+        url: '@Url.Action("ShowList", "Common", new { city = selectedCity })',
+        data: {},
+        success: function (data) {
+            $('#mainPage').html(data);
+        },
+        error: (XMLHttpRequest, textStatus, errorThrown) => {
+            $('#mainPage').html(
+                '<div class="container"><div class="row showlistRow justify-content-center"><h3>此區域本檔期暫無展覽</h3></div></div>'
+            );
+            alert(XMLHttpRequest.status);
+            alert(XMLHttpRequest.readyState);
+            alert(textStatus);
+        }
     });
 
-    </script>
+});
 
-    @*點擊分頁連結*@
-    <script>
+</script>
 
-    @*$("#showList").click(function () {
-        $.ajax({
-            type: 'post',
-            url: '@Url.Action("showList", "Common")',
-            data: {},
-            success: function (data) {
-                $('#mainPage').html(data);
-            }
-        });
-    });*@
+@*點擊分頁連結*@
+<script>
 
-    $("#GalleryList").click(function () {
-        $.ajax({
-            type: 'post',
-            url: '@Url.Action("GalleryList", "Common")',
-            data: {},
-            success: function (data) {
-                $('#mainPage').html(data);
-            }
-        });
+@*$("#showList").click(function () {
+    $.ajax({
+        type: 'post',
+        url: '@Url.Action("showList", "Common")',
+        data: {},
+        success: function (data) {
+            $('#mainPage').html(data);
+        }
     });
+});*@
 
-    </script>
+$("#GalleryList").click(function () {
+    $.ajax({
+        type: 'post',
+        url: '@Url.Action("GalleryList", "Common")',
+        data: {},
+        success: function (data) {
+            $('#mainPage').html(data);
+        }
+    });
+});
+
+</script>
 

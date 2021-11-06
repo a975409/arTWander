@@ -20,8 +20,8 @@
         <div class="description">
             <a href="#">@Model.showDiscription</a>
         </div>
-        <div class="d-flex align-items-center ">
-            <a class="mr-2" href="">05 comment</a>
+        <div class="d-flex align-items-center justify-content-end ">
+            @*<a class="mr-2" href="">05 comment</a>*@
             <a class="addToMyShow" href=""> 
                 ⧾我的展覽
                 <input type="hidden" name="name" value="@Model.showId" />
@@ -32,42 +32,3 @@
 </div>
 <!-- 展覽 ends -->
 
-<script>
-     @*$(document).ready(function () {
-         // 加入我的展覽功能========================
-
-         // 取得加入展覽按鈕nodelist
-         let btnATMS = document.querySelectorAll('.addToMyShow');
-
-         // 迭代nodelist中的按鈕
-         for (let item of btnATMS) {
-
-             let events = $._data($(item)[0], 'events'); // 取得每個a被註冊的事件數量
-
-             // 假如未註冊click事件
-             if (events == null) {
-
-                 $(item).on('click', function (e) {
-                     e.preventDefault(); // 阻止a標籤預設行為
-                     alert('被點擊了');
-                     addToMyShow();
-                 });
-             }
-             else if (events['click'].length == 1)
-             {
-                 alert(events['click'].length + '已經註冊過事件');
-             }
-
-         }
-
-        function addToMyShow() {
-            $.ajax({
-                type: 'post',
-                url: '@Url.Action("addToMyShow", "Common")',
-                data: {showId: @Model.showId}
-
-            });
-        }
-
-    });*@
-</script>

@@ -3,8 +3,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Dynamic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -56,12 +58,50 @@ namespace arTWander.Controllers
             }
         }
 
+        #region Helper
+        private bool HasPassword()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId<int>());
+            if (user != null)
+            {
+                return user.PasswordHash != null;
+            }
+            return false;
+        }
+
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
+
+        #endregion
+
         //基本資料設定 starts
-        public ActionResult SetUp()
+        public ActionResult SetUp(string firstLogIn)
         {
             // 取得model
-            IndexViewModel model = (IndexViewModel)TempData["model"];
-            TempData.Keep("model");
+            IndexViewModel model;
+            if (firstLogIn == "true")
+            {
+                // 假如初次登入
+                model = (IndexViewModel)TempData["model"];
+                TempData.Keep("model");
+                ViewBag.firstLogIn = "true";
+            }
+            else
+            {
+                model = new IndexViewModel
+                {
+                    HasPassword = HasPassword(),
+                    PhoneNumber = UserManager.GetPhoneNumber(User.Identity.GetUserId<int>()),
+                    TwoFactor = UserManager.GetTwoFactorEnabled(User.Identity.GetUserId<int>()),
+                    Logins = UserManager.GetLogins(User.Identity.GetUserId<int>()),
+                    BrowserRemembered = AuthenticationManager.TwoFactorBrowserRemembered(User.Identity.GetUserId<int>().ToString())
+                };
+            }
 
             // 取得viewModel
             int userId = User.Identity.GetUserId<int>();
@@ -150,21 +190,75 @@ namespace arTWander.Controllers
             int userId = User.Identity.GetUserId<int>();
             var user = UserManager.FindById(userId);
 
-            var b = DbContext.ShowPage.Where(p => p.Id == showId).FirstOrDefault();
-            //user.ShowPage.Add();
+            var theShow = DbContext.ShowPage.Where(p => p.Id == showId).FirstOrDefault();
+            try
+            {
+                user.ShowPage.Add(theShow);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(500, "false");
+            }
 
-            //return RedirectToAction("Index", "Home");
-            return Content("success", "text/plain");
+            try
+            {
+                DbContext.SaveChanges();
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(500, "false");
+            }
+
+            return new HttpStatusCodeResult(201, "success");
+           
+        }
+
+        public ActionResult deleFromMyShow(int showId)
+        {
+            var userId = User.Identity.GetUserId<int>();
+            var user = UserManager.FindById(userId);
+
+            var theDeletedShow = user.ShowPage.Where(p => p.Id == showId).FirstOrDefault();
+            user.ShowPage.Remove(theDeletedShow);
+            DbContext.SaveChanges();
+
+            return new HttpStatusCodeResult(201, "success");
         }
 
         //Common首頁 end
 
         //=========================================================================================
 
-        //Aside 導引畫面start
-        public ActionResult MyshowPage()
+        //Aside start
+        public ActionResult MyshowPage(int? cityId)
         {
-            return View();
+            // 建立 城市的list
+            var cityList = DbContext.City.Select(x => x).ToList();
+
+            // 建立 喜愛的展覽清單的viewmodel 的list
+            int userId = User.Identity.GetUserId<int>();
+            var user = UserManager.FindById(userId);
+
+            List<CommonShowViewModel> myShowList = new userFactory().createMyShowList(cityId, userId, user);
+
+            // 將兩個list加入viewModel
+            CommonMyShowViewNodel viewModel = new userFactory().createMyShowViewNodel(cityList, myShowList);
+            
+            // 判斷選擇地區沒有展覽 || 未添加任何展覽進我的展覽時 顯示的訊息
+            if (myShowList.Count() < 1 && cityId != null)
+            {
+                ViewBag.errorMsg = "此地區尚未有展覽被添加至「我的展覽」";
+                ViewBag.guidMsg = "若想規劃此地區的看展行程，請再回到展覽清單探索該地區展覽";
+            }
+            else if(myShowList.Count() < 1 && cityId == null)
+            {
+                ViewBag.errorMsg = "尚未有展覽被添加至「我的展覽」";
+                ViewBag.guidMsg = "若想進行展覽行程規劃，可從「全部展覽」添加展覽進入「我的展覽」";
+            }
+                
+
+            return View(viewModel);
+
         }
 
         public ActionResult MyItineraryPage()
@@ -176,7 +270,7 @@ namespace arTWander.Controllers
         {
             return View();
         }
-        //Aside 導引畫面end
+        //Aside end
         //訂閱展演單位 畫面 start
         public ActionResult SubscriptionDetail()
         {

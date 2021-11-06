@@ -1,0 +1,33 @@
+﻿@model arTWander.Models.CommonViewModel.CommonShowViewModel
+
+<!-- 展覽starts -->
+<div class="col-12 col-lg-4 position-relative  mb-lg-5">
+    <!-- 展覽圖片 starts -->
+    <!-- 侷限移除icon可移動範圍 -->
+    <div class="w-100">
+        <div class="showImg w-100">
+            <a href="#">
+                <img class="w-100 rounded-sm img-fluid " src="../image/exhibiton/@Model.showImg" alt="">
+            </a>
+        </div>
+        <a href="" class="MyshowDeleteIcon">
+            <i class="fa fa-times" aria-hidden="true"></i>
+            <input type="hidden" name="showId" class="showIdInput" value="@Model.showId" />
+        </a>
+    </div>
+    <!-- 展覽圖片 ends -->
+    <!-- 展覽敘述卡 strats -->
+    <div class="shortDetail">
+        <div class="d-flex align-items-center">
+            <a href="">@Model.showCity</a>／
+            <div class="marqee">
+                <a href="">@Model.showTitle</a>
+            </div>
+        </div>
+        <div class="description">
+            <a href="#">@Model.showDiscription</a>
+        </div>
+    </div>
+    <!-- 展覽敘述卡 ends -->
+</div>
+<!-- 展覽 ends -->

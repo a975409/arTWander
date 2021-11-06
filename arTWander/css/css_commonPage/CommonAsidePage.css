@@ -134,7 +134,6 @@ a {
 }
 
     .marqee a {
-        /*display: flex;*/
         position:absolute;
         top: 2px;
         animation: marqee 8s linear infinite;

@@ -7,7 +7,7 @@
 <!-- 展覽列表 starts -->
 <div class="container ">
     <div class="row showlistRow">
-        
+
         @if (Model.Count > 0 && Model[0] != null)
         {
             foreach (var show in Model)
@@ -17,14 +17,15 @@
         }
         else
         {
-            <div class="col-12">
+            <div class="col-12 mt-5 " >
                 <h5 class="d-flex justify-content-center">
                     @ViewBag.errorMsg
                 </h5>
+                
             </div>
         }
     </div>
-    
+
 </div>
 <!-- 展覽列表 ends -->
 <!-- 分頁 starts -->
@@ -66,30 +67,10 @@
             });
         });
 
-        //====================================================
-        // 加入我的展覽
-        @*let btnATMS = document.querySelectorAll('.addToMyShow');
-        for (let item of btnATMS) {
-            item.addEventListener('click', function (e) {
-                // 阻止a標籤預設行為
-                e.preventDefault();
-                //
-                alert('被點擊');
-                addToMyShow();
-            });
-        }
-
-        function addToMyShow() {
-            $.ajax({
-                type: 'post',
-                url: '@Url.Action("addToMyShow", "Common")',
-                data:
-
-            });
-        }*@
-
     });
 
 
 </script>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="~/javascript/common_ShowList.js"></script>
