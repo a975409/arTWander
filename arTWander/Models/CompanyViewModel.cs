@@ -11,6 +11,8 @@ namespace arTWander.Models
 {
     public class CompanyViewModel
     {
+        public int Id { get; set; }
+
         [DisplayName("展演單位名稱")]
         public string CompanyName { get; set; }
 
@@ -52,6 +54,8 @@ namespace arTWander.Models
 
     public class CompanyEditViewModel
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "請填寫展演單位名稱")]
         [StringLength(10, ErrorMessage = "字數最多10個字")]
         [DisplayName("展演單位名稱")]
@@ -98,5 +102,11 @@ namespace arTWander.Models
         [StringLength(20, ErrorMessage = "字數最多20個字")]
         [DisplayName("傳真")]
         public string Fax { get; set; }
+
+        [DisplayName("大頭照")]
+        public string PhotoSticker { get; set; }
+
+        [DisplayName("封面照")]
+        public string PromotionalImage { get; set; }
     }
 }

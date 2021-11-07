@@ -20,13 +20,13 @@
                 <div id="PromotionalImageDiv">
                     @*<img id="PromotionalImageImg" class="card-img-top" src="/image/exhibiton/文心藝所.jpg" alt="">*@
 
-                    @if (string.IsNullOrEmpty(ViewBag.PromotionalImage))
+                    @if (string.IsNullOrEmpty(Model.PromotionalImage))
                     {
                         <img src="~/image/exhibiton/Null.png" class="card-img-top" id="PromotionalImage" alt="...">
                     }
                     else
                     {
-                        <img src="@ViewBag.PromotionalImage" id="PromotionalImage" class="card-img-top" alt="...">
+                        <img src="~/SaveFiles/Company/@Model.Id/Info/@Model.PromotionalImage" id="PromotionalImage" class="card-img-top" alt="...">
                     }
                     <i class="fa fa-camera" aria-hidden="true"></i>
                 </div>
@@ -41,13 +41,13 @@
                         <div id="PhotoStickerDiv">
                             @*<img id="PhotoStickerImg" class="rounded-circle position-absolute" src="/image/exhibiton/dav.png" alt="">*@
 
-                            @if (string.IsNullOrEmpty(ViewBag.PhotoSticker))
+                            @if (string.IsNullOrEmpty(Model.PhotoSticker))
                             {
                                 <img src="~/image/avatar/頭像_展演單位.png" class="rounded-circle position-absolute" id="PhotoStickerImg" alt="...">
                             }
                             else
                             {
-                                <img src="@ViewBag.PhotoSticker" id="PhotoStickerImg" class="card-img-top" alt="...">
+                                <img src="~/SaveFiles/Company/@Model.Id/Info/@Model.PhotoSticker" id="PhotoStickerImg" class="card-img-top" alt="...">
                             }
                             <i class="fa fa-camera" aria-hidden="true"></i>
                         </div>

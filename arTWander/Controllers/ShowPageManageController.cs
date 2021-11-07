@@ -53,7 +53,9 @@ namespace arTWander.Controllers
         public ActionResult Index(int page = 1)
         {
             int userId = User.Identity.GetUserId<int>();
+
             var company = new CompanyFactory(DbContext).GetCompany(userId);
+            ViewBag.PhotoStickerImage = string.IsNullOrEmpty(company.PhotoStickerImage) ? "/image/avatar/頭像_展演單位.png" : $"/SaveFiles/Company/{company.Id}/Info/{company.PhotoStickerImage}";
 
             if (company == null)
                 return RedirectToAction("Edit", "Company");
@@ -63,7 +65,8 @@ namespace arTWander.Controllers
             return View(model);
         }
 
-        public ActionResult getShowPages(int page = 1)
+        [HttpPost]
+        public ActionResult getShowPages(SearchShowPagesViewModel searchModel, int page = 1)
         {
             int userId = User.Identity.GetUserId<int>();
             var company = new CompanyFactory(DbContext).GetCompany(userId);
@@ -71,7 +74,10 @@ namespace arTWander.Controllers
             if (company == null)
                 return RedirectToAction("Edit", "Company");
 
-            var model = new ShowPageFactory(DbContext).getCompanyShowPages(company, page);
+            TempData["SearchModel"] = searchModel;
+            TempData.Keep("SearchModel");
+
+            var model = new ShowPageFactory(DbContext).getCompanyShowPages(company, page, searchModel);
             return PartialView("~/Views/Shared/CompanyPartial/_ShowPagePartial.cshtml", model);
         }
 

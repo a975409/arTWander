@@ -206,14 +206,35 @@
                 @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
             </div>
             <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary">儲存變更</button>
+                <button type="button" onclick="PreviewShowPage()" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">預覽展演</button>
             </div>
         </form>
     </div>
 </div>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">預覽展演</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="PreviewShowPage">
+                @Html.Partial("~/Views/Shared/CompanyPartial/_DisplayShowPagePartial.cshtml")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">繼續編輯</button>
+                <button type="button" form="#CreateShowForm" class="btn btn-primary" onclick="submitEditForm()">更新展演</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section css{
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="~/css/css_companyPage/SingleShowPage.css" rel="stylesheet" />
     <style>
         .titlegroup {
             font-size: 25px;
@@ -247,6 +268,7 @@
 @section scripts {
     <script>
         $(function () {
+
             //取得縣市
             $.ajax({
                 method: 'get',
@@ -306,13 +328,6 @@
 
             getShowImages(@(Model.Id));
 
-            //將原先設定好的關鍵字顯示在"已添加的關鍵字"的欄位
-            @foreach (var item in Model.searchKeyword.Split(','))
-            {
-                @Html.Raw("$('#inputKeyword').val('" + item + "');");
-                @Html.Raw("$('#inputKeywordBtn').trigger('click');");
-            }
-
             $('#Cost').trigger('change');
 
             $('#Description').summernote({
@@ -339,6 +354,17 @@
             });
 
             getKeywords();
+
+            //將原先設定好的關鍵字顯示在"已添加的關鍵字"的欄位
+            let searchKeyword = '@Model.searchKeyword';
+
+            if (searchKeyword != '') {
+
+                for (let item of searchKeyword.split(',')) {
+                    $('#inputKeyword').val(item);
+                    $('#inputKeywordBtn').trigger('click');
+                }
+            }
         });
 
         function getKeywords() {
@@ -350,16 +376,75 @@
                         data: { keyword: request.term },
                         dataType: 'json',
                         success: function (data) {
-                            console.log(data);
                             response(data);
                         }
                     })
                 }
             });
         }
+        function getShowImages(showPageId) {
+            $.ajax({
+                type: 'get',
+                url: '@Url.Action("getShowImages", "ShowPageManage")',
+                data: { showPageId: showPageId },
+                success: function (data) {
+                    $('#showImgs').html('');
+                    $('#showImgs').append(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: textStatus,
+                        text: errorThrown,
+                        showConfirmButton: false,
+                        showCancelButton: true
+                    });
+                }
+            })
+        }
+
+        function removeShowImage(imgId, showPageId) {
+            Swal.fire({
+                title: '移除圖片?',
+                text: "是否要移除這張已上傳的圖片？",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: '是！確定移除',
+                cancelButtonText: '否！不要移除',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'post',
+                        url: '@Url.Action("removeShowImage", "ShowPageManage")',
+                        data: { imgId: imgId, showPageId: showPageId },
+                        success: function (data) {
+                            Swal.fire(
+                                '移除成功!',
+                                '已移除圖片',
+                                'success'
+                            ).then(function () {
+                                getShowImages(showPageId);
+                            });
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: textStatus,
+                                text: errorThrown,
+                                showConfirmButton: false,
+                                showCancelButton: true
+                            });
+                        }
+                    });
+                }
+            });
+        }
 
     </script>
-    <script type="text/javascript" charset="UTF-8" src="~/javascript/EditSingleShowPage.js"></script>
 
+    <script type="text/javascript" charset="UTF-8" src="~/javascript/EditSingleShowPage.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="~/javascript/PreviewShowPage.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
 }

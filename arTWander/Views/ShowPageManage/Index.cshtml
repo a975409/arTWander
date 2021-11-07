@@ -8,17 +8,25 @@
 <!-- 展覽列表 starts -->
 <div class="container">
     <article class="d-flex justify-content-between">
-        <a href="@Url.Action("Create", "ShowPageManage")" class="btn btn-outline-primary">
-            <i class="fas fa-plus"
-               style="vertical-align: middle; color: dodgerblue;"></i>新增展演
-        </a>
-        <article class="btn-group">
-            <a href="#" id="HotSort" class="btn btn-outline-dark"></a>
-            <a href="#" id="ViewSort" class="btn btn-outline-dark"></a>
-            <a href="#" id="DateSort" class="btn btn-outline-dark"></a>
-        </article>
-    </article>
 
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <a href="@Url.Action("Create", "ShowPageManage")" class="btn btn-primary">
+                <i class="fas fa-plus"
+                   style="vertical-align: middle; color: white;"></i> 新增展演
+            </a>
+            <a href="#topHeader" id="resetSearchMode" class="btn btn-secondary">
+                <i class="fas fa-trash" style="vertical-align: middle; color: white;"></i> 清除篩選
+            </a>
+        </div>
+        <div class="form-group" style="margin:0px;">
+            @*<label for="OrderSortField">請選擇排序方式</label>*@
+            <select class="form-control" id="OrderSortField" name="OrderSortField">
+                <option value="1">最新展演</option>
+                <option value="2">熱門展演</option>
+            </select>
+        </div>
+    </article>
+    <br />
     <!-- 展覽列表 -->
     <div id="showPages">
         @{Html.RenderPartial("~/Views/Shared/CompanyPartial/_ShowPagePartial.cshtml", Model); }
@@ -29,6 +37,7 @@
 @section css{
     <link href="~/css/css_commonPage/ShowList.css" rel="stylesheet" />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="~/Content/spinkit.min.css" rel="stylesheet" />
 
     @*PagedList.Mvc分頁切換css & jquery函示庫*@
     <link href="~/Content/PagedList.css" rel="stylesheet" />
@@ -38,6 +47,148 @@
 
 @section scripts{
     <script>
+        let reset = false;
+
+        $(function () {
+            $.ajax({
+                method: 'get',
+                dataType: 'json',
+                url: '@Url.Action("GetCities", "Method")',
+                success: function (data) {
+                    $('#FK_City').append(`<option value="0" selected>全部縣市</option>`);
+                    for (var index in data) {
+                        $('#FK_City').append(`<option value="${data[index].Id}">${data[index].CityName}</option>`);
+                    }
+
+                    $('#FK_City').trigger('change');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: textStatus,
+                        text: errorThrown,
+                        showConfirmButton: false,
+                        showCancelButton: true
+                    });
+                }
+            });
+
+            $('#FK_City').change(function (event) {
+                var cityId = $(this).val();
+
+                if (cityId > 0) {
+                    $.ajax({
+                        method: 'get',
+                        dataType: 'json',
+                        url: '@Url.Action("GetDistricts", "Method")',
+                        data: { cityId: cityId },
+                        success: function (data) {
+                            $('#FK_District').html('');
+                            $('#FK_District').append(`<option value="0" selected>選擇全部...</option>`);
+                            for (var index in data) {
+                                $('#FK_District').append(`<option value="${data[index].Id}">${data[index].DistrictName}</option>`);
+                            }
+                            if (!reset)
+                                $('#searchMode').submit();
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: textStatus,
+                                text: errorThrown,
+                                showConfirmButton: false,
+                                showCancelButton: true
+                            });
+                        }
+                    });
+                } else {
+                    $('#FK_District').html('');
+                    $('#FK_District').append(`<option value="0" selected>選擇全部...</option>`);
+                    if (!reset)
+                        $('#searchMode').submit();
+                }
+            });
+
+            $('#FK_District').change(function () {
+                if (!reset)
+                    $('#searchMode').submit();
+            });
+
+            $('#StartDate').change(function () {
+                if (!reset)
+                    $('#searchMode').submit();
+            });
+
+            $('#EndDate').change(function () {
+                if (!reset)
+                    $('#searchMode').submit();
+            });
+
+            $('#Cost').change(function () {
+                if (!reset)
+                    $('#searchMode').submit();
+            });
+
+            $('#OrderSortField').change(function () {
+                if (!reset)
+                    $('#searchMode').submit();
+            });
+
+            $('#resetSearchMode').click(function () {
+                reset = true;
+                $('#FK_City').val(0);
+                $('#StartDate').val('');
+                $('#EndDate').val('');
+                $('#Cost').val(0);
+                $('#OrderSortField').val(1);
+                $('#searchMode').submit();
+            });
+
+            $('#searchMode').submit(function (event) {
+                event.preventDefault();
+                //let formData = $(this).serialize();
+                let FK_City = $('#FK_City').val();
+                let FK_District = $('#FK_District').val();
+                let StartDate = $('#StartDate').val();
+                let EndDate = $('#EndDate').val();
+                let Cost = $('#Cost').val();
+                let OrderSortField = $('#OrderSortField').val();
+                let page = 1;
+
+                loadingShowPages();
+
+                $.ajax({
+                    type: 'post',
+                    url: '@Url.Action("getShowPages", "ShowPageManage")',
+                    data: { FK_City:FK_City, FK_District:FK_District, StartDate:StartDate, EndDate:EndDate, Cost:Cost, OrderSortField:OrderSortField, page:page},
+                    success: function (data) {
+                        $('#showPages').html(data);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: textStatus,
+                            text: errorThrown,
+                            showConfirmButton: false,
+                            showCancelButton: true
+                        });
+                        errorServerMsg();
+                    }
+                });
+
+                reset = false;
+            });
+
+        });
+
+        function loadingShowPages() {
+            $('#showPages').html('<div class="sk-wave" style="margin:100px auto;"><div class="sk-wave-rect"></div><div class="sk-wave-rect"></div><div class="sk-wave-rect"></div><div class="sk-wave-rect"></div><div class="sk-wave-rect"></div></div>');
+        }
+
+        function errorServerMsg() {
+            $('#showPages').html('<br /><br /><h1>伺服器發生錯誤，無法取得資料</h1>');
+        }
+
         function removeShowPage(showPageId) {
             Swal.fire({
                 title: '移除展覽?',
@@ -55,7 +206,8 @@
                         url: '@Url.Action("Delete", "ShowPageManage")',
                         data: { showPageId: showPageId },
                         success: function () {
-                            updateShowPages();
+                            //    updateShowPages();
+                            $('#resetSearchMode').trigger('click');
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                             Swal.fire({
@@ -71,9 +223,9 @@
             });
         }
 
-        function updateShowPages() {
+        @*function updateShowPages() {
             $.ajax({
-                type: 'get',
+                type: 'post',
                 url: '@Url.Action("getShowPages", "ShowPageManage")',
                 success: function (data) {
                     $('#showPages').html(data);
@@ -88,7 +240,8 @@
                     });
                 }
             })
-        }
+        }*@
+
+
     </script>
-    <script src="~/javascript/MyShowPage.js"></script>
 }

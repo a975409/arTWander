@@ -20,24 +20,79 @@ namespace arTWander.Models
             _dbContext = dbContext;
         }
 
-        public IPagedList<ShowMinViewModel> getCompanyShowPages(Company company,int page=1)
+        public IPagedList<ShowMinViewModel> getCompanyShowPages(Company company, int page = 1, SearchShowPagesViewModel model = null)
         {
             if (company.ShowPages == null || company.ShowPages.Count <= 0)
             {
                 return null;
             }
 
-            var shows = company.ShowPages.OrderByDescending(m => m.Created_At).Select(m => new ShowMinViewModel
+            //依據搜尋條件取得該展演單位的展演
+            var shows = searchShowPage(company.ShowPages, model).Select(m => new ShowMinViewModel
             {
                 Description = m.Description,
                 cityName = m.City.CityName,
                 Id = m.Id,
                 Title = m.Title,
                 Comment = m.ShowComments.Count(),
-                fileName = m.ShowPageFiles.Count() <= 0 ? "/image/exhibiton/Null.png" : $"/SaveFiles/Company/{m.Company.Id}/show/{m.Id}/{m.ShowPageFiles.FirstOrDefault().fileName}"
-            });
+                fileName = m.ShowPageFiles.Count() <= 0 ? "/image/exhibiton/Null.png" : $"/SaveFiles/Company/{m.Company.Id}/show/{m.Id}/{m.ShowPageFiles.FirstOrDefault().fileName}",
+                cityId = m.FK_City
+            }); ;
 
             var showPages = OtherMethod.getCurrentPagedList(shows, page, pageSize);
+
+            return showPages;
+        }
+
+        private IEnumerable<ShowPage> searchShowPage(IEnumerable<ShowPage> showPages, SearchShowPagesViewModel model)
+        {
+            if (model == null)
+            {
+                return showPages.OrderByDescending(m => m.Created_At);
+            }
+            else {
+
+                if (model.FK_City > 0)
+                {
+                    showPages = showPages.Where(m => m.FK_City == model.FK_City);
+
+                    if(model.FK_District>0)
+                        showPages = showPages.Where(m => m.FK_District == model.FK_District);
+                }
+
+                //找出在開始日期與結束日期範圍內的展演
+                if (model.StartDate != null && model.EndDate != null && !model.EndDate.Equals(DateTime.MinValue))
+                {
+                    showPages = showPages.Where(m => DateTime.Compare(model.StartDate, m.StartDate) >= 0 && DateTime.Compare(m.EndDate, model.EndDate) >= 0);
+                }
+
+                if (model.Cost != CostStatus.none) {
+
+                    if (model.Cost == CostStatus.yes)
+                        showPages = showPages.Where(m => m.Cost);
+                    else
+                        showPages = showPages.Where(m => !m.Cost);
+                }
+
+                //熱門展演，以好評數＆留言數做判斷
+                if (model.OrderSortField == OrderSortField.HotSort)
+                {
+                    //先取得平均好評數做排序，再取得留言數做排序
+
+                    showPages = showPages.OrderByDescending(m => {
+
+                        if (m.ShowComments.Count() > 0)
+                            return m.ShowComments.Sum(s => s.Star) / m.ShowComments.Count();
+                        else
+                            return 0;
+                    }).ThenByDescending(m => m.ShowComments.Count());
+                }
+                else
+                {
+                    //最新展演
+                    showPages = showPages.OrderByDescending(m => m.Created_At);
+                }
+            }
 
             return showPages;
         }
@@ -94,6 +149,7 @@ namespace arTWander.Models
         {
             if (imgFiles != null && imgFiles.Length > 0)
             {
+                int count = 1;
                 foreach (var item in imgFiles)
                 {
                     if (item != null && item.ContentLength > 0 && item.FileName.Length <= 20 && OtherMethod.checkFileName(item.FileName))
@@ -106,13 +162,18 @@ namespace arTWander.Models
                             //判斷上傳的檔案是否為圖片檔
                             if (OtherMethod.IsImage(stream))
                             {
+                                //重新命名圖片檔名
+                                string fileName = $"ShowImage_{showPage.Id}_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + $"_{count}" + Path.GetExtension(item.FileName);
+
                                 //完整另存路徑
-                                string savePath = Path.Combine(saveDir, Path.GetFileName(item.FileName));
+                                string savePath = Path.Combine(saveDir, fileName);
 
                                 //server端下載檔案
                                 item.SaveAs(savePath);
 
-                                _dbContext.ShowPageFile.Add(new ShowPageFile { fileName = Path.GetFileName(item.FileName), FK_ShowPage = showPage.Id });
+                                _dbContext.ShowPageFile.Add(new ShowPageFile { fileName = fileName, FK_ShowPage = showPage.Id });
+
+                                count++;
                             }
                         }
                     }
@@ -132,6 +193,8 @@ namespace arTWander.Models
         {
             if (imgFiles != null && imgFiles.Length > 0)
             {
+                int count = 1;
+
                 //儲存新增的圖檔
                 foreach (var item in imgFiles)
                 {
@@ -145,17 +208,18 @@ namespace arTWander.Models
                             //判斷上傳的檔案是否為圖片檔
                             if (OtherMethod.IsImage(stream))
                             {
-                                //查看該檔名如果已存在於資料庫，就不在資料庫新增資料
-                                if (!showPage.ShowPageFiles.Any(m => m.fileName == Path.GetFileName(item.FileName)))
-                                {
-                                    _dbContext.ShowPageFile.Add(new ShowPageFile { fileName = Path.GetFileName(item.FileName), FK_ShowPage = showPage.Id });
-                                }
+                                //重新命名圖片檔名
+                                string fileName = $"ShowImage_{showPage.Id}_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + $"_{count}" + Path.GetExtension(item.FileName);
 
                                 //完整另存路徑
-                                string savePath = Path.Combine(saveDir, Path.GetFileName(item.FileName));
+                                string savePath = Path.Combine(saveDir, fileName);
 
                                 //server端下載檔案，檔名重複則直接覆蓋
                                 item.SaveAs(savePath);
+
+                                _dbContext.ShowPageFile.Add(new ShowPageFile { fileName = fileName, FK_ShowPage = showPage.Id });
+
+                                count++;
                             }
                         }
                     }

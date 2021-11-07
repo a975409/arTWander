@@ -55,4 +55,30 @@ namespace arTWander.Models
             return showPages;
         }
     }
+
+    public class SearchShowPagesViewModel
+    {
+        public int FK_City { get; set; }
+
+        public int FK_District { get; set; }
+
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
+
+        public CostStatus Cost { get; set; }
+
+        public OrderSortField OrderSortField { get; set; }
+
+    }
+
+    public enum CostStatus
+    {
+        none = 0, yes = 1, no = 2
+    }
+
+    public enum OrderSortField
+    {
+        PrimaryKey = 0, DateSort = 1, HotSort = 2
+    }
 }

@@ -86,7 +86,7 @@
                     <div class="form-group col-md-2">
                         @*<label class="col-form-label" for="days">開放時段</label>*@
                         @Html.LabelFor(model => model.Todays, new { @class = "col-form-label" })
-                        
+
                         @{
                             string[] todayNames = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
                             string[] todays = { "day1", "day2", "day3", "day4", "day5", "day6", "day7" };
@@ -130,8 +130,16 @@
                         @*<label for="Cost" class="col-form-label">是否收費？</label>*@
                         @Html.LabelFor(model => model.Cost, new { @class = "col-form-label" })
                         <select class="form-control" id="Cost" name="Cost">
-                            <option value="true" selected>是</option>
-                            <option value="false">否</option>
+                            @if (Model.Cost)
+                            {
+                                <option value="true" selected>是</option>
+                                <option value="false">否</option>
+                            }
+                            else
+                            {
+                                <option value="true">是</option>
+                                <option value="false" selected>否</option>
+                            }
                         </select>
                         <div id="displayPrice">
                             @*<label for="Price" class="col-form-label">收費金額($TW)</label>*@
@@ -145,8 +153,16 @@
                         @*<label for="AgeRange" class="col-form-label">未滿18可觀看？</label>*@
                         @Html.LabelFor(model => model.AgeRange, new { @class = "col-form-label" })
                         <select class="form-control" id="AgeRange" name="AgeRange">
-                            <option value="true" selected>是</option>
-                            <option value="false">否</option>
+                            @if (Model.AgeRange)
+                            {
+                                <option value="true" selected>是</option>
+                                <option value="false">否</option>
+                            }
+                            else
+                            {
+                                <option value="true">是</option>
+                                <option value="false" selected>否</option>
+                            }
                         </select>
                     </div>
                 </div>
@@ -169,7 +185,7 @@
                     <div class="form-group col-md-6">
                         @*<label for="Address">地址</label>*@
                         @Html.LabelFor(model => model.Address)
-                        <input type="text" class="form-control" id="Address" name="Address">
+                        <input type="text" class="form-control" id="Address" name="Address" value="@Model.Address">
                         @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -181,14 +197,35 @@
                 @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
             </div>
             <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary">下一步：預覽展演</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick=" PreviewShowPage()">下一步：預覽展演</button>
             </div>
         </form>
     </div>
 </div>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">預覽展演</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="PreviewShowPage">
+                @Html.Partial("~/Views/Shared/CompanyPartial/_DisplayShowPagePartial.cshtml")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">繼續編輯</button>
+                <button type="submit" form="#CreateShowForm" class="btn btn-primary" onclick="submitCreateForm()">發佈展演</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section css{
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="~/css/css_companyPage/SingleShowPage.css" rel="stylesheet" />
     <style>
         .titlegroup {
             font-size: 25px;
@@ -221,6 +258,7 @@
 
 @section scripts {
     <script>
+
         $(function () {
 
             //取得縣市
@@ -304,6 +342,17 @@
             });
 
             getKeywords();
+
+            //將原先設定好的關鍵字顯示在"已添加的關鍵字"的欄位
+            let searchKeyword = '@Model.searchKeyword';
+
+            if (searchKeyword != '') {
+
+                for (let item of searchKeyword.split(',')) {
+                    $('#inputKeyword').val(item);
+                    $('#inputKeywordBtn').trigger('click');
+                }
+            }
         });
 
         function getKeywords() {
@@ -324,7 +373,20 @@
         }
 
     </script>
-    <script type="text/javascript" charset="UTF-8" src="~/javascript/EditSingleShowPage.js"></script>
 
+    @*將原先設定好的關鍵字顯示在"已添加的關鍵字"的欄位*@
+    @{
+        if (!string.IsNullOrEmpty(Model.searchKeyword) && Model.searchKeyword.Split(',').Count() > 0)
+        {
+            foreach (var item in Model.searchKeyword.Split(','))
+            {
+                <script>$('#inputKeyword').val('@item');</script>
+                <script>$('#inputKeywordBtn').trigger('click');</script>
+            }
+        }
+    }
+
+    <script type="text/javascript" charset="UTF-8" src="~/javascript/EditSingleShowPage.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="~/javascript/PreviewShowPage.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
 }

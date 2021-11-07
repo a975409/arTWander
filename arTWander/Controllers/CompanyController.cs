@@ -70,9 +70,10 @@ namespace arTWander.Controllers
             string address = await new CompanyFactory(DbContext).GetFullAddress(company.FK_City, company.FK_District, company.Address);
 
             string dirPath = $"/SaveFiles/Company/{company.Id}/Info";
-            
+
             var viewModel = new CompanyViewModel
             {
+                Id = company.Id,
                 Address = address,
                 CompanyDescription = company.CompanyDescription,
                 CompanyName = company.CompanyName,
@@ -81,8 +82,8 @@ namespace arTWander.Controllers
                 Fax = company.Fax,
                 HomePage = company.HomePage,
                 Phone = company.Phone,
-                PhotoSticker = string.IsNullOrEmpty(company.PhotoStickerImage) ? "" : $"{dirPath}/{company.PhotoStickerImage}",
-                PromotionalImage = string.IsNullOrEmpty(company.PromotionalImage) ? "" : $"{dirPath}/{company.PromotionalImage}",
+                PhotoSticker = company.PhotoStickerImage,
+                PromotionalImage = company.PromotionalImage,
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(User.Identity.GetUserId<int>()),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(User.Identity.GetUserId<int>()),
@@ -119,6 +120,7 @@ namespace arTWander.Controllers
             if (company != null)
             {
                 string dirPath = $"/SaveFiles/Company/{company.Id}/Info";
+                model.Id = company.Id;
                 model.Address = company.Address;
                 model.BusinessHours = company.BusinessHours;
                 model.CompanyDescription = company.CompanyDescription;
@@ -129,9 +131,8 @@ namespace arTWander.Controllers
                 model.FK_District = company.FK_District;
                 model.HomePage = company.HomePage;
                 model.Phone = company.Phone;
-
-                ViewBag.PhotoSticker = $"{dirPath}/{company.PhotoStickerImage}";
-                ViewBag.PromotionalImage = $"{dirPath}/{company.PromotionalImage}";
+                model.PhotoSticker = company.PhotoStickerImage;
+                model.PromotionalImage = company.PromotionalImage;
             }
 
             return View(model);
@@ -199,17 +200,44 @@ namespace arTWander.Controllers
             //設定宣傳圖
             if (Promotional != null)
             {
-                company.PromotionalImage = "PromotionalImage" + Path.GetExtension(Promotional.FileName);
+                var files = Directory.GetFiles(saveDir).Where(m => Path.GetFileName(m).StartsWith("PromotionalImage"));
+
+                if (files.Count() > 0)
+                {
+                    foreach(var filePath in files)
+                    {
+                        FileInfo file = new FileInfo(filePath);
+
+                        if (file.Exists)
+                            file.Delete();
+                    }
+                }
+
+                company.PromotionalImage = $"PromotionalImage_{company.Id}_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + Path.GetExtension(Promotional.FileName);
 
                 if (factory.SaveCompanyPageImage(Promotional, saveDir, company.PromotionalImage))
                 {
                     await DbContext.SaveChangesAsync();
                 }
             }
-
+            
             //設定大頭照
             if (PhotoSticker != null) {
-                company.PhotoStickerImage = "PhotoStickerImg" + Path.GetExtension(PhotoSticker.FileName);
+
+                var files = Directory.GetFiles(saveDir).Where(m => Path.GetFileName(m).StartsWith("PhotoStickerImg"));
+
+                if (files.Count() > 0)
+                {
+                    foreach (var filePath in files)
+                    {
+                        FileInfo file = new FileInfo(filePath);
+
+                        if (file.Exists)
+                            file.Delete();
+                    }
+                }
+
+                company.PhotoStickerImage = $"PhotoStickerImg_{company.Id}_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + Path.GetExtension(PhotoSticker.FileName);
 
                 if (factory.SaveCompanyPageImage(PhotoSticker, saveDir, company.PhotoStickerImage))
                 {

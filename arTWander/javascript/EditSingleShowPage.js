@@ -20,64 +20,13 @@ $('#Cost').change(function () {
 $('#imgFiles').MultiFile({
     max: 6,
     list: '#showImg',
-    accept: 'gif|jpeg|jpg||png|webp|svg|tiff|icon',
+    accept: 'gif|jpeg|jpg|png|webp|svg|tiff|icon',
     STRING: {
         file: '<em title="Click to remove" onclick="$(this).parent().prev().click()">$file</em>',
         remove: '<i class="fas fa-times"></i>',
         selected: '$file',
         denied: '檔案指定失敗，原因如下：\n$ext!',
         duplicate: '下列圖檔已重複選取:\n$file!'
-    },
-    afterFileSelect: function (element, value, master_element) {
-
-        if (value.length > 20) {
-            let imgFiles = document.querySelectorAll('.MultiFile-remove+span>.MultiFile-label');
-            let a_remove = document.getElementsByClassName('MultiFile-remove');
-
-            for (let i in imgFiles) {
-                if (imgFiles[i].nodeType == 1) {
-                    //    console.log(imgFiles[i].title);
-
-                    if (imgFiles[i].title == value) {
-                        a_remove[i].click();
-                        break;
-                    }
-                }
-            }
-
-            Swal.fire({
-                icon: 'error',
-                title: '無法指定檔案',
-                text: '檔名+副檔名超過20個字',
-                showConfirmButton: false,
-                showCancelButton: true
-            });
-        }
-
-        if (checkImgFileName(value)) {
-
-            let imgFiles = document.querySelectorAll('.MultiFile-remove+span>.MultiFile-label');
-            let a_remove = document.getElementsByClassName('MultiFile-remove');
-
-            for (let i in imgFiles) {
-                if (imgFiles[i].nodeType == 1) {
-                    //    console.log(imgFiles[i].title);
-
-                    if (imgFiles[i].title == value) {
-                        a_remove[i].click();
-                        break;
-                    }
-                }
-            }
-
-            Swal.fire({
-                icon: 'error',
-                title: '無法指定檔案',
-                text: '檔名裡面有特殊符號，請重新命名',
-                showConfirmButton: false,
-                showCancelButton: true
-            });
-        }
     }
 });
 
@@ -111,9 +60,6 @@ $('#inputKeywordBtn').click(function () {
 
 $('#CreateShowForm').submit(function () {
 
-    let Description = $('#Description').summernote('code');
-    $('#Description').val()
-
     //先將選取的關鍵字新增至searchKeyword
     let keywords = document.getElementsByName('keywordSpan');
     let result = '';
@@ -132,63 +78,3 @@ $('#CreateShowForm').submit(function () {
 
     $('#searchKeyword').val(result);
 });
-
-function getShowImages(showPageId) {
-    $.ajax({
-        type: 'get',
-        url: './ShowPageManage/getShowImages',
-        data: { showPageId: showPageId },
-        success: function (data) {
-            $('#showImgs').html('');
-            $('#showImgs').append(data);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Swal.fire({
-                icon: 'error',
-                title: textStatus,
-                text: errorThrown,
-                showConfirmButton: false,
-                showCancelButton: true
-            });
-        }
-    })
-}
-
-function removeShowImage(imgId, showPageId) {
-    Swal.fire({
-        title: '移除圖片?',
-        text: "是否要移除這張已上傳的圖片？",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: '是！確定移除',
-        cancelButtonText: '否！不要移除',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                type: 'post',
-                url: './ShowPageManage/removeShowImage',
-                data: { imgId: imgId, showPageId: showPageId},
-                success: function (data) {
-                    Swal.fire(
-                        '移除成功!',
-                        '已移除圖片',
-                        'success'
-                    ).then(function () {
-                        getShowImages(showPageId);
-                    });
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: textStatus,
-                        text: errorThrown,
-                        showConfirmButton: false,
-                        showCancelButton: true
-                    });
-                }
-            });
-        }
-    });
-}

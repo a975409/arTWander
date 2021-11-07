@@ -1,6 +1,29 @@
 ﻿@using PagedList
 @using PagedList.Mvc
+@using arTWander.Models
 @model IPagedList<arTWander.Models.ShowMinViewModel>
+@{
+    bool sendAgain = TempData["sended"] == null ? false : (bool)TempData["sendAgain"];
+
+    SearchShowPagesViewModel searchModel = (SearchShowPagesViewModel)TempData["SearchModel"] ?? new SearchShowPagesViewModel();
+
+    PagedListRenderOptions pagedListOption = new PagedListRenderOptions
+    {
+        LinkToFirstPageFormat = "<< 第一頁",
+        LinkToPreviousPageFormat = "< 前一頁",
+        LinkToNextPageFormat = "後一頁 >",
+        LinkToLastPageFormat = "最後一頁 >>",
+        DisplayPageCountAndCurrentLocation = true,
+        PageCountAndCurrentLocationFormat = "第 {0} 頁/共 {1} 頁"
+    };
+
+    AjaxOptions ajaxOption = new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "showPages",
+        OnFailure = "errorServerMsg()"
+    };
+}
 
 @if (Model != null && Model.Count() > 0)
 {
@@ -19,7 +42,9 @@
                 <div class="shortDetail">
                     <div class="d-flex align-items-center">
                         <a href="">@item.cityName</a>／
-                        <a href="@Url.Action("DisplayInfo", "ShowPageManage", new { showId = item.Id })">@item.Title</a>
+                        <div class="marqee">
+                            <a href="@Url.Action("DisplayInfo", "ShowPageManage", new { showId = item.Id })">@item.Title</a>
+                        </div>
                     </div>
                     <div class="description">
                         <a href="@Url.Action("DisplayInfo", "ShowPageManage", new { showId = item.Id })">@Html.Raw(HttpUtility.HtmlDecode(item.Description))</a>
@@ -32,28 +57,21 @@
                 <!-- 展覽敘述卡 ends -->
             </div>
         }
+    </div><!-- 分頁 starts -->@*樣式設定參考：https://kevintsengtw.blogspot.com/2013/10/aspnet-mvc-pagedlistmvc_17.html*@@*
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing：用ajax更新資料
+        PagedListRenderOptions：設定樣式
+        AjaxOptions：設定ajax傳遞參數，參考網站：https://docs.microsoft.com/zh-tw/dotnet/api/system.web.mvc.ajax.ajaxoptions.tounobtrusivehtmlattributes?view=aspnet-mvc-5.2
+    *@
+
+    <div class="d-flex justify-content-center">
+        @Html.PagedListPager(Model, page => Url.Action("getShowPages", "ShowPageManage", new { FK_City = searchModel.FK_City, FK_District = searchModel.FK_District, StartDate = searchModel.StartDate, EndDate = searchModel.EndDate, Cost = searchModel.Cost, OrderSortField = searchModel.OrderSortField, page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(pagedListOption, ajaxOption))
     </div>
 }
-
-<!-- 分頁 starts -->
-@*樣式設定參考：https://kevintsengtw.blogspot.com/2013/10/aspnet-mvc-pagedlistmvc_17.html*@
-@*
-    PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing：用ajax更新資料
-    PagedListRenderOptions：設定樣式
-    AjaxOptions：設定ajax傳遞參數，參考網站：https://docs.microsoft.com/zh-tw/dotnet/api/system.web.mvc.ajax.ajaxoptions.tounobtrusivehtmlattributes?view=aspnet-mvc-5.2
-*@
-<div class="d-flex justify-content-center">
-    @Html.PagedListPager(Model, page => Url.Action("getShowPages", "ShowPageManage", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions
+else
 {
-    LinkToFirstPageFormat = "<< 第一頁",
-    LinkToPreviousPageFormat = "< 前一頁",
-    LinkToNextPageFormat = "後一頁 >",
-    LinkToLastPageFormat = "最後一頁 >>",
-    DisplayPageCountAndCurrentLocation = true,
-    PageCountAndCurrentLocationFormat = "第 {0} 頁/共 {1} 頁"
-}, new AjaxOptions()
-{
-    HttpMethod = "GET",
-    UpdateTargetId = "showPages"
-}))
-</div>
+    <div>
+        <br />
+        <br />
+        <h1>查無任何展演資料...</h1>
+    </div>
+}
