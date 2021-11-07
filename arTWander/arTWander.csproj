@@ -464,7 +464,10 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminFactory\AdminFactory.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
+    <Compile Include="Models\AdminViewModel\BlackListViewModel.cs" />
+    <Compile Include="Models\AdminViewModel\CustomerListViewModel.cs" />
     <Compile Include="Models\AdminViewModel\SetupViewModel.cs" />
+    <Compile Include="Models\AdminViewModel\ShowListViewModel.cs" />
     <Compile Include="Models\AdminViewModel\UserListViewModel.cs" />
     <Compile Include="Models\BlackList.cs" />
     <Compile Include="Models\City.cs" />
