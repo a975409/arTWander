@@ -185,6 +185,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="image\avatar\avatar_default.png" />
     <Content Include="image\avatar\頭像_展演單位.png" />
     <Content Include="image\exhibiton\crenature_kv_tkg.jpg" />
     <Content Include="image\exhibiton\dav.png" />
@@ -192,12 +193,10 @@
     <Content Include="image\exhibiton\hongGah.jpg" />
     <Content Include="image\exhibiton\KDMOFA_laiChiMan.jpg" />
     <Content Include="image\exhibiton\KDMOFA_MarinaCruz.jpg" />
-    <Content Include="image\exhibiton\KMFA_OfficialBanner.jpg" />
     <Content Include="image\exhibiton\moca1.jpg" />
     <Content Include="image\exhibiton\moca2.jpg" />
     <Content Include="image\exhibiton\Null.png" />
     <Content Include="image\exhibiton\projectFullFILL.jpg" />
-    <Content Include="image\exhibiton\su-yu,shian_tkg+.jpg" />
     <Content Include="image\exhibiton\taz.jpg" />
     <Content Include="image\exhibiton\theTagnetLineToCognation.jpg" />
     <Content Include="image\exhibiton\vt1.jpg" />
@@ -264,12 +263,14 @@
     <Content Include="image\ico\icons8_user_16.png" />
     <Content Include="image\ico\icons8_user_32.png" />
     <Content Include="image\logo\logo.png" />
+    <Content Include="image\logo\logoReverse.png" />
     <Content Include="image\map.png" />
     <Content Include="image\nav\notify.png" />
     <Content Include="javascript\AccountIndex.js" />
     <Content Include="javascript\Admin\AdminAvatarSetup.js" />
     <Content Include="javascript\Admin\drawCanvasData.js" />
     <Content Include="javascript\AsideTrue.js" />
+    <Content Include="javascript\common_MyShowPage.js" />
     <Content Include="javascript\common_SetUp.js" />
     <Content Include="javascript\common_ShowList.js" />
     <Content Include="javascript\Company.js" />
@@ -293,15 +294,12 @@
     <Content Include="Sweetalert2\sweetalert2.min.js" />
     <Content Include="Views\AsidePage\AccountAside.html" />
     <Content Include="Views\AsidePage\logInFalseAside.html" />
-    <Content Include="Views\AsidePage\managerAside.html" />
     <Content Include="Views\AsidePage\_logInFalseAside.cshtml" />
     <Content Include="Views\Shared\_IsRememberBrowser.cshtml" />
     <Content Include="Views\Shared\_IsTwoFactor.cshtml" />
     <Content Include="Views\Account\AccountIndex.cshtml" />
-    <Content Include="Views\Home\test.cshtml" />
     <Content Include="Views\Shared\_AccountLayout.cshtml" />
     <Content Include="CityCountyData.json" />
-    <Content Include="Views\Common\ManageIndex.cshtml" />
     <Content Include="Views\Shared\CommonLayout\_AsideFalse.cshtml" />
     <Content Include="Views\Shared\CommonLayout\_AsideTrue.cshtml" />
     <Content Include="Views\Company\Index.cshtml" />
@@ -360,6 +358,13 @@
     <Content Include="Views\Shared\CompanyPartial\Aside\_PartialLogInFalse.cshtml" />
     <Content Include="Views\Shared\CompanyPartial\Aside\_PartialLogInTrue.cshtml" />
     <Content Include="Views\Shared\CompanyPartial\_DisplayShowPagePartial.cshtml" />
+    <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
+    <Content Include="Views\Admin\BlackCustomer.cshtml" />
+    <Content Include="Views\Admin\BlackCustomerInfo.cshtml" />
+    <Content Include="Views\Admin\BlackUser.cshtml" />
+    <Content Include="Views\Admin\BlackUserInform.cshtml" />
+    <Content Include="Views\Admin\ShowManage.cshtml" />
+    <Content Include="Views\Shared\CommonPartial\Card\_PartialMyShowList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -121,8 +121,8 @@ namespace arTWander.Models
         public ApplicationDbContext()
             : base(Environment.GetEnvironmentVariable("AzureConnstring"))
         {
-            string a = Environment.GetEnvironmentVariable("AzureConnstring");
-            Console.WriteLine(a);
+            //string a = Environment.GetEnvironmentVariable("AzureConnstring");
+            //Console.WriteLine(a);
         }
 
         static ApplicationDbContext()
