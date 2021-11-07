@@ -119,8 +119,10 @@ namespace arTWander.Models
         ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
     {
         public ApplicationDbContext()
-            : base("AzureLocalModel")
+            : base(Environment.GetEnvironmentVariable("AzureConnstring"))
         {
+            string a = Environment.GetEnvironmentVariable("AzureConnstring");
+            Console.WriteLine(a);
         }
 
         static ApplicationDbContext()
