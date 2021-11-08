@@ -74,3 +74,9 @@ hr {
 #sort {
     padding: 0px;
 }
+
+
+#addMygalleryBtn {
+    border: initial;
+    background-color: rgb(197, 126, 104);
+}

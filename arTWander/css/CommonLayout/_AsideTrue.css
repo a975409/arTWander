@@ -231,3 +231,9 @@ select {
 .bg-gray {
     background-color: rgba(196, 196, 196, 1);
 }
+
+
+#addMygalleryBtn {
+    border: initial;
+    background-color: rgb(197, 126, 104);
+}

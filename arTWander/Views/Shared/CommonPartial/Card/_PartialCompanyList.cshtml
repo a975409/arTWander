@@ -1,0 +1,21 @@
+﻿@model arTWander.Models.CommonCompanyViewModel
+
+<!-- 展演單位列表 starts -->
+<!-- 展演單位starts -->
+<div class="col position-relative mb-5 d-flex flex-column align-items-center Customderform">
+    <!-- 展演單位頭像 starts -->
+    <div class="GalleryImg rounded-circle d-flex position-relative" data-toggle="modal" data-target="#staticBackdrop">
+        <span class="companyId" name="companyId" typeof="hidden">@Model.Id</span>
+        <a class="companyBtn" name="companyBtn">
+            <img class="w-100 rounded-circle img-fluid" src='@Model.PhotoSticker'>
+        </a>
+    </div>
+    <!-- 展演單位頭像 ends -->
+    <!-- 展演單位資訊 starts -->
+    <div class="mt-2">
+        <a class="" href="">@Html.DisplayFor(model => Model.CompanyCity)</a>／
+        <a class="companyBtn" name="companyBtn">@Model.CompanyName</a>
+    </div>
+    <!-- 展演單位資訊 ends -->
+</div>
+<!-- 展演單位 ends -->
