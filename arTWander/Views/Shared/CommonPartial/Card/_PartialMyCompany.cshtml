@@ -1,0 +1,22 @@
+﻿@model arTWander.Models.Company
+
+<!-- 展演單位starts -->
+<div class="col position-relative mb-5 d-flex flex-column align-items-center">
+    <!-- 展演單位頭像 starts -->
+    <div class="GalleryImg rounded-circle d-flex position-relative Customderform" data-toggle="modal" data-target="#staticBackdrop">
+        <span class="companyId " name="companyId" hidden>@Model.Id</span>
+        <a class="companyBtn" name="companyBtn">
+            <img class="w-100 rounded-circle img-fluid" src='/SaveFiles/Company/@Model.Id/Info/@Model.PhotoStickerImage'>
+        </a>
+    </div>
+    <a href="" class="mySubscriptionDeleteIcon"><i class="fa fa-times" aria-hidden="true"><span class="companyId"hidden>@Model.Id</span></i></a>
+    <!-- 展演單位頭像 ends -->
+    <!-- 展演單位資訊 starts -->
+    <div class="mt-2">
+        <a class="" href="">@Html.DisplayFor(model => Model.City.CityName)</a>／
+        <a class="companyBtn" name="companyBtn">@Model.CompanyName</a>
+        <span class="galleryName" name="galleryName" hidden>@Model.CompanyName</span>
+    </div>
+    <!-- 展演單位資訊 ends -->
+</div>
+<!-- 展演單位 ends -->

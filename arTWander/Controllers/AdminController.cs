@@ -16,31 +16,7 @@ namespace arTWander.Controllers
 {
     public class AdminController : Controller
     {
-        ////如果要在其他Controller引用DbContext來對資料表做CRUD，請參考第17~33行新增DbContext
-        ////詳細用法請參考底下 Index 這個 Action
-        //public AdminController()
-        //{
-        //}
-
-        //public AdminController(ApplicationUserManager userManager, ApplicationDbContext dbContext)
-        //{
-        //    UserManager = userManager;
-        //    DbContext = dbContext;
-        //}
-
-        //private ApplicationDbContext _dbContext;
-        //public ApplicationDbContext DbContext
-        //{
-        //    get
-        //    {
-        //        return _dbContext ?? HttpContext.GetOwinContext().Get<ApplicationDbContext>();
-        //    }
-        //    private set
-        //    {
-        //        _dbContext = value;
-        //    }
-        //}
-
+        
         private ApplicationUserManager _userManager;
         public ApplicationUserManager UserManager
         {
