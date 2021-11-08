@@ -69,9 +69,9 @@ namespace arTWander.Controllers
 
             // 取得viewModel
             int userId = User.Identity.GetUserId<int>();
-            CommonInfoViewModel viewModel = new userFactory().createViewModel(model, userId);
 
-            // return
+            CommonInfoViewModel viewModel = new userFactory(DbContext).createViewModel(model, userId);
+
             return View(viewModel);
 
         }
@@ -84,11 +84,11 @@ namespace arTWander.Controllers
             int userId = User.Identity.GetUserId<int>();
             ApplicationUser user = db.Users.Where(u => u.Id == userId).FirstOrDefault();
 
-            new userFactory().updateToDB(user, viewModel);
+            new userFactory(DbContext).updateToDB(user, viewModel);
             db.SaveChanges();
 
             // 取得檔案存入指定資料夾
-            new userFactory().saveAvatarToFolder(user, avatarFile);
+            new userFactory(DbContext).saveAvatarToFolder(user, avatarFile);
 
             // return
             return RedirectToAction("Index", "Home");
@@ -99,45 +99,69 @@ namespace arTWander.Controllers
 
         //Common首頁 start
 
-        public ActionResult Index(string city)
+        public ActionResult Index(string city="")
         {
             // 取得使用者頭像及姓名
             int userId = User.Identity.GetUserId<int>();
+            ApplicationUser user = DbContext.Users.Where(u => u.Id == userId).FirstOrDefault();
 
-            ApplicationDbContext db = new ApplicationDbContext();
-            ApplicationUser user = db.Users.Where(u => u.Id == userId).FirstOrDefault();
+            SearchShowPagesViewModel search = new SearchShowPagesViewModel
+            {
+                Cost = CostStatus.none,
+                OrderSortField = OrderSortField.DateSort
+            };
 
-            ViewBag.userName = user.UserName;
-            ViewBag.avatarUrl = "/image/avatar/" + user.Avatar;
-            ViewBag.city = city;
+            if (!string.IsNullOrEmpty(city))
+            {
+                search.FK_City = DbContext.City.Where(m => m.CityName == city).Select(m => m.Id).FirstOrDefault();
+            }
 
-            // return
-            return View();
+            //使用者未登入
+            if (user == null)
+            {
+                ViewBag.userName = "";
+                ViewBag.avatarUrl = "/image/avatar/avatar_default.png";
+                return View(new userFactory(DbContext).getShowPages(model: search));
+            }
+
+            string role = UserManager.GetRoles(userId)[0];
+
+            switch (role)
+            {
+                case "Member":
+                    ViewBag.userName = user.UserName;
+                    ViewBag.avatarUrl = string.IsNullOrEmpty(user.Avatar) ? "/image/avatar/avatar_default.png" : $"/SaveFiles/Member/{user.Id}/{user.Avatar}";
+                    break;
+                case "Company":
+                    var company = DbContext.Company.Where(m => m.FK_ApplicationUser == userId).FirstOrDefault();
+
+                    if (company == null)
+                    {
+                        ViewBag.userName = user.UserName;
+                        ViewBag.PhotoStickerImage = "/image/avatar/avatar_default.png";
+                    }
+                    else
+                    {
+                        ViewBag.userName = company.CompanyName;
+                        ViewBag.PhotoStickerImage = string.IsNullOrEmpty(company.PhotoStickerImage) ? "/image/exhibiton/Null.png" : $"/SaveFiles/Company/{company.Id}/Info/{company.PhotoStickerImage}";
+                    }
+                    break;
+                default:
+                    ViewBag.userName = "";
+                    ViewBag.avatarUrl = "/image/avatar/avatar_default.png";
+                    break;
+            }
+            return View(new userFactory(DbContext).getShowPages(model: search));
         }
 
-
-        public ActionResult ShowList(string city)
+        [HttpPost]
+        public ActionResult getShowList(SearchShowPagesViewModel searchModel, int page = 1)
         {
-            ViewBag.errorMsg = "";
-            if (String.IsNullOrEmpty(city))
-            {
-                IQueryable<CommonShowViewModel> q = new userFactory().queryAllShow();
-                List<CommonShowViewModel> viewModels = q.ToList();
+            TempData["SearchModel"] = searchModel;
+            TempData.Keep("SearchModel");
 
-                return View(viewModels);
-
-            }
-            else
-            {
-                IQueryable<CommonShowViewModel> q = new userFactory().queryAllShow();
-                List<CommonShowViewModel> viewModels = q.Where(s => s.showCity == city).DefaultIfEmpty().ToList();
-                if (viewModels[0] != null)
-                    return View(viewModels);
-                else
-                    ViewBag.errorMsg = "1此區域本檔期暫無展覽";
-                return View(viewModels);
-            }
-
+            var model = new userFactory(DbContext).getShowPages(page, searchModel);
+            return PartialView("~/Views/Shared/CommonPartial/Card/_PartialShowList.cshtml", model);
         }
 
         public ActionResult GalleryList(int? cityId)

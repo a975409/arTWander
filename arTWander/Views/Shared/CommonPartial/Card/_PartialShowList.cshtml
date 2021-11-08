@@ -1,34 +1,90 @@
-﻿@model arTWander.Models.CommonViewModel.CommonShowViewModel
+﻿@using PagedList
+@using PagedList.Mvc
+@using arTWander.Models
+@model IPagedList<arTWander.Models.CommonViewModel.CommonShowViewModel>
+@{
+    bool sendAgain = TempData["sended"] == null ? false : (bool)TempData["sendAgain"];
 
-<!-- 展覽starts -->
-<div class="col-12 col-lg-4 position-relative mb-lg-5">
-    <!-- 展覽圖片 starts -->
-    <div class="showImg">
-        <a href="#">
-            <img class="w-100 rounded-sm img-fluid " src="~/image/exhibiton/@Model.showImg" alt="">
-        </a>
-    </div>
-    <!-- 展覽圖片 ends -->
-    <!-- 展覽敘述卡 strats -->
-    <div class="shortDetail">
-        <div class="d-flex align-items-center">
-            <a name="showCity" href="/Common/Index?city=@Model.showCity">@Model.showCity</a>／
-            <div class="marqee">
-                <a href="">@Model.showTitle</a>
+    SearchShowPagesViewModel searchModel = (SearchShowPagesViewModel)TempData["SearchModel"] ?? new SearchShowPagesViewModel();
+
+    PagedListRenderOptions pagedListOption = new PagedListRenderOptions
+    {
+        LinkToFirstPageFormat = "<< 第一頁",
+        LinkToPreviousPageFormat = "< 前一頁",
+        LinkToNextPageFormat = "後一頁 >",
+        LinkToLastPageFormat = "最後一頁 >>",
+        DisplayPageCountAndCurrentLocation = true,
+        PageCountAndCurrentLocationFormat = "第 {0} 頁/共 {1} 頁"
+    };
+
+    AjaxOptions ajaxOption = new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "showPages",
+        OnFailure = "errorServerMsg()"
+    };
+}
+
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="row showlistRow">
+        @foreach (var item in Model)
+        {
+            <!-- 展覽starts -->
+            <div class="col-12 col-lg-4 position-relative mb-lg-5">
+                <!-- 展覽圖片 starts -->
+                <div class="showImg">
+                    <a href="@Url.Action("DisplayInfo", "ShowPageManage", new { showId = item.showId })">
+                        <img class="w-100 rounded-sm img-fluid " src="@item.showImg" alt="">
+                    </a>
+                </div>
+                <!-- 展覽圖片 ends -->
+                <!-- 展覽敘述卡 strats -->
+                <div class="shortDetail">
+                    <div class="d-flex align-items-center">
+                        <a name="showCity" href="/Common/Index?city=@item.showCity">@item.showCity</a>／
+                        <div class="marqee">
+                            <a href="@Url.Action("DisplayInfo", "ShowPageManage", new { showId = item.showId })">@item.showTitle</a>
+                        </div>
+                    </div>
+                    <div class="description">
+                        <a href="@Url.Action("DisplayInfo", "ShowPageManage", new { showId = item.showId })">@Html.Raw(HttpUtility.HtmlDecode(item.showDiscription))</a>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-end ">
+                        @*<a class="mr-2" href="">05 comment</a>*@
+                        @if (User.IsInRole("Member"))
+                        {
+                            <a class="addToMyShow" href="">
+                                ⧾我的展覽
+                                <input type="hidden" name="name" value="@item.showId" />
+                            </a>
+                        }
+                    </div>
+                </div>
+                <!-- 展覽敘述卡 ends -->
             </div>
-        </div>
-        <div class="description">
-            <a href="#">@Model.showDiscription</a>
-        </div>
-        <div class="d-flex align-items-center justify-content-end ">
-            @*<a class="mr-2" href="">05 comment</a>*@
-            <a class="addToMyShow" href=""> 
-                ⧾我的展覽
-                <input type="hidden" name="name" value="@Model.showId" />
-            </a>
-        </div>
+            <!-- 展覽 ends -->
+        }
     </div>
-    <!-- 展覽敘述卡 ends -->
-</div>
-<!-- 展覽 ends -->
+
+    <!-- 分頁 starts -->
+    @*樣式設定參考：https://kevintsengtw.blogspot.com/2013/10/aspnet-mvc-pagedlistmvc_17.html*@
+    @*
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing：用ajax更新資料
+        PagedListRenderOptions：設定樣式
+        AjaxOptions：設定ajax傳遞參數，參考網站：https://docs.microsoft.com/zh-tw/dotnet/api/system.web.mvc.ajax.ajaxoptions.tounobtrusivehtmlattributes?view=aspnet-mvc-5.2
+    *@
+
+    <div class="d-flex justify-content-center">
+        @Html.PagedListPager(Model, page => Url.Action("getShowList", "Common", new { FK_City = searchModel.FK_City, FK_District = searchModel.FK_District, StartDate = searchModel.StartDate, EndDate = searchModel.EndDate, Cost = searchModel.Cost, OrderSortField = searchModel.OrderSortField, page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(pagedListOption, ajaxOption))
+    </div>
+}
+else
+{
+    <div>
+        <br />
+        <br />
+        <h1>查無任何展演資料...</h1>
+    </div>
+}
 

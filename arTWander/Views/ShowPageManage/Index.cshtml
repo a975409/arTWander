@@ -21,6 +21,7 @@
         <div class="form-group" style="margin:0px;">
             @*<label for="OrderSortField">請選擇排序方式</label>*@
             <select class="form-control" id="OrderSortField" name="OrderSortField">
+                <option value="0">全部展演</option>
                 <option value="1">最新展演</option>
                 <option value="2">熱門展演</option>
             </select>
@@ -47,9 +48,9 @@
 
 @section scripts{
     <script>
-        let reset = false;
-
         $(function () {
+            let oneload = true;
+
             $.ajax({
                 method: 'get',
                 dataType: 'json',
@@ -88,7 +89,7 @@
                             for (var index in data) {
                                 $('#FK_District').append(`<option value="${data[index].Id}">${data[index].DistrictName}</option>`);
                             }
-                            if (!reset)
+                            if (!oneload)
                                 $('#searchMode').submit();
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
@@ -104,38 +105,40 @@
                 } else {
                     $('#FK_District').html('');
                     $('#FK_District').append(`<option value="0" selected>選擇全部...</option>`);
-                    if (!reset)
+                    if (!oneload)
                         $('#searchMode').submit();
                 }
+
+                oneload = false;
             });
 
             $('#FK_District').change(function () {
-                if (!reset)
+                if (!oneload)
                     $('#searchMode').submit();
             });
 
             $('#StartDate').change(function () {
-                if (!reset)
+                if (!oneload)
                     $('#searchMode').submit();
             });
 
             $('#EndDate').change(function () {
-                if (!reset)
+                if (!oneload)
                     $('#searchMode').submit();
             });
 
             $('#Cost').change(function () {
-                if (!reset)
+                if (!oneload)
                     $('#searchMode').submit();
             });
 
             $('#OrderSortField').change(function () {
-                if (!reset)
+                if (!oneload)
                     $('#searchMode').submit();
             });
 
             $('#resetSearchMode').click(function () {
-                reset = true;
+                oneload = true;
                 $('#FK_City').val(0);
                 $('#StartDate').val('');
                 $('#EndDate').val('');
@@ -176,7 +179,7 @@
                     }
                 });
 
-                reset = false;
+                oneload = false;
             });
 
         });
@@ -241,7 +244,6 @@
                 }
             })
         }*@
-
 
     </script>
 }
