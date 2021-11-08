@@ -109,16 +109,6 @@
     </div>
 </div>
 
-@*<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-8">
-            <p>為展示適合您年齡區間的展覽及使用行程安排功能，請提供您的出生年月日及一組常用地址</p>
-        </div>
-    </div>
-</div>*@
-
-
-
 
 @section scripts{
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -151,6 +141,7 @@
                 })
             })
 
+            // 判斷是否初次登入
             if (@ViewBag.firstLogIn) {
                 Swal.fire({
                     title: '<h5 style="color: rgb(197, 126, 104); font-weight: bold;">歡迎您加入arTwander !</h5>',
@@ -159,18 +150,11 @@
                     
                 })
             }
+            
         })
 
-
-
     </script>
 
-    <script>
-            //密碼變更
-            //$('#passwordModifyBtn').click(function () {
-            //    $('#mainPage').load('/AccountPage/PasswordModify.html');
-            //})
-    </script>
 }
 
 

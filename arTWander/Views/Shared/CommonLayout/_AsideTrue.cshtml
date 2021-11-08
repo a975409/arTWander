@@ -36,20 +36,20 @@
                     {
                         if (User.IsInRole("Admin"))
                         {
-                            <a id="newMessage" class="nav-link ml-3 " href=""><i class="far fa-bell" aria-hidden="true"></i></a>
+                            @*<a id="newMessage" class="nav-link ml-3 " href=""><i class="far fa-bell" aria-hidden="true"></i></a>
                             <a id="myShow" class="nav-link ml-3 d-none d-md-block" href="">
                                 <i class="far fa-heart"
                                    aria-hidden="true"></i>
-                            </a>
+                            </a>*@
                             <a id="setUp" class="nav-link ml-3" href=""><i class="fa fa-cog" aria-hidden="true"></i></a>
                         }
                         else if (User.IsInRole("Company"))
                         {
-                            <a id="newMessage" class="nav-link ml-3 " href=""><i class="far fa-bell" aria-hidden="true"></i></a>
+                            @*<a id="newMessage" class="nav-link ml-3 " href=""><i class="far fa-bell" aria-hidden="true"></i></a>
                             <a id="myShow" class="nav-link ml-3 d-none d-md-block" href="">
                                 <i class="far fa-heart"
                                    aria-hidden="true"></i>
-                            </a>
+                            </a>*@
                             <a id="setUp" class="nav-link ml-3" href="~/Company/Index">
                                 <i class="fa fa-cog"
                                    aria-hidden="true"></i>
@@ -57,11 +57,11 @@
                         }
                         else if (User.IsInRole("Member"))
                         {
-                            <a id="newMessage" class="nav-link ml-3" href=""><i class="far fa-bell" aria-hidden="true"></i></a>
+                            @*<a id="newMessage" class="nav-link ml-3" href=""><i class="far fa-bell" aria-hidden="true"></i></a>
                             <a id="myShow" class="nav-link d-none d-md-block ml-3" href="">
                                 <i class="far fa-heart"
                                    aria-hidden="true"></i>
-                            </a>
+                            </a>*@
                             <a id="setUp" class="nav-link ml-3" href="~/Manage/Index">
                                 <i class="fa fa-cog"
                                    aria-hidden="true"></i>
@@ -118,11 +118,11 @@
         <!-- 主要內容區 starts-->
         <main>
             <div class="container">
-                <div id="mainSection" class="row py-5">
+                <div id="mainSection" class="row justify-content-sm-center py-5">
                     <!-- 判斷是否開啟RWD左側邊框 -->
                     <input type="checkbox" id="menuControl">
                     <!-- 左側邊框 -->
-                    <aside id="aside1" class="col-12 col-md-3  mt-0" style="z-index: 1002;">
+                    <aside id="aside1" class="col-12 col-md-3 mt-0" style="z-index: 1002;">
                         @if (Request.IsAuthenticated)
                         {
 
@@ -146,7 +146,7 @@
                         }
                     </aside>
                     <!-- 右側主內容 -->
-                    <section id="Section" class="col-12 col-md-9 w-100">
+                    <section id="Section" class="col-12 col-md-9 w-100 ">
                         <div id="mainPage">
                             @RenderBody()
                         </div>
