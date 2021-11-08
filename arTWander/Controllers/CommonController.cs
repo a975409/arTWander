@@ -72,6 +72,10 @@ namespace arTWander.Controllers
 
             CommonInfoViewModel viewModel = new userFactory(DbContext).createViewModel(model, userId);
 
+<<<<<<< HEAD
+=======
+            // return
+>>>>>>> 1b6f208bd47d16df1510d5083fc25768bc85f91a
             return View(viewModel);
 
         }
@@ -130,7 +134,7 @@ namespace arTWander.Controllers
             {
                 case "Member":
                     ViewBag.userName = user.UserName;
-                    ViewBag.avatarUrl = string.IsNullOrEmpty(user.Avatar) ? "/image/avatar/avatar_default.png" : $"/SaveFiles/Member/{user.Id}/{user.Avatar}";
+                    ViewBag.avatarUrl = string.IsNullOrEmpty(user.Avatar) ? "/image/avatar/avatar_default.png" : $"/SaveFiles/Member/{user.Id}/Avatar/{user.Avatar}";
                     break;
                 case "Company":
                     var company = DbContext.Company.Where(m => m.FK_ApplicationUser == userId).FirstOrDefault();
@@ -150,6 +154,10 @@ namespace arTWander.Controllers
                     ViewBag.userName = "";
                     ViewBag.avatarUrl = "/image/avatar/avatar_default.png";
                     break;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1b6f208bd47d16df1510d5083fc25768bc85f91a
             }
             return View(new userFactory(DbContext).getShowPages(model: search));
         }
@@ -182,6 +190,35 @@ namespace arTWander.Controllers
 
             return View(viewModels);
         }
+
+        public ActionResult addToMyShow(int showId)
+        {
+            int userId = User.Identity.GetUserId<int>();
+            var user = UserManager.FindById(userId);
+
+            var theShow = DbContext.ShowPage.Where(p => p.Id == showId).FirstOrDefault();
+            try
+            {
+                user.ShowPage.Add(theShow);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(500, "false");
+            }
+
+            try
+            {
+                DbContext.SaveChanges();
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(500, "false");
+            }
+
+            return new HttpStatusCodeResult(201, "success");
+
+        }
+
         public ActionResult addToMyGallery(string galleryId)
         {
             int userId = User.Identity.GetUserId<int>();
@@ -200,14 +237,51 @@ namespace arTWander.Controllers
             return new HttpStatusCodeResult(201, "success");
         }
 
+        public ActionResult deleFromMyShow(int showId)
+        {
+            var userId = User.Identity.GetUserId<int>();
+            var user = UserManager.FindById(userId);
+
+            var theDeletedShow = user.ShowPage.Where(p => p.Id == showId).FirstOrDefault();
+            user.ShowPage.Remove(theDeletedShow);
+            DbContext.SaveChanges();
+
+            return new HttpStatusCodeResult(201, "success");
+        }
+
         //Common首頁 end
 
         //=========================================================================================
 
         //Aside 導引畫面start
-        public ActionResult MyshowPage()
+        public ActionResult MyshowPage(int? cityId)
         {
-            return View();
+            // 建立 城市的list
+            var cityList = DbContext.City.Select(x => x).ToList();
+
+            // 建立 喜愛的展覽清單的viewmodel 的list
+            int userId = User.Identity.GetUserId<int>();
+            var user = UserManager.FindById(userId);
+
+            List<CommonShowViewModel> myShowList = new userFactory(DbContext).createMyShowList(cityId, userId, user);
+
+            // 將兩個list加入viewModel
+            CommonMyShowViewNodel viewModel = new userFactory(DbContext).createMyShowViewNodel(cityList, myShowList);
+
+            // 判斷選擇地區沒有展覽 || 未添加任何展覽進我的展覽時 顯示的訊息
+            if (myShowList.Count() < 1 && cityId != null)
+            {
+                ViewBag.errorMsg = "此地區尚未有展覽被添加至「我的展覽」";
+                ViewBag.guidMsg = "若想規劃此地區的看展行程，請再回到展覽清單探索該地區展覽";
+            }
+            else if (myShowList.Count() < 1 && cityId == null)
+            {
+                ViewBag.errorMsg = "尚未有展覽被添加至「我的展覽」";
+                ViewBag.guidMsg = "若想進行展覽行程規劃，可從「全部展覽」添加展覽進入「我的展覽」";
+            }
+
+
+            return View(viewModel);
         }
 
         public ActionResult MyItineraryPage()
