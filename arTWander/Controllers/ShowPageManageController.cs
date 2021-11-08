@@ -56,6 +56,7 @@ namespace arTWander.Controllers
 
             var company = new CompanyFactory(DbContext).GetCompany(userId);
             ViewBag.PhotoStickerImage = string.IsNullOrEmpty(company.PhotoStickerImage) ? "/image/avatar/頭像_展演單位.png" : $"/SaveFiles/Company/{company.Id}/Info/{company.PhotoStickerImage}";
+            ViewBag.userName = company.CompanyName;
 
             if (company == null)
                 return RedirectToAction("Edit", "Company");
@@ -81,6 +82,7 @@ namespace arTWander.Controllers
             return PartialView("~/Views/Shared/CompanyPartial/_ShowPagePartial.cshtml", model);
         }
 
+        [AllowAnonymous]
         public ActionResult DisplayInfo(int showId)
         {
             var show = DbContext.ShowPage.Find(showId);
@@ -273,7 +275,6 @@ namespace arTWander.Controllers
             showPage.StartDate = model.StartDate;
             showPage.StartTime = model.StartTime;
             showPage.Title = model.Title;
-            showPage.Created_At = DateTime.Now;
             await DbContext.SaveChangesAsync();
 
             //新增該展演對應的關鍵字

@@ -105,7 +105,7 @@ namespace arTWander.Controllers
 
             // 取得viewModel
             int userId = User.Identity.GetUserId<int>();
-            CommonInfoViewModel viewModel = new userFactory().createViewModel(model, userId);
+            CommonInfoViewModel viewModel = new userFactory(DbContext).createViewModel(model, userId);
             
             // return
             return View(viewModel);
@@ -120,11 +120,11 @@ namespace arTWander.Controllers
             int userId = User.Identity.GetUserId<int>();
             ApplicationUser user = db.Users.Where(u => u.Id == userId).FirstOrDefault();
 
-            new userFactory().updateToDB(user, viewModel);
+            new userFactory(DbContext).updateToDB(user, viewModel);
             db.SaveChanges();
 
             // 取得檔案存入指定資料夾
-            new userFactory().saveAvatarToFolder(user, avatarFile);
+            new userFactory(DbContext).saveAvatarToFolder(user, avatarFile);
 
             // return
             return RedirectToAction("Index", "Home");
@@ -135,51 +135,72 @@ namespace arTWander.Controllers
 
         //Common首頁 start
 
-        public ActionResult Index(string city)
+        public ActionResult Index(string city="")
         {
             // 取得使用者頭像及姓名
             int userId = User.Identity.GetUserId<int>();
+            ApplicationUser user = DbContext.Users.Where(u => u.Id == userId).FirstOrDefault();
 
-            ApplicationDbContext db = new ApplicationDbContext();
-            ApplicationUser user = db.Users.Where(u => u.Id == userId).FirstOrDefault();
-            
-            ViewBag.userName = user.UserName;
-            ViewBag.avatarUrl = "/image/avatar/";
-            ViewBag.city = city;
-
-            if (string.IsNullOrEmpty(user.Avatar))
-                ViewBag.avatarUrl += "avatar_default.png";
-            else
-                ViewBag.avatarUrl += user.Avatar;
-
-            // return
-            return View();
-        }
-
-
-        public ActionResult ShowList(string city)
-        {
-            ViewBag.errorMsg = "";
-            if (String.IsNullOrEmpty(city))
+            SearchShowPagesViewModel search = new SearchShowPagesViewModel
             {
-                IQueryable<CommonShowViewModel> q = new userFactory().queryAllShow();
-                List<CommonShowViewModel> viewModels = q.ToList();
+                Cost = CostStatus.none,
+                OrderSortField = OrderSortField.DateSort
+            };
 
-                return View(viewModels);
-
-            }else
+            if (!string.IsNullOrEmpty(city))
             {
-                IQueryable<CommonShowViewModel> q = new userFactory().queryAllShow();
-                List<CommonShowViewModel>  viewModels = q.Where(s => s.showCity == city).DefaultIfEmpty().ToList();
-                if (viewModels[0] != null)
-                    return View(viewModels);
-                else
-                    ViewBag.errorMsg = "此區域本檔期暫無展覽";
-                    return View(viewModels);
+                search.FK_City = DbContext.City.Where(m => m.CityName == city).Select(m => m.Id).FirstOrDefault();
             }
 
+            //使用者未登入
+            if (user == null)
+            {
+                ViewBag.userName = "";
+                ViewBag.avatarUrl = "/image/avatar/avatar_default.png";
+                return View(new userFactory(DbContext).getShowPages(model: search));
+            }
+
+            string role = UserManager.GetRoles(userId)[0];
+
+            switch (role)
+            {
+                case "Member":
+                    ViewBag.userName = user.UserName;
+                    ViewBag.avatarUrl = string.IsNullOrEmpty(user.Avatar) ? "/image/avatar/avatar_default.png" : $"/SaveFiles/Member/{user.Id}/{user.Avatar}";
+                    break;
+                case "Company":
+                    var company = DbContext.Company.Where(m => m.FK_ApplicationUser == userId).FirstOrDefault();
+
+                    if (company == null)
+                    {
+                        ViewBag.userName = user.UserName;
+                        ViewBag.PhotoStickerImage = "/image/avatar/avatar_default.png";
+                    }
+                    else
+                    {
+                        ViewBag.userName = company.CompanyName;
+                        ViewBag.PhotoStickerImage = string.IsNullOrEmpty(company.PhotoStickerImage) ? "/image/exhibiton/Null.png" : $"/SaveFiles/Company/{company.Id}/Info/{company.PhotoStickerImage}";
+                    }
+                    break;
+                default:
+                    ViewBag.userName = "";
+                    ViewBag.avatarUrl = "/image/avatar/avatar_default.png";
+                    break;
+            }
+            return View(new userFactory(DbContext).getShowPages(model: search));
         }
 
+        [HttpPost]
+        public ActionResult getShowList(SearchShowPagesViewModel searchModel, int page = 1)
+        {
+            TempData["SearchModel"] = searchModel;
+            TempData.Keep("SearchModel");
+
+            var model = new userFactory(DbContext).getShowPages(page, searchModel);
+            return PartialView("~/Views/Shared/CommonPartial/Card/_PartialShowList.cshtml", model);
+        }
+
+        [HttpPost]
         public ActionResult GalleryList()
         {
             return View();
@@ -239,10 +260,10 @@ namespace arTWander.Controllers
             int userId = User.Identity.GetUserId<int>();
             var user = UserManager.FindById(userId);
 
-            List<CommonShowViewModel> myShowList = new userFactory().createMyShowList(cityId, userId, user);
+            List<CommonShowViewModel> myShowList = new userFactory(DbContext).createMyShowList(cityId, userId, user);
 
             // 將兩個list加入viewModel
-            CommonMyShowViewNodel viewModel = new userFactory().createMyShowViewNodel(cityList, myShowList);
+            CommonMyShowViewNodel viewModel = new userFactory(DbContext).createMyShowViewNodel(cityList, myShowList);
             
             // 判斷選擇地區沒有展覽 || 未添加任何展覽進我的展覽時 顯示的訊息
             if (myShowList.Count() < 1 && cityId != null)

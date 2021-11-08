@@ -8,15 +8,24 @@ using System.Web;
 using System.Data.Entity;
 using static arTWander.Models.CommonViewModel;
 using System.Threading.Tasks;
+using PagedList;
 
 namespace arTWander.Models
 {
     public class userFactory
     {
+        private ApplicationDbContext _dbContext;
+
+        public userFactory(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        private const int pageSize = 12;
+
         public ApplicationUser getUserById(int id)
         {
-            ApplicationDbContext db = new ApplicationDbContext();
-            var q = from nowUser in db.Users
+            var q = from nowUser in _dbContext.Users
                     where nowUser.Id == id
                     select nowUser;
             var person = q.ToList()[0];
@@ -57,8 +66,7 @@ namespace arTWander.Models
         public CommonInfoViewModel createViewModel(IndexViewModel model, int Userid)
         {
             // 取得user
-            ApplicationDbContext db = new ApplicationDbContext();
-            var user = db.Users.Where(u => u.Id == Userid).FirstOrDefault();
+            var user = _dbContext.Users.Where(u => u.Id == Userid).FirstOrDefault();
 
             // 轉換user.birthay型別以符合前端需求
             string Bday;
@@ -104,25 +112,22 @@ namespace arTWander.Models
             return viewModel;
         }
 
-        public IQueryable<CommonShowViewModel> queryAllShow()
+        public IPagedList<CommonShowViewModel> getShowPages(int page = 1, SearchShowPagesViewModel model = null)
         {
-            ApplicationDbContext db = new ApplicationDbContext();
-            var q = from show in db.ShowPage
-                    join city in db.City on show.FK_City equals city.Id
-                    join company in db.Company on show.FK_Company equals company.Id
-                    join showImg in db.ShowPageFile on show.Id equals showImg.FK_ShowPage
-                    select new CommonShowViewModel
-                    {
-                        showCity = city.CityName,
-                        showTitle = show.Title,
-                        showDiscription = show.Description,
-                        showCompany = company.CompanyName,
-                        showImg = showImg.fileName,
-                        showId = show.Id
-                        //isSelectedCity = "false"
-                    };
+            //依據搜尋條件取得該展演單位的展演
+            var shows = OtherMethod.searchShowPage(_dbContext.ShowPage, model).Select(m => new CommonShowViewModel
+            {
+                showDiscription = m.Description,
+                showCity = m.City.CityName,
+                showId = m.Id,
+                showTitle = m.Title,
+                showImg = m.ShowPageFiles.Count() <= 0 ? "/image/exhibiton/Null.png" : $"/SaveFiles/Company/{m.Company.Id}/show/{m.Id}/{m.ShowPageFiles.FirstOrDefault().fileName}",
+                showCompany = m.Company.CompanyName
+            });
 
-            return q;
+            var showPages = OtherMethod.getCurrentPagedList(shows, page, pageSize);
+
+            return showPages;
         }
 
         public List<CommonShowViewModel> createMyShowList(int? cityId, int userId, ApplicationUser user)

@@ -54,6 +54,79 @@ namespace arTWander.Models
 
             return showPages;
         }
+
+        public static IEnumerable<ShowPage> searchShowPage(IEnumerable<ShowPage> showPages, SearchShowPagesViewModel model)
+        {
+            if (model == null)
+            {
+                return showPages.OrderByDescending(m => m.Created_At);
+            }
+            else
+            {
+
+                if (model.FK_City > 0)
+                {
+                    showPages = showPages.Where(m => m.FK_City == model.FK_City);
+
+                    if (model.FK_District > 0)
+                        showPages = showPages.Where(m => m.FK_District == model.FK_District);
+                }
+
+                //找出在開始日期與結束日期範圍內的展演
+                if (model.StartDate != null && model.EndDate != null)
+                {
+                    if (!model.StartDate.Equals(DateTime.MinValue) && !model.EndDate.Equals(DateTime.MinValue))
+                    {
+                        showPages = showPages.Where(m => DateTime.Compare(model.StartDate, m.StartDate) >= 0 && DateTime.Compare(m.EndDate, model.EndDate) >= 0);
+                    }
+                    else if (!model.StartDate.Equals(DateTime.MinValue))
+                    {
+                        showPages = showPages.Where(m => DateTime.Compare(m.StartDate, model.StartDate) >= 0);
+                    }
+                    else if (!model.EndDate.Equals(DateTime.MinValue))
+                    {
+                        showPages = showPages.Where(m => DateTime.Compare(model.EndDate, m.EndDate) >= 0);
+                    }
+                    else { }
+                }
+
+                if (model.Cost != CostStatus.none)
+                {
+
+                    if (model.Cost == CostStatus.yes)
+                        showPages = showPages.Where(m => m.Cost);
+                    else
+                        showPages = showPages.Where(m => !m.Cost);
+                }
+
+                switch (model.OrderSortField)
+                {
+                    //熱門展演，以好評數＆留言數做判斷
+                    case OrderSortField.HotSort:
+                        //先取得平均好評數做排序，再取得留言數做排序
+                        showPages = showPages.Where(m => DateTime.Compare(DateTime.Now, m.StartDate) >= 0 && DateTime.Compare(DateTime.Now, m.EndDate) <= 0).OrderByDescending(m => {
+
+                            if (m.ShowComments.Count() > 0)
+                                return m.ShowComments.Sum(s => s.Star) / m.ShowComments.Count();
+                            else
+                                return 0;
+                        }).ThenByDescending(m => m.ShowComments.Count());
+                        break;
+                    case OrderSortField.DateSort:
+                        //最新展演
+                        showPages = showPages.Where(m => DateTime.Compare(DateTime.Now, m.StartDate) >= 0 && DateTime.Compare(DateTime.Now, m.EndDate) <= 0).OrderByDescending(m => m.Created_At);
+                        break;
+                    case OrderSortField.AllData:
+                        showPages = showPages.OrderByDescending(m => m.Created_At);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            return showPages;
+        }
     }
 
     public class SearchShowPagesViewModel
@@ -79,6 +152,6 @@ namespace arTWander.Models
 
     public enum OrderSortField
     {
-        PrimaryKey = 0, DateSort = 1, HotSort = 2
+        AllData = 0, DateSort = 1, HotSort = 2
     }
 }
