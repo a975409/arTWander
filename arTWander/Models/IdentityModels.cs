@@ -62,7 +62,8 @@ namespace arTWander.Models
             return userIdentity;
         }
 
-        public ApplicationUser() {
+        public ApplicationUser()
+        {
             PageViewCounts = new HashSet<PageViewCount>();
         }
 
@@ -92,7 +93,7 @@ namespace arTWander.Models
         public virtual ICollection<Reports> ReportsList { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ResponseShowComment> ResponseShowComments { get; set; }
 
@@ -121,11 +122,11 @@ namespace arTWander.Models
         public ApplicationDbContext()
             : base(Environment.GetEnvironmentVariable("AzureConnstring"))
         {
-            //string a = Environment.GetEnvironmentVariable("AzureConnstring");
-            //Console.WriteLine(a);
+            string a = Environment.GetEnvironmentVariable("AzureConnstring");
+        Console.WriteLine(a);
         }
 
-        static ApplicationDbContext()
+    static ApplicationDbContext()
         {
             Database.SetInitializer<ApplicationDbContext>(new ApplicationDbInitializer());
         }

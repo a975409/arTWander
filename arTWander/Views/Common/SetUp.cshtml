@@ -1,10 +1,7 @@
 ﻿@model arTWander.Models.CommonViewModel.CommonInfoViewModel
 
-@{
-    ViewBag.Title = "管理您的帳號";
-    Layout = "~/Views/Shared/CommonLayout/_AsideFalse.cshtml";
-
-}
+@{ ViewBag.Title = "管理您的帳號";
+                Layout = "~/Views/Shared/CommonLayout/_AsideFalse.cshtml"; }
 
 @section css
 {
@@ -27,46 +24,44 @@
 
         @using (Html.BeginForm("SetUp", "Common", FormMethod.Post, new { id = "mainForm", enctype = "multipart/form-data", @class = "container p-0 w-100 rounded-lg mt-5 " }))
         {
-            <div class="row mt-5 justify-content-center ">
-                <!-- 消除input type="file" UI的方法 https://www.wfublog.com/2017/10/input-type-file-upload-css-skill.html -->
-                <label class=" col-3 col-md-1 p-0" for="avatarUploader" role="button">
-                    <div id="userAvatarDiv">
-                        <img id="userAvatarImg" class="rounded-circle d-flex" width="100" height="100" src="@Model.AvatarUrl" style="object-fit: cover;" alt="">
-                        <i class="fa fa-camera " aria-hidden="true"></i>
-                        <div id="fakeDiv"></div>
-                    </div>
-                    <input type="file" class="d-none" name="avatarFile" id="avatarUploader" accept="image/png, image/jpeg, image/gif">
-                </label><br>
-            </div>
-            <input class="d-none" type="text" id="avatarNameInput" name="AvatarName" value="@Model.AvatarName"><br>
-            <div class="row mt-4 justify-content-center ">
-                <label class="col-4 col-md-2" for="userName">會員暱稱</label>
-                <input class="col-6" name="UserName" id="UserName" type="text" value="@Model.UserName"><br>
-            </div>
-            <div class="row mt-4 justify-content-center ">
-                <label class="col-4 col-md-2" for="passwordModify">密碼變更</label>
-                <u class="col-6 px-0"><a id="passwordModifyBtn" href="/Manage/ChangePassword">變更</a><br></u>
-            </div>
-            <div class="row mt-4 justify-content-center">
-                <label class="col-4 col-md-2" for="userBDay">生日</label>
-                <input class="col-6" name="Birthday" id="Birthday" type="date" value="@Model.Birthday"><br>
-            </div>
-            <div class="row mt-4 justify-content-center">
-                <label class="col-4 col-md-2" for="userAddress">常用地址</label>
-                <input class="col-6" name="AccountAddress" id="AccountAddress" type="text" value="@Model.AccountAddress"><br>
-            </div>
-            <div class="row mt-4 justify-content-center">
-                <label class="col-4 col-md-2" for="userPhone">聯絡電話</label>
-                <input class="col-6" name="PhoneNumber" id="PhoneNumber" type="text" value="@Model.PhoneNumber"><br>
-            </div>
-            @*<div class="row mt-4 justify-content-center">
-                    <label class="col-4 col-md-2" for="userSuscribe">訂閱電子報</label>
-                    <select class="col-6" name="" id="">
-                        <option value="">是</option>
-                        <option value="">否</option>
-                    </select><br>
-                </div>*@
-        }
+<div class="row mt-5 justify-content-center ">
+    <!-- 消除input type="file" UI的方法 https://www.wfublog.com/2017/10/input-type-file-upload-css-skill.html -->
+    <label class=" col-3 col-md-1 p-0" for="avatarUploader" role="button">
+        <div id="userAvatarDiv">
+            <img id="userAvatarImg" class="rounded-circle d-flex" width="100" height="100" src="@Model.AvatarUrl" style="object-fit: cover;" alt="">
+            <i class="fa fa-camera " aria-hidden="true"></i>
+            <div id="fakeDiv"></div>
+        </div>
+        <input type="file" class="d-none" name="avatarFile" id="avatarUploader" accept="image/png, image/jpeg, image/gif">
+    </label><br>
+</div>
+                <input class="d-none" type="text" id="avatarNameInput" name="AvatarName" value="@Model.AvatarName"><br>
+                                <div class="row mt-4 justify-content-center ">
+                                    <label class="col-4 col-md-2" for="userName">會員暱稱</label>
+                                    <input class="col-6" name="UserName" id="UserName" type="text" value="@Model.UserName"><br>
+                                </div>
+                                                <div class="row mt-4 justify-content-center ">
+                                                    <label class="col-4 col-md-2" for="passwordModify">密碼變更</label>
+                                                    <u class="col-6 px-0"><a id="passwordModifyBtn" href="/Manage/ChangePassword">變更</a><br></u>
+                                                </div>
+                                                                <div class="row mt-4 justify-content-center">
+                                                                    <label class="col-4 col-md-2" for="userBDay">生日</label>
+                                                                    <input class="col-6" name="Birthday" id="Birthday" type="date" value="@Model.Birthday"><br>
+                                                                </div>
+                                                                                <div class="row mt-4 justify-content-center">
+                                                                                    <label class="col-4 col-md-2" for="userAddress">常用地址</label>
+                                                                                    <input class="col-6" name="AccountAddress" id="AccountAddress" type="text" value="@Model.AccountAddress"><br>
+                                                                                </div>
+                                                                                                <div class="row mt-4 justify-content-center">
+                                                                                                    <label class="col-4 col-md-2" for="userPhone">聯絡電話</label>
+                                                                                                    <input class="col-6" name="PhoneNumber" id="PhoneNumber" type="text" value="@Model.PhoneNumber"><br>
+                                                                                                </div> @*<div class="row mt-4 justify-content-center">
+                                                                                                                        <label class="col-4 col-md-2" for="userSuscribe">訂閱電子報</label>
+                                                                                                                        <select class="col-6" name="" id="">
+                                                                                                                            <option value="">是</option>
+                                                                                                                            <option value="">否</option>
+                                                                                                                        </select><br>
+                                                                                                                    </div>*@}
         <div class="row mt-4 justify-content-center" id="TwoFactor">
             @Html.Partial("_IsTwoFactor", Model)
         </div>
@@ -109,16 +104,6 @@
     </div>
 </div>
 
-@*<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-8">
-            <p>為展示適合您年齡區間的展覽及使用行程安排功能，請提供您的出生年月日及一組常用地址</p>
-        </div>
-    </div>
-</div>*@
-
-
-
 
 @section scripts{
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -151,26 +136,20 @@
                 })
             })
 
+            // 判斷是否初次登入
             if (@ViewBag.firstLogIn) {
                 Swal.fire({
                     title: '<h5 style="color: rgb(197, 126, 104); font-weight: bold;">歡迎您加入arTwander !</h5>',
                     icon: 'info',
                     html: '<div class="container"><div class="row justify-content-center"><div class="col-12"><p style="font-size:16px;">為展示適合您年齡區間的展覽及使用行程安排功能<br>請提供您的出生年月日及一組常用地址</p></div></div></div>',
-                    
+
                 })
             }
+
         })
 
-
-
     </script>
 
-    <script>
-            //密碼變更
-            //$('#passwordModifyBtn').click(function () {
-            //    $('#mainPage').load('/AccountPage/PasswordModify.html');
-            //})
-    </script>
 }
 
 

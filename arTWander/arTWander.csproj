@@ -286,6 +286,41 @@
     <Content Include="javascript\SingleShowPage.js" />
     <Content Include="javascript\sweetalert2%4011.js" />
     <Content Include="packages.config" />
+    <Content Include="SaveFiles\Admin\Avatar\20211027_144817.jpg" />
+    <Content Include="SaveFiles\Admin\Avatar\20211027_233742.jpg" />
+    <Content Include="SaveFiles\Admin\Avatar\20211027_233811.jpg" />
+    <Content Include="SaveFiles\Admin\Avatar\20211031_19234.jpg" />
+    <Content Include="SaveFiles\Admin\Avatar\avatar_default.png" />
+    <Content Include="SaveFiles\Admin\Avatar\Image 032.jpg" />
+    <Content Include="SaveFiles\Company\1\Info\PhotoStickerImg_1_20211108_000928.jpg" />
+    <Content Include="SaveFiles\Company\1\Info\PromotionalImage_1_20211108_000928.png" />
+    <Content Include="SaveFiles\Company\1\show\11\亞紀七等生.png" />
+    <Content Include="SaveFiles\Company\1\show\12\moca2.jpg" />
+    <Content Include="SaveFiles\Company\1\show\12\taz.jpg" />
+    <Content Include="SaveFiles\Company\1\show\12\北美羅智信.png" />
+    <Content Include="SaveFiles\Company\1\show\13\ShowImage_13_20211106_223725_1.jpg" />
+    <Content Include="SaveFiles\Company\1\show\13\ShowImage_13_20211106_223725_2.png" />
+    <Content Include="SaveFiles\Company\1\show\13\ShowImage_13_20211106_223725_3.jpg" />
+    <Content Include="SaveFiles\Company\1\show\14\ShowImage_14_20211106_224331_1.jpg" />
+    <Content Include="SaveFiles\Company\1\show\14\ShowImage_14_20211106_224331_2.jpg" />
+    <Content Include="SaveFiles\Company\1\show\14\ShowImage_14_20211106_224331_3.jpg" />
+    <Content Include="SaveFiles\Company\1\show\1\ShowImage_1_20211106_213509_1.png" />
+    <Content Include="SaveFiles\Company\1\show\1\ShowImage_1_20211106_213509_2.png" />
+    <Content Include="SaveFiles\Company\1\show\1\ShowImage_1_20211106_213510_3.png" />
+    <Content Include="SaveFiles\Company\1\show\1\ShowImage_1_20211106_213510_4.png" />
+    <Content Include="SaveFiles\Company\1\show\1\ShowImage_1_20211106_213510_5.png" />
+    <Content Include="SaveFiles\Company\1\show\1\ShowImage_1_20211108_031856_1.png" />
+    <Content Include="SaveFiles\Company\1\show\1\ShowImage_1_20211108_031856_2.png" />
+    <Content Include="SaveFiles\Company\1\show\1\ShowImage_1_20211108_031856_3.png" />
+    <Content Include="SaveFiles\Company\1\show\1\ShowImage_1_20211108_031856_4.png" />
+    <Content Include="SaveFiles\Company\1\show\1\ShowImage_1_20211108_031856_5.png" />
+    <Content Include="SaveFiles\Company\1\show\2\ShowImage_2_20211108_032327_1.jpg" />
+    <Content Include="SaveFiles\Company\1\show\3\ShowImage_3_20211108_033725_1.png" />
+    <Content Include="SaveFiles\Company\1\show\9\hongGah.jpg" />
+    <Content Include="SaveFiles\Company\2\Info\PhotoStickerImg_2_20211109_014357.jpg" />
+    <Content Include="SaveFiles\Company\2\Info\PromotionalImage_2_20211109_014356.jpg" />
+    <Content Include="SaveFiles\Company\2\show\4\ShowImage_4_20211109_015256_1.jpg" />
+    <Content Include="SaveFiles\Member\4\Avatar\20481918_1090739744390403_8989974898285740032_n.jpg" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\spin.js" />
@@ -366,6 +401,9 @@
     <Content Include="Views\Admin\BlackUserInform.cshtml" />
     <Content Include="Views\Admin\ShowManage.cshtml" />
     <Content Include="Views\Shared\CommonPartial\Card\_PartialMyShowList.cshtml" />
+    <Content Include="Views\Shared\CommonPartial\Card\_PartialCompanyList.cshtml" />
+    <Content Include="Views\Shared\CommonPartial\Card\_PartialMyCompany.cshtml" />
+    <Content Include="Views\Common\ShowInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -497,7 +535,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SaveFiles\Company\" />
+    <Folder Include="SaveFiles\Company\1\show\10\" />
+    <Folder Include="SaveFiles\Company\1\show\17\" />
+    <Folder Include="SaveFiles\Company\3\Info\" />
+    <Folder Include="SaveFiles\Company\5\Info\" />
+    <Folder Include="SaveFiles\Company\5\show\5\" />
+    <Folder Include="SaveFiles\Company\5\show\6\" />
+    <Folder Include="SaveFiles\Company\5\show\7\" />
+    <Folder Include="SaveFiles\Company\5\show\8\" />
+    <Folder Include="SaveFiles\Company\8\Info\" />
     <Folder Include="Views\Method\" />
   </ItemGroup>
   <PropertyGroup>

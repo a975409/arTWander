@@ -70,6 +70,16 @@ a {
     background-color: rgba(196, 196, 196, 1);
 }
 
+@media screen and (max-width: 480px) {
+    #topHeader a {
+        height: 60px;
+    }
+
+    #topHeader img {
+        width: 150px;
+    }
+}
+
 
 /* shortDetail 白色敘述卡 starts*/
 .shortDetail {
@@ -134,7 +144,7 @@ a {
 }
 
     .marqee a {
-        position:absolute;
+        position: absolute;
         top: 2px;
         animation: marqee 8s linear infinite;
         white-space: nowrap;
@@ -163,9 +173,17 @@ a {
         margin-bottom: 100px;
     }
 }
+
+@media screen and (max-width: 480px) {
+    .showImg {
+        height: 320px;
+    }
+
+        .showImg img {
+            height: 320px;
+        }
+}
 /* shortDetail 白色敘述卡 ends*/
-
-
 /* MemberPage */
 .MyshowDeleteIcon {
     display: flex;

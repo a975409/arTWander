@@ -16,6 +16,10 @@ namespace arTWander.Models
 
             public IList<UserLoginInfo> Logins { get; set; }
 
+            [Required(ErrorMessage = "請填寫聯絡電話")]
+            [Phone(ErrorMessage = "請填寫有效的聯絡電話")]
+            [StringLength(20, ErrorMessage = "字數最多20個字")]
+            [DisplayName("聯絡電話")]
             public string PhoneNumber { get; set; }
 
             public bool TwoFactor { get; set; }
@@ -24,6 +28,7 @@ namespace arTWander.Models
 
             [Required]
             [StringLength(40)]
+            [DisplayName("使用者姓名")]
             public string UserName { get; set; }
 
             public string Birthday { get; set; }
@@ -37,6 +42,10 @@ namespace arTWander.Models
 
             public string AvatarName { get; set; }
 
+            [Required(ErrorMessage = "請填寫電子信箱")]
+            [StringLength(100, ErrorMessage = "字數最多100個字")]
+            [EmailAddress(ErrorMessage = "請填寫有效的電子信箱")]
+            [DisplayName("電子信箱")]
             public string Email { get; set; }
 
             public bool IsSuscribe { get; set; }
