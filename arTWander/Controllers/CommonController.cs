@@ -72,10 +72,7 @@ namespace arTWander.Controllers
 
             CommonInfoViewModel viewModel = new userFactory(DbContext).createViewModel(model, userId);
 
-<<<<<<< HEAD
-=======
             // return
->>>>>>> 1b6f208bd47d16df1510d5083fc25768bc85f91a
             return View(viewModel);
 
         }
@@ -103,7 +100,7 @@ namespace arTWander.Controllers
 
         //Common首頁 start
 
-        public ActionResult Index(string city="")
+        public ActionResult Index(string city = "")
         {
             // 取得使用者頭像及姓名
             int userId = User.Identity.GetUserId<int>();
@@ -154,10 +151,7 @@ namespace arTWander.Controllers
                     ViewBag.userName = "";
                     ViewBag.avatarUrl = "/image/avatar/avatar_default.png";
                     break;
-<<<<<<< HEAD
-=======
 
->>>>>>> 1b6f208bd47d16df1510d5083fc25768bc85f91a
             }
             return View(new userFactory(DbContext).getShowPages(model: search));
         }
@@ -182,7 +176,7 @@ namespace arTWander.Controllers
             else
             {
                 viewModels = (new CommonPageFactory(DbContext).queryAllCustomer()).ToList();
-                
+
             }
             // 建立 城市的list
             var cityList = DbContext.City.Select(x => x).ToList();
@@ -190,6 +184,24 @@ namespace arTWander.Controllers
 
             return View(viewModels);
         }
+        public ActionResult addToMyGallery(string galleryId)
+        {
+            int userId = User.Identity.GetUserId<int>();
+            var user = UserManager.FindById(userId);
+            var galleryID = JsonConvert.DeserializeObject<Company>(galleryId);
+            var myGallery = DbContext.Company.Where(p => p.Id == galleryID.Id).FirstOrDefault();
+            try
+            {
+                user.CompanySubs.Add(myGallery);
+                DbContext.SaveChanges();
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(500, "false");
+            }
+            return new HttpStatusCodeResult(201, "success");
+        }
+
 
         public ActionResult addToMyShow(int showId)
         {
@@ -219,23 +231,7 @@ namespace arTWander.Controllers
 
         }
 
-        public ActionResult addToMyGallery(string galleryId)
-        {
-            int userId = User.Identity.GetUserId<int>();
-            var user = UserManager.FindById(userId);
-            var galleryID = JsonConvert.DeserializeObject<Company>(galleryId);
-            var myGallery = DbContext.Company.Where(p => p.Id == galleryID.Id).FirstOrDefault();
-            try
-            {
-                user.CompanySubs.Add(myGallery);
-                DbContext.SaveChanges();
-            }
-            catch
-            {
-                return new HttpStatusCodeResult(500, "false");
-            }
-            return new HttpStatusCodeResult(201, "success");
-        }
+        
 
         public ActionResult deleFromMyShow(int showId)
         {

@@ -261,6 +261,19 @@
             });
         });
     </script>
+
+    <script>
+        $("#GalleryList").click(function () {
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("GalleryList", "Common")',
+                data: {},
+                success: function (data) {
+                    $('#mainPage').html(data);
+                }
+            });
+        });
+    </script>
     <!-- aside判斷結束 -->
     @RenderSection("scripts", required: false)
 </body>
