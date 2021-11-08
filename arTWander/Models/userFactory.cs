@@ -149,9 +149,13 @@ namespace arTWander.Models
             {
                 // 取得此展覽之圖片list
                 List<string> fileName = new List<string>();
-                foreach (var file in show.ShowPageFiles)
+
+                if (show.ShowPageFiles.Count() > 0)
                 {
-                    fileName.Add(file.fileName);
+                    foreach (var file in show.ShowPageFiles)
+                    {
+                        fileName.Add($"/SaveFiles/Company/{show.Company.Id}/show/{show.Id}/{file.fileName}");
+                    }
                 }
 
                 // 建立此展覽viewmodel
@@ -161,7 +165,7 @@ namespace arTWander.Models
                     showTitle = show.Title,
                     showDiscription = show.Description,
                     showCompany = show.Company.CompanyName,
-                    showImg = fileName[0], // 預設選擇使用此展覽第一張圖片
+                    showImg = fileName.Count() > 0 ? fileName[0] : "", // 預設選擇使用此展覽第一張圖片
                     showId = show.Id
                 };
 

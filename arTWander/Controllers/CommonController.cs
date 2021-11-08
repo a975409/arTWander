@@ -166,7 +166,7 @@ namespace arTWander.Controllers
             {
                 case "Member":
                     ViewBag.userName = user.UserName;
-                    ViewBag.avatarUrl = string.IsNullOrEmpty(user.Avatar) ? "/image/avatar/avatar_default.png" : $"/SaveFiles/Member/{user.Id}/{user.Avatar}";
+                    ViewBag.avatarUrl = string.IsNullOrEmpty(user.Avatar) ? "/image/avatar/avatar_default.png" : $"/SaveFiles/Member/{user.Id}/Avatar/{user.Avatar}";
                     break;
                 case "Company":
                     var company = DbContext.Company.Where(m => m.FK_ApplicationUser == userId).FirstOrDefault();
