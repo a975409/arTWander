@@ -168,6 +168,7 @@
     <Content Include="css\CommonIndex.css" />
     <Content Include="css\CommonLayout\_AsideFalse.css" />
     <Content Include="css\CommonLayout\_AsideTrue.css" />
+    <Content Include="css\css_commonPage\CommonAsidePage.css" />
     <Content Include="css\css_commonPage\forum.css" />
     <Content Include="css\css_commonPage\GalleryList.css" />
     <Content Include="css\css_commonPage\setUpPage.css" />
@@ -465,6 +466,8 @@
     <Compile Include="Models\BlackList.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\City_District.cs" />
+    <Compile Include="Models\CommonFactory\CommonPageFactory.cs" />
+    <Compile Include="Models\CommonUserViewModel\CommonCompanyViewModel.cs" />
     <Compile Include="Models\CommonViewModel.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\CompanyFactory.cs" />

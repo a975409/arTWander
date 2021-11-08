@@ -13,7 +13,7 @@ namespace arTWander.Models
     {
         private ApplicationDbContext _dbContext;
 
-        private const int pageSize = 3;
+        private const int pageSize = 12;
 
         public ShowPageFactory(ApplicationDbContext dbContext)
         {
@@ -28,7 +28,7 @@ namespace arTWander.Models
             }
 
             //依據搜尋條件取得該展演單位的展演
-            var shows = searchShowPage(company.ShowPages, model).Select(m => new ShowMinViewModel
+            var shows = OtherMethod.searchShowPage(company.ShowPages, model).Select(m => new ShowMinViewModel
             {
                 Description = m.Description,
                 cityName = m.City.CityName,
@@ -37,66 +37,14 @@ namespace arTWander.Models
                 Comment = m.ShowComments.Count(),
                 fileName = m.ShowPageFiles.Count() <= 0 ? "/image/exhibiton/Null.png" : $"/SaveFiles/Company/{m.Company.Id}/show/{m.Id}/{m.ShowPageFiles.FirstOrDefault().fileName}",
                 cityId = m.FK_City
-            }); ;
+            }); 
 
             var showPages = OtherMethod.getCurrentPagedList(shows, page, pageSize);
 
             return showPages;
         }
 
-        private IEnumerable<ShowPage> searchShowPage(IEnumerable<ShowPage> showPages, SearchShowPagesViewModel model)
-        {
-            if (model == null)
-            {
-                return showPages.OrderByDescending(m => m.Created_At);
-            }
-            else {
-
-                if (model.FK_City > 0)
-                {
-                    showPages = showPages.Where(m => m.FK_City == model.FK_City);
-
-                    if(model.FK_District>0)
-                        showPages = showPages.Where(m => m.FK_District == model.FK_District);
-                }
-
-                //找出在開始日期與結束日期範圍內的展演
-                if (model.StartDate != null && model.EndDate != null && !model.EndDate.Equals(DateTime.MinValue))
-                {
-                    showPages = showPages.Where(m => DateTime.Compare(model.StartDate, m.StartDate) >= 0 && DateTime.Compare(m.EndDate, model.EndDate) >= 0);
-                }
-
-                if (model.Cost != CostStatus.none) {
-
-                    if (model.Cost == CostStatus.yes)
-                        showPages = showPages.Where(m => m.Cost);
-                    else
-                        showPages = showPages.Where(m => !m.Cost);
-                }
-
-                //熱門展演，以好評數＆留言數做判斷
-                if (model.OrderSortField == OrderSortField.HotSort)
-                {
-                    //先取得平均好評數做排序，再取得留言數做排序
-
-                    showPages = showPages.OrderByDescending(m => {
-
-                        if (m.ShowComments.Count() > 0)
-                            return m.ShowComments.Sum(s => s.Star) / m.ShowComments.Count();
-                        else
-                            return 0;
-                    }).ThenByDescending(m => m.ShowComments.Count());
-                }
-                else
-                {
-                    //最新展演
-                    showPages = showPages.OrderByDescending(m => m.Created_At);
-                }
-            }
-
-            return showPages;
-        }
-
+        
         /// <summary>
         /// 新增該展演對應的關鍵字
         /// </summary>
@@ -152,7 +100,7 @@ namespace arTWander.Models
                 int count = 1;
                 foreach (var item in imgFiles)
                 {
-                    if (item != null && item.ContentLength > 0 && item.FileName.Length <= 20 && OtherMethod.checkFileName(item.FileName))
+                    if (item != null && item.ContentLength > 0 && OtherMethod.checkFileName(item.FileName))
                     {
                         byte[] ImageData = new byte[item.ContentLength];
                         item.InputStream.Read(ImageData, 0, item.ContentLength);
@@ -198,7 +146,7 @@ namespace arTWander.Models
                 //儲存新增的圖檔
                 foreach (var item in imgFiles)
                 {
-                    if (item != null && item.ContentLength > 0 && item.FileName.Length <= 20 && OtherMethod.checkFileName(item.FileName))
+                    if (item != null && item.ContentLength > 0 && OtherMethod.checkFileName(item.FileName))
                     {
                         byte[] ImageData = new byte[item.ContentLength];
                         item.InputStream.Read(ImageData, 0, item.ContentLength);
