@@ -113,9 +113,10 @@ namespace arTWander.Controllers
             };
 
             if (!string.IsNullOrEmpty(city))
-            {
                 search.FK_City = DbContext.City.Where(m => m.CityName == city).Select(m => m.Id).FirstOrDefault();
-            }
+
+            TempData["SearchModel"] = search;
+            TempData.Keep("SearchModel");
 
             //使用者未登入
             if (user == null)

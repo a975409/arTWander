@@ -356,7 +356,6 @@
     <Content Include="Views\Shared\CompanyPartial\_showPageImagePartial.cshtml" />
     <Content Include="Views\Shared\CommonLayout\Aside\_PartialLogInFalse.cshtml" />
     <Content Include="Views\Shared\CommonLayout\Aside\_PartialLogInTrue.cshtml" />
-    <Content Include="Views\Shared\CompanyPartial\Aside\_PartialLogInFalse.cshtml" />
     <Content Include="Views\Shared\CompanyPartial\Aside\_PartialLogInTrue.cshtml" />
     <Content Include="Views\Shared\CompanyPartial\_DisplayShowPagePartial.cshtml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
@@ -366,6 +365,7 @@
     <Content Include="Views\Admin\BlackUserInform.cshtml" />
     <Content Include="Views\Admin\ShowManage.cshtml" />
     <Content Include="Views\Shared\CommonPartial\Card\_PartialMyShowList.cshtml" />
+    <Content Include="Views\Common\ShowInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

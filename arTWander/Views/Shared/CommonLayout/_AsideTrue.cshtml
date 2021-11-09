@@ -110,7 +110,7 @@
             </nav>
             <!-- fixed導覽列 end -->
             <!-- breadcrumb starts -->
-            @if (User.IsInRole("Member"))
+            @*@if (User.IsInRole("Member"))
             {
                 <nav id="cmnPage_BreadCrumb" class="col-12 my-4" aria-label="breadcrumb">
                     <ol class="breadcrumb bg-light">
@@ -120,7 +120,7 @@
                         <li class="breadcrumb-item active" aria-current="page">台北市</li>
                     </ol>
                 </nav>
-            }
+            }*@
             <!-- breadcrumb ends -->
         </header>
         <!-- 導覽列 end -->
@@ -134,18 +134,14 @@
                     <aside id="aside1" class="col-12 col-md-3  mt-0" style="z-index: 1002;">
                         @if (Request.IsAuthenticated)
                         {
-
                             if (User.IsInRole("Member"))
                             {
                                 Html.RenderPartial("~/Views/Shared/MemberLayout/_LoginAside.cshtml");
                             }
-                            else if (User.IsInRole("Company"))
+                            
+                            if (User.IsInRole("Company"))
                             {
                                 Html.RenderPartial("~/Views/Shared/CompanyPartial/Aside/_PartialLogInTrue.cshtml");
-                            }
-                            else
-                            {
-                                Html.RenderPartial("~/Views/Shared/CommonPartial/Aside/_PartialLogInTrue.cshtml");
                             }
                         }
 
