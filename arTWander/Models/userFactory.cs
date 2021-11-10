@@ -25,18 +25,13 @@ namespace arTWander.Models
 
         private const int pageSize = 12;
 
-        public ApplicationUser getUserById(int id)
-        {
-            var q = from nowUser in _dbContext.Users
-                    where nowUser.Id == id
-                    select nowUser;
-            var person = q.ToList()[0];
-            return person;
-        }
-
         public void updateToDB(ApplicationUser user, CommonInfoViewModel viewModel)
         {
-            user.Avatar = viewModel.AvatarName;
+            if (viewModel.AvatarName == "avatar_default.png")
+                user.Avatar = null;
+            else
+                user.Avatar = viewModel.AvatarName;
+
             user.UserName = viewModel.UserName;
             user.Birthday = DateTime.Parse(viewModel.Birthday);
             user.AccountAddress = viewModel.AccountAddress;
@@ -57,22 +52,52 @@ namespace arTWander.Models
                 if (fileValid == true)
                 {
                     string fileName = user.Avatar;
-                    string savePath = Path.Combine(HttpContext.Current.Server.MapPath("~/image/avatar"), fileName);
+                    string userId = user.Id.ToString();
+
+                    string saveDir = Path.Combine(HttpContext.Current.Server.MapPath($"~/SaveFiles/Member/{userId}"), "Avatar");
+                    Directory.CreateDirectory(saveDir);
+
+                    string savePath = Path.Combine(saveDir, fileName);
                     avatarFile.SaveAs(savePath);
 
                 }
             }
         }
 
+        //刪除Avatar舊檔
+        public void DeleteAvatarFromFolder(ApplicationUser user, string originAvatar)
+        {
+            if (!string.IsNullOrEmpty(originAvatar))
+            {
+                string userId = user.Id.ToString();
+
+                string deletePath = Path.Combine(HttpContext.Current.Server.MapPath($"~/SaveFiles/Member/{userId}/Avatar"), originAvatar);
+                bool result = File.Exists(deletePath);
+                if (result == true)
+                {
+                    File.Delete(deletePath);
+                }
+            }
+
+        }
+
         public CommonInfoViewModel createViewModel(IndexViewModel model, int Userid)
         {
             // 取得user
-            ApplicationDbContext db = new ApplicationDbContext();
-            var user = db.Users.Where(u => u.Id == Userid).FirstOrDefault();
+            //ApplicationDbContext db = new ApplicationDbContext();
+            var user = _dbContext.Users.Where(u => u.Id == Userid).FirstOrDefault();
 
             // 轉換user.birthay型別以符合前端需求
-            DateTime Birthday = (DateTime)(user.Birthday);
-            string Bday = Birthday.ToString("yyyy-MM-dd");
+            string Bday;
+            if (user.Birthday != null)
+            {
+                DateTime Birthday = (DateTime)(user.Birthday);
+                Bday = Birthday.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                Bday = "";
+            }
 
 
             // 取得user資料模型
@@ -99,7 +124,7 @@ namespace arTWander.Models
             }
             else
             {
-                viewModel.AvatarUrl += user.Avatar;
+                viewModel.AvatarUrl = $"/SaveFiles/Member/{user.Id}/Avatar/{user.Avatar}";
                 viewModel.AvatarName = user.Avatar;
             }
 
@@ -173,7 +198,8 @@ namespace arTWander.Models
             return myShowList;
         }
 
-        public CommonMyShowViewNodel createMyShowViewNodel(List<City> cityList, List<CommonShowViewModel> myShowList)
+
+        public CommonMyShowViewNodel createMyShowViewNodel(List<City> cityList, IPagedList<CommonShowViewModel> myShowList)
         {
             CommonMyShowViewNodel viewModel = new CommonMyShowViewNodel
             {
@@ -184,66 +210,5 @@ namespace arTWander.Models
             return viewModel;
         }
 
-        //public CommonInfoViewModel createViewModel(IndexViewModel model, int Userid)
-        //{
-        //    // 取得user
-        //    ApplicationDbContext db = new ApplicationDbContext();
-        //    var user = db.Users.Where(u => u.Id == Userid).FirstOrDefault();
-
-        //    // 轉換user.birthay型別以符合前端需求
-        //    DateTime Birthday = (DateTime)(user.Birthday);
-        //    string Bday = Birthday.ToString("yyyy-MM-dd");
-
-
-        //    // 取得user資料模型
-        //    CommonInfoViewModel viewModel = new CommonInfoViewModel
-        //    {
-        //        HasPassword = model.HasPassword,
-        //        Logins = model.Logins,
-        //        PhoneNumber = user.PhoneNumber,
-        //        TwoFactor = model.TwoFactor,
-        //        BrowserRemembered = model.BrowserRemembered,
-        //        UserName = user.UserName,
-        //        Birthday = Bday,
-        //        AccountAddress = user.AccountAddress,
-        //        AvatarUrl = "/image/avatar/",
-        //        AvatarName = user.Avatar,
-        //        Email = user.Email
-        //    };
-
-
-        //    if (string.IsNullOrEmpty(user.Avatar))
-        //    {
-        //        viewModel.AvatarUrl += "avatar_default.png";
-        //        viewModel.AvatarName = "avatar_default.png";
-        //    }
-        //    else
-        //    {
-        //        viewModel.AvatarUrl += user.Avatar;
-        //        viewModel.AvatarName = user.Avatar;
-        //    }
-
-
-        //    return viewModel;
-        //}
-
-        public IQueryable<CommonShowViewModel> queryAllShow()
-        {
-            ApplicationDbContext db = new ApplicationDbContext();
-            var q = from show in db.ShowPage
-                        //join city in db.City on show.FK_City equals city.Id
-                        //join company in db.Company on show.FK_Company equals company.Id
-                    join showImg in db.ShowPageFile on show.Id equals showImg.FK_ShowPage
-                    select new CommonShowViewModel
-                    {
-                        showCity = show.City.CityName,
-                        showTitle = show.Title,
-                        showDiscription = show.Description,
-                        showCompany = show.Company.CompanyName,
-                        showImg = showImg.fileName
-                    };
-
-            return q;
-        }
     }
 }

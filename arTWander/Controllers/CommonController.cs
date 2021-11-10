@@ -58,18 +58,55 @@ namespace arTWander.Controllers
             }
         }
 
+        #region Helper
+        private bool HasPassword()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId<int>());
+            if (user != null)
+            {
+                return user.PasswordHash != null;
+            }
+            return false;
+        }
 
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
+
+        #endregion
+
+        private const int pageSize = 12;
 
         //基本資料設定 starts
-        public ActionResult SetUp()
+        public ActionResult SetUp(string firstLogIn)
         {
             // 取得model
-            IndexViewModel model = (IndexViewModel)TempData["model"];
-            TempData.Keep("model");
+            IndexViewModel model;
+            if (firstLogIn == "true")
+            {
+                // 假如初次登入
+                model = (IndexViewModel)TempData["model"];
+                TempData.Keep("model");
+                ViewBag.firstLogIn = "true";
+            }
+            else
+            {
+                model = new IndexViewModel
+                {
+                    HasPassword = HasPassword(),
+                    PhoneNumber = UserManager.GetPhoneNumber(User.Identity.GetUserId<int>()),
+                    TwoFactor = UserManager.GetTwoFactorEnabled(User.Identity.GetUserId<int>()),
+                    Logins = UserManager.GetLogins(User.Identity.GetUserId<int>()),
+                    BrowserRemembered = AuthenticationManager.TwoFactorBrowserRemembered(User.Identity.GetUserId<int>().ToString())
+                };
+            }
 
             // 取得viewModel
             int userId = User.Identity.GetUserId<int>();
-
             CommonInfoViewModel viewModel = new userFactory(DbContext).createViewModel(model, userId);
 
             // return
@@ -85,14 +122,23 @@ namespace arTWander.Controllers
             int userId = User.Identity.GetUserId<int>();
             ApplicationUser user = db.Users.Where(u => u.Id == userId).FirstOrDefault();
 
+            // 找到舊檔案
+            string delAvatar = "";
+
+            if (user.Avatar != viewModel.AvatarName)
+                delAvatar = user.Avatar;
+
+            // 更新資料
             new userFactory(DbContext).updateToDB(user, viewModel);
             db.SaveChanges();
 
             // 取得檔案存入指定資料夾
             new userFactory(DbContext).saveAvatarToFolder(user, avatarFile);
+            // 刪除舊檔案
+            new userFactory(DbContext).DeleteAvatarFromFolder(user, delAvatar);
 
             // return
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Common");
         }
         //基本資料設定 ends
 
@@ -243,8 +289,9 @@ namespace arTWander.Controllers
         //=========================================================================================
 
         //Aside 導引畫面start
-        public ActionResult MyshowPage(int? cityId)
+        public ActionResult MyshowPage(int? cityId, int page = 1)
         {
+
             // 建立 城市的list
             var cityList = DbContext.City.Select(x => x).ToList();
 
@@ -253,9 +300,10 @@ namespace arTWander.Controllers
             var user = UserManager.FindById(userId);
 
             List<CommonShowViewModel> myShowList = new userFactory(DbContext).createMyShowList(cityId, userId, user);
+            var ipagedMyShowList = OtherMethod.getCurrentPagedList(myShowList, page, pageSize);
 
             // 將兩個list加入viewModel
-            CommonMyShowViewNodel viewModel = new userFactory(DbContext).createMyShowViewNodel(cityList, myShowList);
+            CommonMyShowViewNodel viewModel = new userFactory(DbContext).createMyShowViewNodel(cityList, ipagedMyShowList);
 
             // 判斷選擇地區沒有展覽 || 未添加任何展覽進我的展覽時 顯示的訊息
             if (myShowList.Count() < 1 && cityId != null)

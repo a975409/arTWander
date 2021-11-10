@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -65,7 +66,7 @@ namespace arTWander.Models
         public class CommonMyShowViewNodel
         {
             public List<City> allCity { get; set; }
-            public List<CommonShowViewModel> allShow { get; set; }
+            public IPagedList<CommonShowViewModel> allShow { get; set; }
         }
     }
 }

@@ -1,4 +1,7 @@
 ﻿@model arTWander.Models.CommonViewModel.CommonMyShowViewNodel
+@using PagedList
+@using PagedList.Mvc
+   
 
 @{
     Layout = null;
@@ -6,6 +9,34 @@
     var allShow = Model.allShow;
 }
 
+@section css{
+    @*PagedList.Mvc分頁切換css & jquery函示庫*@
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}
+@{
+    //bool sendAgain = TempData["sended"] == null ? false : (bool)TempData["sendAgain"];
+
+    //SearchShowPagesViewModel searchModel = (SearchShowPagesViewModel)TempData["SearchModel"] ?? new SearchShowPagesViewModel();
+
+    PagedListRenderOptions pagedListOption = new PagedListRenderOptions
+    {
+        LinkToFirstPageFormat = "<< 第一頁",
+        LinkToPreviousPageFormat = "< 前一頁",
+        LinkToNextPageFormat = "後一頁 >",
+        LinkToLastPageFormat = "最後一頁 >>",
+        DisplayPageCountAndCurrentLocation = true,
+        PageCountAndCurrentLocationFormat = "第 {0} 頁/共 {1} 頁"
+    };
+
+    AjaxOptions ajaxOption = new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "showPages",
+        OnFailure = "errorServerMsg()"
+    };
+}
 
 <!-- 區域選擇 -->
 <div class="container mb-3">
@@ -30,12 +61,6 @@
 <div class="container ">
     <div class="row showlistRow">
 
-        @*@foreach (var show in allShow)
-        {
-            @Html.Partial("~/Views/Shared/CommonPartial/Card/_PartialMyShowList.cshtml", show);
-        }*@
-
-
         @if (allShow.Count > 0 && allShow[0] != null)
         {
             foreach (var show in allShow)
@@ -56,27 +81,30 @@
 </div>
 <!-- 展覽列表 ends -->
 <!-- 分頁 starts -->
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link text-dark" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
-                <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-                <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link text-dark" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+<div class="d-flex justify-content-center">
+    @Html.PagedListPager(allShow, page => Url.Action("MyshowPage", "Common", new { page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(pagedListOption, ajaxOption))
 </div>
+@*<div class="container my-5">
+        <div class="row justify-content-center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link text-dark" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link text-dark" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>*@
 <!-- 分頁 ends -->
 @*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>*@
 
