@@ -166,24 +166,17 @@ namespace arTWander.Controllers
             return PartialView("~/Views/Shared/CommonPartial/Card/_PartialShowList.cshtml", model);
         }
 
-        public ActionResult GalleryList(int? cityId)
+      
+        public ActionResult GalleryList(int? cityId, int page = 1)
         {
-            List<CommonCompanyViewModel> viewModels = new List<CommonCompanyViewModel>();
-            if (cityId != null)
-            {
-                viewModels = (new CommonPageFactory(DbContext).queryCustomerByCity(cityId)).ToList();
-            }
-            else
-            {
-                viewModels = (new CommonPageFactory(DbContext).queryAllCustomer()).ToList();
-
-            }
+            var model = new CommonPageFactory(DbContext).getGalleryPages(page, cityId);
             // 建立 城市的list
             var cityList = DbContext.City.Select(x => x).ToList();
             ViewBag.city = cityList;
-
-            return View(viewModels);
+            return View(model);
         }
+
+
         public ActionResult addToMyGallery(string galleryId)
         {
             int userId = User.Identity.GetUserId<int>();
@@ -285,17 +278,26 @@ namespace arTWander.Controllers
             return View();
         }
 
-        public ActionResult MySubscription()
+        public ActionResult MySubscription(int page = 1)
         {
             int userId = User.Identity.GetUserId<int>();
             var user = UserManager.FindById(userId);
             var companyList = user.CompanySubs;
+            var model = new CommonPageFactory(DbContext).getMyGalleryPages(page, companyList);
             if (companyList.Count == 0)
             {
                 ViewBag.errorMsg = "尚未有展覽單位被添加至「訂閱單位」";
             }
-            return View(companyList.ToList());
+            return View(model);
         }
+        //public ActionResult GalleryList(int? cityId, int page = 1)
+        //{
+        //    var model = new CommonPageFactory(DbContext).getGalleryPages(page, cityId);
+        //    // 建立 城市的list
+        //    var cityList = DbContext.City.Select(x => x).ToList();
+        //    ViewBag.city = cityList;
+        //    return View(model);
+        //}
         //Aside 導引畫面end
 
 

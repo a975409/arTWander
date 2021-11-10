@@ -1,4 +1,5 @@
-﻿@model arTWander.Models.CommonCompanyViewModel
+﻿@model  arTWander.Models.CommonCompanyViewModel
+
 
 <!-- 展演單位列表 starts -->
 <!-- 展演單位starts -->
@@ -13,9 +14,10 @@
     <!-- 展演單位頭像 ends -->
     <!-- 展演單位資訊 starts -->
     <div class="mt-2">
-        <a class="" href="">@Html.DisplayFor(model => Model.CompanyCity)</a>／
-        <a class="companyBtn" name="companyBtn">@Model.CompanyName</a>
+        <a class="" href="">@Model.CompanyCity</a>／
+        <a class="companyBtn" name="companyBtn">@Html.DisplayFor(model => model.CompanyName)</a>
     </div>
     <!-- 展演單位資訊 ends -->
 </div>
 <!-- 展演單位 ends -->
+

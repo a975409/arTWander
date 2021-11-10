@@ -54,10 +54,14 @@
                         if (User.IsInRole("Admin"))
                         {
                             <a id="newMessage" class="nav-link ml-2 " href=""><i class="far fa-bell" aria-hidden="true"></i></a>
-                            <a id="myShow" class="nav-link ml-2 d-none d-md-block" href=""><i class="far fa-heart"
-                            aria-hidden="true"></i></a>
-                            <a id="setUp" class="nav-link ml-2" href="~/Admin/AdminSetup"><i class="fa fa-cog"
-                            aria-hidden="true"></i></a>
+                            <a id="myShow" class="nav-link ml-2 d-none d-md-block" href="">
+                                <i class="far fa-heart"
+                                   aria-hidden="true"></i>
+                            </a>
+                            <a id="setUp" class="nav-link ml-2" href="~/Admin/AdminSetup">
+                                <i class="fa fa-cog"
+                                   aria-hidden="true"></i>
+                            </a>
                         }
 
                         using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new
@@ -70,7 +74,7 @@
                             @Html.AntiForgeryToken()
                             ;
                             <a id="logOut" class="nav-link ml-2"
-                        href="javascript:document.getElementById('logoutForm').submit()">登出</a>
+                               href="javascript:document.getElementById('logoutForm').submit()">登出</a>
                         }
                     }
                     else
@@ -86,9 +90,9 @@
                 <nav id="navbarFixed" class="nav justify-content-center bg-white">
                     <label for="menuControl" class="menuControlBtn d-block"><span>AA</span></label>
                     <a href="#" class="d-md-none"> </a>
-                    <a class="nav-link active" href="#">首頁</a>
-                    <a class="nav-link" href="#">全部展覽</a>
-                    <a class="nav-link" href="#">展演單位</a>
+                    <a id="homePage" class="nav-link active" href="~/Home/Index">首頁</a>
+                    <a id="showList" class="nav-link" href="~/Common/Index">全部展覽</a>
+                    <a id="GalleryList" class="nav-link" href="#">展演單位</a>
                 </nav>
                 <!-- fixed導覽列 end -->
             </hgroup>
@@ -102,7 +106,7 @@
                     <input type="checkbox" id="menuControl">
                     <!-- 左側邊框 -->
                     <aside id="aside1" class="col-12 col-md-3 d-flex justify-content-center align-content-center mt-0"
-                        style="z-index: 1002;">
+                           style="z-index: 1002;">
                         @if (Request.IsAuthenticated)
                         {
                             //權限若為Admin使用該aside
@@ -166,7 +170,9 @@
                                     <input type="text" class="form-control" placeholder="請留下您的email，讓我們回信給您">
                                 </div>
                                 <button class="btn btn-outline-secondary border-0 bg-pink text-white" type="input"
-                                    id="btnFeedback">送出</button>
+                                        id="btnFeedback">
+                                    送出
+                                </button>
                             </form>
                         </div>
                         <!-- 意見回饋 ends -->
@@ -182,10 +188,12 @@
                             <p>請留下您的email，接收本站的電子報！</p>
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" placeholder="email" aria-label="suscribeEmail"
-                                    aria-describedby="btnSuscribe">
+                                       aria-describedby="btnSuscribe">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary border-0 bg-pink text-white" type="submit"
-                                        id="btnSuscribe">訂閱</button>
+                                            id="btnSuscribe">
+                                        訂閱
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -207,6 +215,32 @@
     <style id="css"></style>
     <script src="/javascript/AsideTrue.js"></script>
     <!-- aside判斷結束 -->
+
+    <script>
+        $("#myShow").click(function () {
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("MyshowPage", "Common")',
+                data: {},
+                success: function (data) {
+                    $('#mainPage').html(data);
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $("#GalleryList").click(function () {
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("GalleryList", "Common")',
+                data: {},
+                success: function (data) {
+                    $('#mainPage').html(data);
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

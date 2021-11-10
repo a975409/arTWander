@@ -4,6 +4,7 @@ let NavbarFixed = document.getElementById("navbarFixed");
 let menuCheckbox = document.getElementById("menuControl");
 let navCheckbox = document.getElementById("navControl");
 let backGroundClick = document.getElementById("mainPage");
+let MySubscriptionClick = document.getElementById("MySubscriptionBtn");
 
 //判斷是否存在aside
 if (fixAside){
@@ -25,7 +26,7 @@ window.addEventListener("click", function () {
                 navCheckbox.checked = false;
                 menuCheckbox.checked = false;
             };
-            
+
         }else{
             navCheckbox.checked = false;
             menuCheckbox.checked = false;

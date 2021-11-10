@@ -18,6 +18,10 @@
     <!-- css -->
     <link href="~/css/CommonLayout/_AsideTrue.css" rel="stylesheet" />
     <link href="~/css/css_commonPage/CommonAsidePage.css" rel="stylesheet" />
+    @*PagedList.Mvc分頁切換css & jquery函示庫*@
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     @RenderSection("css", required: false)
 </head>
 
@@ -60,16 +64,16 @@
                                                                                 <i class="fa fa-cog"
                                                                                    aria-hidden="true"></i>
                                                                             </a> //登入狀態為一般使用者套入LoginNav @*<div class="col-4 d-flex justify-content-end align-items-start" id="avatarNavSet"></div>
-                            //Html.RenderPartial("~/Views/Shared/MemberLayout/_LoginNav.cshtml");
-                            }
+                                                                            //Html.RenderPartial("~/Views/Shared/MemberLayout/_LoginNav.cshtml");
+                                                                        }
 
-                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new
-                            {
-                                id = "logoutForm",
-                                @class =
-                            "navbar-right"
-                            }))
-                            {
+                                                                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new
+                                                                        {
+                                                                            id = "logoutForm",
+                                                                            @class =
+                                                                        "navbar-right"
+                                                                        }))
+                                                                        {
                                                         @Html.AntiForgeryToken()
                                                                             <a id="logOut" class="nav-link ml-3"
                                                                                href="javascript:document.getElementById('logoutForm').submit()">登出</a> }
@@ -242,7 +246,7 @@
         });
     </script>
 
-        <script>
+    <script>
         $("#GalleryList").click(function () {
             $.ajax({
                 type: 'post',
