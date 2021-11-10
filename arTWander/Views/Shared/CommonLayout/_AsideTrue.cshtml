@@ -246,7 +246,7 @@
     <style id="css"></style>
     <script src="/javascript/AsideTrue.js"></script>
     <script>
-        $("#myShow").click(function () {
+        @*$("#myShow").click(function () {
             $.ajax({
                 type: 'post',
                 url: '@Url.Action("MyshowPage", "Common")',
@@ -255,10 +255,8 @@
                     $('#mainPage').html(data);
                 }
             });
-        });
-    </script>
+        });*@
 
-    <script>
         $("#GalleryList").click(function () {
             $.ajax({
                 type: 'post',
@@ -269,6 +267,47 @@
                 }
             });
         });
+
+        $(".MyshowBtn").click(function () {
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("MyshowPage", "Common")',
+                data: {},
+                success: function (data) {
+                    $('#mainPage').html(data);
+                },
+                error: function (data) {
+                    alert(XMLHttpRequest.status);
+                    alert(XMLHttpRequest.readyState);
+
+                }
+
+            });
+        });
+
+
+        @*$("#MyItineraryBtn").click(function () {
+            loadingShowPages();
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("MyItineraryPage", "Common")',
+                success: function (data) {
+                    $('#mainPage').html(data);
+                }
+            });
+        });*@
+
+        $(".MySubscriptionBtn").click(function () {
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("MySubscription", "Common")',
+                data: FormData,
+                success: function (data) {
+                    $('#mainPage').html(data);
+                }
+            });
+        });
+
     </script>
     <!-- aside判斷結束 -->
     @RenderSection("scripts", required: false)

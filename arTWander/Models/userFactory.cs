@@ -27,12 +27,9 @@ namespace arTWander.Models
 
         public ApplicationUser getUserById(int id)
         {
-            var q = from nowUser in _dbContext.Users
-                    where nowUser.Id == id
-                    select nowUser;
-            var person = q.ToList()[0];
-            return person;
+            return _dbContext.Users.Find(id);
         }
+
 
         public void updateToDB(ApplicationUser user, CommonInfoViewModel viewModel)
         {
@@ -244,6 +241,52 @@ namespace arTWander.Models
                     };
 
             return q;
+        }
+
+        public IEnumerable<CommonMyItineraryPage> getMyShowPage(ApplicationUser user, DateTime StartDate, DateTime StartTime, DateTime EndTime)
+        {
+            IEnumerable<CommonMyItineraryPage> showPage = null;
+            
+            //Today
+            if (DateTime.Equals(StartDate, DateTime.MinValue))
+                StartDate = DateTime.Today;
+
+            //00:00
+            if (DateTime.Equals(StartTime, DateTime.MinValue))
+                StartTime = new DateTime(1, 1, 1, 0, 0, 0);
+
+            //23:59
+            if (DateTime.Equals(EndTime, DateTime.MinValue))
+                EndTime = new DateTime(1, 1, 1, 23, 59, 0);
+
+
+            var temp = user.ShowPage.Where(m => m.PageToTodaysList.Any(t => t.Today == (int)(StartDate.DayOfWeek + 1)));
+
+
+            temp= temp.Where(m => CompareTime(StartTime, m.StartTime) <= 0);
+
+            temp = temp.Where(m => CompareTime(EndTime, m.EndTime) >= 0);
+
+            showPage = temp.Select(m => new CommonMyItineraryPage
+            {
+                city = m.City,
+                showCompany = m.Company.CompanyName,
+                showId = m.Id,
+                showTitle = m.Title,
+                showAddress = $"{m.City.CityName}{m.District.DistrictName}{m.Address}"
+            });
+
+            return showPage;
+        }
+
+        private int CompareTime(DateTime t1, DateTime t2)
+        {
+            DateTime timer1 = new DateTime(1, 1, 1, t1.Hour, t1.Minute, 0);
+            DateTime timer2 = new DateTime(1, 1, 1, t2.Hour, t2.Minute, 0);
+
+            int result = DateTime.Compare(timer1, timer2);
+
+            return result;
         }
     }
 }

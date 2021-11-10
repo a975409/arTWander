@@ -319,7 +319,6 @@
     <Content Include="Views\ShowPageManage\Edit.cshtml" />
     <Content Include="Views\Shared\MemberLayout\_LoginAside.cshtml" />
     <Content Include="Views\Shared\MemberLayout\_LoginNav.cshtml" />
-    <Content Include="Views\Common\MyItineraryPage.cshtml" />
     <Content Include="Views\Common\MyshowPage.cshtml" />
     <Content Include="Views\Common\MySubscription.cshtml" />
     <Content Include="Views\Common\SetUp.cshtml" />
@@ -366,6 +365,10 @@
     <Content Include="Views\Admin\ShowManage.cshtml" />
     <Content Include="Views\Shared\CommonPartial\Card\_PartialMyShowList.cshtml" />
     <Content Include="Views\Common\ShowInfo.cshtml" />
+    <Content Include="Views\Shared\CommonPartial\Card\_PartialMyItineraryShowList.cshtml" />
+    <Content Include="Views\Shared\CommonPartial\Card\_PartialCompanyList.cshtml" />
+    <Content Include="Views\Shared\CommonPartial\Card\_PartialMyCompany.cshtml" />
+    <Content Include="Views\Common\MyItineraryPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

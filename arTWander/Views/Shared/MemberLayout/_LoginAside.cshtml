@@ -88,15 +88,12 @@
             <hr>
             <ul class="list-group list-group-flush ">
                 <li class="list-group-item bg-transparent">
-                    <a href="~/Common/Index">全部展覽</a>
-                    @*<a class="MyshowBtn" href="">我的展覽</a>*@
-                </li>
-                <li class="list-group-item bg-transparent">
                     <a class="MyshowBtn" href="#MyshowPage">我的展覽</a>
                     @*<a class="MyshowBtn" href="">我的展覽</a>*@
                 </li>
                 <li class="list-group-item bg-transparent">
-                    <a class="MyItineraryBtn" href="#MyItineraryPage">我的行程 </a>
+                    <a href="~/Common/MyItineraryPage">我的行程</a>
+                    @*<a id="MyItineraryBtn" href="#MyItineraryPage">我的行程 </a>*@
                 </li>
             </ul>
             <br>
@@ -115,52 +112,3 @@
 
     <!-- 條件查詢 end -->
 </div>
-
-
-<script>
-    $(document).ready(function () {
-
-        $(".MyshowBtn").click(function () {
-            $.ajax({
-                type: 'post',
-                url: '@Url.Action("MyshowPage", "Common")',
-                data: {},
-                success: function (data) {
-                    $('#mainPage').html(data);
-                },
-                error: function (data) {
-                    alert(XMLHttpRequest.status);
-                    alert(XMLHttpRequest.readyState);
-
-                }
-
-            });
-        });
-
-
-        $(".MyItineraryBtn").click(function () {
-            $.ajax({
-                type: 'post',
-                url: '@Url.Action("MyItineraryPage", "Common")',
-                data: FormData,
-                success: function (data) {
-                    $('#mainPage').html(data);
-                }
-            });
-        });
-
-        $(".MySubscriptionBtn").click(function () {
-            $.ajax({
-                type: 'post',
-                url: '@Url.Action("MySubscription", "Common")',
-                data: FormData,
-                success: function (data) {
-                    $('#mainPage').html(data);
-                }
-            });
-        });
-    });
-
-
-
-</script>

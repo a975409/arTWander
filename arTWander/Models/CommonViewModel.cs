@@ -58,5 +58,19 @@ namespace arTWander.Models
             public List<City> allCity { get; set; }
             public List<CommonShowViewModel> allShow { get; set; }
         }
+
+        public class CommonMyItineraryPage
+        {
+            public int showId { get; set; }
+
+            public City city { get; set; }
+
+            public string showCompany { get; set; }
+
+            public string showTitle { get; set; }
+
+            public string showAddress { get; set; }
+
+        }
     }
 }
