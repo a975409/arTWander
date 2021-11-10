@@ -46,7 +46,7 @@ namespace arTWander.Models
         /// <param name="page">指定頁數</param>
         /// <param name="pageSize">單頁呈現多少資料筆數</param>
         /// <returns></returns>
-        public static IPagedList<T> getCurrentPagedList<T>(IEnumerable<T> datalist, int page = 1 ,int pageSize=3) where T : class
+        public static IPagedList<T> getCurrentPagedList<T>(IEnumerable<T> datalist, int page = 1, int pageSize = 3) where T : class
         {
             int currentPage = page < 1 ? 1 : page;
 
@@ -104,7 +104,8 @@ namespace arTWander.Models
                     //熱門展演，以好評數＆留言數做判斷
                     case OrderSortField.HotSort:
                         //先取得平均好評數做排序，再取得留言數做排序
-                        showPages = showPages.Where(m => DateTime.Compare(DateTime.Now, m.StartDate) >= 0 && DateTime.Compare(DateTime.Now, m.EndDate) <= 0).OrderByDescending(m => {
+                        showPages = showPages.Where(m => DateTime.Compare(DateTime.Now, m.StartDate) >= 0 && DateTime.Compare(DateTime.Now, m.EndDate) <= 0).OrderByDescending(m =>
+                        {
 
                             if (m.ShowComments.Count() > 0)
                                 return m.ShowComments.Sum(s => s.Star) / m.ShowComments.Count();
@@ -127,6 +128,32 @@ namespace arTWander.Models
 
             return showPages;
         }
+
+
+        public static IEnumerable<Company> searchCustomerPage(IEnumerable<Company> company, int? cityId)
+        {
+            if (cityId == null)
+            {
+                return company.OrderBy(m => m.FK_City);
+            }
+            else
+            {
+                if (cityId != null)
+                {
+                    company = company.Where(m => m.FK_City == cityId).OrderBy(m => m.FK_City);
+                }
+            }
+            return company;
+        }
+        public static IEnumerable<Company> searchMyCustomerPage(IEnumerable<Company> company, ICollection<Company> model)
+        {
+            if (model != null)
+            {
+                    company = model.OrderBy(m => m.Id);
+            }
+            return company;
+        }
+
     }
 
     public class SearchShowPagesViewModel
@@ -143,6 +170,12 @@ namespace arTWander.Models
 
         public OrderSortField OrderSortField { get; set; }
 
+    }
+    public class SearchCustomerPagesViewModel
+    {
+        public int FK_City { get; set; }
+
+        public OrderSortField OrderSortField { get; set; }
     }
 
     public enum CostStatus

@@ -1,42 +1,87 @@
-﻿@model List<arTWander.Models.CommonCompanyViewModel>
+﻿@*引入PagedList.Mvc分頁套件*@
+@using PagedList
+@using PagedList.Mvc
+@model IPagedList<arTWander.Models.CommonCompanyViewModel>
 
 @{
     Layout = null;
 }
 
 
-<!-- 區域選擇 -->
-<div class="container mb-3">
-    <div class="dropdown d-flex my-auto col-10 col-md-8 col-lg-6 pl-0 ">
-        <div class="row w-100 mx-0 justify-content-start">
-            <label class="col-6 col-md-4 px-0 my-auto">請選擇地區</label>
-            <div class="col-6 col-md-6 px-0">
-                <select class="form-control ml-1" id="citySelector">
-                    <option value="" selected disabled hidden>請選擇地區</option>
-                    @foreach (var city in  ViewBag.city)
-                    {
-                        <option value="@city.Id">@city.CityName</option>
-                    }
+@{
+    PagedListRenderOptions pagedListOption = new PagedListRenderOptions
+    {
+        LinkToFirstPageFormat = "<<",
+        LinkToPreviousPageFormat = "<",
+        LinkToNextPageFormat = ">",
+        LinkToLastPageFormat = ">>",
+        DisplayPageCountAndCurrentLocation = true,
+        PageCountAndCurrentLocationFormat = "第 {0} 頁/共 {1} 頁"
+    };
 
-                </select>
+    AjaxOptions ajaxOption = new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "showPages",
+        OnFailure = "errorServerMsg()"
+    };
+}
+@section css{
+    <link href="~/css/css_commonPage/ShowList.css" rel="stylesheet" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="~/Content/spinkit.min.css" rel="stylesheet" />
+
+    @*PagedList.Mvc分頁切換css & jquery函示庫*@
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}
+
+<div id="showPages">
+    <!-- 區域選擇 -->
+    <div class="container mb-3">
+        <div class="dropdown d-flex my-auto col-10 col-md-8 col-lg-6 pl-0 ">
+            <div class="row w-100 mx-0 justify-content-start">
+                <label class="col-6 col-md-4 px-0 my-auto">請選擇地區</label>
+                <div class="col-6 col-md-6 px-0">
+                    <select class="form-control ml-1" id="citySelector">
+                        <option value="" selected disabled hidden>請選擇地區</option>
+                        @foreach (var city in ViewBag.city)
+                        {
+                            <option value="@city.Id">@city.CityName</option>
+                        }
+
+                    </select>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- 展覽列表 starts -->
-<div class="container ">
-    <div class="row row-cols-lg-2 row-cols-xl-3 showlistRow">
-        @if (Model.Count > 0)
-        {
-            foreach (var show in Model)
+    <!-- 展覽列表 starts -->
+    <div class="container ">
+        <div class="row row-cols-lg-2 row-cols-xl-3 showlistRow">
+            @if (Model.Count > 0)
             {
-                @Html.Partial("~/Views/Shared/CommonPartial/Card/_PartialCompanyList.cshtml", show);
+                foreach (var show in Model)
+                {
+                    @Html.Partial("~/Views/Shared/CommonPartial/Card/_PartialCompanyList.cshtml", show);
+                }
+
+
+
             }
-        }
+        </div>
+    </div>
+
+
+
+
+
+    <div class="d-flex justify-content-center">
+        @Html.PagedListPager(Model, page => Url.Action("GalleryList", "Common", new { page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(pagedListOption, ajaxOption))
     </div>
 </div>
-
+<!-- 分頁 start -->
 <!-- 分頁 ends -->
 <!-- 彈出視窗顯示用戶資訊 -->
 <!-- Button trigger modal -->

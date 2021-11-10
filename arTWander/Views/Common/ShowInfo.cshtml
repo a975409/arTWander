@@ -159,12 +159,13 @@ else
     <script src="~/javascript/SingleShowPage.js"></script>
     <script>
         $("#addMyShowBtn").click(function () {
-            let ShowId = $("#addToMyshop").val();
+            let ShowId = $("#addToMyshop").text();
                 $.ajax({
                     url: '/Common/addToMyShow?showId=' + ShowId,
                     type: 'POST',
                     data: {},
                     success: function (data) {
+                        console.log("good")
                         Swal.fire({
                             icon: 'success',
                             text: '已添加到我的展覽'

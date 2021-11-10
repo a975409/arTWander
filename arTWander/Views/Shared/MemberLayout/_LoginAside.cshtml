@@ -88,11 +88,11 @@
             <hr>
             <ul class="list-group list-group-flush ">
                 <li class="list-group-item bg-transparent">
-                    <a class="MyshowBtn" href="#MyshowPage">我的展覽</a>
+                    <a id="MyshowBtn" href="#MyshowPage">我的展覽</a>
                     @*<a class="MyshowBtn" href="">我的展覽</a>*@
                 </li>
                 <li class="list-group-item bg-transparent">
-                    <a class="MyItineraryBtn" href="#MyItineraryPage">我的行程 </a>
+                    <a id="MyItineraryBtn" href="#MyItineraryPage">我的行程 </a>
                 </li>
             </ul>
             <br>
@@ -102,7 +102,7 @@
             <hr>
             <ul class="list-group list-group-flush ">
                 <li class="list-group-item bg-transparent">
-                    <a class="MySubscriptionBtn" href="#MySubscriptionPage">訂閱單位</a>
+                    <a id="MySubscriptionBtn" href="#MySubscriptionPage">訂閱單位</a>
                 </li>
             </ul>
             <br>
@@ -116,7 +116,7 @@
 <script>
     $(document).ready(function () {
 
-        $(".MyshowBtn").click(function () {
+        $("#MyshowBtn").click(function () {
             $.ajax({
                 type: 'post',
                 url: '@Url.Action("MyshowPage", "Common")',
@@ -134,7 +134,7 @@
         });
 
 
-        $(".MyItineraryBtn").click(function () {
+        $("#MyItineraryBtn").click(function () {
             $.ajax({
                 type: 'post',
                 url: '@Url.Action("MyItineraryPage", "Common")',
@@ -145,7 +145,7 @@
             });
         });
 
-        $(".MySubscriptionBtn").click(function () {
+        $("#MySubscriptionBtn").click(function () {
             $.ajax({
                 type: 'post',
                 url: '@Url.Action("MySubscription", "Common")',
