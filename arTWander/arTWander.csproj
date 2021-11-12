@@ -280,6 +280,7 @@
     <Content Include="javascript\index1014.js" />
     <Content Include="javascript\jquery.MultiFile.min.js" />
     <Content Include="javascript\LoginForm.js" />
+    <Content Include="javascript\MyItineraryPage.js" />
     <Content Include="javascript\MyShowPage.js" />
     <Content Include="javascript\PreviewShowPage.js" />
     <Content Include="javascript\RegisterForm.js" />
@@ -354,7 +355,6 @@
     <Content Include="Views\ShowPageManage\Edit.cshtml" />
     <Content Include="Views\Shared\MemberLayout\_LoginAside.cshtml" />
     <Content Include="Views\Shared\MemberLayout\_LoginNav.cshtml" />
-    <Content Include="Views\Common\MyItineraryPage.cshtml" />
     <Content Include="Views\Common\MyshowPage.cshtml" />
     <Content Include="Views\Common\MySubscription.cshtml" />
     <Content Include="Views\Common\SetUp.cshtml" />
@@ -391,7 +391,6 @@
     <Content Include="Views\Shared\CompanyPartial\_showPageImagePartial.cshtml" />
     <Content Include="Views\Shared\CommonLayout\Aside\_PartialLogInFalse.cshtml" />
     <Content Include="Views\Shared\CommonLayout\Aside\_PartialLogInTrue.cshtml" />
-    <Content Include="Views\Shared\CompanyPartial\Aside\_PartialLogInFalse.cshtml" />
     <Content Include="Views\Shared\CompanyPartial\Aside\_PartialLogInTrue.cshtml" />
     <Content Include="Views\Shared\CompanyPartial\_DisplayShowPagePartial.cshtml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
@@ -401,9 +400,11 @@
     <Content Include="Views\Admin\BlackUserInform.cshtml" />
     <Content Include="Views\Admin\ShowManage.cshtml" />
     <Content Include="Views\Shared\CommonPartial\Card\_PartialMyShowList.cshtml" />
+    <Content Include="Views\Common\ShowInfo.cshtml" />
+    <Content Include="Views\Shared\CommonPartial\Card\_PartialMyItineraryShowList.cshtml" />
     <Content Include="Views\Shared\CommonPartial\Card\_PartialCompanyList.cshtml" />
     <Content Include="Views\Shared\CommonPartial\Card\_PartialMyCompany.cshtml" />
-    <Content Include="Views\Common\ShowInfo.cshtml" />
+    <Content Include="Views\Common\MyItineraryPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
