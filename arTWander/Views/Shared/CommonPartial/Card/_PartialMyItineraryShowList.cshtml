@@ -8,7 +8,7 @@
                 <i class="fa fa-plus"></i>
             </button>
         </td>
-        <td aria-address="@item.showAddress">
+        <td aria-address="@item.showAddress" aria-showId="@item.showId">
             <a href="@Url.Action("DisplayInfo","ShowPageManage",new { showId=item.showId})" class="showPageUrl" target="_blank">
                 <span>@item.city.CityName / </span>
                 <span class="showCustomer">@item.showCompany</span> |

@@ -312,6 +312,18 @@ namespace arTWander.Controllers
             return PartialView("~/Views/Shared/CommonPartial/Card/_PartialMyItineraryShowList.cshtml", model);
         }
 
+
+        public async Task<ActionResult> SendRountToEmail(string url)
+        {
+            int userId = User.Identity.GetUserId<int>();
+            var user = UserManager.FindById(userId);
+
+            await UserManager.SendEmailAsync(user.Id, "您的觀展路線已規劃完畢，請點擊內部連結，即可將路線導入至Google Map", "請按一下此連結將路線導入至Google Map：<a href=\"" + url + "\">這裏</a>");
+
+            string success = SweetAlert.initAlert() + SweetAlert.SuccessAlert("寄送成功", "路線已寄送至您的信箱", "");
+            return JavaScript(success);
+        }
+
         public ActionResult MySubscription()
         {
             int userId = User.Identity.GetUserId<int>();
