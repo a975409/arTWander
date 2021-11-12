@@ -280,6 +280,7 @@
     <Content Include="javascript\index1014.js" />
     <Content Include="javascript\jquery.MultiFile.min.js" />
     <Content Include="javascript\LoginForm.js" />
+    <Content Include="javascript\MyItineraryPage.js" />
     <Content Include="javascript\MyShowPage.js" />
     <Content Include="javascript\PreviewShowPage.js" />
     <Content Include="javascript\RegisterForm.js" />
