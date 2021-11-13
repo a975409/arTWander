@@ -150,7 +150,7 @@ namespace arTWander.Controllers
         {
             // 取得使用者頭像及姓名
             int userId = User.Identity.GetUserId<int>();
-            ApplicationUser user = DbContext.Users.Where(u => u.Id == userId).FirstOrDefault();
+            getUserByIdInfo(userId);
 
             SearchShowPagesViewModel search = new SearchShowPagesViewModel
             {
@@ -164,12 +164,20 @@ namespace arTWander.Controllers
             TempData["SearchModel"] = search;
             TempData.Keep("SearchModel");
 
+            return View(new userFactory(DbContext).getShowPages(model: search));
+        }
+
+        //取得使用者名稱＆大頭照
+        private void getUserByIdInfo(int userId)
+        {
+            ApplicationUser user = DbContext.Users.Where(u => u.Id == userId).FirstOrDefault();
+
             //使用者未登入
             if (user == null)
             {
                 ViewBag.userName = "";
                 ViewBag.avatarUrl = "/image/avatar/avatar_default.png";
-                return View(new userFactory(DbContext).getShowPages(model: search));
+                return;
             }
 
             string role = UserManager.GetRoles(userId)[0];
@@ -200,22 +208,48 @@ namespace arTWander.Controllers
                     break;
 
             }
-            return View(new userFactory(DbContext).getShowPages(model: search));
         }
-
+        
+        /// <summary>
+        /// 進階（條件）搜尋展覽 & 關鍵字搜尋展覽
+        /// </summary>
+        /// <param name="searchModel"></param>
+        /// <param name="page"></param>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
         [HttpPost]
-        public ActionResult getShowList(SearchShowPagesViewModel searchModel, int page = 1)
+        public ActionResult getShowList(SearchShowPagesViewModel searchModel, int page = 1, string keyword = "")
         {
-            TempData["SearchModel"] = searchModel;
-            TempData.Keep("SearchModel");
+            SearchShowPagesViewModel search;
+            if (string.IsNullOrEmpty(keyword))
+            {
+                search = searchModel;
+                TempData["SearchModel"] = search;
+                TempData.Keep("SearchModel");
+            }
+            else
+            {
+                search = new SearchShowPagesViewModel
+                {
+                    Cost = CostStatus.none,
+                    OrderSortField = OrderSortField.AllData
+                };
 
-            var model = new userFactory(DbContext).getShowPages(page, searchModel);
+                TempData["keyword"] = keyword;
+                TempData.Keep("keyword");
+            }
+
+            var model = new userFactory(DbContext).getShowPages(page, search, keyword);
             return PartialView("~/Views/Shared/CommonPartial/Card/_PartialShowList.cshtml", model);
         }
 
       
         public ActionResult GalleryList(int? cityId, int page = 1)
         {
+            // 取得使用者頭像及姓名
+            int userId = User.Identity.GetUserId<int>();
+            getUserByIdInfo(userId);
+
             var model = new CommonPageFactory(DbContext).getGalleryPages(page, cityId);
             // 建立 城市的list
             var cityList = DbContext.City.Select(x => x).ToList();
@@ -292,13 +326,15 @@ namespace arTWander.Controllers
         //Aside 導引畫面start
         public ActionResult MyshowPage(int? cityId, int page = 1)
         {
-
             // 建立 城市的list
             var cityList = DbContext.City.Select(x => x).ToList();
 
             // 建立 喜愛的展覽清單的viewmodel 的list
             int userId = User.Identity.GetUserId<int>();
             var user = UserManager.FindById(userId);
+            
+            // 取得使用者頭像及姓名
+            getUserByIdInfo(userId);
 
             List<CommonShowViewModel> myShowList = new userFactory(DbContext).createMyShowList(cityId, userId, user);
             var ipagedMyShowList = OtherMethod.getCurrentPagedList(myShowList, page, pageSize);
@@ -326,6 +362,9 @@ namespace arTWander.Controllers
         {
             int userId = User.Identity.GetUserId<int>();
             var user = UserManager.FindById(userId);
+            
+            // 取得使用者頭像及姓名
+            getUserByIdInfo(userId);
 
             var model = new userFactory(_dbContext).getMyShowPage(user, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
 
@@ -369,6 +408,10 @@ namespace arTWander.Controllers
         {
             int userId = User.Identity.GetUserId<int>();
             var user = UserManager.FindById(userId);
+
+            // 取得使用者頭像及姓名
+            getUserByIdInfo(userId);
+
             var companyList = user.CompanySubs;
             var model = new CommonPageFactory(DbContext).getMyGalleryPages(page, companyList);
             if (companyList.Count == 0)

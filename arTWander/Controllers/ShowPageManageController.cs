@@ -66,8 +66,14 @@ namespace arTWander.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// 進階（條件）搜尋展覽 & 關鍵字搜尋
+        /// </summary>
+        /// <param name="searchModel"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
         [HttpPost]
-        public ActionResult getShowPages(SearchShowPagesViewModel searchModel, int page = 1)
+        public ActionResult getShowPages(SearchShowPagesViewModel searchModel, int page = 1, string keyword = "")
         {
             int userId = User.Identity.GetUserId<int>();
             var company = new CompanyFactory(DbContext).GetCompany(userId);
@@ -75,10 +81,27 @@ namespace arTWander.Controllers
             if (company == null)
                 return RedirectToAction("Edit", "Company");
 
-            TempData["SearchModel"] = searchModel;
-            TempData.Keep("SearchModel");
+            SearchShowPagesViewModel search;
 
-            var model = new ShowPageFactory(DbContext).getCompanyShowPages(company, page, searchModel);
+            if (string.IsNullOrEmpty(keyword))
+            {
+                search = searchModel;
+                TempData["SearchModel"] = search;
+                TempData.Keep("SearchModel");
+            }
+            else
+            {
+                search = new SearchShowPagesViewModel
+                {
+                    Cost = CostStatus.none,
+                    OrderSortField = OrderSortField.AllData
+                };
+
+                TempData["keyword"] = keyword;
+                TempData.Keep("keyword");
+            }
+
+            var model = new ShowPageFactory(DbContext).getCompanyShowPages(company, page, search, keyword);
             return PartialView("~/Views/Shared/CompanyPartial/_ShowPagePartial.cshtml", model);
         }
 

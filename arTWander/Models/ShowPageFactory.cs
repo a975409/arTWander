@@ -20,15 +20,26 @@ namespace arTWander.Models
             _dbContext = dbContext;
         }
 
-        public IPagedList<ShowMinViewModel> getCompanyShowPages(Company company, int page = 1, SearchShowPagesViewModel model = null)
+        public IPagedList<ShowMinViewModel> getCompanyShowPages(Company company, int page = 1, SearchShowPagesViewModel model = null, string keyword = "")
         {
             if (company.ShowPages == null || company.ShowPages.Count <= 0)
             {
                 return null;
             }
 
+            IEnumerable<ShowPage> pages = null;
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                pages = company.ShowPages.Where(m => m.Title.Contains(keyword) || m.Description.Contains(keyword) || m.KeywordsList.Where(k => k.Name.Contains(keyword)).Any());
+            }
+            else
+            {
+                pages = company.ShowPages;
+            }
+
             //依據搜尋條件取得該展演單位的展演
-            var shows = OtherMethod.searchShowPage(company.ShowPages, model).Select(m => new ShowMinViewModel
+            var shows = OtherMethod.searchShowPage(pages, model).Select(m => new ShowMinViewModel
             {
                 Description = m.Description,
                 cityName = m.City.CityName,
@@ -36,7 +47,8 @@ namespace arTWander.Models
                 Title = m.Title,
                 Comment = m.ShowComments.Count(),
                 fileName = m.ShowPageFiles.Count() <= 0 ? "/image/exhibiton/Null.png" : $"/SaveFiles/Company/{m.Company.Id}/show/{m.Id}/{m.ShowPageFiles.FirstOrDefault().fileName}",
-                cityId = m.FK_City
+                cityId = m.FK_City,
+                 end= DateTime.Compare(m.EndDate, DateTime.Now.Date) < 0
             }); 
 
             var showPages = OtherMethod.getCurrentPagedList(shows, page, pageSize);

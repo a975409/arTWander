@@ -77,15 +77,15 @@ namespace arTWander.Models
                 {
                     if (!model.StartDate.Equals(DateTime.MinValue) && !model.EndDate.Equals(DateTime.MinValue))
                     {
-                        showPages = showPages.Where(m => DateTime.Compare(model.StartDate, m.StartDate) >= 0 && DateTime.Compare(m.EndDate, model.EndDate) >= 0);
+                        showPages = showPages.Where(m => DateTime.Compare(model.StartDate.Date, m.StartDate.Date) <= 0 && DateTime.Compare(m.EndDate.Date, model.EndDate.Date) <= 0);
                     }
                     else if (!model.StartDate.Equals(DateTime.MinValue))
                     {
-                        showPages = showPages.Where(m => DateTime.Compare(m.StartDate, model.StartDate) >= 0);
+                        showPages = showPages.Where(m => DateTime.Compare(model.StartDate.Date, m.StartDate.Date) <= 0);
                     }
                     else if (!model.EndDate.Equals(DateTime.MinValue))
                     {
-                        showPages = showPages.Where(m => DateTime.Compare(model.EndDate, m.EndDate) >= 0);
+                        showPages = showPages.Where(m => DateTime.Compare(m.EndDate.Date, model.EndDate.Date) <= 0);
                     }
                     else { }
                 }
