@@ -5,6 +5,10 @@
 @{
     bool sendAgain = TempData["sended"] == null ? false : (bool)TempData["sendAgain"];
 
+    //關鍵字搜尋
+    string keyword = (string)TempData["keyword"];
+
+    //進階（條件）搜尋展覽
     SearchShowPagesViewModel searchModel = (SearchShowPagesViewModel)TempData["SearchModel"] ?? new SearchShowPagesViewModel();
 
     PagedListRenderOptions pagedListOption = new PagedListRenderOptions
@@ -35,7 +39,15 @@
                 <!-- 展覽圖片 starts -->
                 <div class="showImg">
                     <a href="@Url.Action("DisplayInfo", "ShowPageManage", new { showId = item.showId })">
-                        <img class="w-100 rounded-sm img-fluid " src="@item.showImg" alt="">
+                        @if (item.end)
+                        {
+                            <img class="w-100 rounded-sm img-fluid " src="@item.showImg" style="filter: grayscale(1);" alt="">
+                        }
+                        else
+                        {
+                            <img class="w-100 rounded-sm img-fluid " src="@item.showImg" alt="">
+                        }
+
                     </a>
                 </div>
                 <!-- 展覽圖片 ends -->
@@ -65,18 +77,14 @@
             </div>
             <!-- 展覽 ends -->
         }
-    </div>
-
-    <!-- 分頁 starts -->
-    @*樣式設定參考：https://kevintsengtw.blogspot.com/2013/10/aspnet-mvc-pagedlistmvc_17.html*@
-    @*
+    </div><!-- 分頁 starts -->@*樣式設定參考：https://kevintsengtw.blogspot.com/2013/10/aspnet-mvc-pagedlistmvc_17.html*@@*
         PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing：用ajax更新資料
         PagedListRenderOptions：設定樣式
         AjaxOptions：設定ajax傳遞參數，參考網站：https://docs.microsoft.com/zh-tw/dotnet/api/system.web.mvc.ajax.ajaxoptions.tounobtrusivehtmlattributes?view=aspnet-mvc-5.2
     *@
 
     <div class="d-flex justify-content-center">
-        @Html.PagedListPager(Model, page => Url.Action("getShowList", "Common", new { FK_City = searchModel.FK_City, FK_District = searchModel.FK_District, StartDate = searchModel.StartDate, EndDate = searchModel.EndDate, Cost = searchModel.Cost, OrderSortField = searchModel.OrderSortField, page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(pagedListOption, ajaxOption))
+        @Html.PagedListPager(Model, page => Url.Action("getShowList", "Common", new { FK_City = searchModel.FK_City, FK_District = searchModel.FK_District, StartDate = searchModel.StartDate, EndDate = searchModel.EndDate, Cost = searchModel.Cost, OrderSortField = searchModel.OrderSortField, keyword = keyword, page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(pagedListOption, ajaxOption))
     </div>
 }
 else

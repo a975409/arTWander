@@ -25,7 +25,8 @@
         <div class="form-group" style="margin:0px;">
             @*<label for="OrderSortField">請選擇排序方式</label>*@
             <select class="form-control" id="OrderSortField" name="OrderSortField">
-                <option value="1">最新展演</option>
+                <option value="0">全部展演</option>
+                <option value="1" selected>最新展演</option>
                 <option value="2">熱門展演</option>
             </select>
         </div>
@@ -86,8 +87,9 @@
                 let cityId = $(this).val();
 
                 let selectCityName = this.options.item(this.selectedIndex).innerHTML;
-
+                removeSearchUrlKeyword();
                 removeSearchUrlDistrict();
+                $('#showKeyword').val('');
 
                 if (cityId > 0) {
                     $.ajax({
@@ -157,9 +159,9 @@
             });
 
             $('#FK_District').change(function () {
-
+                $('#showKeyword').val('');
                 let selectDistrictName = this.options.item(this.selectedIndex).innerHTML;
-
+                removeSearchUrlKeyword();
                 removeSearchUrlDistrict();
 
                 let districtLi = document.createElement('li');
@@ -185,21 +187,25 @@
             addToMyShowAddEvent();
 
             $('#StartDate').change(function () {
+                $('#showKeyword').val('');
                 if (!oneload)
                     $('#searchMode').submit();
             });
 
             $('#EndDate').change(function () {
+                $('#showKeyword').val('');
                 if (!oneload)
                     $('#searchMode').submit();
             });
 
             $('#Cost').change(function () {
+                $('#showKeyword').val('');
                 if (!oneload)
                     $('#searchMode').submit();
             });
 
             $('#OrderSortField').change(function () {
+                $('#showKeyword').val('');
                 if (!oneload)
                     $('#searchMode').submit();
             });
@@ -216,6 +222,7 @@
 
             $('#resetSearchMode').click(function () {
                 oneload = true;
+                removeSearchUrlKeyword();
                 removeSearchUrlCity();
                 removeSearchUrlDistrict();
                 $('#FK_City').val(0);
@@ -232,11 +239,74 @@
                 cityLi.appendChild(city_A);
                 document.getElementById('searchUrl').appendChild(cityLi);
 
+                $('#showKeyword').val('');
                 $('#StartDate').val('');
                 $('#EndDate').val('');
                 $('#Cost').val(0);
                 $('#OrderSortField').val(1);
                 $('#searchMode').submit();
+            });
+
+            $('#buttonSearch').click(function () {
+                let page = 1;
+
+                let showKeyword = $('#showKeyword').val();
+                if (showKeyword == '') {
+                    return;
+                }
+                oneload = true;
+                $('#FK_City').val(0);
+                $('#StartDate').val('');
+                $('#EndDate').val('');
+                $('#Cost').val(0);
+                $('#OrderSortField').val(0);
+                removeSearchUrlKeyword();
+                loadingShowPages();
+
+                $.ajax({
+                    type: 'post',
+                    url: '@Url.Action("getShowList", "Common")',
+                    data: { keyword: showKeyword, page: page },
+                    success: function (data) {
+                        $('#showPages').html(data);
+
+                        let searchUrl = document.getElementById('searchUrl');
+                        let changeCity = document.getElementById('changeCity');
+                        let changeDistrict = document.getElementById('changeDistrict');
+
+                        if (changeCity != null) {
+                            searchUrl.removeChild(changeCity.parentNode);
+                        }
+
+                        if (changeDistrict != null) {
+                            searchUrl.removeChild(changeDistrict.parentNode);
+                        }
+
+                        let kwdtLi = document.createElement('li');
+                        kwdtLi.className = 'breadcrumb-item';
+
+                        let kwd_A = document.createElement('a');
+                        kwd_A.setAttribute('id', 'changeKwd');
+                        kwd_A.setAttribute('aria-current', 'page');
+
+                        let kwdName = document.createTextNode(`搜尋關鍵字：${showKeyword}`);
+                        kwd_A.appendChild(kwdName);
+                        kwdtLi.appendChild(kwd_A);
+                        document.getElementById('searchUrl').appendChild(kwdtLi);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: textStatus,
+                            text: errorThrown,
+                            showConfirmButton: false,
+                            showCancelButton: true
+                        });
+                        errorServerMsg();
+                    }
+                });
+
+                oneload = false;
             });
 
             $('#searchMode').submit(function (event) {
@@ -274,6 +344,15 @@
                 oneload = false;
             });
         });
+
+        function removeSearchUrlKeyword() {
+            let kwd_A = document.getElementById('changeKwd');
+
+            if (kwd_A != null) {
+
+                document.getElementById('searchUrl').removeChild(kwd_A.parentNode);
+            }
+        }
 
         function removeSearchUrlCity() {
             let cityLi_A = document.getElementById('changeCity');

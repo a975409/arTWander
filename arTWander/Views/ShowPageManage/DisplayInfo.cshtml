@@ -3,32 +3,14 @@
     Layout = "~/Views/Shared/CommonLayout/_AsideFalse.cshtml";
 }
 
-@if (User.IsInRole("Company"))
-{
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="~/Company/Index">會員功能</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="~/ShowPageManage/Index">我的展演</a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">查看展演</li>
-        </ol>
-    </nav>
-}
-else
-{
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="~/Common/Index">全部展覽</a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">查看展演</li>
-        </ol>
-    </nav>
-}
-
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="~/Common/Index">全部展覽</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">查看展演</li>
+    </ol>
+</nav>
 
 <div class="row d-flex justify-content-center">
     <div class="col-9 px-0">

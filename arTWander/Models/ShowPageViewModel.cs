@@ -23,6 +23,8 @@ namespace arTWander.Models
         public string cityName { get; set; }
 
         public int cityId { get; set; }
+
+        public bool end { get; set; }
     }
 
     public class ShowPageViewModel
