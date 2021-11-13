@@ -1,0 +1,60 @@
+﻿@media screen and (max-width: 767px) {
+    .iframeOuter {
+        justify-content: center;
+    }
+    .iframeInner {
+        width: 526px;
+        height: 327px;
+        transform: scale(1);
+        /*transform-origin: 0 0;*/
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .iframeOuter {
+        width: 375px;
+        height: 40vh;
+        justify-content: center;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .iframeInner {
+        width: 200px;
+        height: 40vh;
+        transform: scale(0.6);
+        zoom: 267%;
+        transform-origin: 0 10px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 979px) {
+    .iframeOuter {
+        justify-content: center;
+        text-align:center;
+    }
+
+    .iframeInner {
+        width: 526px;
+        height: 327px;
+        /*transform-origin: 0 0;*/
+        
+    }
+}
+
+@media screen and (min-width: 980px) {
+    .iframeOuter {
+        justify-content: center;
+        text-align: center;
+    }
+    .iframeInner {
+        width: 526px;
+        height: 327px;
+        /*transform-origin: 0 0;*/
+        justify-content: center;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+
+}

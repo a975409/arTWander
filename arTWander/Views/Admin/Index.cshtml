@@ -10,7 +10,7 @@
     $(document).ready(function () {
         $.ajax({
             type: 'post',
-            url: '@Url.Action("MemberManage", "Admin")',
+            url: '@Url.Action("dataStatisticsManage", "Admin")',
             data: {},
             success: function (data) {
                 $('#mainPage').html(data);
