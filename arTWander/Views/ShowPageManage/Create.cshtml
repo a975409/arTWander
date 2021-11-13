@@ -49,7 +49,7 @@
                         <div class="input-group col-12">
                             <input type="text" class="form-control" id="inputKeyword" name="inputKeyword" placeholder="輸入關鍵字" aria-label="Recipient's username" aria-describedby="button-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button" id="inputKeywordBtn">新增關鍵字</button>
+                                <button class="btn btn-outline-secondary border-0 bg-pink text-white" type="button" id="inputKeywordBtn">新增關鍵字</button>
                             </div>
                         </div>
                     </div>
@@ -197,7 +197,7 @@
                 @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
             </div>
             <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick=" PreviewShowPage()">下一步：預覽展演</button>
+                <button type="button" class="btn btn-outline-secondary border-0 bg-pink text-white" data-toggle="modal" data-target="#exampleModal" onclick=" PreviewShowPage()">下一步：預覽展演</button>
             </div>
         </form>
     </div>
@@ -217,7 +217,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">繼續編輯</button>
-                <button type="submit" form="#CreateShowForm" class="btn btn-primary" onclick="submitCreateForm()">發佈展演</button>
+                <button type="submit" form="#CreateShowForm" class="btn btn-outline-secondary border-0 bg-pink text-white" onclick="submitCreateForm()">發佈展演</button>
             </div>
         </div>
     </div>
