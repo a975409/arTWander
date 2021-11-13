@@ -129,9 +129,6 @@ namespace arTWander.Models.AdminFactory
             var q = from users in db.Users
                     join login in db.LogingLog on users.Id equals login.FK_ApplicationUser into ps
                     from login in ps.DefaultIfEmpty()
-                        //join sComment in db.ShowComment on users.Id equals sComment.FK_ApplicationUser into pt
-                        //from sComment in pt.DefaultIfEmpty()
-                        //join sPage in db.ShowPage on sComment.FK_ShowPage equals sPage.Id
                     join bList in db.BlackList on users.Id equals bList.FK_ApplicationUser into pu
                     from bList in pu.DefaultIfEmpty()
                     join cCompany in db.Company on users.Id equals cCompany.FK_ApplicationUser into cu
@@ -181,14 +178,9 @@ namespace arTWander.Models.AdminFactory
             var q = from users in db.Users
                     join login in db.LogingLog on users.Id equals login.FK_ApplicationUser into ps
                     from login in ps.DefaultIfEmpty()
-                    //join sComment in db.ShowComment on users.Id equals sComment.FK_ApplicationUser into pt
-                    //from sComment in pt.DefaultIfEmpty()
-                    //join sPage in db.ShowPage on sComment.FK_ShowPage equals sPage.Id
                     join bList in db.BlackList on users.Id equals bList.FK_ApplicationUser into pu
                     from bList in pu.DefaultIfEmpty()
                     where users.Id.ToString() == searchWord
-                    //login.RegisterTime.ToString().Contains(searchWord)||
-                    //users.Id.ToString().Contains(searchWord)
                     select new UserListViewModel
                     {
                         FK_ApplicationUser = users.Id,
@@ -223,12 +215,6 @@ namespace arTWander.Models.AdminFactory
             var role = new ApplicationUserRole();
             BlackList blackList = new BlackList();
             List<CustomerListViewModel> model = new List<CustomerListViewModel>();
-            //var roles = new IdentityUserRole();
-            //foreach (var c in roles.RoleId)
-            //    string s = c;
-            //    Console.WriteLine(c);
-            //var list = from ls in roles.RoleId select ls;
-            //list.ToList();
             string Bday = "";
             string blist = "";
             var AllUserId = db.Users.OrderBy(m => m.Id).Select(m => m.Id).ToList();

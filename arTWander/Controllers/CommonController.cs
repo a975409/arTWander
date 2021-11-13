@@ -159,9 +159,10 @@ namespace arTWander.Controllers
             };
 
             if (!string.IsNullOrEmpty(city))
-            {
                 search.FK_City = DbContext.City.Where(m => m.CityName == city).Select(m => m.Id).FirstOrDefault();
-            }
+
+            TempData["SearchModel"] = search;
+            TempData.Keep("SearchModel");
 
             //使用者未登入
             if (user == null)
@@ -323,7 +324,45 @@ namespace arTWander.Controllers
 
         public ActionResult MyItineraryPage()
         {
-            return View();
+            int userId = User.Identity.GetUserId<int>();
+            var user = UserManager.FindById(userId);
+
+            var model = new userFactory(_dbContext).getMyShowPage(user, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+
+            return View(model);
+        }
+
+        public ActionResult getMyShow(int cityId, DateTime StartDate, string StartTime, string EndTime)
+        {
+            int userId = User.Identity.GetUserId<int>();
+            var user = UserManager.FindById(userId);
+
+            int startHours = int.Parse(StartTime.Split(':')[0]);
+            int startMinutes = int.Parse(StartTime.Split(':')[1]);
+            DateTime startTime = new DateTime(1, 1, 1, startHours, startMinutes, 0);
+
+            int endHours = int.Parse(EndTime.Split(':')[0]);
+            int endMinutes = int.Parse(EndTime.Split(':')[1]);
+            DateTime endTime = new DateTime(1, 1, 1, endHours, endMinutes, 0);
+
+            var model = new userFactory(_dbContext).getMyShowPage(user, StartDate, startTime, endTime);
+
+            if (cityId > 0)
+                model = model.Where(m => m.city.Id == cityId);
+
+            return PartialView("~/Views/Shared/CommonPartial/Card/_PartialMyItineraryShowList.cshtml", model);
+        }
+
+
+        public async Task<ActionResult> SendRountToEmail(string url)
+        {
+            int userId = User.Identity.GetUserId<int>();
+            var user = UserManager.FindById(userId);
+
+            await UserManager.SendEmailAsync(user.Id, "您的觀展路線已規劃完畢，請點擊內部連結，即可將路線導入至Google Map", "請按一下此連結將路線導入至Google Map：<a href=\"" + url + "\">這裏</a>");
+
+            string success = SweetAlert.initAlert() + SweetAlert.SuccessAlert("寄送成功", "路線已寄送至您的信箱", "");
+            return JavaScript(success);
         }
 
         public ActionResult MySubscription(int page = 1)

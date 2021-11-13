@@ -53,6 +53,24 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Apis, Version=1.55.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.55.0\lib\net45\Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.AnalyticsReporting.v4, Version=1.55.0.2484, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.AnalyticsReporting.v4.1.55.0.2484\lib\net45\Google.Apis.AnalyticsReporting.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.55.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.55.0\lib\net461\Google.Apis.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.55.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.55.0\lib\net461\Google.Apis.Auth.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.55.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.55.0\lib\net45\Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.55.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.55.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0-alpha1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -165,6 +183,7 @@
   <ItemGroup>
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\spinkit.min.css" />
+    <Content Include="css\Adminiframe\iframe.css" />
     <Content Include="css\CommonIndex.css" />
     <Content Include="css\CommonLayout\_AsideFalse.css" />
     <Content Include="css\CommonLayout\_AsideTrue.css" />
@@ -280,6 +299,7 @@
     <Content Include="javascript\index1014.js" />
     <Content Include="javascript\jquery.MultiFile.min.js" />
     <Content Include="javascript\LoginForm.js" />
+    <Content Include="javascript\MyItineraryPage.js" />
     <Content Include="javascript\MyShowPage.js" />
     <Content Include="javascript\PreviewShowPage.js" />
     <Content Include="javascript\RegisterForm.js" />
@@ -317,10 +337,6 @@
     <Content Include="SaveFiles\Company\1\show\2\ShowImage_2_20211108_032327_1.jpg" />
     <Content Include="SaveFiles\Company\1\show\3\ShowImage_3_20211108_033725_1.png" />
     <Content Include="SaveFiles\Company\1\show\9\hongGah.jpg" />
-    <Content Include="SaveFiles\Company\2\Info\PhotoStickerImg_2_20211109_014357.jpg" />
-    <Content Include="SaveFiles\Company\2\Info\PromotionalImage_2_20211109_014356.jpg" />
-    <Content Include="SaveFiles\Company\2\show\4\ShowImage_4_20211109_015256_1.jpg" />
-    <Content Include="SaveFiles\Member\4\Avatar\20481918_1090739744390403_8989974898285740032_n.jpg" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\spin.js" />
@@ -354,7 +370,6 @@
     <Content Include="Views\ShowPageManage\Edit.cshtml" />
     <Content Include="Views\Shared\MemberLayout\_LoginAside.cshtml" />
     <Content Include="Views\Shared\MemberLayout\_LoginNav.cshtml" />
-    <Content Include="Views\Common\MyItineraryPage.cshtml" />
     <Content Include="Views\Common\MyshowPage.cshtml" />
     <Content Include="Views\Common\MySubscription.cshtml" />
     <Content Include="Views\Common\SetUp.cshtml" />
@@ -391,9 +406,11 @@
     <Content Include="Views\Shared\CompanyPartial\_showPageImagePartial.cshtml" />
     <Content Include="Views\Shared\CommonLayout\Aside\_PartialLogInFalse.cshtml" />
     <Content Include="Views\Shared\CommonLayout\Aside\_PartialLogInTrue.cshtml" />
-    <Content Include="Views\Shared\CompanyPartial\Aside\_PartialLogInFalse.cshtml" />
     <Content Include="Views\Shared\CompanyPartial\Aside\_PartialLogInTrue.cshtml" />
     <Content Include="Views\Shared\CompanyPartial\_DisplayShowPagePartial.cshtml" />
+    <Content Include="GA.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <Content Include="Views\Admin\BlackCustomer.cshtml" />
     <Content Include="Views\Admin\BlackCustomerInfo.cshtml" />
@@ -401,9 +418,11 @@
     <Content Include="Views\Admin\BlackUserInform.cshtml" />
     <Content Include="Views\Admin\ShowManage.cshtml" />
     <Content Include="Views\Shared\CommonPartial\Card\_PartialMyShowList.cshtml" />
+    <Content Include="Views\Common\ShowInfo.cshtml" />
+    <Content Include="Views\Shared\CommonPartial\Card\_PartialMyItineraryShowList.cshtml" />
     <Content Include="Views\Shared\CommonPartial\Card\_PartialCompanyList.cshtml" />
     <Content Include="Views\Shared\CommonPartial\Card\_PartialMyCompany.cshtml" />
-    <Content Include="Views\Common\ShowInfo.cshtml" />
+    <Content Include="Views\Common\MyItineraryPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -537,6 +556,8 @@
   <ItemGroup>
     <Folder Include="SaveFiles\Company\1\show\10\" />
     <Folder Include="SaveFiles\Company\1\show\17\" />
+    <Folder Include="SaveFiles\Company\2\Info\" />
+    <Folder Include="SaveFiles\Company\2\show\4\" />
     <Folder Include="SaveFiles\Company\3\Info\" />
     <Folder Include="SaveFiles\Company\5\Info\" />
     <Folder Include="SaveFiles\Company\5\show\5\" />
@@ -544,6 +565,7 @@
     <Folder Include="SaveFiles\Company\5\show\7\" />
     <Folder Include="SaveFiles\Company\5\show\8\" />
     <Folder Include="SaveFiles\Company\8\Info\" />
+    <Folder Include="SaveFiles\Member\4\Avatar\" />
     <Folder Include="Views\Method\" />
   </ItemGroup>
   <PropertyGroup>

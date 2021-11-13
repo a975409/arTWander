@@ -25,6 +25,12 @@ namespace arTWander.Models
 
         private const int pageSize = 12;
 
+
+        public ApplicationUser getUserById(int id)
+        {
+            return _dbContext.Users.Find(id);
+        }
+
         public void updateToDB(ApplicationUser user, CommonInfoViewModel viewModel)
         {
             if (viewModel.AvatarName == "avatar_default.png")
@@ -210,5 +216,112 @@ namespace arTWander.Models
             return viewModel;
         }
 
+        //public CommonInfoViewModel createViewModel(IndexViewModel model, int Userid)
+        //{
+        //    // 取得user
+        //    ApplicationDbContext db = new ApplicationDbContext();
+        //    var user = db.Users.Where(u => u.Id == Userid).FirstOrDefault();
+
+        //    // 轉換user.birthay型別以符合前端需求
+        //    DateTime Birthday = (DateTime)(user.Birthday);
+        //    string Bday = Birthday.ToString("yyyy-MM-dd");
+
+
+        //    // 取得user資料模型
+        //    CommonInfoViewModel viewModel = new CommonInfoViewModel
+        //    {
+        //        HasPassword = model.HasPassword,
+        //        Logins = model.Logins,
+        //        PhoneNumber = user.PhoneNumber,
+        //        TwoFactor = model.TwoFactor,
+        //        BrowserRemembered = model.BrowserRemembered,
+        //        UserName = user.UserName,
+        //        Birthday = Bday,
+        //        AccountAddress = user.AccountAddress,
+        //        AvatarUrl = "/image/avatar/",
+        //        AvatarName = user.Avatar,
+        //        Email = user.Email
+        //    };
+
+
+        //    if (string.IsNullOrEmpty(user.Avatar))
+        //    {
+        //        viewModel.AvatarUrl += "avatar_default.png";
+        //        viewModel.AvatarName = "avatar_default.png";
+        //    }
+        //    else
+        //    {
+        //        viewModel.AvatarUrl += user.Avatar;
+        //        viewModel.AvatarName = user.Avatar;
+        //    }
+
+
+        //    return viewModel;
+        //}
+
+        public IQueryable<CommonShowViewModel> queryAllShow()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var q = from show in db.ShowPage
+                        //join city in db.City on show.FK_City equals city.Id
+                        //join company in db.Company on show.FK_Company equals company.Id
+                    join showImg in db.ShowPageFile on show.Id equals showImg.FK_ShowPage
+                    select new CommonShowViewModel
+                    {
+                        showCity = show.City.CityName,
+                        showTitle = show.Title,
+                        showDiscription = show.Description,
+                        showCompany = show.Company.CompanyName,
+                        showImg = showImg.fileName
+                    };
+
+            return q;
+        }
+
+        public IEnumerable<CommonMyItineraryPage> getMyShowPage(ApplicationUser user, DateTime StartDate, DateTime StartTime, DateTime EndTime)
+        {
+            IEnumerable<CommonMyItineraryPage> showPage = null;
+            
+            //Today
+            if (DateTime.Equals(StartDate, DateTime.MinValue))
+                StartDate = DateTime.Today;
+
+            //00:00
+            if (DateTime.Equals(StartTime, DateTime.MinValue))
+                StartTime = new DateTime(1, 1, 1, 0, 0, 0);
+
+            //23:59
+            if (DateTime.Equals(EndTime, DateTime.MinValue))
+                EndTime = new DateTime(1, 1, 1, 23, 59, 0);
+
+
+            var temp = user.ShowPage.Where(m => m.PageToTodaysList.Any(t => t.Today == (int)(StartDate.DayOfWeek + 1)));
+
+
+            temp= temp.Where(m => CompareTime(StartTime, m.StartTime) <= 0);
+
+            temp = temp.Where(m => CompareTime(EndTime, m.EndTime) >= 0);
+
+            showPage = temp.Select(m => new CommonMyItineraryPage
+            {
+                city = m.City,
+                showCompany = m.Company.CompanyName,
+                showId = m.Id,
+                showTitle = m.Title,
+                showAddress = $"{m.City.CityName}{m.District.DistrictName}{m.Address}"
+            });
+
+            return showPage;
+        }
+
+        private int CompareTime(DateTime t1, DateTime t2)
+        {
+            DateTime timer1 = new DateTime(1, 1, 1, t1.Hour, t1.Minute, 0);
+            DateTime timer2 = new DateTime(1, 1, 1, t2.Hour, t2.Minute, 0);
+
+            int result = DateTime.Compare(timer1, timer2);
+
+            return result;
+        }
     }
 }

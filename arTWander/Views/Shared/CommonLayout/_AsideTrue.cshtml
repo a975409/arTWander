@@ -11,8 +11,6 @@
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
     <!-- font-awesome -->
     <script src="https://kit.fontawesome.com/9bd3ad2735.js" crossorigin="anonymous"></script>
     <!-- css -->
@@ -118,18 +116,14 @@
                     <aside id="aside1" class="col-12 col-md-3 mt-0" style="z-index: 1002;">
                         @if (Request.IsAuthenticated)
                         {
-
                             if (User.IsInRole("Member"))
                             {
                                 Html.RenderPartial("~/Views/Shared/MemberLayout/_LoginAside.cshtml");
                             }
-                            else if (User.IsInRole("Company"))
+                            
+                            if (User.IsInRole("Company"))
                             {
                                 Html.RenderPartial("~/Views/Shared/CompanyPartial/Aside/_PartialLogInTrue.cshtml");
-                            }
-                            else
-                            {
-                                Html.RenderPartial("~/Views/Shared/CommonPartial/Aside/_PartialLogInTrue.cshtml");
                             }
                         }
 
@@ -233,7 +227,7 @@
     <style id="css"></style>
     <script src="/javascript/AsideTrue.js"></script>
     <script>
-        $("#myShow").click(function () {
+        @*$("#myShow").click(function () {
             $.ajax({
                 type: 'post',
                 url: '@Url.Action("MyshowPage", "Common")',
@@ -242,10 +236,8 @@
                     $('#mainPage').html(data);
                 }
             });
-        });
-    </script>
+        });*@
 
-    <script>
         $("#GalleryList").click(function () {
             $.ajax({
                 type: 'post',
@@ -256,6 +248,47 @@
                 }
             });
         });
+
+        $(".MyshowBtn").click(function () {
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("MyshowPage", "Common")',
+                data: {},
+                success: function (data) {
+                    $('#mainPage').html(data);
+                },
+                error: function (data) {
+                    alert(XMLHttpRequest.status);
+                    alert(XMLHttpRequest.readyState);
+
+                }
+
+            });
+        });
+
+
+        @*$("#MyItineraryBtn").click(function () {
+            loadingShowPages();
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("MyItineraryPage", "Common")',
+                success: function (data) {
+                    $('#mainPage').html(data);
+                }
+            });
+        });*@
+
+        $(".MySubscriptionBtn").click(function () {
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("MySubscription", "Common")',
+                data: FormData,
+                success: function (data) {
+                    $('#mainPage').html(data);
+                }
+            });
+        });
+
     </script>
     <!-- aside判斷結束 -->
     @RenderSection("scripts", required: false)

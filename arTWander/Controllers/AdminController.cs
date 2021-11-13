@@ -1,6 +1,8 @@
 ﻿using arTWander.Models;
 using arTWander.Models.AdminFactory;
 using arTWander.Models.AdminViewModel;
+using Google.Apis.AnalyticsReporting.v4;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -390,6 +392,7 @@ namespace arTWander.Controllers
         //dataStatisticsManage detail page start
         public ActionResult WebFlow()
         {
+            //var googleCredential = GoogleCredential.FromFile("GA.json").CreateScoped(AnalyticsReportingService.Scope.Analytics);
             return View();
         }
         public ActionResult UserFlow()
@@ -496,5 +499,7 @@ namespace arTWander.Controllers
         {
             return View();
         }
+
+      
     }
 }
