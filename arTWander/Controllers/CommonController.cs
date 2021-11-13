@@ -574,5 +574,56 @@ namespace arTWander.Controllers
             return View(model);
         }
 
+        // footer starts
+        [HttpPost]
+        public async Task sendMsgToAdminAsync(string feedBack, string userEmail)
+        {
+            IdentityMessage msg;
+            IdentityMessage msgConfirm;
+            if (Request.IsAuthenticated)
+            {
+                // 取得使用者
+                int userId = User.Identity.GetUserId<int>();
+                var user = UserManager.FindById(userId);
+
+                // 寄信給管理員
+                msg = new IdentityMessage
+                {
+                    Destination = "admin@artwander.art",
+                    Subject = "使用者意見回饋",
+                    Body = $"使用者名稱 : {user.UserName}</br>使用者id : {user.Id}</br>使用者信箱 : {user.Email}</br></br>內文 : {feedBack}"
+                };
+
+                // 寄信給使用者
+                msgConfirm = new IdentityMessage
+                {
+                    Destination = user.Email,
+                    Subject = "arTWander 藝文漫步",
+                    Body = $"<h3>arTWander已收到您的回饋</h3><br><p>{user.UserName} 您好 : <br>感謝您的來信，您的寶貴意見與建議，是我們不斷改善整體服務品質的最佳動力，敬請不吝指教。如有任何疑問，歡迎來電洽詢，本站將竭誠為您服務</p><br><br>本郵件為系統發送郵件，請勿直接回覆<br>電話：0800-111-222 | 信箱：test001@gmail.com"
+                };
+                
+            }
+            else
+            {
+                msg = new IdentityMessage
+                {
+                    Destination = "admin@artwander.art",
+                    Subject = $"使用者意見回饋",
+                    Body = $"使用者名稱 : null</br>使用者id : null</br>使用者信箱 : {userEmail}</br></br>內文 : {feedBack}"
+                };
+
+                // 寄信給使用者
+                msgConfirm = new IdentityMessage
+                {
+                    Destination = userEmail,
+                    Subject = "arTWander 藝文漫步",
+                    Body = $"<h3>arTWander已收到您的回饋</h3><br><p>{userEmail}您好 :<br> 感謝您的來信，您的寶貴意見與建議，是我們不斷改善整體服務品質的最佳動力，敬請不吝指教。如有任何疑問，歡迎來電洽詢，本站將竭誠為您服務</p><br><br>本郵件為系統發送郵件，請勿直接回覆<br>電話：0800-111-222 | 信箱：test001@gmail.com"
+                };
+            }
+
+            await new EmailService().SendAsync(msg);
+            await new EmailService().SendAsync(msgConfirm);
+        }
+        // footer ends
     }
 }

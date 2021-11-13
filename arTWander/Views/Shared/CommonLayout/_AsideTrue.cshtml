@@ -11,8 +11,7 @@
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+	
     <!-- font-awesome -->
     <script src="https://kit.fontawesome.com/9bd3ad2735.js" crossorigin="anonymous"></script>
     <!-- css -->
@@ -83,6 +82,18 @@
                 <a id="GalleryList" class="nav-link" href="~/Common/GalleryList">展演單位</a>
             </nav>
             <!-- fixed導覽列 end -->
+            <!-- breadcrumb starts -->
+            @if (User.IsInRole("Member"))
+            {
+                <nav id="cmnPage_BreadCrumb" class="col-12 my-4" aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-light">
+                        <li class="breadcrumb-item">
+                            <a href="#">全部展覽</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">台北市</li>
+                    </ol>
+                </nav>      }
+            <!-- breadcrumb ends -->
         </header>
         <!-- 導覽列 end -->
         <!-- 主要內容區 starts-->
@@ -154,17 +165,16 @@
                         <!-- 意見回饋 starts -->
                         <div class="col-12 col-md-8">
                             <h5 class="font-weight-bold">我們重視你的意見！</h5>
-                            <form class="d-flex flex-column justify-content-end" action="">
+                            <form id="feedbackForm" action="" class="d-flex flex-column justify-content-end" >
                                 <div class="form-group">
                                     <label class="font-size-sm" for="feedBack">請將您寶貴的意見回饋給本站，您的關注是我們持續改進的動力</label>
                                     <textarea class="form-control" id="feedBack" rows="5"></textarea>
+                                    <p id="txtAreaWarningMsg" class="text-danger m-0 mt-2"></p>
                                     <br>
-                                    <input type="text" class="form-control" placeholder="請留下您的email，讓我們回信給您">
+                                    <input type="email" class="form-control" id="userEmail" placeholder="請留下您的email，讓我們回信給您">
+                                    <p id="emailWarningMsg" class="text-danger m-0 mt-2"></p>
                                 </div>
-                                <button class="btn btn-outline-secondary border-0 bg-pink text-white" type="submit"
-                                        id="btnFeedback">
-                                    送出
-                                </button>
+                                <input form="feedbackForm" type="submit" id="btnFeedback" class="btn btn-outline-secondary border-0 bg-pink text-white" value="送出">
                             </form>
                         </div>
                         <!-- 意見回饋 ends -->
@@ -175,7 +185,7 @@
                 <div class="row mt-5 mt-md-0">
                     <div class="col-12 container-fluid ">
                         <!-- 訂閱 starts -->
-                        <form class="col-12 ">
+                        @*<form class="col-12 ">
                             <h5 class="font-weight-bold">想收到第一手展演資訊嗎?</h5>
                             <p>請留下您的email，接收本站的電子報！</p>
                             <div class="input-group mb-3">
@@ -188,7 +198,7 @@
                                     </button>
                                 </div>
                             </div>
-                        </form>
+                        </form>*@
                         <!-- 訂閱 ends -->
                     </div>
                 </div>
