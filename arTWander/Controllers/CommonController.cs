@@ -257,6 +257,15 @@ namespace arTWander.Controllers
             return View(model);
         }
 
+        public ActionResult getGalleryList(int? cityId, int page = 1)
+        {
+            var model = new CommonPageFactory(DbContext).getGalleryPages(page, cityId);
+            // 建立 城市的list
+            var cityList = DbContext.City.Select(x => x).ToList();
+            ViewBag.city = cityList;
+            return PartialView("~/Views/Shared/CommonPartial/Card/_PartialCompanyList.cshtml", model);
+        }
+
 
         public ActionResult addToMyGallery(string galleryId)
         {
@@ -358,6 +367,37 @@ namespace arTWander.Controllers
             return View(viewModel);
         }
 
+        public ActionResult getMyshowPage(int? cityId, int page = 1)
+        {
+            // 建立 城市的list
+            var cityList = DbContext.City.Select(x => x).ToList();
+
+            // 建立 喜愛的展覽清單的viewmodel 的list
+            int userId = User.Identity.GetUserId<int>();
+            var user = UserManager.FindById(userId);
+
+            List<CommonShowViewModel> myShowList = new userFactory(DbContext).createMyShowList(cityId, userId, user);
+            var ipagedMyShowList = OtherMethod.getCurrentPagedList(myShowList, page, pageSize);
+
+            // 將兩個list加入viewModel
+            CommonMyShowViewNodel viewModel = new userFactory(DbContext).createMyShowViewNodel(cityList, ipagedMyShowList);
+
+            // 判斷選擇地區沒有展覽 || 未添加任何展覽進我的展覽時 顯示的訊息
+            if (myShowList.Count() < 1 && cityId != null)
+            {
+                ViewBag.errorMsg = "此地區尚未有展覽被添加至「我的展覽」";
+                ViewBag.guidMsg = "若想規劃此地區的看展行程，請再回到展覽清單探索該地區展覽";
+            }
+            else if (myShowList.Count() < 1 && cityId == null)
+            {
+                ViewBag.errorMsg = "尚未有展覽被添加至「我的展覽」";
+                ViewBag.guidMsg = "若想進行展覽行程規劃，可從「全部展覽」添加展覽進入「我的展覽」";
+            }
+
+            //return View(viewModel);
+            return PartialView("~/Views/Shared/CommonPartial/Card/_PartialMyShowList.cshtml", viewModel.allShow);
+        }
+
         public ActionResult MyItineraryPage()
         {
             int userId = User.Identity.GetUserId<int>();
@@ -420,16 +460,20 @@ namespace arTWander.Controllers
             }
             return View(model);
         }
-        //public ActionResult GalleryList(int? cityId, int page = 1)
-        //{
-        //    var model = new CommonPageFactory(DbContext).getGalleryPages(page, cityId);
-        //    // 建立 城市的list
-        //    var cityList = DbContext.City.Select(x => x).ToList();
-        //    ViewBag.city = cityList;
-        //    return View(model);
-        //}
-        //Aside 導引畫面end
 
+        public ActionResult getMySubscription(int page = 1)
+        {
+            int userId = User.Identity.GetUserId<int>();
+            var user = UserManager.FindById(userId);
+
+            var companyList = user.CompanySubs;
+            var model = new CommonPageFactory(DbContext).getMyGalleryPages(page, companyList);
+            if (companyList.Count == 0)
+            {
+                ViewBag.errorMsg = "尚未有展覽單位被添加至「訂閱單位」";
+            }
+            return PartialView("~/Views/Shared/CommonPartial/Card/_PartialMyCompany.cshtml", model);
+        }
 
         //訂閱展演單位 畫面 start
         public ActionResult SubscriptionDetail(string companyID)
@@ -451,7 +495,7 @@ namespace arTWander.Controllers
                 {
                     Id = companyInfo.Id,
                     CompanyName = companyInfo.CompanyName,
-                    CompanyDescription = companyInfo.CompanyDescription,
+                    CompanyDescription = MvcHtmlString.Create(companyInfo.CompanyDescription).ToString(),
                     CompanyCity = companyInfo.City.CityName,
                     Address = companyInfo.Address,
                     Email = companyInfo.Email,
@@ -463,8 +507,8 @@ namespace arTWander.Controllers
                     ShowId = showInfo?.Select(s => s.Id).ToArray(),
                     ShowCity = showInfo?.Select(s => s.City.CityName).ToArray(),
                     ShowTitle = showInfo?.Select(s => s.Title).ToArray(),
-                    ShowDiscription = showInfo.Select(s => s.Description).ToArray(),
-                    ShowImg = DbContext?.ShowPageFile.Where(m => m.ShowPage.FK_Company == companyInfo.Id).Select(m => ("/SaveFiles/Company/" + companyInfo.Id + "/show/" + m.ShowPage.Id + "/" + m.fileName)).ToArray()
+                    ShowImg = DbContext?.ShowPageFile.Where(m => m.ShowPage.FK_Company == companyInfo.Id).Select(m => ("/SaveFiles/Company/" + companyInfo.Id + "/show/" + m.ShowPage.Id + "/" + m.fileName)).ToArray(),
+                     ShowDiscription= showInfo?.Select(s => s.Description).ToArray()
                 };
 
                 viewModels.Add(model);

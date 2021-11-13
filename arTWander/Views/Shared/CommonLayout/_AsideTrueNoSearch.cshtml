@@ -18,6 +18,7 @@
     <!-- css -->
     <link href="~/css/CommonLayout/_AsideTrue.css" rel="stylesheet" />
     <link href="~/css/css_commonPage/CommonAsidePage.css" rel="stylesheet" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @*PagedList.Mvc分頁切換css & jquery函示庫*@
     <link href="~/Content/PagedList.css" rel="stylesheet" />
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
@@ -35,16 +36,38 @@
                     <a href="/Home/Index"><img src="/image/logo/logo.png" alt="logo"></a>
                 </figure>
                 <div class="col-4 d-flex justify-content-end align-items-start" id="avatarNavSet">
-                    <a id="setUp" class="nav-link ml-3" href="~/Manage/Index">
-                        <i class="fa fa-cog"
-                           aria-hidden="true"></i>
-                    </a>
 
-                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    @if (Request.IsAuthenticated)
                     {
-                        @Html.AntiForgeryToken()
-                        <a id="logOut" class="nav-link ml-3"
-                           href="javascript:document.getElementById('logoutForm').submit()">登出</a>}
+                        if (User.IsInRole("Member"))
+                        {
+                            <a id="setUp" class="nav-link ml-3" href="~/Manage/Index">
+                                <i class="fa fa-cog"
+                                   aria-hidden="true"></i>
+                            </a>
+                        }
+                        else if (User.IsInRole("Company"))
+                        {
+                            <a id="setUp" class="nav-link ml-3" href="~/Company/Index">
+                                <i class="fa fa-cog"
+                                   aria-hidden="true"></i>
+                            </a>
+                        }
+                        else
+                        {   //Admin
+                            <a id="setUp" class="nav-link ml-3" href=""><i class="fa fa-cog" aria-hidden="true"></i></a>
+                        }
+
+                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <a id="logOut" class="nav-link ml-3"
+                               href="javascript:document.getElementById('logoutForm').submit()">登出</a>
+                        }
+                    }
+                    else
+                    {
+                        <a href="~/Account/AccountIndex" class="nav-link ml-2">登入 / 註冊</a>
                     }
                 </div>
             </div>
@@ -56,7 +79,7 @@
                 <a href="#" class="d-md-none"> </a>
                 <a id="homePage" class="nav-link active" href="~/Home/Index">首頁</a>
                 <a id="showList" class="nav-link" href="~/Common/Index">全部展覽</a>
-                <a id="GalleryList" class="nav-link" href="#">展演單位</a>
+                <a id="GalleryList" class="nav-link" href="~/Common/GalleryList">展演單位</a>
             </nav>
             <!-- fixed導覽列 end -->
         </header>
@@ -68,46 +91,65 @@
                     <!-- 判斷是否開啟RWD左側邊框 -->
                     <input type="checkbox" id="menuControl">
                     <!-- 左側邊框 -->
-                    <aside id="aside1" class="col-12 col-md-3 mt-0" style="z-index: 1002;">
-                        <div id="aside1Div" class="d-md-block">
-                            <!-- d-flex justify-content-center -->
-                            <!-- 頭像starts -->
-                            <figure class="d-flex justify-content-center">
-                                <div id="asideAvatar" class="d-flex justify-content-center overflow-hidden">
-                                    <img src="@ViewBag.avatarUrl" alt="Alternate Text" />
+                    @if (Request.IsAuthenticated)
+                    {
+                        <aside id="aside1" class="col-12 col-md-3 mt-0" style="z-index: 1002;">
+                            <div id="aside1Div" class="d-md-block">
+                                <!-- d-flex justify-content-center -->
+                                <!-- 頭像starts -->
+                                <figure class="d-flex justify-content-center">
+                                    <div id="asideAvatar" class="d-flex justify-content-center overflow-hidden">
+                                        <img src="@ViewBag.avatarUrl" alt="Alternate Text" />
+                                    </div>
+                                </figure>
+                                <div class="d-flex justify-content-center w-100 overflow-hidden">
+                                    <p>@ViewBag.userName 您好!</p>
                                 </div>
-                            </figure>
-                            <div class="d-flex justify-content-center w-100 overflow-hidden">
-                                <p>@ViewBag.userName 您好!</p>
+                                <!-- 頭像end -->
+
+                                @if (User.IsInRole("Member"))
+                                {
+                                    <ul id="aside1DivUl" class="p-0 p-lg-4">
+                                        <li>
+                                            <p>展覽</p>
+                                            <hr>
+                                            <ul class="list-group list-group-flush ">
+                                                <li class="list-group-item bg-transparent">
+                                                    <a href="~/Common/MyshowPage">我的展覽</a>
+                                                </li>
+                                                <li class="list-group-item bg-transparent">
+                                                    <a href="~/Common/MyItineraryPage">我的行程</a>
+                                                </li>
+                                            </ul>
+                                            <br>
+                                        </li>
+                                        <li>
+                                            <p>最新消息</p>
+                                            <hr>
+                                            <ul class="list-group list-group-flush ">
+                                                <li class="list-group-item bg-transparent">
+                                                    <a href="~/Common/MySubscription">訂閱單位</a>
+                                                </li>
+                                            </ul>
+                                            <br>
+                                        </li>
+                                    </ul>
+                                }
+                                else if (User.IsInRole("Company"))
+                                {
+                                    <ul id="aside1DivUl" class="p-0 p-lg-4">
+                                        <li>
+                                            <hr>
+                                            <a href="@Url.Action("Index","Company")">展演單位資訊</a>
+                                            <hr>
+                                        </li>
+                                    </ul>
+                                }
+                                else { }
                             </div>
-                            <!-- 頭像end -->
-                            <ul id="aside1DivUl" class="p-0 p-lg-4">
-                                <li>
-                                    <p>展覽</p>
-                                    <hr>
-                                    <ul class="list-group list-group-flush ">
-                                        <li class="list-group-item bg-transparent">
-                                            <a href="~/Common/MyshowPage">我的展覽</a>
-                                        </li>
-                                        <li class="list-group-item bg-transparent">
-                                            <a href="~/Common/MyItineraryPage">我的行程</a>
-                                        </li>
-                                    </ul>
-                                    <br>
-                                </li>
-                                <li>
-                                    <p>最新消息</p>
-                                    <hr>
-                                    <ul class="list-group list-group-flush ">
-                                        <li class="list-group-item bg-transparent">
-                                            <a href="~/Common/MySubscription">訂閱單位</a>
-                                        </li>
-                                    </ul>
-                                    <br>
-                                </li>
-                            </ul>
-                        </div>
-                    </aside>
+                        </aside>
+                    }
+
                     <!-- 右側主內容 -->
                     <section id="Section" class="col-12 col-md-9 w-100 ">
                         <div id="mainPage">

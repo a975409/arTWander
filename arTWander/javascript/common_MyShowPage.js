@@ -8,10 +8,10 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'post',
-            url: '/Common/MyshowPage?cityId='+ cityId,
+            url: '/Common/getMyshowPage?cityId='+ cityId,
             data: {},
             success: function (data) {
-                $('#mainPage').html(data);
+                $('#myshowPage').html(data);
             },
             error: function (data) {
                 alert(XMLHttpRequest.status);
@@ -77,10 +77,10 @@ $(document).ready(function () {
     function reloadShowPage() {
         $.ajax({
             type: 'post',
-            url: '/Common/MyshowPage',
+            url: '/Common/getMyshowPage',
             data: {},
             success: function (data) {
-                $('#mainPage').html(data);
+                $('#myshowPage').html(data);
             },
             error: function (data) {
                 alert(XMLHttpRequest.status);
