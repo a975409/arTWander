@@ -384,6 +384,7 @@ namespace arTWander.Models.AdminFactory
                     where users.Id.ToString() == searchWord
                     select new CustomerListViewModel
                     {
+                        Id=cCompany.Id,
                         CompanyName = cCompany.CompanyName,
                         CompanyDescription = cCompany.CompanyDescription,
                         Fax = cCompany.Fax,

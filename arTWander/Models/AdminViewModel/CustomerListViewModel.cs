@@ -9,6 +9,10 @@ namespace arTWander.Models.AdminViewModel
 {
     public class CustomerListViewModel
     {
+
+        [DisplayName("展演id")]
+        public int Id { get; set; }
+
         [DisplayName("展演單位名稱")]
         public string CompanyName { get; set; }
 
