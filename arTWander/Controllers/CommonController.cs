@@ -150,7 +150,7 @@ namespace arTWander.Controllers
         {
             // 取得使用者頭像及姓名
             int userId = User.Identity.GetUserId<int>();
-            ApplicationUser user = DbContext.Users.Where(u => u.Id == userId).FirstOrDefault();
+            getUserByIdInfo(userId);
 
             SearchShowPagesViewModel search = new SearchShowPagesViewModel
             {
@@ -164,12 +164,20 @@ namespace arTWander.Controllers
             TempData["SearchModel"] = search;
             TempData.Keep("SearchModel");
 
+            return View(new userFactory(DbContext).getShowPages(model: search));
+        }
+
+        //取得使用者名稱＆大頭照
+        private void getUserByIdInfo(int userId)
+        {
+            ApplicationUser user = DbContext.Users.Where(u => u.Id == userId).FirstOrDefault();
+
             //使用者未登入
             if (user == null)
             {
                 ViewBag.userName = "";
                 ViewBag.avatarUrl = "/image/avatar/avatar_default.png";
-                return View(new userFactory(DbContext).getShowPages(model: search));
+                return;
             }
 
             string role = UserManager.GetRoles(userId)[0];
@@ -200,27 +208,94 @@ namespace arTWander.Controllers
                     break;
 
             }
-            return View(new userFactory(DbContext).getShowPages(model: search));
         }
 
-        [HttpPost]
-        public ActionResult getShowList(SearchShowPagesViewModel searchModel, int page = 1)
+        public ActionResult DisplayInfo(int showId)
         {
-            TempData["SearchModel"] = searchModel;
-            TempData.Keep("SearchModel");
+            var show = DbContext.ShowPage.Find(showId);
 
-            var model = new userFactory(DbContext).getShowPages(page, searchModel);
+            if (show == null)
+            {
+                return HttpNotFound("該展覽不存在或已被移除");
+            }
+
+            ShowPageViewModel model = new ShowPageViewModel
+            {
+                Address = $"{show.City.CityName}{show.District.DistrictName}{show.Address}",
+                AgeRange = show.AgeRange,
+                Cost = show.Cost,
+                Description = show.Description,
+                EndDate = show.EndDate,
+                EndTime = show.EndTime,
+                Id = show.Id,
+                Price = show.Price,
+                Remark = show.Remark,
+                StartDate = show.StartDate,
+                StartTime = show.StartTime,
+                Title = show.Title,
+                Todays = show.PageToTodaysList?.Select(m => m.Today).ToArray(),
+                Keywords = show.KeywordsList?.Select(m => m.Name).ToArray(),
+                images = show.ShowPageFiles?.Select(m => $"/SaveFiles/Company/{show.Company.Id}/show/{show.Id}/{m.fileName}").ToArray(),
+                ViewCount = (ulong)show.PageViewCounts?.Select(m => m.Count).Sum()
+            };
+
+            return View(model);
+        }
+
+        /// <summary>
+        /// 進階（條件）搜尋展覽 & 關鍵字搜尋展覽
+        /// </summary>
+        /// <param name="searchModel"></param>
+        /// <param name="page"></param>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult getShowList(SearchShowPagesViewModel searchModel, int page = 1, string keyword = "")
+        {
+            SearchShowPagesViewModel search;
+            if (string.IsNullOrEmpty(keyword))
+            {
+                search = searchModel;
+                TempData["SearchModel"] = search;
+                TempData.Keep("SearchModel");
+            }
+            else
+            {
+                search = new SearchShowPagesViewModel
+                {
+                    Cost = CostStatus.none,
+                    OrderSortField = OrderSortField.AllData
+                };
+
+                TempData["keyword"] = keyword;
+                TempData.Keep("keyword");
+            }
+
+            var model = new userFactory(DbContext).getShowPages(page, search, keyword);
             return PartialView("~/Views/Shared/CommonPartial/Card/_PartialShowList.cshtml", model);
         }
 
       
         public ActionResult GalleryList(int? cityId, int page = 1)
         {
+            // 取得使用者頭像及姓名
+            int userId = User.Identity.GetUserId<int>();
+            getUserByIdInfo(userId);
+
             var model = new CommonPageFactory(DbContext).getGalleryPages(page, cityId);
             // 建立 城市的list
             var cityList = DbContext.City.Select(x => x).ToList();
             ViewBag.city = cityList;
             return View(model);
+        }
+
+        public ActionResult getGalleryList(int? cityId, int page = 1)
+        {
+            var model = new CommonPageFactory(DbContext).getGalleryPages(page, cityId);
+            // 建立 城市的list
+            var cityList = DbContext.City.Select(x => x).ToList();
+            ViewBag.city = cityList;
+            return PartialView("~/Views/Shared/CommonPartial/Card/_PartialCompanyList.cshtml", model);
         }
 
 
@@ -292,7 +367,40 @@ namespace arTWander.Controllers
         //Aside 導引畫面start
         public ActionResult MyshowPage(int? cityId, int page = 1)
         {
+            // 建立 城市的list
+            var cityList = DbContext.City.Select(x => x).ToList();
 
+            // 建立 喜愛的展覽清單的viewmodel 的list
+            int userId = User.Identity.GetUserId<int>();
+            var user = UserManager.FindById(userId);
+            
+            // 取得使用者頭像及姓名
+            getUserByIdInfo(userId);
+
+            List<CommonShowViewModel> myShowList = new userFactory(DbContext).createMyShowList(cityId, userId, user);
+            var ipagedMyShowList = OtherMethod.getCurrentPagedList(myShowList, page, pageSize);
+
+            // 將兩個list加入viewModel
+            CommonMyShowViewNodel viewModel = new userFactory(DbContext).createMyShowViewNodel(cityList, ipagedMyShowList);
+
+            // 判斷選擇地區沒有展覽 || 未添加任何展覽進我的展覽時 顯示的訊息
+            if (myShowList.Count() < 1 && cityId != null)
+            {
+                ViewBag.errorMsg = "此地區尚未有展覽被添加至「我的展覽」";
+                ViewBag.guidMsg = "若想規劃此地區的看展行程，請再回到展覽清單探索該地區展覽";
+            }
+            else if (myShowList.Count() < 1 && cityId == null)
+            {
+                ViewBag.errorMsg = "尚未有展覽被添加至「我的展覽」";
+                ViewBag.guidMsg = "若想進行展覽行程規劃，可從「全部展覽」添加展覽進入「我的展覽」";
+            }
+
+
+            return View(viewModel);
+        }
+
+        public ActionResult getMyshowPage(int? cityId, int page = 1)
+        {
             // 建立 城市的list
             var cityList = DbContext.City.Select(x => x).ToList();
 
@@ -318,14 +426,17 @@ namespace arTWander.Controllers
                 ViewBag.guidMsg = "若想進行展覽行程規劃，可從「全部展覽」添加展覽進入「我的展覽」";
             }
 
-
-            return View(viewModel);
+            //return View(viewModel);
+            return PartialView("~/Views/Shared/CommonPartial/Card/_PartialMyShowList.cshtml", viewModel.allShow);
         }
 
         public ActionResult MyItineraryPage()
         {
             int userId = User.Identity.GetUserId<int>();
             var user = UserManager.FindById(userId);
+            
+            // 取得使用者頭像及姓名
+            getUserByIdInfo(userId);
 
             var model = new userFactory(_dbContext).getMyShowPage(user, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
 
@@ -369,6 +480,10 @@ namespace arTWander.Controllers
         {
             int userId = User.Identity.GetUserId<int>();
             var user = UserManager.FindById(userId);
+
+            // 取得使用者頭像及姓名
+            getUserByIdInfo(userId);
+
             var companyList = user.CompanySubs;
             var model = new CommonPageFactory(DbContext).getMyGalleryPages(page, companyList);
             if (companyList.Count == 0)
@@ -377,16 +492,20 @@ namespace arTWander.Controllers
             }
             return View(model);
         }
-        //public ActionResult GalleryList(int? cityId, int page = 1)
-        //{
-        //    var model = new CommonPageFactory(DbContext).getGalleryPages(page, cityId);
-        //    // 建立 城市的list
-        //    var cityList = DbContext.City.Select(x => x).ToList();
-        //    ViewBag.city = cityList;
-        //    return View(model);
-        //}
-        //Aside 導引畫面end
 
+        public ActionResult getMySubscription(int page = 1)
+        {
+            int userId = User.Identity.GetUserId<int>();
+            var user = UserManager.FindById(userId);
+
+            var companyList = user.CompanySubs;
+            var model = new CommonPageFactory(DbContext).getMyGalleryPages(page, companyList);
+            if (companyList.Count == 0)
+            {
+                ViewBag.errorMsg = "尚未有展覽單位被添加至「訂閱單位」";
+            }
+            return PartialView("~/Views/Shared/CommonPartial/Card/_PartialMyCompany.cshtml", model);
+        }
 
         //訂閱展演單位 畫面 start
         public ActionResult SubscriptionDetail(string companyID)
@@ -408,7 +527,7 @@ namespace arTWander.Controllers
                 {
                     Id = companyInfo.Id,
                     CompanyName = companyInfo.CompanyName,
-                    CompanyDescription = companyInfo.CompanyDescription,
+                    CompanyDescription = MvcHtmlString.Create(companyInfo.CompanyDescription).ToString(),
                     CompanyCity = companyInfo.City.CityName,
                     Address = companyInfo.Address,
                     Email = companyInfo.Email,
@@ -420,8 +539,8 @@ namespace arTWander.Controllers
                     ShowId = showInfo?.Select(s => s.Id).ToArray(),
                     ShowCity = showInfo?.Select(s => s.City.CityName).ToArray(),
                     ShowTitle = showInfo?.Select(s => s.Title).ToArray(),
-                    ShowDiscription = showInfo.Select(s => s.Description).ToArray(),
-                    ShowImg = DbContext?.ShowPageFile.Where(m => m.ShowPage.FK_Company == companyInfo.Id).Select(m => ("/SaveFiles/Company/" + companyInfo.Id + "/show/" + m.ShowPage.Id + "/" + m.fileName)).ToArray()
+                    ShowImg = DbContext?.ShowPageFile.Where(m => m.ShowPage.FK_Company == companyInfo.Id).Select(m => ("/SaveFiles/Company/" + companyInfo.Id + "/show/" + m.ShowPage.Id + "/" + m.fileName)).ToArray(),
+                     ShowDiscription= showInfo?.Select(s => s.Description).ToArray()
                 };
 
                 viewModels.Add(model);

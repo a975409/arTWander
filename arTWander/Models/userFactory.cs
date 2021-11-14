@@ -139,17 +139,29 @@ namespace arTWander.Models
         }
 
 
-        public IPagedList<CommonShowViewModel> getShowPages(int page = 1, SearchShowPagesViewModel model = null)
+        public IPagedList<CommonShowViewModel> getShowPages(int page = 1, SearchShowPagesViewModel model = null, string keyword = "")
         {
+            IEnumerable<ShowPage> pages = null; 
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                pages = _dbContext.ShowPage.Where(m => m.Title.Contains(keyword) || m.Description.Contains(keyword) || m.KeywordsList.Where(k => k.Name.Contains(keyword)).Any());
+            }
+            else
+            {
+                pages = _dbContext.ShowPage;
+            }
+
             //依據搜尋條件取得該展演單位的展演
-            var shows = OtherMethod.searchShowPage(_dbContext.ShowPage, model).Select(m => new CommonShowViewModel
+            var shows = OtherMethod.searchShowPage(pages, model).Select(m => new CommonShowViewModel
             {
                 showDiscription = m.Description,
                 showCity = m.City.CityName,
                 showId = m.Id,
                 showTitle = m.Title,
                 showImg = m.ShowPageFiles.Count() <= 0 ? "/image/exhibiton/Null.png" : $"/SaveFiles/Company/{m.Company.Id}/show/{m.Id}/{m.ShowPageFiles.FirstOrDefault().fileName}",
-                showCompany = m.Company.CompanyName
+                showCompany = m.Company.CompanyName,
+                end = DateTime.Compare(m.EndDate, DateTime.Now.Date) < 0
             });
 
             var showPages = OtherMethod.getCurrentPagedList(shows, page, pageSize);

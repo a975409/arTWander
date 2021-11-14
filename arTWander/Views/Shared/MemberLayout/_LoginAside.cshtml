@@ -13,7 +13,7 @@
     <!-- 頭像end -->
     <!-- 關鍵字查詢 starts -->
     <div class="input-group input-group-sm w-100 my-4">
-        <input type="text" class="form-control rounded-pill" placeholder="查詢展覽" aria-label="search" aria-describedby="buttonSearch">
+        <input type="text" id="showKeyword" class="form-control rounded-pill" placeholder="查詢展覽" aria-label="search" aria-describedby="buttonSearch">
         <div class="input-group-prepend">
             <button class="btn" type="button" id="buttonSearch"><i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
@@ -48,13 +48,13 @@
                         <ul class="list-group list-group-flush bg-transparent ">
                             <li class="list-group-item bg-transparent p-1 p-lg-0">
                                 <div class="form-group">
-                                    <label for="StartDate">開始時間</label>
+                                    <label for="StartDate">開始日期</label>
                                     <input type="date" class="form-control" id="StartDate" name="StartDate">
                                 </div>
                             </li>
                             <li class="list-group-item bg-transparent p-1 p-lg-0">
                                 <div class="form-group">
-                                    <label for="EndDate">結束時間</label>
+                                    <label for="EndDate">結束日期</label>
                                     <input type="date" class="form-control" id="EndDate" name="EndDate">
                                 </div>
                             </li>
@@ -82,18 +82,15 @@
 
             </form>
         </li>
-        <br>
         <li>
             <p>展覽</p>
             <hr>
             <ul class="list-group list-group-flush ">
                 <li class="list-group-item bg-transparent">
-                    <a id="MyshowBtn" href="#MyshowPage">我的展覽</a>
-                    @*<a class="MyshowBtn" href="">我的展覽</a>*@
+                    <a href="~/Common/MyshowPage">我的展覽</a>
                 </li>
                 <li class="list-group-item bg-transparent">
                     <a href="~/Common/MyItineraryPage">我的行程</a>
-                    @*<a id="MyItineraryBtn" href="#MyItineraryPage">我的行程 </a>*@
                 </li>
             </ul>
             <br>
@@ -103,7 +100,7 @@
             <hr>
             <ul class="list-group list-group-flush ">
                 <li class="list-group-item bg-transparent">
-                    <a id="MySubscriptionBtn" href="#MySubscriptionPage">訂閱單位</a>
+                    <a href="~/Common/MySubscription">訂閱單位</a>
                 </li>
             </ul>
             <br>
@@ -113,52 +110,3 @@
     <!-- 條件查詢 end -->
 
 </div>
-
-
-<script>
-    $(document).ready(function () {
-
-        $("#MyshowBtn").click(function () {
-            $.ajax({
-                type: 'post',
-                url: '@Url.Action("MyshowPage", "Common")',
-                data: {},
-                success: function (data) {
-                    $('#mainPage').html(data);
-                },
-                error: function (data) {
-                    alert(XMLHttpRequest.status);
-                    alert(XMLHttpRequest.readyState);
-
-                }
-
-            });
-        });
-
-
-        $("#MyItineraryBtn").click(function () {
-            $.ajax({
-                type: 'post',
-                url: '@Url.Action("MyItineraryPage", "Common")',
-                data: FormData,
-                success: function (data) {
-                    $('#mainPage').html(data);
-                }
-            });
-        });
-
-        $("#MySubscriptionBtn").click(function () {
-            $.ajax({
-                type: 'post',
-                url: '@Url.Action("MySubscription", "Common")',
-                data: FormData,
-                success: function (data) {
-                    $('#mainPage').html(data);
-                }
-            });
-        });
-    });
-
-
-
-</script>

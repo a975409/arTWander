@@ -423,6 +423,8 @@
     <Content Include="Views\Shared\CommonPartial\Card\_PartialCompanyList.cshtml" />
     <Content Include="Views\Shared\CommonPartial\Card\_PartialMyCompany.cshtml" />
     <Content Include="Views\Common\MyItineraryPage.cshtml" />
+    <Content Include="Views\Shared\CommonLayout\_AsideTrueNoSearch.cshtml" />
+    <Content Include="Views\Common\DisplayInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

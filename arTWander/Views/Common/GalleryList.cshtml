@@ -4,28 +4,9 @@
 @model IPagedList<arTWander.Models.CommonCompanyViewModel>
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/CommonLayout/_AsideTrueNoSearch.cshtml";
 }
 
-
-@{
-    PagedListRenderOptions pagedListOption = new PagedListRenderOptions
-    {
-        LinkToFirstPageFormat = "<<",
-        LinkToPreviousPageFormat = "<",
-        LinkToNextPageFormat = ">",
-        LinkToLastPageFormat = ">>",
-        DisplayPageCountAndCurrentLocation = true,
-        PageCountAndCurrentLocationFormat = "第 {0} 頁/共 {1} 頁"
-    };
-
-    AjaxOptions ajaxOption = new AjaxOptions()
-    {
-        HttpMethod = "POST",
-        UpdateTargetId = "showPages",
-        OnFailure = "errorServerMsg()"
-    };
-}
 @section css{
     <link href="~/css/css_commonPage/ShowList.css" rel="stylesheet" />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -58,25 +39,11 @@
     </div>
 
     <!-- 展覽列表 starts -->
-    <div class="container ">
-        <div class="row row-cols-lg-2 row-cols-xl-3 showlistRow">
-            @if (Model.Count > 0)
-            {
-                foreach (var show in Model)
-                {
-                    @Html.Partial("~/Views/Shared/CommonPartial/Card/_PartialCompanyList.cshtml", show);
-                }
-
-
-
-            }
-        </div>
+    <div id="getCompanyList">
+        @Html.Partial("~/Views/Shared/CommonPartial/Card/_PartialCompanyList.cshtml", Model)
     </div>
 
 
-    <div class="d-flex justify-content-center">
-        @Html.PagedListPager(Model, page => Url.Action("GalleryList", "Common", new { page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(pagedListOption, ajaxOption))
-    </div>
 </div>
 <!-- 分頁 start -->
 <!-- 分頁 ends -->
@@ -106,7 +73,6 @@
         </div>
     </div>
 </div>
-
 
 <script>
     //取得對應customer ID詳細資訊
@@ -141,12 +107,12 @@
         var cityId = $('#citySelector').val()
         event.preventDefault();
         $.ajax({
-            url: '/Common/GalleryList?cityId='+cityId,
-            type: 'POST',
-            data: {},
+            url: '/Common/getGalleryList',
+            type: 'get',
+            data: { cityId:cityId},
             success: function (data) {
                 console.log("Good");
-                $('#mainPage').html(data);
+                $('#getCompanyList').html(data);
             },
             //錯誤訊息
             error: (XMLHttpRequest, textStatus, errorThrown)=>{

@@ -1,10 +1,10 @@
 ﻿@model arTWander.Models.CommonViewModel.CommonMyShowViewNodel
 @using PagedList
 @using PagedList.Mvc
-   
+
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/CommonLayout/_AsideTrueNoSearch.cshtml";
     var allCity = Model.allCity;
     var allShow = Model.allShow;
 }
@@ -58,54 +58,8 @@
 </div>
 
 <!-- 展覽列表 starts -->
-<div class="container ">
-    <div class="row showlistRow">
-
-        @if (allShow.Count > 0 && allShow[0] != null)
-        {
-            foreach (var show in allShow)
-            {
-                @Html.Partial("~/Views/Shared/CommonPartial/Card/_PartialMyShowList.cshtml", show);
-            }
-        }
-        else
-        {
-            <div class="col-12 mt-5 d-flex align-items-center flex-column">
-                <h5 class="d-flex justify-content-center ">
-                    @ViewBag.errorMsg
-                </h5>
-                <p>@ViewBag.guidMsg</p>
-            </div>
-        }
-    </div>
+<div id="myshowPage">
+    @Html.Partial("~/Views/Shared/CommonPartial/Card/_PartialMyShowList.cshtml", allShow)
 </div>
-<!-- 展覽列表 ends -->
-<!-- 分頁 starts -->
-<div class="d-flex justify-content-center">
-    @Html.PagedListPager(allShow, page => Url.Action("MyshowPage", "Common", new { page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(pagedListOption, ajaxOption))
-</div>
-@*<div class="container my-5">
-        <div class="row justify-content-center">
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link text-dark" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link text-dark" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>*@
-<!-- 分頁 ends -->
-@*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>*@
 
 @Scripts.Render("~/javascript/common_MyShowPage.js")

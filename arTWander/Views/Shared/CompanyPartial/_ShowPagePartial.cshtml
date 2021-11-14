@@ -5,6 +5,10 @@
 @{
     bool sendAgain = TempData["sended"] == null ? false : (bool)TempData["sendAgain"];
 
+    //關鍵字搜尋
+    string keyword = (string)TempData["keyword"];
+
+    //進階（條件）搜尋展覽
     SearchShowPagesViewModel searchModel = (SearchShowPagesViewModel)TempData["SearchModel"] ?? new SearchShowPagesViewModel();
 
     PagedListRenderOptions pagedListOption = new PagedListRenderOptions
@@ -34,7 +38,16 @@
                 <!-- 展覽圖片 starts -->
                 <div class="showImg">
                     <a href="@Url.Action("DisplayInfo", "ShowPageManage", new { showId = item.Id })">
-                        <img class="w-100 rounded-sm img-fluid " src="@item.fileName" alt="">
+
+                        @if (item.end)
+                        {
+                            <img class="w-100 rounded-sm img-fluid " src="@item.fileName" style="filter: grayscale(1);" alt="">
+                        }
+                        else
+                        {
+                            <img class="w-100 rounded-sm img-fluid " src="@item.fileName" alt="">
+                        }
+
                     </a>
                 </div>
                 <!-- 展覽圖片 ends -->
@@ -64,7 +77,7 @@
     *@
 
     <div class="d-flex justify-content-center">
-        @Html.PagedListPager(Model, page => Url.Action("getShowPages", "ShowPageManage", new { FK_City = searchModel.FK_City, FK_District = searchModel.FK_District, StartDate = searchModel.StartDate, EndDate = searchModel.EndDate, Cost = searchModel.Cost, OrderSortField = searchModel.OrderSortField, page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(pagedListOption, ajaxOption))
+        @Html.PagedListPager(Model, page => Url.Action("getShowPages", "ShowPageManage", new { FK_City = searchModel.FK_City, FK_District = searchModel.FK_District, StartDate = searchModel.StartDate, EndDate = searchModel.EndDate, Cost = searchModel.Cost, OrderSortField = searchModel.OrderSortField, page = page, keyword = keyword }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(pagedListOption, ajaxOption))
     </div>
 }
 else
