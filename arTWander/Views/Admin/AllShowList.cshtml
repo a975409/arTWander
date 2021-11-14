@@ -40,57 +40,58 @@
 
 <link rel="stylesheet" href="./css/UserList.css">
 
-<!-- breadcrumb start -->
-<div class="justify-items-start">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb bg-light">
-            <li class="breadcrumb-item"><a href="#">系統管理員</a></li>
-            <li class="breadcrumb-item active" aria-current="page">展覽資訊</li>
-        </ol>
-    </nav>
-</div>
-<!-- breadcrumb end -->
+
 <article>
     <section id="Section">
+        <div id="showPages">
 
-        <div id="userPages">
             <div class="AllList">
+                <!-- breadcrumb start -->
+                <div class="justify-items-start">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb bg-light">
+                            <li class="breadcrumb-item"><a href="#">系統管理員</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">展覽資訊</li>
+                        </ol>
+                    </nav>
+                </div>
+                <!-- breadcrumb end -->
                 <!-- 關鍵字查詢 start-->
                 <!--<div class="AllListTitle">
-                <div class="input-group-prepend my-1">
-                    <div class="row w-100">-->
+    <div class="input-group-prepend my-1">
+        <div class="row w-100">-->
                 <!-- 下拉式地區搜尋 -->
                 <!--<div class="dropdown d-flex my-auto col-6 col-md-6 col-lg-3">
-                    <a class="btn btn-White dropdown-toggle col-6" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        台北市
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="#">台北市</a>
-                        <a class="dropdown-item" href="#">台中市</a>
-                        <a class="dropdown-item" href="#">高雄市</a>
-                    </div>
-                    <a class="btn btn-White dropdown-toggle col-6" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        台北市
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="#">台北市</a>
-                        <a class="dropdown-item" href="#">台中市</a>
-                        <a class="dropdown-item" href="#">高雄市</a>
-                    </div>
-                </div>-->
+        <a class="btn btn-White dropdown-toggle col-6" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            台北市
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#">台北市</a>
+            <a class="dropdown-item" href="#">台中市</a>
+            <a class="dropdown-item" href="#">高雄市</a>
+        </div>
+        <a class="btn btn-White dropdown-toggle col-6" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            台北市
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#">台北市</a>
+            <a class="dropdown-item" href="#">台中市</a>
+            <a class="dropdown-item" href="#">高雄市</a>
+        </div>
+    </div>-->
                 <!-- 時間搜尋 -->
                 <!--<div id="timeSelect" class="d-flex col-6 col-md-6 col-lg-9 justify-content-end">
-                                <div class="row w-100 justify-content-between">
-                                    <label for="startDate" class="col-lg-2-text-right my-auto p-0">開始時間</label>
-                                    <input type="date" class="form-control col-lg-4" id="startDate">
-                                    <label for="endDate" class="col-lg-2-text-right my-auto p-0">結束時間</label>
-                                    <input type="date" class="form-control col-lg-4" id="endDate">
+                    <div class="row w-100 justify-content-between">
+                        <label for="startDate" class="col-lg-2-text-right my-auto p-0">開始時間</label>
+                        <input type="date" class="form-control col-lg-4" id="startDate">
+                        <label for="endDate" class="col-lg-2-text-right my-auto p-0">結束時間</label>
+                        <input type="date" class="form-control col-lg-4" id="endDate">
 
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                </div>-->
+                </div>
+            </div>
+        </div>
+    </div>-->
                 <div class="AllListTitle">
                     <div class="input-group-prepend my-2 justify-content-between">
                         <form id="uploadShowForm" enctype="multipart/form-data" class="w-100">
@@ -145,10 +146,11 @@
 
                     </div>
                     <div class="d-flex justify-content-center">
-                        @Html.PagedListPager(Model, page => Url.Action("UserList", "Admin", new { page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(pagedListOption, ajaxOption))
+                        @Html.PagedListPager(Model, page => Url.Action("AllShowList", "Admin", new { page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(pagedListOption, ajaxOption))
                     </div>
                 </div>
             </div>
+        </div>
     </section>
 
 </article>
