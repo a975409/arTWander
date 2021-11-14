@@ -38,7 +38,7 @@
             <div class="col-12 col-lg-4 position-relative mb-lg-5">
                 <!-- 展覽圖片 starts -->
                 <div class="showImg">
-                    <a href="@Url.Action("DisplayInfo", "ShowPageManage", new { showId = item.showId })">
+                    <a href="@Url.Action("DisplayInfo", "Common", new { showId = item.showId })">
                         @if (item.end)
                         {
                             <img class="w-100 rounded-sm img-fluid " src="@item.showImg" style="filter: grayscale(1);" alt="">
@@ -56,11 +56,11 @@
                     <div class="d-flex align-items-center">
                         <a name="showCity" href="/Common/Index?city=@item.showCity">@item.showCity</a>／
                         <div class="marqee">
-                            <a href="@Url.Action("DisplayInfo", "ShowPageManage", new { showId = item.showId })">@item.showTitle</a>
+                            <a href="@Url.Action("DisplayInfo", "Common", new { showId = item.showId })">@item.showTitle</a>
                         </div>
                     </div>
                     <div class="description">
-                        <a href="@Url.Action("DisplayInfo", "ShowPageManage", new { showId = item.showId })">@Html.Raw(HttpUtility.HtmlDecode(item.showDiscription))</a>
+                        <a href="@Url.Action("DisplayInfo", "Common", new { showId = item.showId })">@Html.Raw(HttpUtility.HtmlDecode(item.showDiscription))</a>
                     </div>
                     <div class="d-flex align-items-center justify-content-end ">
                         @*<a class="mr-2" href="">05 comment</a>*@

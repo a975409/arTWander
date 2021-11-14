@@ -209,7 +209,39 @@ namespace arTWander.Controllers
 
             }
         }
-        
+
+        public ActionResult DisplayInfo(int showId)
+        {
+            var show = DbContext.ShowPage.Find(showId);
+
+            if (show == null)
+            {
+                return HttpNotFound("該展覽不存在或已被移除");
+            }
+
+            ShowPageViewModel model = new ShowPageViewModel
+            {
+                Address = $"{show.City.CityName}{show.District.DistrictName}{show.Address}",
+                AgeRange = show.AgeRange,
+                Cost = show.Cost,
+                Description = show.Description,
+                EndDate = show.EndDate,
+                EndTime = show.EndTime,
+                Id = show.Id,
+                Price = show.Price,
+                Remark = show.Remark,
+                StartDate = show.StartDate,
+                StartTime = show.StartTime,
+                Title = show.Title,
+                Todays = show.PageToTodaysList?.Select(m => m.Today).ToArray(),
+                Keywords = show.KeywordsList?.Select(m => m.Name).ToArray(),
+                images = show.ShowPageFiles?.Select(m => $"/SaveFiles/Company/{show.Company.Id}/show/{show.Id}/{m.fileName}").ToArray(),
+                ViewCount = (ulong)show.PageViewCounts?.Select(m => m.Count).Sum()
+            };
+
+            return View(model);
+        }
+
         /// <summary>
         /// 進階（條件）搜尋展覽 & 關鍵字搜尋展覽
         /// </summary>

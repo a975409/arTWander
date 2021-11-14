@@ -105,7 +105,6 @@ namespace arTWander.Controllers
             return PartialView("~/Views/Shared/CompanyPartial/_ShowPagePartial.cshtml", model);
         }
 
-        [AllowAnonymous]
         public ActionResult DisplayInfo(int showId)
         {
             var show = DbContext.ShowPage.Find(showId);
