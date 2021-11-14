@@ -35,7 +35,7 @@
                     <!-- 侷限移除icon可移動範圍 -->
                     <div class="w-100">
                         <div class="showImg w-100">
-                            <a href="#">
+                            <a href="@Url.Action("DisplayInfo","Common",new { showId=show.showId})">
                                 <img class="w-100 rounded-sm img-fluid " src="@show.showImg" alt="">
                             </a>
                         </div>
@@ -48,13 +48,13 @@
                     <!-- 展覽敘述卡 strats -->
                     <div class="shortDetail">
                         <div class="d-flex align-items-center">
-                            <a href="">@show.showCity</a>／
+                            <a href="/Common/Index?city=@show.showCity">@show.showCity</a>／
                             <div class="marqee">
                                 <a href="">@show.showTitle</a>
                             </div>
                         </div>
                         <div class="description">
-                            <a href="#">@Html.Raw(HttpUtility.HtmlDecode(show.showDiscription))</a>
+                            <a href="@Url.Action("DisplayInfo","Common",new { showId=show.showId})">@Html.Raw(HttpUtility.HtmlDecode(show.showDiscription))</a>
                         </div>
                     </div>
                     <!-- 展覽敘述卡 ends -->

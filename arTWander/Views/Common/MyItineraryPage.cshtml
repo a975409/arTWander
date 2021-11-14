@@ -90,13 +90,7 @@
             <div class="form-group row">
                 <label for="FK_City" class="col-sm-2 col-form-label">請選擇縣市</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="FK_City" name="FK_City">
-                        <option value="0">全部縣市</option>
-                        @foreach (var item in Model.Select(m => m.city))
-                        {
-                            <option value="@item.Id">@item.CityName</option>
-                        }
-                    </select>
+                    <select class="form-control" id="FK_City" name="FK_City"></select>
                 </div>
             </div>
             <div class="showCityBorder py-0">

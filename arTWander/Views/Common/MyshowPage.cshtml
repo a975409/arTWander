@@ -15,28 +15,6 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 }
-@{
-    //bool sendAgain = TempData["sended"] == null ? false : (bool)TempData["sendAgain"];
-
-    //SearchShowPagesViewModel searchModel = (SearchShowPagesViewModel)TempData["SearchModel"] ?? new SearchShowPagesViewModel();
-
-    PagedListRenderOptions pagedListOption = new PagedListRenderOptions
-    {
-        LinkToFirstPageFormat = "<< 第一頁",
-        LinkToPreviousPageFormat = "< 前一頁",
-        LinkToNextPageFormat = "後一頁 >",
-        LinkToLastPageFormat = "最後一頁 >>",
-        DisplayPageCountAndCurrentLocation = true,
-        PageCountAndCurrentLocationFormat = "第 {0} 頁/共 {1} 頁"
-    };
-
-    AjaxOptions ajaxOption = new AjaxOptions()
-    {
-        HttpMethod = "POST",
-        UpdateTargetId = "showPages",
-        OnFailure = "errorServerMsg()"
-    };
-}
 
 <!-- 區域選擇 -->
 <div class="container mb-3">

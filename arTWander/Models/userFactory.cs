@@ -298,21 +298,21 @@ namespace arTWander.Models
             if (DateTime.Equals(StartDate, DateTime.MinValue))
                 StartDate = DateTime.Today;
 
-            //00:00
+            //08:00
             if (DateTime.Equals(StartTime, DateTime.MinValue))
-                StartTime = new DateTime(1, 1, 1, 0, 0, 0);
+                StartTime = new DateTime(1, 1, 1, 8, 0, 0);
 
-            //23:59
+            //21:00
             if (DateTime.Equals(EndTime, DateTime.MinValue))
-                EndTime = new DateTime(1, 1, 1, 23, 59, 0);
+                EndTime = new DateTime(1, 1, 1, 21, 0, 0);
 
 
             var temp = user.ShowPage.Where(m => m.PageToTodaysList.Any(t => t.Today == (int)(StartDate.DayOfWeek + 1)));
 
+            //時間篩選區間必須在展覽開放時間內才會列出符合的展覽
+            temp = temp.Where(m => CompareTime(m.StartTime, StartTime) <= 0);
 
-            temp= temp.Where(m => CompareTime(StartTime, m.StartTime) <= 0);
-
-            temp = temp.Where(m => CompareTime(EndTime, m.EndTime) >= 0);
+            temp = temp.Where(m => CompareTime(EndTime, m.EndTime) <= 0);
 
             showPage = temp.Select(m => new CommonMyItineraryPage
             {
