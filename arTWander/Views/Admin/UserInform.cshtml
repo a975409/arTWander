@@ -52,80 +52,80 @@
                         </div>
                     </div>
                     @*<div class="userActivity">
-                        <p>近期活動</p>
-                        <hr>
-                        <nav>
-                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                <a class="nav-link active" data-toggle="tab" href="#userShowAttend" role="tab"
-                                   aria-controls="userShowAttend" aria-selected="true">參與活動</a>
-                                <a class="nav-link" data-toggle="tab" href="#userComment" role="tab"
-                                   aria-controls="userComment" aria-selected="false">貼文留言</a>
+                                <p>近期活動</p>
+                                <hr>
+                                <nav>
+                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                        <a class="nav-link active" data-toggle="tab" href="#userShowAttend" role="tab"
+                                           aria-controls="userShowAttend" aria-selected="true">參與活動</a>
+                                        <a class="nav-link" data-toggle="tab" href="#userComment" role="tab"
+                                           aria-controls="userComment" aria-selected="false">貼文留言</a>
+                                    </div>
+                                </nav>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="userShowAttend" role="tabpanel" aria-labelledby="userShowAttend">
+                                        <table id="" class="table table-hover w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col-2 col-md-2">展演編號</th>
+                                                    <th scope="col-2 col-md-2">展演名稱</th>
+                                                    <th scope="col-2 col-md-2">留言內容</th>
+                                                    <th scope="col-1 col-md-1">給予評分</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td scope="col-2 col-md-2">S0001</td>
+                                                    <td scope="col-2 col-md-2">@Html.DisplayFor(m => item.Title)</td>
+                                                    <td scope="col-2 col-md-2">@Html.DisplayFor(m => item.Comment)</td>
+                                                    <td scope="col-1 col-md-1">@Html.DisplayFor(m => item.Star)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td scope="col-2 col-md-2">S0002</td>
+                                                    <td scope="col-2 col-md-2">單飛不解散，你怎麼說</td>
+                                                    <td scope="col-2 col-md-2">停車困難</td>
+                                                    <td scope="col-1 col-md-1">1顆星</td>
+                                                </tr>
+                                                <tr>
+                                                    <td scope="col-2 col-md-2">S0003</td>
+                                                    <td scope="col-2 col-md-2">單飛不解散，你怎麼說</td>
+                                                    <td scope="col-2 col-md-2">停車困難</td>
+                                                    <td scope="col-1 col-md-1">1顆星</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane fade show" id="userComment" role="tabpanel" aria-labelledby="userComment">
+                                        <table id="" class="table table-hover w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col-2 col-md-2">貼文編號</th>
+                                                    <th scope="col-1 col-md-2">貼文主題</th>
+                                                    <th scope="col-1 col-md-3">回覆內容</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td scope="col-2 col-md-2">P0001</td>
+                                                    <td scope="col-1 col-md-2">左點 Left dot. 詩集 × 插畫個展</td>
+                                                    <td scope="col-1 col-md-3">左邊右邊左邊右邊左</td>
+                                                </tr>
+                                                <tr>
+                                                    <td scope="col-2 col-md-2">P0001</td>
+                                                    <td scope="col-1 col-md-2">左點 Left dot. 詩集 × 插畫個展</td>
+                                                    <td scope="col-1 col-md-3">讚啦</td>
+                                                </tr>
+                                                <tr>
+                                                    <td scope="col-2 col-md-2">P0001</td>
+                                                    <td scope="col-1 col-md-2">左點 Left dot. 詩集 × 插畫個展</td>
+                                                    <td scope="col-1 col-md-3">百年難得一優</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
-                        </nav>
-                        <div class="tab-content">
-                            <div class="tab-pane fade show active" id="userShowAttend" role="tabpanel" aria-labelledby="userShowAttend">
-                                <table id="" class="table table-hover w-100">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col-2 col-md-2">展演編號</th>
-                                            <th scope="col-2 col-md-2">展演名稱</th>
-                                            <th scope="col-2 col-md-2">留言內容</th>
-                                            <th scope="col-1 col-md-1">給予評分</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td scope="col-2 col-md-2">S0001</td>
-                                            <td scope="col-2 col-md-2">@Html.DisplayFor(m => item.Title)</td>
-                                            <td scope="col-2 col-md-2">@Html.DisplayFor(m => item.Comment)</td>
-                                            <td scope="col-1 col-md-1">@Html.DisplayFor(m => item.Star)</td>
-                                        </tr>
-                                        <tr>
-                                            <td scope="col-2 col-md-2">S0002</td>
-                                            <td scope="col-2 col-md-2">單飛不解散，你怎麼說</td>
-                                            <td scope="col-2 col-md-2">停車困難</td>
-                                            <td scope="col-1 col-md-1">1顆星</td>
-                                        </tr>
-                                        <tr>
-                                            <td scope="col-2 col-md-2">S0003</td>
-                                            <td scope="col-2 col-md-2">單飛不解散，你怎麼說</td>
-                                            <td scope="col-2 col-md-2">停車困難</td>
-                                            <td scope="col-1 col-md-1">1顆星</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="tab-pane fade show" id="userComment" role="tabpanel" aria-labelledby="userComment">
-                                <table id="" class="table table-hover w-100">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col-2 col-md-2">貼文編號</th>
-                                            <th scope="col-1 col-md-2">貼文主題</th>
-                                            <th scope="col-1 col-md-3">回覆內容</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td scope="col-2 col-md-2">P0001</td>
-                                            <td scope="col-1 col-md-2">左點 Left dot. 詩集 × 插畫個展</td>
-                                            <td scope="col-1 col-md-3">左邊右邊左邊右邊左</td>
-                                        </tr>
-                                        <tr>
-                                            <td scope="col-2 col-md-2">P0001</td>
-                                            <td scope="col-1 col-md-2">左點 Left dot. 詩集 × 插畫個展</td>
-                                            <td scope="col-1 col-md-3">讚啦</td>
-                                        </tr>
-                                        <tr>
-                                            <td scope="col-2 col-md-2">P0001</td>
-                                            <td scope="col-1 col-md-2">左點 Left dot. 詩集 × 插畫個展</td>
-                                            <td scope="col-1 col-md-3">百年難得一優</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>*@
+                        </div>*@
 
             </section>
 
@@ -133,51 +133,55 @@
 
 
 
-        
 
-            <!-- 彈出視窗顯示黑名單資訊 -->
-            <!-- Button trigger modal -->
-            <!-- Modal -->
-            <div class="modal fade px-0" id="inputBlackReason" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <!-- 控至彈出窗大小 -->
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">加入黑名單</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <main>
-                                <!-- 主內容 -->
-                                <section id="Section" class="w-100">
-                                    <div id="reasonInput ">
-                                        <form  id="blackForm" method="post">
+
+        <!-- 彈出視窗顯示黑名單資訊 -->
+        <!-- Button trigger modal -->
+        <!-- Modal -->
+        <div class="modal fade px-0" id="inputBlackReason" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <!-- 控至彈出窗大小 -->
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">加入黑名單</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <main>
+                            <!-- 主內容 -->
+                            <section id="Section" class="w-100">
+                                <div id="reasonInput ">
+                                    <form id="blackForm" method="post">
                                         <label for="">請輸入黑名單原因: </label>
                                         <a id="BlackReason">@Html.TextArea("txtReason", new { @class = "form-control", @rows = 5 })</a>
-                      
-                                        </form>
-                                    </div>
-                                </section>
-                            </main>
-                        </div>
-                        <div class="modal-footer">
-                            <button id="blackFormBtn" type="submit" class="btn btn-primary" value="加入黑名單" >加入黑名單</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
+
+                                    </form>
+                                </div>
+                            </section>
+                        </main>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="blackFormBtn" type="submit" class="btn btn-primary" value="加入黑名單">加入黑名單</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
-        
+        </div>
+
     }
 }
+
+
 <script>
     //搜尋關鍵字
     $('#blackFormBtn').click(function (event) {
         var blackAdd = { FK_ApplicationUser: $("#userId").text(), Reason: $("#txtReason").val(), UserName: $("#userName").text() };
         var myFormData = new FormData();
         myFormData.append("blackAdd", JSON.stringify(blackAdd));
+
+        event.preventDefault();
         $.ajax({
             type: 'post',
             //dataType: 'script',
@@ -188,14 +192,25 @@
             contentType: false,
             processData: false,
             success: function (data) {
-                console.log("GOODGOOD")
-                alert($("#userName").text() + "已加入黑名單");
+                myrefresh();
+                Swal.fire({
+                    position: 'top',
+                    icon: 'success',
+                    text: $("#userName").text() + "已加入黑名單",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                
+                var _tmp = window.$;   // save old value
+                window.$ = window.jQuery
+
+                var x = jQuery.noConflict();
                 //modal關閉導向引入bs/jquery
-                event.preventDefault();
-                jQuery.noConflict();
-                $('#inputBlackReason').modal('hide');
-                $('#staticBackdrop').modal('hide');
-                location.reload();
+                x($('#inputBlackReason').modal('hide'));
+                x($('#staticBackdrop').modal('hide'));
+                
+                window.$ = _tmp; // jQuery恢復
+             
             }
             ,
             error: (XMLHttpRequest, textStatus, errorThrown) => {
@@ -206,4 +221,14 @@
             }
         });
     });
+    function myrefresh() {
+        $.ajax({
+            type: 'post',
+            url: '/Admin/userList',
+            data: FormData,
+            success: function (data) {
+                $('#memberManageMain').html(data);
+            }
+        });
+    }
 </script>

@@ -74,6 +74,7 @@
         var blackAdd = { FK_ApplicationUser: $("#userId").text(), Reason: $("#txtReason").val(), CompanyName: $("#CustomerName").text() };
         var myFormData = new FormData();
         myFormData.append("blackAdd", JSON.stringify(blackAdd));
+        event.preventDefault();
         $.ajax({
             type: 'post',
             //dataType: 'script',
@@ -84,16 +85,26 @@
             contentType: false,
             processData: false,
             success: function (data) {
-                console.log("GOODGOOD")
-                alert($("#CustomerName").text()+"已返還權限");
                 //modal關閉導向引入bs/jquery
-                event.preventDefault();
-                jQuery.noConflict();
-                $('#inputBlackReason').modal('hide');
-                $('#staticBackdrop').modal('hide');
-                location.reload();
-            }
-            ,
+                
+                myrefresh();
+                Swal.fire({
+                    position: 'top',
+                    icon: 'success',
+                    text: $("#CustomerName").text() + "已返還權限",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+
+                var _tmp = window.$;   // save old value
+                window.$ = window.jQuery
+
+                var x = jQuery.noConflict();
+                //modal關閉導向引入bs/jquery
+                x($('#inputBlackReason').modal('hide'));
+                x($('#staticBackdrop').modal('hide'));
+                window.$ = _tmp; // jQuery恢復
+            },
             error: (XMLHttpRequest, textStatus, errorThrown) => {
                 $("#detailInform").innerHTML = "there is something wrong!";
                 alert(XMLHttpRequest.status);
@@ -102,4 +113,14 @@
             }
         });
     });
+    function myrefresh() {
+        $.ajax({
+            type: 'post',
+            url: '/Admin/BlackCustomer',
+            data: FormData,
+            success: function (data) {
+                $('#blackMain').html(data);
+            }
+        });
+    }
 </script>

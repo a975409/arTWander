@@ -1,5 +1,6 @@
 ﻿using arTWander.Models.AdminViewModel;
 using Microsoft.AspNet.Identity.EntityFramework;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,6 +13,15 @@ namespace arTWander.Models.AdminFactory
 
     public class AdminFactory
     {
+        private ApplicationDbContext _dbContext;
+
+        public AdminFactory(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        private const int pageSize = 8;
+
         //取得當前user資料 in ApplicationUser
         public ApplicationUser getUserById(int id)
         {
@@ -59,105 +69,124 @@ namespace arTWander.Models.AdminFactory
         }
 
         //取得所有user
-        public IEnumerable<UserListViewModel> GetUserListAll()
+        public IPagedList<UserListViewModel> GetUserListAll(int page=1)
         {
-            var db = new ApplicationDbContext();
-            BlackList blackList = new BlackList();
+            //var db = new ApplicationDbContext();
+            var CompanyId = _dbContext.Company.Select(m => m.FK_ApplicationUser);
+            var blackListFkId = _dbContext.BlackList.Select(m=>m.FK_ApplicationUser);
             List<UserListViewModel> model = new List<UserListViewModel>();
-
-            string Bday = "";
+            //string Bday = "";
             string blist = "";
-            var AllUserId = db.Users.OrderBy(m => m.Id).Select(m => m.Id).ToList();
+            var AllUserId = _dbContext.Users.OrderBy(m => m.Id).Select(m => m.Id).ToList();
 
             //判斷是否有搜尋字串
-
+            bool xx;
             foreach (var userId in AllUserId)
             {
-                if (string.IsNullOrEmpty(blackList.ToString())) { blist = "正常"; }
-                else { blist = "黑名單"; }
-                //left join +into ps from login in ps.DefaultIfEmpty()
-                var q = from users in db.Users
-                        join login in db.LogingLog on users.Id equals login.FK_ApplicationUser into ps
-                        from login in ps.DefaultIfEmpty()
-                            //join sComment in db.ShowComment on users.Id equals sComment.FK_ApplicationUser into pt
-                            //from sComment in pt.DefaultIfEmpty()
-                            //join sPage in db.ShowPage on sComment.FK_ShowPage equals sPage.Id
-                        join bList in db.BlackList on users.Id equals bList.FK_ApplicationUser into pu
-                        from bList in pu.DefaultIfEmpty()
-                        join cCompany in db.Company on users.Id equals cCompany.FK_ApplicationUser into cu
-                        from cCompany in cu.DefaultIfEmpty()
-                        where users.Id == userId && bList.FK_ApplicationUser == null && cCompany.FK_ApplicationUser != userId
-                        select new UserListViewModel
-                        {
-                            FK_ApplicationUser = users.Id,
-                            users = users,
-                            PhoneNumber = users.PhoneNumber,
-                            UserName = users.UserName,
-                            Birthday = Bday,
-                            AccountAddress = users.AccountAddress,
-                            AvatarUrl = "/SaveFiles/Admin/Avatar/",
-                            AvatarName = users.Avatar,
-                            Email = users.Email,
-                            RegisterTime = login.RegisterTime,
-                            LastloginTime = login.LastloginTime,
-                            LoginOutTime = login.LoginOutTime,
-                            LogingCount = login.LogingCount,
-                            IsBlackList = blist,
-                            //Title = sPage.Title,
-                            //Comment = sComment.Comment,
-                            //Star = sComment.Star
-                        };
+                xx = blackListFkId.Contains(userId);
+                if (blackListFkId.Contains(userId) ==false) { blist = "正常"; }
+            else { blist = "黑名單"; }
+            //left join +into ps from login in ps.DefaultIfEmpty()
+            //var q = from users in db.Users
+            //        join login in db.LogingLog on users.Id equals login.FK_ApplicationUser into ps
+            //        from login in ps.DefaultIfEmpty()
+            //        join bList in db.BlackList on users.Id equals bList.FK_ApplicationUser into pu
+            //        from bList in pu.DefaultIfEmpty()
+            //        join cCompany in db.Company on users.Id equals cCompany.FK_ApplicationUser into cu
+            //        from cCompany in cu.DefaultIfEmpty()
+            //        where users.Id == userId && bList.FK_ApplicationUser == null && cCompany.FK_ApplicationUser != userId
+            //        select new UserListViewModel
+            //        {
+            //            FK_ApplicationUser = users.Id,
+            //            users = users,
+            //            PhoneNumber = users.PhoneNumber,
+            //            UserName = users.UserName,
+            //            Birthday = Bday,
+            //            AccountAddress = users.AccountAddress,
+            //            AvatarUrl = "/SaveFiles/Admin/Avatar/",
+            //            AvatarName = users.Avatar,
+            //            Email = users.Email,
+            //            RegisterTime = login.RegisterTime,
+            //            LastloginTime = login.LastloginTime,
+            //            LoginOutTime = login.LoginOutTime,
+            //            LogingCount = login.LogingCount,
+            //            IsBlackList = blist,
+            //            //Title = sPage.Title,
+            //            //Comment = sComment.Comment,
+            //            //Star = sComment.Star
+            //        };
+
+            //        join login in db.LogingLog on users.Id equals login.FK_ApplicationUser into ps
+            //        from login in ps.DefaultIfEmpty()
+
+            var q = _dbContext.Users.Where(m=>m.Id == userId && blist == "正常" && !CompanyId.Contains(userId)).GroupJoin(_dbContext.LogingLog, m=>m.Id, l=>l.FK_ApplicationUser, (m,l) => new { _m = m, _l=l}).SelectMany(x => x._l.DefaultIfEmpty(), (x, y) => new { user = x._m, log = y }).Select(ml => new UserListViewModel
+                {
+                    FK_ApplicationUser = ml.user.Id,
+                    users = ml.user,
+                    PhoneNumber = ml.user.PhoneNumber,
+                    UserName = ml.user.UserName,
+                    Birthday = ml.user.Birthday,
+                    AccountAddress = ml.user.AccountAddress,
+                    AvatarUrl = "/SaveFiles/Admin/Avatar/",
+                    AvatarName = ml.user.Avatar,
+                    Email = ml.user.Email,
+                    RegisterTime = ml.log.RegisterTime,
+                    LastloginTime = ml.log.LastloginTime,
+                    LoginOutTime = ml.log.LoginOutTime,
+                    LogingCount = ml.log.LogingCount,
+                    IsBlackList = blist,
+                });
+
                 List<UserListViewModel> viewmodel = q.ToList();
                 model.AddRange(viewmodel);
             }
-            return model;
+
+            var userPages = OtherMethod.getCurrentPagedList(model, page, pageSize);
+            return userPages;
         }
 
 
-        public IEnumerable<UserListViewModel> GetUserListBySearch(string searchWord)
+        public IEnumerable<UserListViewModel> GetUserListBySearch(string searchWord, int page = 1)
         {
-            var db = new ApplicationDbContext();
-            BlackList blackList = new BlackList();
+           
+            //var db = new ApplicationDbContext();
+            var CompanyId = _dbContext.Company.Select(m => m.FK_ApplicationUser);
+            var blackListFkId = _dbContext.BlackList.Select(m => m.FK_ApplicationUser);
             List<UserListViewModel> model = new List<UserListViewModel>();
-
-            string Bday = "";
+            //string Bday = "";
             string blist = "";
+            var AllUserId = _dbContext.Users.Where(m=> m.Email.Contains(searchWord) || m.UserName.Contains(searchWord)).OrderBy(m => m.Id).Select(m => m.Id).ToList();
+
             //判斷是否有搜尋字串
-            if (string.IsNullOrEmpty(blackList.ToString())) { blist = "正常"; }
-            else { blist = "黑名單"; }
-            //left join +into ps from login in ps.DefaultIfEmpty()
-            var q = from users in db.Users
-                    join login in db.LogingLog on users.Id equals login.FK_ApplicationUser into ps
-                    from login in ps.DefaultIfEmpty()
-                    join bList in db.BlackList on users.Id equals bList.FK_ApplicationUser into pu
-                    from bList in pu.DefaultIfEmpty()
-                    join cCompany in db.Company on users.Id equals cCompany.FK_ApplicationUser into cu
-                    from cCompany in cu.DefaultIfEmpty()
-                    where users.UserName.Contains(searchWord) ||
-                    users.Email.Contains(searchWord)
-                    select new UserListViewModel
-                    {
-                        FK_ApplicationUser = users.Id,
-                        users = users,
-                        PhoneNumber = users.PhoneNumber,
-                        UserName = users.UserName,
-                        Birthday = Bday,
-                        AccountAddress = users.AccountAddress,
-                        AvatarUrl = "/SaveFiles/Admin/Avatar/",
-                        AvatarName = users.Avatar,
-                        Email = users.Email,
-                        RegisterTime = login.RegisterTime,
-                        LastloginTime = login.LastloginTime,
-                        LoginOutTime = login.LoginOutTime,
-                        LogingCount = login.LogingCount,
-                        IsBlackList = blist,
-                        //Title = sPage.Title,
-                        //Comment = sComment.Comment,
-                        //Star = sComment.Star
-                    };
-            List<UserListViewModel> viewmodel = q.ToList();
-            model.AddRange(viewmodel);
-            return model;
+            bool xx;
+            foreach (var userId in AllUserId)
+            {
+                xx = blackListFkId.Contains(userId);
+                if (blackListFkId.Contains(userId) == false) { blist = "正常"; }
+                else { blist = "黑名單"; }
+                
+                var q = _dbContext.Users.Where(m => m.Id == userId && blist == "正常" && !CompanyId.Contains(userId)).GroupJoin(_dbContext.LogingLog, m => m.Id, l => l.FK_ApplicationUser, (m, l) => new { _m = m, _l = l }).SelectMany(x => x._l.DefaultIfEmpty(), (x, y) => new { user = x._m, log = y }).Select(ml => new UserListViewModel
+                {
+                    FK_ApplicationUser = ml.user.Id,
+                    users = ml.user,
+                    PhoneNumber = ml.user.PhoneNumber,
+                    UserName = ml.user.UserName,
+                    Birthday = ml.user.Birthday,
+                    AccountAddress = ml.user.AccountAddress,
+                    AvatarUrl = "/SaveFiles/Admin/Avatar/",
+                    AvatarName = ml.user.Avatar,
+                    Email = ml.user.Email,
+                    RegisterTime = ml.log.RegisterTime,
+                    LastloginTime = ml.log.LastloginTime,
+                    LoginOutTime = ml.log.LoginOutTime,
+                    LogingCount = ml.log.LogingCount,
+                    IsBlackList = blist,
+                });
+                List<UserListViewModel> viewmodel = q.ToList();
+                model.AddRange(viewmodel);
+            }
+            var userPages = OtherMethod.getCurrentPagedList(model, page, pageSize);
+            return userPages;
         }
 
 
@@ -187,7 +216,7 @@ namespace arTWander.Models.AdminFactory
                         users = users,
                         PhoneNumber = users.PhoneNumber,
                         UserName = users.UserName,
-                        Birthday = users.Birthday.ToString(),
+                        //Birthday = users.Birthday.ToString(),
                         AccountAddress = users.AccountAddress,
                         AvatarUrl = "/SaveFiles/Admin/Avatar/",
                         AvatarName = users.Avatar,
@@ -209,7 +238,7 @@ namespace arTWander.Models.AdminFactory
 
 
         //取得所有展演單位
-        public IEnumerable<CustomerListViewModel> GetCustomerListAll()
+        public IPagedList<CustomerListViewModel> GetCustomerListAll(int page)
         {
             var db = new ApplicationDbContext();
             var role = new ApplicationUserRole();
@@ -266,11 +295,12 @@ namespace arTWander.Models.AdminFactory
                 List<CustomerListViewModel> viewmodel = q.ToList();
                 model.AddRange(viewmodel);
             }
-            return model;
+            var userPages = OtherMethod.getCurrentPagedList(model, page, pageSize);
+            return userPages;
         }
 
         //取得搜尋展演單位
-        public IEnumerable<CustomerListViewModel> GetCustomerBySearch(string searchWord)
+        public IPagedList<CustomerListViewModel> GetCustomerBySearch(string searchWord, int page)
         {
             var db = new ApplicationDbContext();
             BlackList blackList = new BlackList();
@@ -307,8 +337,8 @@ namespace arTWander.Models.AdminFactory
                             UserName = users.UserName,
                             Birthday = Bday,
                             CompanyAddress = users.AccountAddress,
-                            AvatarUrl = $"/SaveFiles/Company/1/Info/",
-                            AvatarName = cCompany.PhotoStickerImage,
+                            AvatarUrl = $"/SaveFiles/Company/"+ users.Id,
+                            AvatarName = "/Info/"+cCompany.PhotoStickerImage,
                             Email = users.Email,
                             RegisterTime = login.RegisterTime,
                             LastloginTime = login.LastloginTime,
@@ -322,7 +352,8 @@ namespace arTWander.Models.AdminFactory
                 List<CustomerListViewModel> viewmodel = q.ToList();
                 model.AddRange(viewmodel);
             }
-            return model;
+            var userPages = OtherMethod.getCurrentPagedList(model, page, pageSize);
+            return userPages;
         }
 
         //取得展演單位詳細資訊
@@ -381,7 +412,7 @@ namespace arTWander.Models.AdminFactory
 
 
         //黑名單用戶
-        public IEnumerable<BlackListViewModel> GetBlackUserAll()
+        public IPagedList<arTWander.Models.AdminViewModel.BlackListViewModel> GetBlackUserAll(int page)
         {
             var db = new ApplicationDbContext();
             BlackList blackList = new BlackList();
@@ -431,10 +462,11 @@ namespace arTWander.Models.AdminFactory
                 List<BlackListViewModel> viewmodel = q.ToList();
                 model.AddRange(viewmodel);
             }
-            return model;
+            var userPages = OtherMethod.getCurrentPagedList(model, page, pageSize);
+            return userPages;
         }
 
-        public IEnumerable<BlackListViewModel> GetBlackUserBySearch(string searchWord)
+        public IPagedList<BlackListViewModel> GetBlackUserBySearch(string searchWord, int page)
         {
             var db = new ApplicationDbContext();
             BlackList blackList = new BlackList();
@@ -479,7 +511,8 @@ namespace arTWander.Models.AdminFactory
                     };
             List<BlackListViewModel> viewmodel = q.ToList();
             model.AddRange(viewmodel);
-            return model;
+            var userPages = OtherMethod.getCurrentPagedList(model, page, pageSize);
+            return userPages;
         }
 
         public IEnumerable<BlackListViewModel> GetBlackUserInformById(string searchWord)
@@ -531,7 +564,7 @@ namespace arTWander.Models.AdminFactory
 
 
         //取得所有黑名單展演單位
-        public IEnumerable<BlackListViewModel> GetBlackCustomerAll()
+        public IPagedList<BlackListViewModel> GetBlackCustomerAll(int page)
         {
             var db = new ApplicationDbContext();
             var role = new ApplicationUserRole();
@@ -589,7 +622,8 @@ namespace arTWander.Models.AdminFactory
                 List<BlackListViewModel> viewmodel = q.ToList();
                 model.AddRange(viewmodel);
             }
-            return model;
+            var userPages = OtherMethod.getCurrentPagedList(model, page, pageSize);
+            return userPages;
         }
 
         //取得展演黑名單詳細資訊
@@ -643,52 +677,50 @@ namespace arTWander.Models.AdminFactory
                     };
             List<BlackListViewModel> viewmodel = q.ToList();
             model.AddRange(viewmodel);
+           
             return model;
         }
 
 
         //取得展演資訊
         //取得所有user
-        public IEnumerable<ShowListViewModel> GetShowListAll()
+        public IEnumerable<ShowListViewModel> GetShowListAll(int page)
         {
-            var db = new ApplicationDbContext();
             List<ShowListViewModel> model = new List<ShowListViewModel>();
             //var showId = db.ShowPage.Select(m => m.Id).ToList();
             //foreach (var showid in showId)
             //{
-                var showPage = from show in db.ShowPage
-                                   //join cCompany in db.Company on show.FK_Company equals cCompany.Id
-                                   //join sShowPageFile in db.ShowPageFile on show.Id equals sShowPageFile.FK_ShowPage
-                               orderby show.Id
-                               select new ShowListViewModel
-                               {
-                                   Address = show.Address,
-                                   CityName = show.City.CityName,
-                                   DistrictName = show.District.DistrictName,
-                                   AgeRange = show.AgeRange,
-                                   Cost = show.Cost,
-                                   Description = show.Description,
-                                   EndDate = show.EndDate,
-                                   EndTime = show.EndTime,
-                                   Id = show.Id,
-                                   Price = show.Price,
-                                   Remark = show.Remark,
-                                   StartDate = show.StartDate,
-                                   StartTime = show.StartTime,
-                                   Title = show.Title,
-                                   Created_At = show.Created_At,
-                                   CompanyName = show.Company.CompanyName,
-                                   PhoneNumber = show.Company.Phone,
-                                   UserName = show.Company.ApplicationUser.UserName
-                               };
+            var showPage = _dbContext.ShowPage.OrderBy(m => m.Id).Select(m => new ShowListViewModel
+            {
+                Address = m.Address,
+                CityName = m.City.CityName,
+                DistrictName = m.District.DistrictName,
+                AgeRange = m.AgeRange,
+                Cost = m.Cost,
+                Description = m.Description,
+                EndDate = m.EndDate,
+                EndTime = m.EndTime,
+                Id = m.Id,
+                Price = m.Price,
+                Remark = m.Remark,
+                StartDate = m.StartDate,
+                StartTime = m.StartTime,
+                Title = m.Title,
+                Created_At = m.Created_At,
+                CompanyName = m.Company.CompanyName,
+                PhoneNumber = m.Company.Phone,
+                UserName = m.Company.ApplicationUser.UserName,
+                ShowImg = "/SaveFiles/Company/" + m.Company.Id + "/show/" + m.Id + "/" + m.ShowPageFiles.Select(n => n.fileName).FirstOrDefault()
+                               });
                 List<ShowListViewModel> showInfo = showPage.ToList();
                 model.AddRange(showInfo);
             //}
-            return model;
+            var showPages = OtherMethod.getCurrentPagedList(model, page, pageSize);
+            return showPages;
         }
 
 
-        public IEnumerable<ShowListViewModel> GetShowListBySearch(string searchWord)
+        public IEnumerable<ShowListViewModel> GetShowListBySearch(string searchWord, int page)
         {
             var db = new ApplicationDbContext();
             List<ShowListViewModel> model = new List<ShowListViewModel>();
@@ -721,43 +753,41 @@ namespace arTWander.Models.AdminFactory
                            };
             List<ShowListViewModel> showInfo = showPage.ToList();
                 model.AddRange(showInfo);
-            
-            return model;
+
+            var showPages = OtherMethod.getCurrentPagedList(model, page, pageSize);
+            return showPages;
         }
 
 
         //取得展演詳細資訊
         public IEnumerable<ShowListViewModel> GetShowInformById(string searchWord)
         {
-            var db = new ApplicationDbContext();
+            //var db = new ApplicationDbContext();
             List<ShowListViewModel> model = new List<ShowListViewModel>();
-            var showId = db.ShowPage.OrderBy(m => m.Id).Select(m => m.Id).ToList();
-            var showPage = from show in db.ShowPage
-                           //join cCompany in db.Company on show.FK_Company equals cCompany.Id
-                           //join sShowPageFile in db.ShowPageFile on show.Id equals sShowPageFile.FK_ShowPage
-                           where show.Id.ToString() == searchWord
-                           orderby show.Id
-                           select new ShowListViewModel
-                           {
-                               Address = show.Address,
-                               CityName = show.City.CityName,
-                               DistrictName = show.District.DistrictName,
-                               AgeRange = show.AgeRange,
-                               Cost = show.Cost,
-                               Description = show.Description,
-                               EndDate = show.EndDate,
-                               EndTime = show.EndTime,
-                               Id = show.Id,
-                               Price = show.Price,
-                               Remark = show.Remark,
-                               StartDate = show.StartDate,
-                               StartTime = show.StartTime,
-                               Title = show.Title,
-                               Created_At = show.Created_At,
-                               CompanyName = show.Company.CompanyName,
-                               PhoneNumber = show.Company.Phone,
-                               UserName = show.Company.ApplicationUser.UserName
-                           };
+            //var showId = db.ShowPage.OrderBy(m => m.Id).Select(m => m.Id).ToList();
+     
+            var showPage = _dbContext.ShowPage.Where(m=>m.Id.ToString() == searchWord).OrderBy(m => m.Id).Select(m => new ShowListViewModel
+            {
+                Address = m.Address,
+                CityName = m.City.CityName,
+                DistrictName = m.District.DistrictName,
+                AgeRange = m.AgeRange,
+                Cost = m.Cost,
+                Description = m.Description,
+                EndDate = m.EndDate,
+                EndTime = m.EndTime,
+                Id = m.Id,
+                Price = m.Price,
+                Remark = m.Remark,
+                StartDate = m.StartDate,
+                StartTime = m.StartTime,
+                Title = m.Title,
+                Created_At = m.Created_At,
+                CompanyName = m.Company.CompanyName,
+                PhoneNumber = m.Company.Phone,
+                UserName = m.Company.ApplicationUser.UserName,
+                ShowImg = "/SaveFiles/Company/" + m.Company.Id + "/show/" + m.Id + "/" + m.ShowPageFiles.Select(n => n.fileName).FirstOrDefault()
+            });
             List<ShowListViewModel> showInfo = showPage.ToList();
             model.AddRange(showInfo);
 

@@ -74,6 +74,7 @@
         var blackAdd = { FK_ApplicationUser: $("#userId").text(), UserName: $("#userName").text() };
         var myFormData = new FormData();
         myFormData.append("blackAdd", JSON.stringify(blackAdd));
+        event.preventDefault();
         $.ajax({
             type: 'post',
             //dataType: 'script',
@@ -83,15 +84,25 @@
             cache: false,
             contentType: false,
             processData: false,
-            success: function (data) {
-                console.log("GOODGOOD")
-                alert($("#userName").text() + "已返還權限");
+            success: function (data) {                
+                myrefresh();
+                Swal.fire({
+                    position: 'top',
+                    icon: 'success',
+                    text: $("#userName").text() + "已返還權限",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+
+                var _tmp = window.$;   // save old value
+                window.$ = window.jQuery
+
+                var x = jQuery.noConflict();
                 //modal關閉導向引入bs/jquery
-                event.preventDefault();
-                jQuery.noConflict();
-                $('#inputBlackReason').modal('hide');
-                $('#staticBackdrop').modal('hide');
-                location.reload();
+                x($('#inputBlackReason').modal('hide'));
+                x($('#staticBackdrop').modal('hide'));
+
+                window.$ = _tmp; // jQuery恢復
             }
             ,
             error: (XMLHttpRequest, textStatus, errorThrown) => {
@@ -102,4 +113,14 @@
             }
         });
     });
+    function myrefresh() {
+        $.ajax({
+            type: 'post',
+            url: '/Admin/BlackUser',
+            data: FormData,
+            success: function (data) {
+                $('#blackMain').html(data);
+            }
+        });
+    }
 </script>

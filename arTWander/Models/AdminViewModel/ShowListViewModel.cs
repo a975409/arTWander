@@ -86,5 +86,8 @@ namespace arTWander.Models.AdminViewModel
         [StringLength(40)]
         [DisplayName("負責人")]
         public string UserName { get; set; }
+
+
+        public string ShowImg { get; set; }
     }
 }

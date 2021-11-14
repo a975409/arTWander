@@ -20,9 +20,9 @@ namespace arTWander.Models.AdminViewModel
         [DisplayName("用戶")]
         public string UserName { get; set; }
 
-        [DisplayName("生日")]
+        [DisplayName("註冊日")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
-        public string Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
 
         [Required]
         [StringLength(255)]

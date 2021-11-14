@@ -1,4 +1,7 @@
-﻿@model IEnumerable<arTWander.Models.AdminViewModel.BlackListViewModel>
+﻿@*引入PagedList.Mvc分頁套件*@
+@using PagedList
+@using PagedList.Mvc
+@model IPagedList<arTWander.Models.AdminViewModel.BlackListViewModel>
 
 @{
     Layout = "BlackCustomer";
@@ -7,77 +10,103 @@
 
 <link rel="stylesheet" href="~/css/UserList.css">
 
+
+@{
+    PagedListRenderOptions pagedListOption = new PagedListRenderOptions
+    {
+        LinkToFirstPageFormat = "<<",
+        LinkToPreviousPageFormat = "<",
+        LinkToNextPageFormat = ">",
+        LinkToLastPageFormat = ">>",
+        DisplayPageCountAndCurrentLocation = true,
+        PageCountAndCurrentLocationFormat = "第 {0} 頁/共 {1} 頁"
+    };
+
+    AjaxOptions ajaxOption = new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "showPages",
+        OnFailure = "errorServerMsg()"
+    };
+}
+
+@{
+    <link href="~/css/css_commonPage/ShowList.css" rel="stylesheet" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="~/Content/spinkit.min.css" rel="stylesheet" />
+
+    @*PagedList.Mvc分頁切換css & jquery函示庫*@
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}
+
 <article>
     <section id="Section">
-        <div class="AllList">
-            <!-- 關鍵字查詢 start-->
-            <div class="AllListTitle">
-                <div class="input-group-prepend my-2 justify-content-between">
-                    <form id="blackCustomerForm" enctype="multipart/form-data" class="w-100">
-                        <div class="row col-10 col-sm-8">
+        <div id="showPages">
+            <div class="AllList">
+                <!-- 關鍵字查詢 start-->
+                <div class="AllListTitle">
+                    <div class="input-group-prepend my-2 justify-content-between">
+                        <form id="blackCustomerForm" enctype="multipart/form-data" class="w-100">
+                            <div class="row col-10 col-sm-8">
 
-                            <!-- <span class="col-11 col-md-4 my-auto mx-2">一般會員</span> -->
-                            @*字串搜尋*@
-                            <input type="text" id="txtKeyword" name="txtKeyword" value="@Request.Form["txtKeyword"]" class="col-10 col-md-8 form-control rounded-pill my-1" style="width:180px;height:auto;" placeholder="關鍵字搜尋" aria-label="search" aria-describedby="buttonSearch">
-                            <button class="btn col-2 col-md-2 my-2" type="submit" id="buttonSearch" value=""><i class="fa fa-search" aria-hidden="true"></i></button>
+                                <!-- <span class="col-11 col-md-4 my-auto mx-2">一般會員</span> -->
+                                @*字串搜尋*@
+                                <input type="text" id="txtKeyword" name="txtKeyword" value="@Request.Form["txtKeyword"]" class="col-10 col-md-8 form-control rounded-pill my-1" style="width:180px;height:auto;" placeholder="關鍵字搜尋" aria-label="search" aria-describedby="buttonSearch">
+                                <button class="btn col-2 col-md-2 my-2" type="submit" id="buttonSearch" value=""><i class="fa fa-search" aria-hidden="true"></i></button>
 
-                        </div>
-                    </form>
-                    <div class="my-auto">
-                        <a class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-sort-amount-down" aria-hidden="true"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" id="sort">
-                            <a href="#" class="dropdown-item">編號排序</a>
-                            <a href="#" class="dropdown-item">帳號排序</a>
-                            <a href="#" class="dropdown-item">註冊日排序</a>
+                            </div>
+                        </form>
+                        <div class="my-auto">
+                            <a class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-sort-amount-down" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" id="sort">
+                                <a href="#" class="dropdown-item">編號排序</a>
+                                <a href="#" class="dropdown-item">帳號排序</a>
+                                <a href="#" class="dropdown-item">註冊日排序</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- 關鍵字查詢 end -->
-            <div class="AllListContent">
-                <table class="table table-hover w-100">
-                    <thead>
-                        <tr>
-                            <th scope="col col-md-1" class="d-none d-md-table-cell">編號</th>
-                            <th scope="col-1 col-md-1" class="tableInd">@Html.DisplayNameFor(model => model.CompanyName)</th>
-                            <th scope="col col-md-1" class="tableInd d-none d-md-table-cell">@Html.DisplayNameFor(model => model.Email)</th>
-                            <th scope="col-2 col-md-2">@Html.DisplayNameFor(model => model.Created_At)</th>
-                            <th scope="col col-md-1">@Html.DisplayNameFor(model => model.ShowCount)</th>
-                            @*<th scope="col col-md-1">@Html.DisplayNameFor(model => model.Statue)</th>*@
-                        </tr>
-                    </thead>
-                    @{
+                <!-- 關鍵字查詢 end -->
+                <div class="AllListContent">
+                    <table class="table table-hover w-100">
+                        <thead>
+                            <tr>
+                                <th scope="col col-md-1" class="d-none d-md-table-cell">編號</th>
+                                <th scope="col-1 col-md-1" class="tableInd">@Html.DisplayNameFor(model => model.FirstOrDefault().CompanyName)</th>
+                                <th scope="col col-md-1" class="tableInd d-none d-md-table-cell">@Html.DisplayNameFor(model => model.FirstOrDefault().Email)</th>
+                                <th scope="col-2 col-md-2">@Html.DisplayNameFor(model => model.FirstOrDefault().Created_At)</th>
+                                <th scope="col col-md-1">@Html.DisplayNameFor(model => model.FirstOrDefault().ShowCount)</th>
+                                @*<th scope="col col-md-1">@Html.DisplayNameFor(model => model.Statue)</th>*@
+                            </tr>
+                        </thead>
+                        @{
 
-                        foreach (var item in Model)
-                        {
-                            <tbody>
-                                <tr class="CustomInform" name="CustomInform" data-toggle="modal" data-target="#staticBackdrop">
-                                    <th scope="row" class="d-none d-md-table-cell">B000<span class="userId">@Html.DisplayFor(model => item.FK_ApplicationUser)</span></th>
-                                    <td scope="col-md-1" class="tableInd">@Html.DisplayFor(model => item.CompanyName)</td>
-                                    <td scope="col col-md-1" class="tableInd d-none d-md-table-cell">@Html.DisplayFor(model => item.Email)</td>
-                                    <td scope="col-2 col-md-2">@Html.DisplayFor(model => item.Created_At)</td>
-                                    <td scope="col col-md-1">@Html.DisplayFor(model => item.ShowCount)</td>
-                                    @*<td scope="col col-md-1">@Html.DisplayFor(model => item.Statue)</td>*@
-                                </tr>
-                            </tbody>
+                            foreach (var item in Model)
+                            {
+                                <tbody>
+                                    <tr class="CustomInform" name="CustomInform" data-toggle="modal" data-target="#staticBackdrop">
+                                        <th scope="row" class="d-none d-md-table-cell">B000<span class="userId">@Html.DisplayFor(model => item.FK_ApplicationUser)</span></th>
+                                        <td scope="col-md-1" class="tableInd">@Html.DisplayFor(model => item.CompanyName)</td>
+                                        <td scope="col col-md-1" class="tableInd d-none d-md-table-cell">@Html.DisplayFor(model => item.Email)</td>
+                                        <td scope="col-2 col-md-2">@Html.DisplayFor(model => item.Created_At)</td>
+                                        <td scope="col col-md-1">@Html.DisplayFor(model => item.ShowCount)</td>
+                                        @*<td scope="col col-md-1">@Html.DisplayFor(model => item.Statue)</td>*@
+                                    </tr>
+                                </tbody>
+                            }
                         }
-                    }
-                </table>
+                    </table>
 
+                </div>
+                <div class="d-flex justify-content-center">
+                    @Html.PagedListPager(Model, page => Url.Action("GalleryList", "Common", new { page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(pagedListOption, ajaxOption))
+                </div>
             </div>
-            <nav aria-label="Page navigation example" class="mt-2">
-                <ul class="pagination justify-content-center text-secondary">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
-            </nav>
         </div>
-
     </section>
 
 </article>
