@@ -438,7 +438,7 @@ namespace arTWander.Controllers
             // 取得使用者頭像及姓名
             getUserByIdInfo(userId);
 
-            var model = new userFactory(_dbContext).getMyShowPage(user, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+            var model = new userFactory(_dbContext).getMyShowPage(user, DateTime.Now.Date, DateTime.MinValue, DateTime.MinValue);
 
             return View(model);
         }

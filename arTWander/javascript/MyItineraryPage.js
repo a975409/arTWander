@@ -5,6 +5,28 @@ let searchCenter = '';
 let googleMapUrl = '';
 
 $(function () {
+    //取得縣市
+    $.ajax({
+        method: 'get',
+        dataType: 'json',
+        url: '/Method/GetCities',
+        success: function (data) {
+            $('#FK_City').append(`<option value="0" selected>全部縣市</option>`);
+            for (var index in data) {
+                $('#FK_City').append(`<option value="${data[index].Id}">${data[index].CityName}</option>`);
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            Swal.fire({
+                icon: 'error',
+                title: textStatus,
+                text: errorThrown,
+                showConfirmButton: false,
+                showCancelButton: true
+            });
+        }
+    });
+
     $("#sortable").sortable();
 
     $('#StartDate').change(function () {
@@ -220,7 +242,14 @@ function searchShowPage() {
     let StartDate = $('#StartDate').val();
     let StartTimeStr = document.getElementById('StartTime').value;
     let EndTimeStr = document.getElementById('EndTime').value;
- 
+
+    if (StartDate == '') {
+        let today = new Date();
+
+        StartDate = `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`;
+        $('#StartDate').val(`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`);
+    }
+
     loadingShowPages();
 
     $.ajax({

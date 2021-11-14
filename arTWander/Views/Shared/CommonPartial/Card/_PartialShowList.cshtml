@@ -66,9 +66,9 @@
                         @*<a class="mr-2" href="">05 comment</a>*@
                         @if (User.IsInRole("Member"))
                         {
-                            <a class="addToMyShow" href="">
+                            <a class="addToMyShow" href="" onclick="addToMyShow(@item.showId,event)">
                                 ⧾我的展覽
-                                <input type="hidden" name="name" value="@item.showId" />
+                                @*<input type="hidden" name="name" value="@item.showId" />*@
                             </a>
                         }
                     </div>
