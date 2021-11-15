@@ -87,7 +87,7 @@ namespace arTWander.Models
                     {
                         showPages = showPages.Where(m => DateTime.Compare(m.EndDate.Date, model.EndDate.Date) <= 0);
                     }
-                    else { }
+                    else {}
                 }
 
                 if (model.Cost != CostStatus.none)
@@ -104,9 +104,9 @@ namespace arTWander.Models
                     //熱門展演，以好評數＆留言數做判斷
                     case OrderSortField.HotSort:
                         //先取得平均好評數做排序，再取得留言數做排序
-                        showPages = showPages.Where(m => DateTime.Compare(DateTime.Now, m.StartDate) >= 0 && DateTime.Compare(DateTime.Now, m.EndDate) <= 0).OrderByDescending(m =>
+                        showPages = showPages.Where(m => DateTime.Compare(m.EndDate.Date
+                            , DateTime.Now.Date) >= 0).OrderByDescending(m =>
                         {
-
                             if (m.ShowComments.Count() > 0)
                                 return m.ShowComments.Sum(s => s.Star) / m.ShowComments.Count();
                             else
@@ -115,7 +115,8 @@ namespace arTWander.Models
                         break;
                     case OrderSortField.DateSort:
                         //最新展演
-                        showPages = showPages.Where(m => DateTime.Compare(DateTime.Now, m.StartDate) >= 0 && DateTime.Compare(DateTime.Now, m.EndDate) <= 0).OrderByDescending(m => m.Created_At);
+                        showPages = showPages.Where(m => DateTime.Compare(m.EndDate.Date
+                            , DateTime.Now.Date) >= 0).OrderByDescending(m => m.Created_At);
                         break;
                     case OrderSortField.AllData:
                         showPages = showPages.OrderByDescending(m => m.Created_At);

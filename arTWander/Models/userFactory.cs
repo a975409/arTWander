@@ -161,7 +161,7 @@ namespace arTWander.Models
                 showTitle = m.Title,
                 showImg = m.ShowPageFiles.Count() <= 0 ? "/image/exhibiton/Null.png" : $"/SaveFiles/Company/{m.Company.Id}/show/{m.Id}/{m.ShowPageFiles.FirstOrDefault().fileName}",
                 showCompany = m.Company.CompanyName,
-                end = DateTime.Compare(m.EndDate, DateTime.Now.Date) < 0
+                end = DateTime.Compare(m.EndDate.Date, DateTime.Now.Date) < 0
             });
 
             var showPages = OtherMethod.getCurrentPagedList(shows, page, pageSize);

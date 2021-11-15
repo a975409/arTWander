@@ -48,7 +48,7 @@ namespace arTWander.Models
                 Comment = m.ShowComments.Count(),
                 fileName = m.ShowPageFiles.Count() <= 0 ? "/image/exhibiton/Null.png" : $"/SaveFiles/Company/{m.Company.Id}/show/{m.Id}/{m.ShowPageFiles.FirstOrDefault().fileName}",
                 cityId = m.FK_City,
-                 end= DateTime.Compare(m.EndDate, DateTime.Now.Date) < 0
+                 end= DateTime.Compare(m.EndDate.Date, DateTime.Now.Date) < 0
             }); 
 
             var showPages = OtherMethod.getCurrentPagedList(shows, page, pageSize);
