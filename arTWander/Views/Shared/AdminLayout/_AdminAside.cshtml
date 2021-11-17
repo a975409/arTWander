@@ -1,0 +1,96 @@
+﻿@model arTWander.Models.AdminViewModel.SetupViewModel
+
+<div id="aside1Div" class=" d-md-block">
+    <!-- 頭像starts -->
+    <figure>
+        <div id="asideAvatar" class="d-flex justify-content-center overflow-hidden">
+            <img class="" src="@Model.AvatarUrl@Model.AvatarName" alt="">
+        </div>
+        <!-- <a class="just-content-center my-2 text-center">Dear <span>Manager</span>,<br>
+            start to manage !
+            </a> -->
+    </figure>
+    <!-- 頭像end -->
+
+    <!-- 條件查詢 starts -->
+    <ul class="list-group list-group-flush bg-transparent">
+        <!-- 用戶數據分析統計 starts -->
+        <li class="list-group-item bg-transparent">
+            <a class="dataStatistics" href="#dataStatistics">數據統計</a>
+            <hr>
+        </li>
+        <!-- 數據分析end -->
+        <!-- 會員管理 starts -->
+        <li class="list-group-item bg-transparent">
+            <a class="memberManage" href="#memberManage">會員管理</a>
+            <hr>
+        </li>
+        <!-- 會員管理 end -->
+        <!-- 展覽管理 starts -->
+        <li class="list-group-item bg-transparent">
+            <a class="ShowManage" href="#ShowManage">展覽管理</a>
+            <hr>
+        </li>
+        <!-- 展覽管理 end -->
+        <!-- 通報管理 starts -->
+        <!--<li class="list-group-item bg-transparent">
+        <a class="InformManage" href="#InformManage">通報管理</a>
+        <hr>
+    </li>-->
+        <!-- 通報管理end -->
+
+
+    </ul>
+    <!-- 條件查詢 end -->
+</div>
+
+
+<script>
+    //會員管理頁面
+    $(".memberManage").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("MemberManage", "Admin")',
+            data: FormData,
+            success: function (data) {
+                $('#mainPage').html(data);
+            }
+        });
+    });
+
+
+    //所有展演List
+    $(".ShowManage").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("AllShowList", "Admin")',
+            data: FormData,
+            success: function (data) {
+                $('#mainPage').html(data);
+            }
+        });
+    });
+
+    //通知管理頁面
+    $(".InformManage").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("InformMange", "Admin")',
+            data: FormData,
+            success: function (data) {
+                $('#mainPage').html(data);
+            }
+        });
+    });
+    //資料分析頁面
+    $(".dataStatistics").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("dataStatisticsManage", "Admin")',
+            data: FormData,
+            success: function (data) {
+                $('#mainPage').html(data);
+            }
+        });
+    });
+</script>

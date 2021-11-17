@@ -1,0 +1,65 @@
+﻿@*引入PagedList.Mvc分頁套件*@
+@using PagedList
+@using PagedList.Mvc
+@model IPagedList<arTWander.Models.CommonCompanyViewModel>
+@{
+    PagedListRenderOptions pagedListOption = new PagedListRenderOptions
+    {
+        LinkToFirstPageFormat = "<<",
+        LinkToPreviousPageFormat = "<",
+        LinkToNextPageFormat = ">",
+        LinkToLastPageFormat = ">>",
+        DisplayPageCountAndCurrentLocation = true,
+        PageCountAndCurrentLocationFormat = "第 {0} 頁/共 {1} 頁"
+    };
+
+    AjaxOptions ajaxOption = new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "showPages",
+        OnFailure = "errorServerMsg()"
+    };
+}
+
+@if (Model.Count > 0)
+{
+    <div class="container">
+        <div class="row row-cols-lg-2 row-cols-xl-3 showlistRow">
+            @foreach (var show in Model)
+            {
+                <!-- 展演單位列表 starts -->
+                <!-- 展演單位starts -->
+                <div class="col position-relative mb-5 d-flex flex-column align-items-center Customderform">
+                    <!-- 展演單位頭像 starts -->
+                    <div class="GalleryImg rounded-circle d-flex position-relative" data-toggle="modal" data-target="#staticBackdrop">
+                        <span class="companyId" name="companyId" typeof="hidden">@show.Id</span>
+                        <a class="companyBtn" name="companyBtn">
+                            <img class="w-100 rounded-circle img-fluid" src='@show.PhotoSticker'>
+                        </a>
+                    </div>
+                    <!-- 展演單位頭像 ends -->
+                    <!-- 展演單位資訊 starts -->
+                    <div class="mt-2">
+                        <a class="" href="">@show.CompanyCity</a>／
+                        <a class="companyBtn" name="companyBtn">@show.CompanyName</a>
+                    </div>
+                    <!-- 展演單位資訊 ends -->
+                </div>
+                <!-- 展演單位 ends -->
+            }
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        @Html.PagedListPager(Model, page => Url.Action("GalleryList", "Common", new { page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(pagedListOption, ajaxOption))
+    </div>
+}
+else
+{
+    <div>
+        <br />
+        <br />
+        <h1>查無任何展演單位...</h1>
+    </div>
+}
+

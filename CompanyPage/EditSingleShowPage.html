@@ -1,0 +1,228 @@
+<link rel="stylesheet" href="./css/EditSingleShowPage.css">
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">會員功能</a></li>
+    <li class="breadcrumb-item"><a href="#">新增/編輯展演</a></li>
+  </ol>
+</nav>
+
+<div class="row">
+  <!-- <div id="list-example" class="list-group col-12 col-lg-2">
+    <a class="list-group-item list-group-item-action" href="#list-item-1">輸入展演資訊</a>
+    <a class="list-group-item list-group-item-action" href="#list-item-2">預覽展演資訊</a>
+  </div> -->
+
+  <!--<div id="scrollContent" data-spy="scroll" data-target="#list-example" data-offset="0"
+    class="scrollspy-example mt-3 col-12 col-lg-10" style="position: relative;overflow-y: scroll;">-->
+  <div id="scrollContent" data-spy="scroll" data-target="#list-example" data-offset="0"
+    class="scrollspy-example mt-3 col-12" style="position: relative;">
+    <h1 id="list-item-1" class="display-4">輸入展演資訊</h1>
+    <hr>
+    <form>
+      <div class="form-group">
+        <label for="Theme" class="titlegroup">展演主題：</label>
+        <input type="text" class="form-control" id="Theme" placeholder="">
+      </div>
+
+      <div class="form-group">
+        <label for="content" class="titlegroup">展演內容：</label>
+        <textarea class="form-control" id="content" rows="10"></textarea>
+      </div>
+
+      <!--主視覺-->
+      <div class="jumbotron bg-light">
+        <h1>主視覺</h1>
+        <br>
+        <div class="form-group">
+          <label for="customFile">請將圖片拖曳到下方上傳</label>
+          <div id="dropDIV" ondragover="dragoverHandler(event)" ondrop="dropHandler(event)"></div>
+          <!-- <input type="file" multiple class="custom-file-input dropzone" id="customFile"> -->
+        </div>
+
+        <div class="form-group row">
+          <label for="searchKeyword" class="col-md-3 col-lg-2 col-form-label">設定關鍵字</label>
+          <div class="col-md-9 col-lg-10">
+            <input type="email" class="form-control" id="searchKeyword">
+          </div>
+        </div>
+      </div>
+
+      <!--展演開放時間-->
+      <div class="jumbotron bg-light">
+        <h1>展演開放時間</h1>
+        <br>
+        <div class="form-group row">
+          <label for="startDate" class="col-md-2 col-form-label">開放日期</label>
+          <div class="col-md-4">
+            <input type="date" class="form-control" id="startDate">
+          </div>
+          <label for="endDate" class="col-md-2 col-form-label">結束日期</label>
+          <div class="col-md-4">
+            <input type="date" class="form-control" id="endDate">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="form-group col-md-2">
+            <label class="col-form-label" for="days">開放時段</label>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" name="days" id="day1" value="1">
+              <label for="day1" class="form-check-label">星期日</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" name="days" id="day2" value="2">
+              <label for="day2" class="form-check-label">星期一</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" name="days" id="day3" value="3">
+              <label for="day3" class="form-check-label">星期二</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" name="days" id="day4" value="4">
+              <label for="day4" class="form-check-label">星期三</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" name="days" id="day5" value="5">
+              <label for="day5" class="form-check-label">星期四</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" name="days" id="day6" value="6">
+              <label for="day6" class="form-check-label">星期五</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" name="days" id="day7" value="7">
+              <label for="day7" class="form-check-label">星期六</label>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="startTime" class="col-form-label">開放時間</label>
+            <div>
+              <input type="time" class="form-control" id="startTime">
+            </div>
+            <label for="endTime" class="col-form-label">結束時間</label>
+            <div>
+              <input type="time" class="form-control" id="endTime">
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="" class="col-form-label">是否收費？</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="charge" id="yes" value="true">
+              <label class="form-check-label" for="yes">是</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="charge" id="no" value="false" checked>
+              <label class="form-check-label" for="no">否</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="jumbotron bg-light">
+        <h1>展演地點</h1>
+        <br>
+        <div class="row">
+          <div class="form-group col-md-3">
+            <label for="startDate">縣市</label>
+            <select class="form-control" id="FK_City" name="FK_City" value="@Model.FK_City"></select>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="startDate">鄉鎮市區</label>
+            <select class="form-control" id="FK_District" name="FK_District" value="@Model.FK_District"></select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="startDate">地址</label>
+            <input type="text" class="form-control" id="address">
+          </div>
+        </div>
+        <div class="form-group col-12">
+          <img src="./image/map.png" alt="展演地點" style="width: 100%;">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Remark" class="titlegroup">備註：</label>
+        <textarea class="form-control" id="Remark" rows="3"></textarea>
+      </div>
+    </form>
+    <!--     <hr>
+    <h1 id="list-item-2">預覽展演資訊</h1>
+    <hr>
+    <div id="ReviewPage"></div> -->
+    <div class="d-flex justify-content-end">
+      <button type="button" id="BtnNextReView" class="btn btn-primary">下一步：預覽展演</button>
+    </div>
+  </div>
+</div>
+<!-- <script src="javascript/EditSingleShowPage.js"></script> -->
+<script>
+  document.getElementById('BtnNextReView').addEventListener('click', function () {
+    $('#mainPage').load('CompanyPage/ReviewPage.html');
+    $('html,body').animate({
+      scrollTop: 0
+    }, 'slow');
+  })
+
+  function dragoverHandler(evt) {
+    evt.preventDefault();
+  }
+
+  function dropHandler(evt) { //evt 為 DragEvent 物件
+    evt.preventDefault();
+    var files = evt.dataTransfer.files; //由DataTransfer物件的files屬性取得檔案物件
+    let errMsg = ''
+
+    for (var i in files) {
+      if (i > 6)
+        break;
+
+      if (files[i].type.startsWith("image/")) {
+        if (files[i].size > 5000000) {
+          errMsg += files[i].name + '\n';
+          continue;
+        }
+
+        //將圖片在頁面預覽
+        var fr = new FileReader();
+        fr.onload = openfile;
+        fr.readAsDataURL(files[i]);
+
+      }
+    }
+
+    if (files.length > 6) {
+      alert("檔案上傳的數量超出限制，故多餘的檔案不上傳");
+    }
+
+    if (errMsg.length > 0) {
+      errMsg = '下列檔案超出大小，無法上傳：\n' + errMsg;
+      alert(errMsg);
+    }
+  }
+
+  function openfile(evt) {
+    var img = evt.target.result;
+    let imgdiv = document.createElement('div');
+    imgdiv.className = 'alert alert-light alert-dismissible fade show';
+    imgdiv.setAttribute('role', 'alert');
+    imgdiv.style.display = 'inline-block';
+    imgdiv.style.paddingLeft = '12px';
+    imgdiv.style.paddingRight = '54px';
+    imgdiv.style.backgroundColor = '#E8EAEA';
+
+    var imgx = document.createElement('img');
+    imgx.src = img;
+    imgx.style.height = '100px';
+    imgdiv.appendChild(imgx);
+
+    let closebtn = document.createElement('button');
+    closebtn.classList.add('close');
+    closebtn.setAttribute('type', 'button');
+    closebtn.setAttribute('data-dismiss', 'alert');
+    closebtn.setAttribute('aria-label', 'Close');
+    closebtn.innerHTML = '<span aria-hidden="true">&times;</span>';
+    imgdiv.appendChild(closebtn);
+
+    document.getElementById('dropDIV').appendChild(imgdiv);
+  }
+
+  // $('#ReviewPage').load('CompanyPage/ReviewPage.html');
+</script>

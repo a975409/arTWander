@@ -1,0 +1,227 @@
+﻿@model IEnumerable<arTWander.Models.AdminViewModel.CustomerListViewModel>
+
+@{
+    ViewBag.Title = "UserInform";
+    Layout = null;
+}
+<link rel="stylesheet" href="../css/UserList.css">
+@{
+    foreach (var item in Model)
+    {
+        <article>
+            <section id="Section">
+                <div class="AllList">
+                    <div class="userDetailInform mb-3">
+                        <div class="container px-0">
+                            <p class="text-right">帳號狀態: <span class="isBlock">@Html.DisplayFor(m => item.IsBlackList)</span></p>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <img src="@Html.DisplayFor(m => item.AvatarUrl)@Html.DisplayFor(m => item.AvatarName)" class="d-flex w-100" alt="">
+                                </div>
+                                <div class="col-12 col-lg-9">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <p>會員編號: <span>M000<a id="userId">@Html.DisplayFor(m => item.FK_ApplicationUser)</a></span></p>
+                                            <p>@Html.DisplayNameFor(m => m.CompanyName) : <span id="CustomerName">@Html.DisplayFor(m => item.CompanyName)</span></p>
+                                            <p>@Html.DisplayNameFor(m => m.Email) : <span>@Html.DisplayFor(m => item.Email)</span></p>
+                                            <p>@Html.DisplayNameFor(m => m.CityName) : <span>@Html.DisplayFor(m => item.CityName)</span></p>
+                                            <p>@Html.DisplayNameFor(m => m.DistrictName) : <span>@Html.DisplayFor(m => item.DistrictName)</span></p>
+                                            <p>@Html.DisplayNameFor(m => m.CompanyAddress) : <span>@Html.DisplayFor(m => item.CompanyAddress)</span></p>
+                                            <p>@Html.DisplayNameFor(m => m.UserName) : <span>@Html.DisplayFor(m => item.UserName)</span></p>
+                                            <p>@Html.DisplayNameFor(m => m.PhoneNumber) : <span>@Html.DisplayFor(m => item.PhoneNumber)</span></p>
+                                        </div>
+                                        <div class="col-6">
+                                            <p>@Html.DisplayNameFor(m => m.RegisterTime) : <span>@Html.DisplayFor(m => item.RegisterTime)</span></p>
+                                            <p>@Html.DisplayNameFor(m => m.LastloginTime) : <span>@Html.DisplayFor(m => item.LastloginTime)</span></p>
+                                            <p>@Html.DisplayNameFor(m => m.LogingCount) : <span>@Html.DisplayFor(m => item.LogingCount)</span></p>
+                                            @*<p>@Html.DisplayNameFor(m => m.Statue) : <span>@Html.DisplayFor(m => item.Statue)</span></p>*@
+                                            @*<p>@Html.DisplayNameFor(m => m.ShowCount) : <a href="#"> @Html.DisplayFor(m => item.ShowCount) </a></p>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+
+                            
+                            <div class="modal-footer">
+                                <div class="CustomerInfoUpdate d-flex justify-content-end">
+                                    @*<button class="btn btn-primary mx-1">發送密碼重置</button>*@
+                                    <!-- 新增彈出視窗 輸入黑名單原因 -->
+                                    <button class="btn btn-primary mx-1" id="blackReason" href="" data-toggle="modal" data-target="#inputBlackReason">加入黑名單</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="userActivity">
+                            <p>近期活動</p>
+                            <hr>
+                            <nav>
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                    <a class="nav-link active" data-toggle="tab" href="#userShowAttend" role="tab"
+                                       aria-controls="userShowAttend" aria-selected="true">舉辦活動</a>
+                                    <a class="nav-link" data-toggle="tab" href="#userComment" role="tab"
+                                       aria-controls="userComment" aria-selected="false">貼文</a>
+                                </div>
+                            </nav>
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="userShowAttend" role="tabpanel" aria-labelledby="userShowAttend">
+                                    <table id="" class="table table-hover w-100">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col-2 col-md-2">展演編號</th>
+                                                <th scope="col-2 col-md-4">展演名稱</th>
+                                                <th scope="col-2 col-md-6">描述</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td scope="col-2 col-md-2">S0001</td>
+                                                <td scope="col-2 col-md-4">單飛不解散，你怎麼說</td>
+                                                <td scope="col-2 col-md-6" class="overflow-scroll">紐約當代藝術家，奧普海姆（Peter Opheim b.1961-），有著斯堪地那維亞血統（Scandinavia）。他最新的作品帶著一些北歐神話與色彩，無論你知不知道北歐神話，其實都沒關係，奧普海姆的作品始終擁有純粹、天馬行空及療癒感，這正是步調緊湊、生活壓抑的現代人所缺少的。</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="col-2 col-md-2">S0001</td>
+                                                <td scope="col-2 col-md-4">單飛不解散，你怎麼說</td>
+                                                <td scope="col-2 col-md-6" class="overflow-scroll">紐約當代藝術家，奧普海姆（Peter Opheim b.1961-），有著斯堪地那維亞血統（Scandinavia）。他最新的作品帶著一些北歐神話與色彩，無論你知不知道北歐神話，其實都沒關係，奧普海姆的作品始終擁有純粹、天馬行空及療癒感，這正是步調緊湊、生活壓抑的現代人所缺少的。</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="col-2 col-md-2">S0001</td>
+                                                <td scope="col-2 col-md-4">單飛不解散，你怎麼說</td>
+                                                <td scope="col-2 col-md-6" class="overflow-scroll">紐約當代藝術家，奧普海姆（Peter Opheim b.1961-），有著斯堪地那維亞血統（Scandinavia）。他最新的作品帶著一些北歐神話與色彩，無論你知不知道北歐神話，其實都沒關係，奧普海姆的作品始終擁有純粹、天馬行空及療癒感，這正是步調緊湊、生活壓抑的現代人所缺少的。</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade show" id="userComment" role="tabpanel" aria-labelledby="userComment">
+                                    <table id="" class="table table-hover w-100">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col-2 col-md-2">貼文編號</th>
+                                                <th scope="col-1 col-md-2">貼文主題</th>
+                                                <th scope="col-1 col-md-3">回覆內容</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td scope="col-2 col-md-2">P0001</td>
+                                                <td scope="col-1 col-md-2">左點 Left dot. 詩集 × 插畫個展</td>
+                                                <td scope="col-1 col-md-3">感謝您的建議, 歡迎再次蒞臨</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="col-2 col-md-2">P0001</td>
+                                                <td scope="col-1 col-md-2">左點 Left dot. 詩集 × 插畫個展</td>
+                                                <td scope="col-1 col-md-3">感謝您的建議, 歡迎再次蒞臨</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="col-2 col-md-2">P0001</td>
+                                                <td scope="col-1 col-md-2">左點 Left dot. 詩集 × 插畫個展</td>
+                                                <td scope="col-1 col-md-3">經查您並未參與過該展演, 歡迎您蒞臨後再給予建議</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+
+            </section>
+
+        </article>
+
+
+        <!-- 彈出視窗顯示黑名單資訊 -->
+        <!-- Button trigger modal -->
+        <!-- Modal -->
+        <div class="modal fade px-0" id="inputBlackReason" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <!-- 控至彈出窗大小 -->
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">加入黑名單</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">  
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <main>
+                            <!-- 主內容 -->
+                            <section id="Section" class="w-100">
+                                <div id="reasonInput ">
+                                    <form id="blackForm" method="post">
+                                        <label for="">請輸入黑名單原因: </label>
+                                        <a id="BlackReason">@Html.TextArea("txtReason", new { @class = "form-control", @rows = 5 })</a>
+
+                                    </form>
+                                </div>
+                            </section>
+                        </main>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="CustomerblackFormBtn" type="submit" class="btn btn-primary" value="加入黑名單">加入黑名單</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<script>
+    //搜尋關鍵字
+    $('#CustomerblackFormBtn').click(function (event) {
+        var blackAdd = { FK_ApplicationUser: $("#userId").text(), Reason: $("#txtReason").val(), CompanyName: $("#CustomerName").text() };
+        var myFormData = new FormData();
+        myFormData.append("blackAdd", JSON.stringify(blackAdd));
+        event.preventDefault();
+        $.ajax({
+            type: 'post',
+            //dataType: 'script',
+            url: '@Url.Action("CustomerAddBlack", "Admin")',
+            data: myFormData,
+            enctype: "multipart/form-data",
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                //modal關閉導向引入bs/jquery
+                myrefresh();
+                Swal.fire({
+                    position: 'top',
+                    icon: 'success',
+                    text: $("#CustomerName").text() + "已加入黑名單",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+
+                var _tmp = window.$;   // save old value
+                window.$ = window.jQuery
+
+                var x = jQuery.noConflict();
+                //modal關閉導向引入bs/jquery
+                x($('#inputBlackReason').modal('hide'));
+                x($('#staticBackdrop').modal('hide'));
+
+                window.$ = _tmp; // jQuery恢復
+            }
+            ,
+            error: (XMLHttpRequest, textStatus, errorThrown) => {
+                $("#detailInform").innerHTML = "there is something wrong!";
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
+        });
+    });
+    function myrefresh() {
+        $.ajax({
+            type: 'post',
+            url: '/Admin/ShowCustomList',
+            data: FormData,
+            success: function (data) {
+                $('#memberManageMain').html(data);
+            }
+        });
+    }
+</script>

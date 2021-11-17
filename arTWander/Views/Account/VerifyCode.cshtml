@@ -1,0 +1,103 @@
+﻿@model arTWander.Models.VerifyCodeViewModel
+@{
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+<div class="container">
+    <!-- 驗證nav starts -->
+    <ul class="nav nav-tabs d-flex justify-content-center border-bottom-0 " id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <h4>請輸入驗證碼</h4>
+        </li>
+    </ul>
+    <p>
+        @ViewBag.Status
+    </p>
+
+    <div class="tab-content">
+
+        @using (Html.BeginForm("VerifyCode", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" ,id= "VerifyCodeForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("provider", @Model.Provider)
+
+
+
+            <div class="row my-3 col-12 col-md-6 mx-auto">
+                <div class="w-100 mx-auto text-center">
+                    @Html.LabelFor(m => m.Code)：
+                    @Html.TextBoxFor(m => m.Code, new { @class = "border-bottom border-top-0 border-left-0 border-right-0 bg-transparent" })
+                    <div>
+                        @Html.ValidationMessageFor(m => m.Code, "", new { @class = "text-danger", id = "LoginCodeMsg" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row my-3 col-12 col-md-6 mx-auto">
+                <div class="w-100 mx-auto text-center">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(m => m.RememberBrowser)
+                        @Html.LabelFor(m => m.RememberBrowser)
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5 mb-2 justify-content-center">
+                <div class="col-6 col-md-3 mx-auto d-flex justify-content-center">
+                    <button id="loginBtn" type="submit"
+                            class="btn btn-outline-secondary border-0 bg-pink text-white w-100">
+                        提交
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Sweet Alert -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $('#VerifyCodeForm').submit(function (event) {
+            let LoginCode = $('#Code').val();
+
+            if (!inputRequire(LoginCode)) {
+                $('#Code').trigger('change');
+                return false;
+            }
+
+            event.preventDefault();
+            let formData = $(this).serialize();
+
+            $.ajax({
+                type: 'post',
+                dataType:'script',
+                url: '@Url.Action("VerifyCode", "Account")',
+                data: formData,
+                success: function (data) {
+                    eval(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: textStatus,
+                        text: errorThrown,
+                        showConfirmButton: false,
+                        showCancelButton: true
+                    });
+                }
+             });
+        });
+
+        $('#Code').change(function () {
+            let data = $(this).val();
+            let LoginCodeMsg = $('#LoginCodeMsg');
+
+            if (!inputRequire(data)) {
+                LoginCodeMsg.html('請輸入驗證碼 !!');
+            }else {
+                LoginEmailMsg.html('');
+            }
+        });
+    </script>
+    <script src="~/javascript/AccountIndex.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+}

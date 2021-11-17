@@ -1,0 +1,20 @@
+﻿
+@{
+    //ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminLayout/_AdminLayout.cshtml";
+}
+
+<div id="mainPage" class="w-100"></div>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("dataStatisticsManage", "Admin")',
+            data: {},
+            success: function (data) {
+                $('#mainPage').html(data);
+            }
+            });
+            });
+</script>

@@ -1,0 +1,241 @@
+﻿@*引入PagedList.Mvc分頁套件*@
+@using PagedList
+@using PagedList.Mvc
+@model IPagedList<arTWander.Models.AdminViewModel.ShowListViewModel>
+
+@{
+    ViewBag.Title = "AllShowList";
+    Layout = null;
+}
+
+@{
+    PagedListRenderOptions pagedListOption = new PagedListRenderOptions
+    {
+        LinkToFirstPageFormat = "<<",
+        LinkToPreviousPageFormat = "<",
+        LinkToNextPageFormat = ">",
+        LinkToLastPageFormat = ">>",
+        DisplayPageCountAndCurrentLocation = true,
+        PageCountAndCurrentLocationFormat = "第 {0} 頁/共 {1} 頁"
+    };
+
+    AjaxOptions ajaxOption = new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "showPages",
+        OnFailure = "errorServerMsg()"
+    };
+}
+@{
+    <link rel="stylesheet" href="./css/UserList.css">
+    <link href="~/css/css_commonPage/ShowList.css" rel="stylesheet" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="~/Content/spinkit.min.css" rel="stylesheet" />
+
+    @*PagedList.Mvc分頁切換css & jquery函示庫*@
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}
+
+<link rel="stylesheet" href="./css/UserList.css">
+
+
+<article>
+    <section id="Section">
+        <div id="showPages">
+
+            <div class="AllList">
+                <!-- breadcrumb start -->
+                <div class="justify-items-start">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb bg-light">
+                            <li class="breadcrumb-item"><a href="#">系統管理員</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">展覽資訊</li>
+                        </ol>
+                    </nav>
+                </div>
+                <!-- breadcrumb end -->
+                <!-- 關鍵字查詢 start-->
+                <!--<div class="AllListTitle">
+    <div class="input-group-prepend my-1">
+        <div class="row w-100">-->
+                <!-- 下拉式地區搜尋 -->
+                <!--<div class="dropdown d-flex my-auto col-6 col-md-6 col-lg-3">
+        <a class="btn btn-White dropdown-toggle col-6" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            台北市
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#">台北市</a>
+            <a class="dropdown-item" href="#">台中市</a>
+            <a class="dropdown-item" href="#">高雄市</a>
+        </div>
+        <a class="btn btn-White dropdown-toggle col-6" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            台北市
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#">台北市</a>
+            <a class="dropdown-item" href="#">台中市</a>
+            <a class="dropdown-item" href="#">高雄市</a>
+        </div>
+    </div>-->
+                <!-- 時間搜尋 -->
+                <!--<div id="timeSelect" class="d-flex col-6 col-md-6 col-lg-9 justify-content-end">
+                    <div class="row w-100 justify-content-between">
+                        <label for="startDate" class="col-lg-2-text-right my-auto p-0">開始時間</label>
+                        <input type="date" class="form-control col-lg-4" id="startDate">
+                        <label for="endDate" class="col-lg-2-text-right my-auto p-0">結束時間</label>
+                        <input type="date" class="form-control col-lg-4" id="endDate">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+                <div class="AllListTitle">
+                    <div class="input-group-prepend my-2 justify-content-between">
+                        <form id="uploadShowForm" enctype="multipart/form-data" class="w-100">
+                            <div class="row col-10 col-sm-8">
+                                @*關鍵字巡展演*@
+                                <input type="text" id="txtKeyword" name="txtKeyword" value="@Request.Form["txtKeyword"]" class="col-10 col-sm-8 form-control rounded-pill my-1 w-100 " style="width:180px;height:auto;" placeholder="關鍵字搜尋" aria-label="search" aria-describedby="buttonSearch">
+                                <button class="btn col-2 col-md-1 my-2" type="submit" id="buttonSearch"><i class="fa fa-search" aria-hidden="true"></i></button>
+
+                            </div>
+                        </form>
+                        <div class="my-auto">
+                            <a class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-sort-amount-down" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" id="sort">
+                                <a href="#" class="dropdown-item">編號排序</a>
+                                <a href="#" class="dropdown-item">帳號排序</a>
+                                <a href="#" class="dropdown-item">註冊日排序</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 關鍵字查詢 end -->
+                    <div class="AllListContent">
+                        <table class="table table-hover w-100">
+                            <thead>
+                                <tr>
+                                    <th scope="col-1 col-md-1" class="d-none d-md-table-cell">編號</th>
+                                    <th scope="col-3 col-md-3">@Html.DisplayNameFor(model => model.FirstOrDefault().Title)</th>
+                                    <th scope="col-1 col-md-3" class="d-none d-lg-table-cell">@Html.DisplayNameFor(model => model.FirstOrDefault().CompanyName)</th>
+                                    <th scope="col-1 col-md-1">@Html.DisplayNameFor(model => model.FirstOrDefault().CityName)</th>
+                                    <th scope="col-1 col-md-1">@Html.DisplayNameFor(model => model.FirstOrDefault().StartDate)</th>
+                                    <th scope="col-1 col-md-1">@Html.DisplayNameFor(model => model.FirstOrDefault().EndDate)</th>
+                                </tr>
+                            </thead>
+                            @{
+                                foreach (var item in Model)
+                                {
+                                    <tbody>
+                                        <tr class="showInform" href="" data-toggle="modal" data-target="#staticBackdrop">
+                                            <td scope="col-1 col-md-1" class="d-none d-md-table-cell">S<span class="showId">@Html.DisplayFor(model => item.Id)</span></td>
+                                            <td scope="col-3 col-md-3">@Html.DisplayFor(model => item.Title)</td>
+                                            <td scope="col-1 col-md-1" class="d-none d-lg-table-cell">@Html.DisplayFor(model => item.CompanyName)</td>
+                                            <td scope="col-1 col-md-1">@Html.DisplayFor(model => item.CityName)</td>
+                                            <td scope="col-1 col-md-1">@Html.DisplayFor(model => item.StartDate)</td>
+                                            <td scope="col-1 col-md-1">@Html.DisplayFor(model => item.EndDate)</td>
+                                        </tr>
+                                    </tbody>
+                                }
+                            }
+                        </table>
+
+
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        @Html.PagedListPager(Model, page => Url.Action("AllShowList", "Admin", new { page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(pagedListOption, ajaxOption))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</article>
+
+
+<!-- 彈出視窗顯示展演資訊 -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade px-0" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- 控至彈出窗大小 -->
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">展演詳細資訊</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <main>
+                    <!-- 主內容 -->
+                    <!-- ajax導入相關內容 -->
+                    <section id="Section" class="w-100">
+                        <div id="detailInform">
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    //搜尋關鍵字
+    $('#uploadShowForm').submit(function (event) {
+        event.preventDefault();
+        let formData = $(this).serialize();
+        $.ajax({
+            type: 'post',
+            //dataType: 'script',
+            url: '@Url.Action("AllShowList", "Admin")',
+            data: formData,
+            success: function (data) {
+                console.log("good");
+                $('#mainPage').html(data);
+            }
+            ,
+            error: (XMLHttpRequest, textStatus, errorThrown) => {
+                $("#detailInform").innerHTML = "there is something wrong!";
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
+        });
+    });
+</script>
+<script>
+    //取得對應ID詳細資訊
+    $('.showInform').click(function (event) {
+        var showID = { Id: $(this).find(".showId").text() };
+        var myFormData = new FormData();
+        myFormData.append("showID", JSON.stringify(showID));
+
+        $.ajax({
+            url: '@Url.Action("ShowInformPage", "Admin")',
+            type: 'POST',
+            data: myFormData,
+            //contentType: "application/json; charset=utf-8",
+            enctype: "multipart/form-data",
+            cache: false,
+            contentType: false,
+            processData: false,
+            //dataType: "json",
+            success: function (data) {
+                console.log("Good");
+                $('#detailInform').html(data);
+            },
+            //錯誤訊息
+            error: (XMLHttpRequest, textStatus, errorThrown)=>{
+              $("#detailInform").innerHTML = "there is something wrong!";
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
+         });
+    });
+</script>

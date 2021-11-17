@@ -1,0 +1,239 @@
+﻿body {
+    position: relative;
+    overflow-x: hidden;
+}
+
+i {
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+}
+
+nav a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    transition: all .3s ease-in-out;
+}
+
+    nav a:hover {
+        text-decoration: none;
+        color: rgb(197, 126, 104);
+    }
+
+.navbarFixed_Slide {
+    height: 48px;
+    position: absolute;
+    top: -48px;
+    left: 0;
+    right: 0;
+}
+
+.navbarFixed_active {
+    position: fixed;
+    top: 0px;
+    transition: all .3s ease;
+}
+
+.menuControlBtn span {
+    opacity: 0;
+}
+
+#menuControl {
+    position: fixed;
+    z-index: -2;
+    opacity: 0;
+}
+
+#navControl {
+    position: fixed;
+    z-index: -2;
+    opacity: 0;
+}
+
+/* navbar end */
+/* aside starts */
+
+/* 取消li前預設maker點 */
+#aside1DivUl li {
+    list-style-type: none;
+}
+
+#aside1 {
+    width: 20%;
+}
+
+    #aside1 a {
+        text-decoration: none;
+        color: rgb(0, 0, 0);
+    }
+
+    #aside1 i {
+        font-size: 10px;
+    }
+
+#asideAvatar {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+#buttonSearch:active {
+    transform: scale(1.2);
+}
+
+.list-group-flush > .list-group-item {
+    border-width: 0 0 0;
+}
+
+select {
+    width: 105px;
+}
+
+/* aside end */
+/* aside RWD手刻 */
+/* nav/menu滑動窗控制checkbox start*/
+#menuControl {
+    position: fixed;
+    z-index: -2;
+    opacity: 0;
+}
+
+.menuControlBtn span {
+    opacity: 0;
+}
+
+#navControl {
+    position: fixed;
+    z-index: -2;
+    opacity: 0;
+}
+
+/* nav/menu滑動窗控制checkbox end*/
+
+@media screen and (max-width: 768px) {
+    /* navbar start */
+    /* icon create */
+    #navbarFixed::before {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        font-size: 28px;
+        content: "\f0c9";
+        position: absolute;
+        left: 15px;
+    }
+    /* aside hidden */
+    #aside1 {
+        position: absolute;
+        width: 80%;
+        height: 92vh;
+        left: -100%;
+        background-color: rgb(255, 255, 255);
+        overflow: scroll;
+        overflow-x: hidden;
+        transition: .3s;
+    }
+        /* slide aside hidden */
+        #aside1.aside1_Slide {
+            position: fixed;
+            width: 80%;
+            height: 94vh;
+            left: -100%;
+            top: 48px;
+            background-color: rgb(255, 255, 255);
+            overflow: scroll;
+            overflow-x: hidden;
+            transition: .3s;
+        }
+    /* btn monitor 控制nav/menu滑動窗*/
+    .menuControlBtn {
+        height: 48px;
+        width: 48px;
+        position: absolute;
+        left: 0;
+        background-color: transparent;
+    }
+
+    #menuControl:checked ~ #aside1 {
+        left: 0;
+    }
+
+        #menuControl:checked ~ #aside1.aside1_Slide {
+            left: 0;
+        }
+
+    #navControl:checked ~ .navbarFixed_Slide {
+        height: 48px;
+        position: fixed;
+        top: 0px;
+        left: 0;
+        right: 0;
+    }
+
+    /* navbar end */
+
+    /* breadcrumb start */
+    .breadcrumb {
+        display: none;
+    }
+}
+/* aside RWD end */
+
+/* asideAvatar 的 RWD */
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    #asideAvatar {
+        height: 145px;
+    }
+}
+
+/*右上方會員功能*/
+#avatarNavSet a {
+    font-size: 15px;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    transition: all .3s ease-in-out;
+    padding: 0;
+}
+
+    #avatarNavSet a:hover {
+        text-decoration: none;
+        color: rgb(197, 126, 104);
+    }
+
+#avatarNavSet > a i {
+    font-size: 22px;
+}
+
+.bg-pink {
+    background-color: rgb(197, 126, 104);
+}
+
+#aside1 a:hover {
+    text-decoration: none;
+    color: rgb(197, 126, 104);
+}
+
+.fa-cog:hover {
+    transform: rotate(180deg);
+}
+
+#avatarNavSet i {
+    font-size: 20px;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    transition: all .2s ease-in-out;
+}
+
+#avatarNavSet i:hover {
+    text-decoration: none;
+    color: rgb(197, 126, 104);
+}
+/*=======================================*/
+
+.bg-gray {
+    background-color: rgba(196, 196, 196, 1);
+}
+
+
+#addMygalleryBtn {
+    border: initial;
+    background-color: rgb(197, 126, 104);
+}

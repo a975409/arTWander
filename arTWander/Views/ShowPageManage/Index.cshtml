@@ -1,0 +1,416 @@
+﻿@*引入PagedList.Mvc分頁套件*@
+@using PagedList
+@using PagedList.Mvc
+@model IPagedList<arTWander.Models.ShowMinViewModel>
+@{
+    Layout = "~/Views/Shared/CommonLayout/_AsideTrue.cshtml";
+}
+
+<nav id="cmnPage_BreadCrumb" class="col-12 my-4" aria-label="breadcrumb">
+    <ol class="breadcrumb bg-light" id="searchUrl">
+        <li class="breadcrumb-item">
+            <a href="~/Company/Index">展演單位管理</a>
+        </li>
+        <li class="breadcrumb-item">
+            我的展覽
+        </li>
+    </ol>
+</nav>
+
+<!-- 展覽列表 starts -->
+<div class="container">
+    <article class="d-flex justify-content-between">
+
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <a href="@Url.Action("Create", "ShowPageManage")" class="btn btn-outline-secondary border-0 bg-dark text-white">
+                <i class="fas fa-plus"
+                   style="vertical-align: middle; color: white;"></i> 新增展演
+            </a>
+            <a href="#topHeader" id="resetSearchMode" class="btn btn-outline-secondary border-0 bg-pink text-white">
+                <i class="fas fa-trash" style="vertical-align: middle; color: white;"></i> 清除篩選
+            </a>
+        </div>
+        <div class="form-group" style="margin:0px;">
+            @*<label for="OrderSortField">請選擇排序方式</label>*@
+            <select class="form-control" id="OrderSortField" name="OrderSortField">
+                <option value="0" selected>全部展演</option>
+                <option value="1">最新展演</option>
+                @*<option value="2">熱門展演</option>*@
+            </select>
+        </div>
+    </article>
+    <br />
+    <!-- 展覽列表 -->
+    <div id="showPages">
+        @{Html.RenderPartial("~/Views/Shared/CompanyPartial/_ShowPagePartial.cshtml", Model); }
+    </div>
+</div>
+<!-- 展覽列表 ends -->
+
+@section css{
+    <link href="~/css/css_commonPage/ShowList.css" rel="stylesheet" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="~/Content/spinkit.min.css" rel="stylesheet" />
+
+    @*PagedList.Mvc分頁切換css & jquery函示庫*@
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}
+
+@section scripts{
+    <script>
+        $(function () {
+            let oneload = true;
+
+            $.ajax({
+                method: 'get',
+                dataType: 'json',
+                url: '@Url.Action("GetCities", "Method")',
+                success: function (data) {
+                    $('#FK_City').append(`<option value="0" selected>全部縣市</option>`);
+                    for (var index in data) {
+                        $('#FK_City').append(`<option value="${data[index].Id}">${data[index].CityName}</option>`);
+                    }
+
+                    $('#FK_City').trigger('change');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: textStatus,
+                        text: errorThrown,
+                        showConfirmButton: false,
+                        showCancelButton: true
+                    });
+                }
+            });
+
+            $('#FK_City').change(function (event) {
+                var cityId = $(this).val();
+                $('#showKeyword').val('');
+                let selectCityName = this.options.item(this.selectedIndex).innerHTML;
+                removeSearchUrlKeyword();
+                removeSearchUrlDistrict();
+
+                if (cityId > 0) {
+                    $.ajax({
+                        method: 'get',
+                        dataType: 'json',
+                        url: '@Url.Action("GetDistricts", "Method")',
+                        data: { cityId: cityId },
+                        success: function (data) {
+                            $('#FK_District').html('');
+                            $('#FK_District').append(`<option value="0" selected>選擇全部...</option>`);
+
+                            removeSearchUrlCity();
+
+                            let cityLi = document.createElement('li');
+                            cityLi.className = 'breadcrumb-item active';
+                            cityLi.setAttribute('aria-current', 'page');
+
+                            let city_A = document.createElement('a');
+                            city_A.setAttribute('id', 'changeCity');
+
+                            let cityName = document.createTextNode(selectCityName);
+                            city_A.appendChild(cityName);
+                            cityLi.appendChild(city_A);
+                            document.getElementById('searchUrl').appendChild(cityLi);
+
+                            for (var index in data) {
+                                $('#FK_District').append(`<option value="${data[index].Id}">${data[index].DistrictName}</option>`);
+                            }
+                            if (!oneload)
+                                $('#searchMode').submit();
+
+                            oneload = false;
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: textStatus,
+                                text: errorThrown,
+                                showConfirmButton: false,
+                                showCancelButton: true
+                            });
+                        }
+                    });
+                } else {
+                    $('#FK_District').html('');
+                    $('#FK_District').append(`<option value="0" selected>選擇全部...</option>`);
+
+                    removeSearchUrlCity();
+
+                    let cityLi = document.createElement('li');
+                    cityLi.className = 'breadcrumb-item active';
+
+                    let city_A = document.createElement('a');
+                    city_A.setAttribute('id', 'changeCity');
+                    city_A.setAttribute('aria-current', 'page');
+
+                    let cityName = document.createTextNode(selectCityName);
+                    city_A.appendChild(cityName);
+                    cityLi.appendChild(city_A);
+                    document.getElementById('searchUrl').appendChild(cityLi);
+
+                    if (!oneload)
+                        $('#searchMode').submit();
+
+                    oneload = false;
+                }
+            });
+
+            $('#FK_District').change(function () {
+                $('#showKeyword').val('');
+                let selectDistrictName = this.options.item(this.selectedIndex).innerHTML;
+                removeSearchUrlKeyword();
+                removeSearchUrlDistrict();
+
+                let districtLi = document.createElement('li');
+                districtLi.className = 'breadcrumb-item active';
+
+                let district_A = document.createElement('a');
+                district_A.setAttribute('id', 'changeDistrict');
+                district_A.setAttribute('aria-current', 'page');
+
+                let districtName = document.createTextNode(selectDistrictName);
+                district_A.appendChild(districtName);
+                districtLi.appendChild(district_A);
+                document.getElementById('searchUrl').appendChild(districtLi);
+
+                let cityLi = document.getElementById('changeCity').parentNode;
+                cityLi.classList.remove('active');
+                cityLi.removeAttribute('aria-current');
+
+                if (!oneload)
+                    $('#searchMode').submit();
+            });
+
+            $('#StartDate').change(function () {
+                $('#showKeyword').val('');
+                if (!oneload)
+                    $('#searchMode').submit();
+            });
+
+            $('#EndDate').change(function () {
+                $('#showKeyword').val('');
+                if (!oneload)
+                    $('#searchMode').submit();
+            });
+
+            $('#Cost').change(function () {
+                $('#showKeyword').val('');
+                if (!oneload)
+                    $('#searchMode').submit();
+            });
+
+            $('#OrderSortField').change(function () {
+                $('#showKeyword').val('');
+                if (!oneload)
+                    $('#searchMode').submit();
+            });
+
+            $('#changeCity').click(function (event) {
+                event.preventDefault();
+                $('#FK_City').trigger('change');
+            });
+
+            $('#changeDistrict').click(function (event) {
+                event.preventDefault();
+                $('#FK_District').trigger('change');
+            });
+
+            $('#resetSearchMode').click(function () {
+                oneload = true;
+                removeSearchUrlKeyword();
+                removeSearchUrlCity();
+                removeSearchUrlDistrict();
+                $('#FK_City').val(0);
+
+                let cityLi = document.createElement('li');
+                cityLi.className = 'breadcrumb-item active';
+
+                let city_A = document.createElement('a');
+                city_A.setAttribute('id', 'changeCity');
+                city_A.setAttribute('aria-current', 'page');
+
+                let cityName = document.createTextNode('全部縣市');
+                city_A.appendChild(cityName);
+                cityLi.appendChild(city_A);
+                document.getElementById('searchUrl').appendChild(cityLi);
+                $('#showKeyword').val('');
+                $('#StartDate').val('');
+                $('#EndDate').val('');
+                $('#Cost').val(0);
+                $('#OrderSortField').val(0);
+                $('#searchMode').submit();
+            });
+
+            $('#buttonSearch').click(function () {
+                let page = 1;
+                let showKeyword = $('#showKeyword').val();
+                if (showKeyword == '') {
+                    return;
+                }
+                oneload = true;
+                $('#FK_City').val(0);
+                $('#StartDate').val('');
+                $('#EndDate').val('');
+                $('#Cost').val(0);
+                $('#OrderSortField').val(0);
+                removeSearchUrlKeyword();
+                loadingShowPages();
+
+                $.ajax({
+                    type: 'post',
+                    url: '@Url.Action("getShowPages", "ShowPageManage")',
+                    data: { keyword: showKeyword, page: page },
+                    success: function (data) {
+                        $('#showPages').html(data);
+
+                        let searchUrl = document.getElementById('searchUrl');
+                        let changeCity = document.getElementById('changeCity');
+                        let changeDistrict = document.getElementById('changeDistrict');
+
+                        if (changeCity != null) {
+                            searchUrl.removeChild(changeCity.parentNode);
+                        }
+
+                        if (changeDistrict != null) {
+                            searchUrl.removeChild(changeDistrict.parentNode);
+                        }
+
+                        let kwdtLi = document.createElement('li');
+                        kwdtLi.className = 'breadcrumb-item';
+
+                        let kwd_A = document.createElement('a');
+                        kwd_A.setAttribute('id', 'changeKwd');
+                        kwd_A.setAttribute('aria-current', 'page');
+
+                        let kwdName = document.createTextNode(`搜尋關鍵字：${showKeyword}`);
+                        kwd_A.appendChild(kwdName);
+                        kwdtLi.appendChild(kwd_A);
+                        document.getElementById('searchUrl').appendChild(kwdtLi);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: textStatus,
+                            text: errorThrown,
+                            showConfirmButton: false,
+                            showCancelButton: true
+                        });
+                        errorServerMsg();
+                    }
+                });
+                oneload = false;
+            });
+
+            $('#searchMode').submit(function (event) {
+                event.preventDefault();
+                //let formData = $(this).serialize();
+                let FK_City = $('#FK_City').val();
+                let FK_District = $('#FK_District').val();
+                let StartDate = $('#StartDate').val();
+                let EndDate = $('#EndDate').val();
+                let Cost = $('#Cost').val();
+                let OrderSortField = $('#OrderSortField').val();
+                let page = 1;
+
+                loadingShowPages();
+
+                $.ajax({
+                    type: 'post',
+                    url: '@Url.Action("getShowPages", "ShowPageManage")',
+                    data: { FK_City:FK_City, FK_District:FK_District, StartDate:StartDate, EndDate:EndDate, Cost:Cost, OrderSortField:OrderSortField, page:page},
+                    success: function (data) {
+                        $('#showPages').html(data);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: textStatus,
+                            text: errorThrown,
+                            showConfirmButton: false,
+                            showCancelButton: true
+                        });
+                        errorServerMsg();
+                    }
+                });
+
+                oneload = false;
+            });
+
+        });
+
+        function loadingShowPages() {
+            $('#showPages').html('<div class="sk-wave" style="margin:100px auto;"><div class="sk-wave-rect"></div><div class="sk-wave-rect"></div><div class="sk-wave-rect"></div><div class="sk-wave-rect"></div><div class="sk-wave-rect"></div></div>');
+        }
+
+        function errorServerMsg() {
+            $('#showPages').html('<br /><br /><h1>伺服器發生錯誤，無法取得資料</h1>');
+        }
+
+        function removeShowPage(showPageId) {
+            Swal.fire({
+                title: '移除展覽?',
+                text: "是否要移除此展覽？",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: '是！確定移除',
+                cancelButtonText: '否！不要移除',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'post',
+                        url: '@Url.Action("Delete", "ShowPageManage")',
+                        data: { showPageId: showPageId },
+                        success: function () {
+                            //    updateShowPages();
+                            $('#resetSearchMode').trigger('click');
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: textStatus,
+                                text: errorThrown,
+                                showConfirmButton: false,
+                                showCancelButton: true
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+        function removeSearchUrlKeyword() {
+            let kwd_A = document.getElementById('changeKwd');
+
+            if (kwd_A != null) {
+
+                document.getElementById('searchUrl').removeChild(kwd_A.parentNode);
+            }
+        }
+
+        function removeSearchUrlCity() {
+            let cityLi_A = document.getElementById('changeCity');
+
+            if (cityLi_A != null) {
+
+                document.getElementById('searchUrl').removeChild(cityLi_A.parentNode);
+            }
+        }
+
+        function removeSearchUrlDistrict() {
+            let districtLi_A = document.getElementById('changeDistrict');
+
+            if (districtLi_A != null) {
+
+                document.getElementById('searchUrl').removeChild(districtLi_A.parentNode);
+            }
+        }
+
+    </script>
+}

@@ -1,0 +1,62 @@
+﻿@*@if (Model.TwoFactor)
+    {
+        <form method="post" action="/Manage/DisableTFA" id="IsEnableTFA">
+            <p>
+                Two factor is currently enabled:
+                <input type="submit" value="Disable" class="btn btn-default" />
+            </p>
+        </form>
+    }
+    else
+    {
+        <form method="post" action="/Manage/EnableTFA" id="IsEnableTFA">
+            <p>
+                Two factor is currently disabled:
+                <input type="submit" value="Enable" class="btn btn-default" />
+            </p>
+        </form>
+    }*@
+
+@if (Model.TwoFactor)
+{
+    if (User.IsInRole("Company"))
+    {
+        <form class="form-group row" method="post" action="/Manage/DisableTFA" id="IsEnableTFA">
+            <label class="col-sm-4 col-form-label">二階段認證：</label>
+            <div class="col-sm-8">
+                <input type="submit" value="已開啟" class="btn btn-success" />
+            </div>
+        </form>
+    }
+    else
+    {
+
+        <form class="col-12 row justify-content-center px-0" method="post" action="/Manage/DisableTFA" id="IsEnableTFA">
+            <label class="col-4 col-md-2">二階段認證</label>
+            <div class="col-6 px-0 d-flex justify-content-start">
+                <input type="submit" value="已開啟" class="w-100 btn btn-outline-secondary border-0 bg-gray" />
+            </div>
+        </form>
+    }
+}
+else
+{
+    if (User.IsInRole("Company"))
+    {
+        <form class="form-group row" method="post" action="/Manage/EnableTFA" id="IsEnableTFA">
+            <label class="col-sm-4 col-form-label">二階段認證：</label>
+            <div class="col-sm-8">
+                <input type="submit" value="已關閉" class="btn btn-danger" />
+            </div>
+        </form>
+    }
+    else
+    {
+        <form class="col-12 row justify-content-center px-0" method="post" action="/Manage/EnableTFA" id="IsEnableTFA">
+            <label class="col-4 col-md-2">二階段認證</label>
+            <div class="col-6 px-0 d-flex justify-content-start">
+                <input type="submit" value="已關閉" class="w-100 btn btn-outline-secondary border-0 bg-gray" />
+            </div>
+        </form>
+    }
+}

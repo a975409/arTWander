@@ -1,0 +1,126 @@
+﻿@*引入PagedList.Mvc分頁套件*@
+@using PagedList
+@using PagedList.Mvc
+@model IPagedList<arTWander.Models.CommonCompanyViewModel>
+
+@{
+    Layout = "~/Views/Shared/CommonLayout/_AsideTrueNoSearch.cshtml";
+}
+
+@section css{
+    <link href="~/css/css_commonPage/ShowList.css" rel="stylesheet" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="~/Content/spinkit.min.css" rel="stylesheet" />
+
+    @*PagedList.Mvc分頁切換css & jquery函示庫*@
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}
+
+<div id="showPages">
+    <!-- 區域選擇 -->
+    <div class="container mb-3">
+        <div class="dropdown d-flex my-auto col-10 col-md-8 col-lg-6 pl-0 ">
+            <div class="row w-100 mx-0 justify-content-start">
+                <label class="col-6 col-md-4 px-0 my-auto">請選擇地區</label>
+                <div class="col-6 col-md-6 px-0">
+                    <select class="form-control ml-1" id="citySelector">
+                        <option value="" selected disabled hidden>請選擇地區</option>
+                        @foreach (var city in ViewBag.city)
+                        {
+                            <option value="@city.Id">@city.CityName</option>
+                        }
+
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 展覽列表 starts -->
+    <div id="getCompanyList">
+        @Html.Partial("~/Views/Shared/CommonPartial/Card/_PartialCompanyList.cshtml", Model)
+    </div>
+
+
+</div>
+<!-- 分頁 start -->
+<!-- 分頁 ends -->
+<!-- 彈出視窗顯示用戶資訊 -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade px-0" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- 控至彈出窗大小 -->
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">展演單位詳細資訊</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <main>
+                    <!-- 主內容 -->
+                    <!-- ajax導入相關內容 -->
+                    <section id="Section" class="w-100">
+                        <div id="detailInform">
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    //取得對應customer ID詳細資訊
+    $('.Customderform').click(function (event) {
+        var companyID = { Id: $(this).find(".companyId").text() };
+        var myFormData = new FormData();
+        myFormData.append("companyId", JSON.stringify(companyID));
+
+        $.ajax({
+            url: '@Url.Action("SubscriptionDetail", "Common")',
+            type: 'POST',
+            data: myFormData,
+            enctype: "multipart/form-data",
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log("Good");
+                $('#detailInform').html(data);
+            },
+            //錯誤訊息
+            error: (XMLHttpRequest, textStatus, errorThrown)=>{
+              $("#detailInform").innerHTML = "there is something wrong!";
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
+         });
+    });
+
+    $('#citySelector').change(function (event) {
+        var cityId = $('#citySelector').val()
+        event.preventDefault();
+        $.ajax({
+            url: '/Common/getGalleryList',
+            type: 'get',
+            data: { cityId:cityId},
+            success: function (data) {
+                console.log("Good");
+                $('#getCompanyList').html(data);
+            },
+            //錯誤訊息
+            error: (XMLHttpRequest, textStatus, errorThrown)=>{
+              $("#detailInform").innerHTML = "there is something wrong!";
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
+         });
+    });
+</script>

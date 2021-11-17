@@ -1,0 +1,97 @@
+.bg-gray{
+    background-color: rgba(196, 196, 196, 1);
+}
+
+/* shortDetail 白色敘述卡 starts*/
+.shortDetail{
+    background-color: rgb(255, 255, 255);
+    box-shadow: 5px 0 10px rgb(131, 131, 131);
+    width: 80%;
+    z-index: 1000;
+    padding: 20px;
+    position: absolute;
+    bottom: -10%;
+    left: 10%;
+}
+
+.shortDetail a{
+    text-decoration: none;
+    color: rgb(197, 126, 104);
+    font-size: 10px;
+    transition: all .3s ease-in-out;
+}
+
+.shortDetail a:hover{
+    /* font-weight: bold; */
+    color: rgb(0, 0, 0);
+}
+
+.description{
+    overflow:hidden; 
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    /* https://medium.com/@jacobhsu/css-%E9%99%90%E5%88%B6%E5%85%A7%E5%AE%B9%E5%AD%97%E6%95%B8-224926dd642f  */
+}
+
+.description a{
+    font-size: 15px;
+    color: black;
+}
+
+.showImg{
+    max-width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.showImg img{
+    max-width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: all .3s ease-in-out;
+}
+
+.showImg img:hover{
+    transform: scale(1.2);
+}
+
+.marqee {
+    height: 24px;
+    width: 65%;
+    overflow: hidden;
+    position: relative;
+}
+
+    .marqee a {
+        position: absolute;
+        top: 2px;
+        animation: marqee 8s linear infinite;
+        white-space: nowrap;
+    }
+
+
+@media screen and (max-width: 992px){
+    .showImg{
+        height: 400px;
+    }
+
+    .showImg img{
+        height: 400px;
+    }
+
+    .shortDetail a{
+        font-size: 15px;
+    }
+
+    .description a{
+        font-size: 20px;
+        color: black;
+    }
+    
+    .showlistRow > div{
+        margin-bottom: 100px;
+    }
+}
+/* shortDetail 白色敘述卡 ends*/

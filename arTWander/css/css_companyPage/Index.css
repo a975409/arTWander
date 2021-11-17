@@ -1,0 +1,18 @@
+﻿
+
+#PromotionalImage {
+    max-height:400px;
+}
+
+.jumbotron {
+    border-radius: 0px;
+}
+
+#nav-MyShow-tab {
+    margin: 0px;
+}
+
+.mainField .form-control {
+    border-style: none;   
+    background-color: transparent;
+}

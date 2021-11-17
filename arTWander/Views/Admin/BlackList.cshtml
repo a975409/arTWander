@@ -1,0 +1,68 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<link rel="stylesheet" href="~/css/UserList.css">
+
+
+<!-- nav-tab -->
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-link active" id="navBlackUserTab" data-toggle="tab" href="#nav-Blackuser" role="tab"
+           aria-controls="nav-Blackuser" aria-selected="true">一般會員</a>
+        <a class="nav-link" id="navBlackCustomerTab" data-toggle="tab" href="#nav-BlackCustomer" role="tab"
+           aria-controls="nav-BlackCustomer" aria-selected="false">展演單位</a>
+
+    </div>
+</nav>
+
+<main>
+    <!-- 主內容 -->
+    <section id="Section" class="w-100">
+        <div id="blackMain">
+        </div>
+    </section>
+</main>
+
+
+<script>
+  //BlackList (預設導入) (jquery ready (檔案讀取完成後導入))
+    $(document).ready(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("BlackUser", "Admin")',
+            data: {},
+            success: function (data) {
+                $('#blackMain').html(data);
+            }
+        });
+    });
+</script>
+
+<script>
+  //點擊分頁連結頁面
+  //BlackUserlist
+    $("#navBlackUserTab").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("BlackUser", "Admin")',
+            data: FormData,
+            success: function (data) {
+                $('#blackMain').html(data);
+            }
+        });
+    });
+      //BlackCustomer
+    $("#navBlackCustomerTab").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("BlackCustomer", "Admin")',
+            data: FormData,
+            success: function (data) {
+                $('#blackMain').html(data);
+            }
+        });
+    });
+</script>

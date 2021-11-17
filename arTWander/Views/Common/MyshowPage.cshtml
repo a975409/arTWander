@@ -1,0 +1,43 @@
+﻿@model arTWander.Models.CommonViewModel.CommonMyShowViewNodel
+@using PagedList
+@using PagedList.Mvc
+
+
+@{
+    Layout = "~/Views/Shared/CommonLayout/_AsideTrueNoSearch.cshtml";
+    var allCity = Model.allCity;
+    var allShow = Model.allShow;
+}
+
+@section css{
+    @*PagedList.Mvc分頁切換css & jquery函示庫*@
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}
+
+<!-- 區域選擇 -->
+<div class="container mb-3">
+    <div class="dropdown d-flex my-auto col-10 col-md-8 col-lg-6 pl-0 ">
+        <div class="row w-100 mx-0 justify-content-start">
+            <label class="col-6 col-md-4 px-0 my-auto">請選擇地區</label>
+            <div class="col-6 col-md-6 px-0">
+                <select class="form-control ml-1" id="citySelector">
+                    <option value="" selected disabled hidden>請選擇地區</option>
+                    @foreach (var city in allCity)
+                    {
+                        <option value="@city.Id">@city.CityName</option>
+                    }
+
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 展覽列表 starts -->
+<div id="myshowPage">
+    @Html.Partial("~/Views/Shared/CommonPartial/Card/_PartialMyShowList.cshtml", allShow)
+</div>
+
+@Scripts.Render("~/javascript/common_MyShowPage.js")

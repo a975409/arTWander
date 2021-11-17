@@ -1,0 +1,82 @@
+body {
+    position: relative;
+    overflow-x: hidden;
+}
+
+i {
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+}
+
+
+
+#showTitle {
+    line-height: 50px;
+}
+
+@media screen and (max-width: 768px) {
+
+    /* breadcrumb start */
+    .breadcrumb {
+        display: none;
+    }
+    /* breadcrumb end */
+
+}
+
+
+/* section start*/
+
+div.AllListContent {
+    border: solid;
+    border-color: rgb(196, 196, 196);
+    border-radius: 5px;
+    /* margin: 10px; */
+}
+
+#tableSet {
+    table-layout: fixed;
+    width: 100%;
+    height: 100%;
+}
+#tableset > .tableInd {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.AllListTitle input {
+    height: auto;
+    min-height: 20px;
+    padding: 2px;
+}
+
+
+
+/* pagination 控制顏色 */
+.page-link {
+    color: #333;
+}
+
+/* section end */
+
+hr {
+    border-top: 2px solid rgba(0,0,0,.1);
+    width: 95%;
+}
+
+/* breadcrumb color */
+.breadcrumb .active {
+    color: #C57E68;
+}
+
+/* sort標籤 */
+#sort {
+    padding: 0px;
+}
+
+
+#addMygalleryBtn {
+    border: initial;
+    background-color: rgb(197, 126, 104);
+}

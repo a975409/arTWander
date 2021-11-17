@@ -1,0 +1,218 @@
+﻿@model List<arTWander.Models.CommonCompanyViewModel>
+
+@{
+    ViewBag.Title = "SubscriptionDetail";
+    Layout = null;
+}
+
+
+@{
+    foreach (var item in Model)
+    {
+
+        <div class="container mt-5">
+            <div class="row">
+                <!-- 展演單位starts -->
+                <div class="col-12 col-lg-4 position-relative d-flex flex-column align-items-center">
+                    <!-- 展演單位頭像 starts -->
+                    <div class="GalleryImg rounded-circle d-flex position-relative mb-3">
+                        <a class="galleryPage" href="#">
+                            <img class="w-100 rounded-circle img-fluid " src="@item.PhotoSticker" alt="">
+                        </a>
+                    </div>
+                    <!-- 展演單位頭像 ends -->
+                </div>
+
+                <div class="col-12 col-lg-8 my-auto ">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <!-- 展演單位資訊 starts -->
+                            <h4 class="col-12 px-0 my-auto itineraryIcon font-weight-bold">@item.CompanyCity／@item.CompanyName</h4>
+                            <!-- 展演單位資訊 ends -->
+                        </div>
+
+                        <div class="col-12">
+                            <!-- 展演單位資訊 starts -->
+                            <!-- 自動斷行 -->
+                            <p class="text-break">@Html.Raw(HttpUtility.HtmlDecode(item.CompanyDescription))</p>
+                            <!-- 展演單位資訊 ends -->
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <h4>聯繫方式</h4>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="mainField">
+                                <span class="">官方首頁</span><br>
+                                <a href="" value="">@item.HomePage</a>
+                            </div><br>
+                            <div class="mainField">
+                                <span class="">營業時間</span><br>
+                                <span class="">@item.BusinessHours</span>
+                            </div><br>
+                            <div class="mainField">
+                                <span class="">地址</span><br>
+                                <a class="col-12" href="https://www.google.com/maps/search/?api=1&query=@item.Address" target="_blank"><i class="fas fa-map-marker-alt"> @item.Address</i></a>
+                            </div><br>
+                        </div>
+
+                        <div class="col-12 col-sm-6">
+
+                            <div class="mainField">
+                                <span class="">Email</span><br>
+                                <a href="" value="">@item.Email</a>
+                            </div><br>
+                            <div class="mainField">
+                                <span class="">電話</span><br>
+                                <span class="">@item.Phone</span>
+                            </div><br>
+                            <div class="mainField">
+                                <span class="">營業時間</span><br>
+                                <span class="">@item.BusinessHours</span>
+                            </div><br>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 w-100 mx-auto text-center">
+                <button id="addMygalleryBtn" class="btn btn-default col-12 col-md-6 col-lg-4" type="submit" value="加入訂閱" style=" border: initial; background-color: rgb(197, 126, 104); color:white;">
+                    加入訂閱 <span class="addToGallery" name="addToGallery" hidden>@item.Id</span>
+                    <span class="galleryName" name="galleryName" hidden>@item.CompanyName</span>
+
+                </button>
+
+            </div>
+
+            <!-- 展演單位 ends -->
+
+            <div class="container mt-5">
+                <span class="px-3 py-2 spanText"> 當期展覽 </span>
+            </div>
+
+        </div>
+
+
+        <div class="container mt-5">
+
+            @for (int i = 0; i < item.ShowId.Length; i++)
+            {
+                <div class="row my-5 position-relative"data-toggle="modal" data-target="#staticBackdrop">
+                    <!-- 展覽圖片 strats -->
+                    <div class="col-12">
+                        <div class="subscriptionShowImg" >
+                            <a class="showInformBtn" href="@Url.Action("ShowInfo","Common", new{ showId=@item.ShowId[i]})" >
+                                <img class="w-100 img-fluid" style="object-fit: cover;" src="@item.ShowImg[i]" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 展覽圖片 end -->
+                    <!-- 展覽敘述卡 strats -->
+                    <div class="SubShowDetail col-12 col-md-4">
+                        <div class="d-flex align-items-center">
+                            <a href="">
+                                @item.ShowCity[i]
+                            </a>／
+                            <a href="">
+                                @item.ShowTitle[i]
+                            </a>
+                        </div>
+                        <div class="description">
+                            <a href="#">
+                                @Html.Raw(HttpUtility.HtmlDecode(item.ShowDiscription[i]))
+                            </a>
+                        </div>
+                    </div>
+                    @*< !--展覽敘述卡 ends -->*@
+                </div>
+                <br>
+            }
+        </div>
+
+
+
+
+
+        <!-- 彈出視窗顯示展演資訊 -->
+        <!-- Button trigger modal -->
+        <!-- Modal -->
+        <div class="modal fade px-0" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <!-- 控至彈出窗大小 -->
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">展演資訊</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <main>
+                            <!-- 主內容 -->
+                            <!-- ajax導入相關內容 -->
+                            <section id="Section" class="w-100">
+                                <div id="detailShowInform">
+                                </div>
+                            </section>
+                        </main>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    //點擊分頁連結頁面
+    $(".showInformBtn").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("ShowInformDetail", "Common")',
+            data: {},
+            success: function (data) {
+                $('#detailShowInform').html(data);
+            }
+        });
+    });
+
+    //取得對應customer ID詳細資訊
+    $('#addMygalleryBtn').click(function (event) {
+        var galleryId = { Id: $(this).find(".addToGallery").text() };
+        var myFormData = new FormData();
+        myFormData.append("galleryId", JSON.stringify(galleryId));
+        var galleryName = $(this).find(".galleryName").text();
+        $.ajax({
+            url: '@Url.Action("addToMyGallery", "Common")',
+            type: 'POST',
+            data: myFormData,
+            enctype: "multipart/form-data",
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log("Good");
+                Swal.fire({
+                    position: 'top',
+                    icon: 'success',
+                    title: galleryName+' 已加進訂閱清單',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                /*$('#mainPage').load();*/
+                
+
+            },
+            //錯誤訊息
+            error: (XMLHttpRequest, textStatus, errorThrown)=>{
+              $("#detailInform").innerHTML = "there is something wrong!";
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
+         });
+    });
+</script>

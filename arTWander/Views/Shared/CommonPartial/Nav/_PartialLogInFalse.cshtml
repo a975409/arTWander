@@ -1,0 +1,116 @@
+﻿<!-- 登入按鈕 starts -->
+<button type="button" class="border-0 bg-transparent" data-toggle="modal" data-target="#logInModal">
+    登入
+</button>
+<!-- 登入按鈕 ends -->
+<!-- 燈箱(modal) starts -->
+<div class="modal fade" id="logInModal" tabindex="-1" aria-labelledby="logInModal" aria-hidden="true" ">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body d-flex align-items-center" style="height: 400px;">
+                <div class=" container-fluid">
+                    <!-- 登入及註冊鈕 starts -->
+                    <ul class="nav nav-tabs d-flex justify-content-center border-bottom-0 " id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active border-0 bg-transparent" id="loginForm-tab" data-toggle="tab" data-target="#loginForm" type="button" role="tab" aria-controls="loginForm" aria-selected="true">
+                                <h4>登入</h4>
+                            </button>
+                        </li>
+                        <li class="nav-item p-1">
+                            <h4>|</h4>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link border-0 bg-transparent" id="regist-tab" data-toggle="tab" data-target="#registerForm" type="button" role="tab" aria-controls="registerForm" aria-selected="false">
+                                <h4>註冊</h4>
+                            </button>
+                        </li>
+                    </ul>
+                    <!-- 登入及註冊鈕 ends -->
+                    <div class="tab-content">
+                        <!-- 登入欄位 starts -->
+                        <form id="loginForm" action="" class="tab-pane fade show active" role="tabpanel" aria-labelledby="loginForm-tab">
+                            <div class="row my-2">
+                                <div class="col-6 mx-auto">
+                                    <label for="account">帳號：</label>
+                                    <input id="account" name="account" type="text" class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 mx-auto">
+                                    <label for="pwd">密碼：</label>
+                                    <input id="pwd" name="pwd" type="password" class="border-bottom border-top-0 border-left-0 border-right-0 bg-transparent">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-6 mx-auto d-flex justify-content-end text-decoration-underline">
+                                    <u><a class="font-weight-light" href="">忘記密碼?</a></u>
+                                </div>
+                            </div>
+                            <div class="row mt-4 mb-2 justify-content-center">
+                                <div class="col-3 mx-auto d-flex justify-content-center">
+                                    <button type="button" class="btn btn-outline-secondary border-0 bg-dark text-white w-100">登入</button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- 登入欄位 ends -->
+                        <!-- 註冊欄位 starts -->
+                        <form id="registerForm" action="" class="tab-pane" role="tabpanel" aria-labelledby="regist-tab">
+                            <div class="row my-2 justify-content-center">
+                                <div class="col-3 p-0">
+                                    <label for="signName">使用者名稱：</label>
+                                </div>
+                                <div class="col-4 p-0">
+                                    <input id="signName" name="account" type="text" class=" bg-transparent border border-dark">
+                                </div>
+                            </div>
+                            <div class="row my-2 justify-content-center">
+                                <div class="col-3 p-0">
+                                    <label for="signAccount">帳號：</label>
+
+                                </div>
+                                <div class="col-4 p-0">
+                                    <input id="signAccount" name="account" type="text" class=" bg-transparent border border-dark">
+                                </div>
+                            </div>
+                            <div class="row my-2 justify-content-center">
+                                <div class="col-3 p-0">
+                                    <label for="signPwd">密碼：</label>
+
+                                </div>
+                                <div class="col-4 p-0">
+                                    <input id="signPwd" name="account" type="text" class=" bg-transparent border border-dark">
+                                </div>
+                            </div>
+                            <div class="row my-2 justify-content-center">
+                                <div class="col-3 p-0">
+                                    <label for="signPwdChk">密碼確認：</label>
+
+                                </div>
+                                <div class="col-4 p-0">
+                                    <input id="signPwdChk" name="account" type="text" class=" bg-transparent border border-dark">
+                                </div>
+                            </div>
+                            <div class="row mt-4 mb-2 justify-content-center">
+                                <div class="col-7 mx-auto d-flex justify-content-center">
+                                    <button id="btnSignUp" type="button" class="btn btn-outline-secondary border-0 bg-pink text-white w-50 px-0">
+                                        繼續
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- 註冊欄位 ends -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+  </div>
+<!-- 燈箱(modal) ends -->

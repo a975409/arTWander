@@ -1,0 +1,23 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">會員功能</a></li>
+    <li class="breadcrumb-item"><a href="#">帳戶管理</a></li>
+  </ol>
+</nav>
+
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+  </div>
+  <div class="tab-pane fade" id="list-analyze" role="tabpanel" aria-labelledby="list-analyze-list"></div>
+  <div class="tab-pane fade" id="list-reportShow" role="tabpanel" aria-labelledby="list-reportShow-list">...</div>
+  <div class="tab-pane fade" id="list-reportPost" role="tabpanel" aria-labelledby="list-reportPost-list">...</div>
+  <div class="tab-pane fade" id="list-Edit" role="tabpanel" aria-labelledby="list-Edit-list"></div>
+</div>
+
+<script>
+  $('#list-home').load('CompanyPage/AccountPage/AccountHomePage.html');
+  $('#list-analyze').load('CompanyPage/AccountPage/AccountAnalyzePage.html');
+  $('#list-reportShow').load('CompanyPage/AccountPage/AccoutReportShowPage.html');
+  $('#list-reportPost').load('CompanyPage/AccountPage/AccoutReportPostPage.html');
+  $('#list-Edit').load('CompanyPage/AccountPage/AccoutEditPage.html');
+</script>

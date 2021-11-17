@@ -1,0 +1,676 @@
+/* 基本設定 starts */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: rgb(54, 50, 50);
+}
+
+.container-fluid, .container {
+    padding: 0;
+}
+
+.row {
+    margin: 0;
+    padding: 0;
+}
+
+mark {
+    padding: 0 0;
+    background-color: transparent;
+}
+
+h3, h4, h5, p, a {
+    font-family: 'Noto Serif TC', serif;
+}
+
+/* 基本設定 ends */
+
+/* 頁首starts */
+header {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    z-index: 1005;
+}
+
+    /* ------------- */
+    header nav {
+        height: 10%;
+    }
+
+        header nav div:last-of-type {
+            display: flex;
+            justify-content: end;
+            padding: 2% 3%;
+        }
+
+#signInBtn {
+    z-index: 1003;
+}
+
+.fa-cog {
+    transition: all .3s ease-in;
+    color: white;
+    margin-right: 15px;
+}
+
+    .fa-cog:hover {
+        transform: rotate(180deg);
+    }
+/* ------------- */
+header section {
+    height: 90%;
+    justify-content: end;
+}
+
+    header section .paddingMap {
+        padding: 0 100px;
+        overflow: hidden;
+    }
+
+    header section svg {
+        opacity: 0;
+        animation-name: scale;
+        animation-timing-function: ease;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-delay: .5s;
+    }
+
+svg {
+    fill: #7c7c7c;
+    stroke: #ffffff;
+    stroke-width: .5px;
+    /* 邊框端點的形狀 */
+    stroke-linecap: round;
+    /* 邊框接合尖角的形狀 */
+    stroke-linejoin: round;
+}
+
+    svg a {
+        fill: #7c7c7c;
+    }
+
+path {
+    transition: all .15s ease-in-out;
+}
+
+    path:hover {
+        fill: rgb(0, 255, 170);
+        filter: drop-shadow(0 0 15px rgb(0, 255, 170));
+    }
+
+    path title {
+        border: none;
+        background-color: transparent;
+    }
+/* ------------- */
+header > figure, header > h3, header > hgroup {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+header > figure {
+    animation-name: rightFadeIn;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease;
+}
+
+    header > figure img {
+        width: 15%;
+    }
+
+header > h3 {
+    /* 藝文漫步  */
+    font-size: 20px;
+    color: white;
+    letter-spacing: 5px;
+    font-family: 'Noto Serif TC', serif;
+    writing-mode: vertical-lr;
+    margin: 0 0;
+    animation-name: topFadeIn;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease;
+    opacity: 0;
+}
+
+header > hgroup {
+    /* 從地圖出發... 探索*/
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-name: popOut;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-delay: .5s;
+    opacity: 0
+}
+
+    header > hgroup h3, header > hgroup p {
+        /* 從地圖出發... 探索*/
+        color: white;
+    }
+
+mark {
+    display: flex;
+    align-items: center;
+}
+
+    mark p {
+        margin: 0;
+    }
+
+#pointer {
+    /* focus特效 */
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 0 20px;
+    animation-name: light;
+    animation-duration: 1s;
+    animation-delay: 2s;
+    animation-iteration-count: infinite;
+    opacity: 0;
+}
+
+/* ------------- */
+/* 頁首ends */
+
+/* 內容 starts */
+body > main {
+    margin-top: 150px;
+    padding: 100px 0;
+    opacity: 0;
+    filter: blur(10px);
+    transition: all .5s ease-in;
+}
+
+.aboutUs {
+    background-color: white;
+    box-shadow: 5px 5px 20px black;
+    border-radius: 5px;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    .aboutUs img {
+        width: 150px;
+        margin-bottom: 10px;
+    }
+
+    .aboutUs h4 {
+        font-weight: bold;
+    }
+
+    .aboutUs hr {
+        border: none;
+        height: .5px;
+        background-color: rgb(139, 139, 139);
+        width: 100%;
+    }
+/* ------------- */
+
+.section1 {
+    padding: 100px 0;
+    justify-content: end;
+    opacity: 0;
+    filter: blur(10px);
+    transition: all .5s ease-in;
+}
+
+.section2 {
+    padding: 100px 0;
+    justify-content: start;
+    opacity: 0;
+    filter: blur(10px);
+    transition: all .5s ease-in;
+}
+
+.carousel_div {
+    width: 100%;
+    height: 400px;
+}
+
+    .carousel_div img {
+        object-fit: cover;
+    }
+/* ------------- */
+body > section {
+    margin-top: 150px;
+}
+
+.detailCard {
+    width: 100%;
+    height: 250px;
+    background-color: white;
+    padding: 20px 20px 20px 20px;
+    border-radius: 5px;
+    z-index: 1000;
+    box-shadow: 5px 5px 20px black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+    .detailCard a, .detailCard i {
+        text-decoration: underline;
+        color: rgb(197, 126, 104);
+        transition: all .3s ease-in;
+    }
+
+    .detailCard h5 {
+        font-weight: bold;
+        font-size: 18px;
+        margin: 20px 0;
+    }
+
+    .detailCard p {
+        color: #5d5d5d;
+    }
+
+    .detailCard a {
+        font-size: 90%;
+    }
+
+        .detailCard a:hover {
+            color: rgb(255, 153, 122);
+        }
+
+#section1 .detailCard {
+    top: 200px;
+    left: 50px;
+}
+
+#section2 .detailCard {
+    top: 200px;
+    right: 50px;
+}
+
+#section1 .col-md-1, #section2 .col-md-1 {
+    /* top: -100px; */
+    color: aliceblue;
+    writing-mode: vertical-lr;
+    letter-spacing: 10px;
+}
+
+/* 內容 ends */
+/* 頁尾 starts */
+footer {
+    margin-top: 200px;
+}
+
+    footer .row {
+        justify-content: center;
+    }
+
+        footer .row:last-of-type {
+            margin-top: 200px;
+            margin-bottom: 50px;
+        }
+
+            footer .row:last-of-type p {
+                font-weight: lighter;
+            }
+
+#footerText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    #footerText h4, footer p {
+        color: white;
+    }
+
+#btnUP {
+    margin-top: 20px;
+    filter: drop-shadow(0 0 5px red);
+    animation-name: shine;
+    animation-iteration-count: infinite;
+    animation-duration: 1s;
+}
+
+/* 頁尾 ends */
+.show {
+    filter: blur(0px);
+    opacity: 1;
+}
+
+
+/* media query starts*/
+
+
+@media screen and (max-width: 992px) {
+    .detailCard {
+        height: 200px;
+    }
+
+    body > section {
+        margin-top: 0px;
+    }
+
+    body > main {
+        margin: 150px 0;
+    }
+
+    header > hgroup {
+        width: 320px;
+        left: 35%;
+        padding: 30px;
+    }
+
+    mark {
+        height: 30px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+
+    .detailCard h5 {
+        margin: 10px 0;
+        font-size: 15px;
+    }
+
+    .detailCard p, .detailCard a {
+        font-size: 10px;
+    }
+
+    /*header>hgroup h3 {
+        font-size: 20px;
+    }*/
+}
+
+@media screen and (max-width: 768px) {
+    body > main {
+        margin: 0 0;
+    }
+
+    #section1 .col-md-1 {
+        writing-mode: horizontal-tb;
+        top: 220px;
+    }
+
+    #section2 .col-md-1 {
+        writing-mode: horizontal-tb;
+        top: -720px;
+    }
+
+    #section1 .detailCard {
+        top: 550px;
+        left: 20px;
+    }
+
+    #section2 .detailCard {
+        top: -100px;
+        left: -20px;
+    }
+
+    #section2 {
+        margin-top: 100px;
+    }
+
+    .detailCard {
+        height: 250px;
+        width: 70%;
+    }
+
+    footer {
+        margin-top: 0px;
+        margin-bottom: 100px;
+    }
+
+    header > figure img {
+        width: 120px;
+    }
+
+    header > h3 {
+        font-size: 15px;
+        animation-name: topFadeInSmall;
+    }
+
+
+    header > hgroup h3 {
+        font-size: 20px;
+    }
+
+    header > hgroup p {
+        font-size: 10px;
+    }
+}
+
+
+@media screen and (max-width: 576px) {
+    #section1 .col-md-1 {
+        top: 180px;
+    }
+
+    #section2 .col-md-1 {
+        top: -650px;
+    }
+
+    header section .paddingMap {
+        padding: 0 50px;
+    }
+
+    #section1 .detailCard {
+        top: 430px;
+        left: 20px;
+    }
+
+    #section2 .detailCard {
+        top: -170px;
+        left: -20px;
+    }
+
+    #section1 {
+        padding-top: 0;
+    }
+
+    #section2 {
+        padding-bottom: 0;
+        margin-top: 0px;
+    }
+
+    .detailCard {
+        height: 200px;
+        width: 70%;
+    }
+
+        .detailCard h5 {
+            font-size: 15px;
+        }
+
+        .detailCard p, .detailCard a {
+            font-size: 10px;
+        }
+
+    main.container {
+        padding-bottom: 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #logoutForm {
+        margin-top: 12px;
+    }
+
+
+    nav a {
+        font-size: 6px;
+    }
+
+    header > hgroup {
+        top: 30%;
+        margin-left: 30px;
+    }
+
+    header section .paddingMap {
+        padding: 0 0;
+        padding-top: 80px;
+        overflow: hidden;
+    }
+
+    header section svg {
+        margin-top: 50px;
+    }
+
+    #aboutUs {
+        margin: 0;
+    }
+
+        #aboutUs h4 {
+            font-size: 20px;
+        }
+
+        #aboutUs p {
+            font-size: 8px;
+        }
+
+    #section1 {
+        height: 80vh;
+    }
+
+        #section1 .detailCard {
+            top: 320px;
+        }
+
+    #section2 .detailCard {
+        top: -270px;
+    }
+
+    .detailCard h5 {
+        font-size: 12px;
+    }
+
+    .detailCard p {
+        font-size: 2px;
+    }
+
+    .detailCard a {
+        font-size: 5px;
+    }
+}
+
+@media screen and (max-width: 280px) {
+
+    header > hgroup {
+        top: 30%;
+        margin-left: 60px;
+    }
+
+    header > h3 {
+        font-size: 10px;
+        animation-name: topFadeInSmall;
+    }
+}
+
+
+
+
+
+/* media query ends*/
+/* animation starts*/
+@keyframes rightFadeIn {
+    from {
+        top: 2%;
+        left: 70%;
+        opacity: 0;
+    }
+
+    to {
+        top: 2%;
+        left: 3%;
+        opacity: 1;
+    }
+}
+
+@keyframes topFadeIn {
+    from {
+        top: 0;
+        left: 3%;
+        opacity: 0;
+    }
+
+    to {
+        top: calc(100vh - 20%);
+        left: 3%;
+        opacity: 1;
+    }
+}
+
+@keyframes topFadeInSmall {
+    from {
+        top: 0;
+        left: 3%;
+        opacity: 0;
+    }
+
+    to {
+        top: calc(100vh - 45%);
+        left: 3%;
+        opacity: 1;
+    }
+}
+
+
+@keyframes scale {
+    from {
+        filter: blur(50px);
+        transform: scale(50);
+        opacity: 0;
+    }
+
+    to {
+        filter: blur(0);
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes light {
+    from {
+        transform: scale(5);
+        opacity: 1;
+        filter: drop-shadow(0px 0px 15px rgb(0, 255, 170));
+        border: 0.1px solid rgb(0, 255, 170);
+        width: 20px;
+        height: 20px;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 0;
+        border: .5px solid rgb(0, 255, 170);
+        width: 0px;
+        height: 0px;
+    }
+}
+
+@keyframes popOut {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes shine {
+    from {
+        filter: drop-shadow(0 0 5px red);
+    }
+
+    to {
+        filter: drop-shadow(0 0 20px red);
+    }
+}
+/* animation ends */

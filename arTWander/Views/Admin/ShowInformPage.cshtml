@@ -1,0 +1,163 @@
+﻿@model IEnumerable<arTWander.Models.AdminViewModel.ShowListViewModel>
+
+@{
+    ViewBag.Title = "ShowInformPage";
+    Layout = null;
+}
+
+
+<link rel="stylesheet" href="~/css/UserList.css">
+@{
+    foreach (var item in Model)
+    {
+        <article>
+            <section id="Section">
+                <div class="AllList">
+                    <div class="userDetailInform mb-3">
+                        <div class="container px-0">
+                            
+                                <div class="col-12">
+
+                                    <img src="@Html.DisplayFor(m => item.ShowImg)" class="d-flex w-100" alt="">
+                                </div>
+                                <div class="col-12">
+                                    <label for="">@Html.DisplayNameFor(m => m.Description)</label>
+                                    <p id="showDescript">
+                                       @Html.Raw(HttpUtility.HtmlDecode(item.Description))
+                                    </p>
+                                </div>
+                                <hr>
+                            
+                            <div class="row">
+                                <div class="col-12 col-md-5">
+                                    <p>@Html.DisplayNameFor(m => m.Id) : S<span id="Id">@Html.DisplayFor(m => item.Id)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.Title) : <span id="Title">@Html.DisplayFor(m => item.Title)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.CompanyName) : <span id="CompanyName">@Html.DisplayFor(m => item.CompanyName)</span></p>
+                                    @*<p>@Html.DisplayNameFor(m => m.)Email : <span>@Html.DisplayFor(m => item.)dKMS@art.com</span></p>*@
+                                    <p>@Html.DisplayNameFor(m => m.PhoneNumber) : <span>@Html.DisplayFor(m => item.PhoneNumber)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.CityName) : <span>@Html.DisplayFor(m => item.CityName)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.DistrictName) : <span>@Html.DisplayFor(m => item.DistrictName)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.Address) : <span>@Html.DisplayFor(m => item.Address)</span></p>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <p>@Html.DisplayNameFor(m => m.StartDate) : <span>@Html.DisplayFor(m => item.StartDate)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.EndDate) : <span>@Html.DisplayFor(m => item.EndDate)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.StartTime) : <span>@Html.DisplayFor(m => item.StartTime)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.EndTime) : <span>@Html.DisplayFor(m => item.EndTime)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.Cost) : <span>@Html.DisplayFor(m => item.Cost)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.Price) : <span> @Html.DisplayFor(m => item.Price)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.AgeRange) : <span>@Html.DisplayFor(m => item.AgeRange)</span></p>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <p>@Html.DisplayNameFor(m => m.Created_At) : <span>@Html.DisplayFor(m => item.Created_At)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.ViewCount) : <span>@Html.DisplayFor(m => item.ViewCount)</span></p>
+                                    @*<p>@Html.DisplayNameFor(m => m.ViewCount)訂閱人數 : <span>@Html.DisplayFor(m => item.ViewCount)125</span></p>*@
+                                    @*<p>@Html.DisplayNameFor(m => m.)檢舉次數: <span>5</span></p>*@
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="modal-footer">
+                            <div class="userInfoUpdate d-flex justify-content-end">
+                                <button class="btn btn-primary mx-1" id="showReason" href="" data-toggle="modal" data-target="#inputBlackReason">展演下架與通知</button>
+                            </div>
+                        </div>
+                    </div>
+
+            </section>
+
+        </article>
+    }
+}
+
+<!-- 彈出視窗顯示下架資訊 -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade px-0" id="inputBlackReason" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- 控至彈出窗大小 -->
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">展演下架</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <main>
+                    <!-- 主內容 -->
+                    <section id="Section" class="w-100">
+                        <div id="reasonInput ">
+                            <label for="">請輸入下架原因: </label>
+                            <textarea class="form-control" id="reasonContent" rows="5"></textarea>
+                        </div>
+                    </section>
+                </main>
+            </div>
+            <div class="modal-footer">
+                <button id="DeleteShow" type="submit" class="btn btn-primary">確定送出</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    //搜尋關鍵字
+    $('#DeleteShow').click(function (event) {
+        var showDele = { Id: $("#Id").text(), Title: $("#Title").text(), CompanyName: $("#CompanyName").text()};
+        var myFormData = new FormData();
+        myFormData.append("showDele", JSON.stringify(showDele));
+        event.preventDefault();
+        $.ajax({
+            type: 'post',
+            //dataType: 'script',
+            url: '@Url.Action("ShowDelete", "Admin")',
+            data: myFormData,
+            enctype: "multipart/form-data",
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                //modal關閉導向引入bs/jquery
+                myrefresh();
+                Swal.fire({
+                    position: 'top',
+                    icon: 'success',
+                    text: $("#CompanyName").text() + $("#Title").text() + "展演已下架",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+
+                var _tmp = window.$;   // save old value
+                window.$ = window.jQuery
+
+                var x = jQuery.noConflict();
+                //modal關閉導向引入bs/jquery
+                x($('#inputBlackReason').modal('hide'));
+                x($('#staticBackdrop').modal('hide'));
+
+                window.$ = _tmp; // jQuery恢復
+            }
+            ,
+            error: (XMLHttpRequest, textStatus, errorThrown) => {
+                $("#detailInform").innerHTML = "there is something wrong!";
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
+        });
+    });
+    function myrefresh() {
+        $.ajax({
+            type: 'post',
+            url: '/Admin/AllShowList',
+            data: FormData,
+            success: function (data) {
+                $('#mainPage').html(data);
+            }
+        });
+    }
+</script>

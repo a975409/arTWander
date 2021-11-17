@@ -1,0 +1,19 @@
+﻿@model IEnumerable<arTWander.Models.CommonViewModel.CommonMyItineraryPage>
+<!-- 顯示訂單內縣市展演 start -->
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            <button type="button" class="addShowPage" onclick="addShowPage(event)">
+                <i class="fa fa-plus"></i>
+            </button>
+        </td>
+        <td aria-address="@item.showAddress" aria-showId="@item.showId">
+            <a href="@Url.Action("DisplayInfo","Common",new { showId=item.showId})" class="showPageUrl" target="_blank">
+                <span class="optionCityName" aria-cityId="@item.city.Id" aria-cityname="@item.city.CityName">@item.city.CityName / </span>
+                <span class="showCustomer">@item.showCompany</span> |
+                <span class="showName">@item.showTitle</span>
+            </a>
+        </td>
+    </tr>
+}

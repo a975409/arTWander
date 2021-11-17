@@ -1,0 +1,92 @@
+﻿
+@{
+    Layout = null;
+}
+
+<link rel="stylesheet" href="./css/UserList.css">
+<!-- breadcrumb -->
+<div class="justify-items-start">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light">
+            <li class="breadcrumb-item"><a href="#">系統管理員</a></li>
+            <li class="breadcrumb-item active" aria-current="page">數據統計</li>
+        </ol>
+    </nav>
+</div>
+<!-- nav-tab -->
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-link active" id="navWebFlowTab" data-toggle="tab" href="#nav-navWebFlow" role="tab"
+           aria-controls="nav-navWebFlow" aria-selected="true">當日流量統計</a>
+        <a class="nav-link" id="navUserFlowTab" data-toggle="tab" href="#nav-PostInform" role="tab"
+           aria-controls="nav-PostInform" aria-selected="false">當週流量統計</a>
+        @*<a class="nav-link" id="navShowFlowTab" data-toggle="tab" href="#nav-FeedBack" role="tab"
+           aria-controls="nav-FeedBack" aria-selected="false">展演統計</a>*@
+    </div>
+</nav>
+
+<!-- nav-tab -->
+
+
+<main>
+    <!-- 主內容 -->
+    <section id="Section" class="w-100">
+
+        <div id="drawStatisticsMain"></div>
+
+    </section>
+</main>
+
+<script>
+    //一般使用者List (預設導入) (jquery ready (檔案讀取完成後導入))
+    $("#navWebFlowTab").ready(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("WebFlow", "Admin")',
+            data: FormData,
+            success: function (data) {
+                $('#drawStatisticsMain').html(data);
+            }
+        });
+});
+</script>
+  
+
+
+<script>
+    //點擊分頁連結頁面
+    //網頁流量圖
+    $("#navWebFlowTab").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("WebFlow", "Admin")',
+            data: FormData,
+            success: function (data) {
+                $('#drawStatisticsMain').html(data);
+            }
+        });
+    });
+    //用戶流量
+    $("#navUserFlowTab").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("UserFlow", "Admin")',
+            data: FormData,
+            success: function (data) {
+                $('#drawStatisticsMain').html(data);
+            }
+        });
+    });
+    //展覽流量
+    $("#navShowFlowTab").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("ShowFlow", "Admin")',
+            data: FormData,
+            success: function (data) {
+                $('#drawStatisticsMain').html(data);
+            }
+        });
+    });
+
+</script>

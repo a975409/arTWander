@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<div class="container">
+    <!-- 驗證nav starts -->
+    <ul class="nav nav-tabs d-flex justify-content-center border-bottom-0 " id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <h4>您的Email已確認</h4>
+        </li>
+    </ul>
+
+    <!-- 驗證nav ends -->
+    <div class="tab-content">
+        <div class="row my-3 col-12 col-md-6 mx-auto">
+            <div class="col-12 w-100 mx-auto text-center">
+                DEMO:請 @Html.ActionLink("按一下這裡登入", "AccountIndex", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+            </div>
+        </div>
+    </div>
+</div>

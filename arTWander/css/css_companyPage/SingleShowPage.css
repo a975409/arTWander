@@ -1,0 +1,88 @@
+﻿
+.dropdown-menu > .dropdown-item {
+    font-size: 16px;
+}
+
+    .dropdown-menu > .dropdown-item > i {
+        font-size: 16px;
+    }
+
+
+.progress {
+    height: 20px;
+}
+
+    .progress > span {
+        line-height: 20px;
+        font-size: large;
+    }
+
+.star {
+    font-size: 40px;
+}
+
+.usercommentImg {
+    vertical-align: top;
+    margin-right: 10px;
+}
+
+    .usercommentImg > img {
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+    }
+
+.usercommentStar i {
+    font-size: 16px;
+}
+
+.userCommentName {
+    font-size: 20px;
+}
+
+#carouselExampleIndicators {
+    height: 500px;
+    margin: 0px auto;
+}
+
+.carousel-inner>div {
+    height: 500px;
+    line-height: 500px;
+}
+
+    .carousel-inner div > img {
+        max-height: 500px;
+    }
+
+
+
+    #infoDiv p a {
+        font-size: 18px;
+    }
+
+#infoDiv span > i {
+    font-size: 18px;
+    font-style: normal;
+}
+
+#infoDiv a > i {
+    font-size: 18px;
+    font-style:normal;
+}
+
+
+.badge {
+    height: 30px;
+    line-height: 30px;
+    margin: 2px;
+    background-color: rgb(197, 126, 104);
+}
+
+    .badge i {
+        font-size: 14px;
+        color: white;
+    }
+
+a.badge-primary:focus, a.badge-primary:hover {
+    background-color: gray;
+}

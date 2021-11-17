@@ -1,0 +1,126 @@
+﻿@model IEnumerable<arTWander.Models.AdminViewModel.BlackListViewModel>
+
+@{
+    ViewBag.Title = "UserInform";
+    Layout = null;
+}
+<link rel="stylesheet" href="../css/UserList.css">
+@{
+    foreach (var item in Model)
+    {
+        <article>
+            <section id="Section">
+                <div class="AllList">
+                    <div class="userDetailInform mb-3">
+                        <div class="container px-0">
+                            <p class="text-right">帳號狀態: <span class="isBlock">@Html.DisplayFor(m => item.IsBlackList)</span></p>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12 col-lg-3 mb-3">
+                                    <img src="@Html.DisplayFor(m => item.AvatarUrl)@Html.DisplayFor(m => item.AvatarName)" class="d-flex w-100" alt="">
+                                </div>
+                                <div class="col-12 col-lg-9">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <p>會員編號: <span>B000<a id="userId">@Html.DisplayFor(m => item.FK_ApplicationUser)</a></span></p>
+                                            <p>@Html.DisplayNameFor(m => m.CompanyName) : <span id="CustomerName">@Html.DisplayFor(m => item.CompanyName)</span></p>
+                                            <p>@Html.DisplayNameFor(m => m.Email) : <span>@Html.DisplayFor(m => item.Email)</span></p>
+                                            <p>@Html.DisplayNameFor(m => m.CityName) : <span>@Html.DisplayFor(m => item.CityName)</span></p>
+                                            <p>@Html.DisplayNameFor(m => m.DistrictName) : <span>@Html.DisplayFor(m => item.DistrictName)</span></p>
+                                            <p>@Html.DisplayNameFor(m => m.CompanyAddress) : <span>@Html.DisplayFor(m => item.CompanyAddress)</span></p>
+                                            <p>負責人 : <span>@Html.DisplayFor(m => item.UserName)</span></p>
+                                            <p>@Html.DisplayNameFor(m => m.PhoneNumber) : <span>@Html.DisplayFor(m => item.PhoneNumber)</span></p>
+                                        </div>
+                                        <div class="col-6">
+                                            <p>@Html.DisplayNameFor(m => m.RegisterTime) : <span>@Html.DisplayFor(m => item.RegisterTime)</span></p>
+                                            <p>@Html.DisplayNameFor(m => m.LastloginTime) : <span>@Html.DisplayFor(m => item.LastloginTime)</span></p>
+                                            <p>@Html.DisplayNameFor(m => m.LogingCount) : <span>@Html.DisplayFor(m => item.LogingCount)</span></p>
+                                            @*<p>@Html.DisplayNameFor(m => m.Statue) : <span>@Html.DisplayFor(m => item.Statue)</span></p>*@
+                                            <p>@Html.DisplayNameFor(m => m.ShowCount) : <a href="#"> @Html.DisplayFor(m => item.ShowCount) </a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <p>黑名單編號 : <span>B000<a id="userId">@Html.DisplayFor(m => item.FK_ApplicationUser)</a></span></p>
+                                    <p>@Html.DisplayNameFor(m => m.Created_At) : <span id="userName"> @Html.DisplayFor(m => item.Created_At)</span></p>
+                                    <p>@Html.DisplayNameFor(m => m.Reason) : <span>@Html.DisplayFor(m => item.Reason)</span></p>
+                                </div>
+                            </div>
+                            <div class="userInfoUpdate d-flex justify-content-end">
+                                @*取消黑名單*@
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary mx-1" id="blackCustomerReleaseBtn" href="" data-toggle="modal" data-target="#inputBlackReason">用戶權限返還</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </article>
+
+
+    }
+}
+
+<script>
+    //搜尋關鍵字
+    $('#blackCustomerReleaseBtn').click(function (event) {
+        var blackAdd = { FK_ApplicationUser: $("#userId").text(), Reason: $("#txtReason").val(), CompanyName: $("#CustomerName").text() };
+        var myFormData = new FormData();
+        myFormData.append("blackAdd", JSON.stringify(blackAdd));
+        event.preventDefault();
+        $.ajax({
+            type: 'post',
+            //dataType: 'script',
+            url: '@Url.Action("ReleaseBlack", "Admin")',
+            data: myFormData,
+            enctype: "multipart/form-data",
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                //modal關閉導向引入bs/jquery
+                
+                myrefresh();
+                Swal.fire({
+                    position: 'top',
+                    icon: 'success',
+                    text: $("#CustomerName").text() + "已返還權限",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+
+                var _tmp = window.$;   // save old value
+                window.$ = window.jQuery
+
+                var x = jQuery.noConflict();
+                //modal關閉導向引入bs/jquery
+                x($('#inputBlackReason').modal('hide'));
+                x($('#staticBackdrop').modal('hide'));
+                window.$ = _tmp; // jQuery恢復
+            },
+            error: (XMLHttpRequest, textStatus, errorThrown) => {
+                $("#detailInform").innerHTML = "there is something wrong!";
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
+        });
+    });
+    function myrefresh() {
+        $.ajax({
+            type: 'post',
+            url: '/Admin/BlackCustomer',
+            data: FormData,
+            success: function (data) {
+                $('#blackMain').html(data);
+            }
+        });
+    }
+</script>

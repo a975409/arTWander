@@ -1,0 +1,84 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<arTWander.Models.CommonViewModel.CommonShowViewModel>
+@{
+    //bool sendAgain = TempData["sended"] == null ? false : (bool)TempData["sendAgain"];
+
+    //SearchShowPagesViewModel searchModel = (SearchShowPagesViewModel)TempData["SearchModel"] ?? new SearchShowPagesViewModel();
+
+    PagedListRenderOptions pagedListOption = new PagedListRenderOptions
+    {
+        LinkToFirstPageFormat = "<< 第一頁",
+        LinkToPreviousPageFormat = "< 前一頁",
+        LinkToNextPageFormat = "後一頁 >",
+        LinkToLastPageFormat = "最後一頁 >>",
+        DisplayPageCountAndCurrentLocation = true,
+        PageCountAndCurrentLocationFormat = "第 {0} 頁/共 {1} 頁"
+    };
+
+    AjaxOptions ajaxOption = new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "showPages",
+        OnFailure = "errorServerMsg()"
+    };
+}
+@if (Model.Count > 0 && Model[0] != null)
+{
+    <div class="container">
+        <div class="row showlistRow">
+            @foreach (var show in Model)
+            {
+                <!-- 展覽starts -->
+                <div class="col-12 col-lg-4 position-relative  mb-lg-5">
+                    <!-- 展覽圖片 starts -->
+                    <!-- 侷限移除icon可移動範圍 -->
+                    <div class="w-100">
+                        <div class="showImg w-100">
+                            <a href="@Url.Action("DisplayInfo","Common",new { showId=show.showId})">
+                                <img class="w-100 rounded-sm img-fluid " src="@show.showImg" alt="">
+                            </a>
+                        </div>
+                        <a href="" class="MyshowDeleteIcon">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                            <input type="hidden" name="showId" class="showIdInput" value="@show.showId" />
+                        </a>
+                    </div>
+                    <!-- 展覽圖片 ends -->
+                    <!-- 展覽敘述卡 strats -->
+                    <div class="shortDetail">
+                        <div class="d-flex align-items-center">
+                            <a href="/Common/Index?city=@show.showCity">@show.showCity</a>／
+                            <div class="marqee">
+                                <a href="">@show.showTitle</a>
+                            </div>
+                        </div>
+                        <div class="description">
+                            <a href="@Url.Action("DisplayInfo","Common",new { showId=show.showId})">@Html.Raw(HttpUtility.HtmlDecode(show.showDiscription))</a>
+                        </div>
+                    </div>
+                    <!-- 展覽敘述卡 ends -->
+                </div>
+                <!-- 展覽 ends -->
+            }
+        </div>
+    </div>
+    <!-- 展覽列表 ends -->
+    <!-- 分頁 starts -->
+    <div class="d-flex justify-content-center">
+        @Html.PagedListPager(Model, page => Url.Action("MyshowPage", "Common", new { page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(pagedListOption, ajaxOption))
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="row showlistRow">
+            <div class="col-12 mt-5 d-flex align-items-center flex-column">
+                <h5 class="d-flex justify-content-center ">
+                    @ViewBag.errorMsg
+                </h5>
+                <p>@ViewBag.guidMsg</p>
+            </div>
+        </div>
+    </div>
+}

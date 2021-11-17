@@ -1,0 +1,359 @@
+body{
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-gray{
+    background-color: rgba(196, 196, 196, 1);
+}
+
+/* header starts*/
+/* a{
+    font-size: 18px;
+} */
+i{
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+}
+
+/* 取消li前預設maker點 */
+#aside1DivUl li{
+    list-style-type: none;
+}
+
+/* 右上頭像下拉式選單 */
+
+#avatarNavSet >a{
+    padding: 0px;
+    width: 30px;
+    font-size: 25px;
+}
+#avatarNavSet>a i{
+    font-size: 22px;
+}
+#avatarNav{
+    width: 25px;
+    height: auto;
+}
+.dropdown-menu >a{
+    font-size: 16px;
+}
+ 
+#avatarNavDropdown{
+    position: fixed;
+    width: 180px;
+    top: 50px;
+    left:100%;
+    transition:all .3s ease-in-out;
+}
+
+/* header end */
+/* navbar starts */
+
+nav a{
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    transition: all .3s ease-in-out;
+}
+
+nav a:hover{
+    text-decoration: none;
+    color: rgb(197, 126, 104);
+}
+
+.navbarFixed_Slide{
+    height: 48px;
+    position:absolute;
+    top: -48px;
+    left: 0;
+    right: 0;
+}
+
+.navbarFixed_active{
+    position:fixed;
+    top: 0px;
+    transition: all .3s ease;
+}
+
+/* navbar end */
+/* aside starts */
+
+#aside1{
+    width: 20%;
+}
+
+#aside1 a{
+    text-decoration: none;
+    color: rgb(0, 0, 0);  
+}
+
+input{
+    font-size: 5px;
+}
+
+#aside1 a:hover{
+    text-decoration: none;
+    color: rgb(197, 126, 104);
+}
+
+.fa-cog:hover{
+    transform: rotate(180deg);
+}   
+
+#aside1 i{
+    font-size: 10px;
+    transition: all .2s ease-in-out;
+}
+
+#asideAvatar{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    /* cursor: pointer; */
+}
+
+#asideAvatar img{
+    object-fit: cover;
+}
+
+#buttonSearch:active{
+    transform: scale(1.2);
+}
+
+.list-group-flush>.list-group-item{
+    border-width: 0 0 0;
+}
+
+select{
+    width: 105px;
+}
+/* 
+.aside_active{
+    position: absolute;
+    top: 20px;
+    left: 0;
+    z-index: 1001;
+    transition: all .3s ease;
+} */
+
+
+/* aside end */
+/* aside RWD手刻 */
+/* nav/menu滑動窗控制checkbox start*/
+#menuControl {
+    position: fixed;
+    z-index: -2;
+    opacity: 0;
+}
+.menuControlBtn span{
+    opacity: 0;
+}
+#navControl {
+    position: fixed;
+    z-index: -2;
+    opacity: 0;
+}
+/* nav/menu滑動窗控制checkbox end*/
+
+@media screen and (max-width: 768px){
+   /* navbar start */
+    /* icon create */
+    #navbarFixed::before{
+        font-family: "Font Awesome 5 Free"; 
+        font-weight: 900; 
+        font-size: 28px;
+        content: "\f0c9";
+        position:absolute;
+        left:15px;
+    }    
+    /* aside hidden */
+    #aside1{
+        position:absolute;
+        width: 80%;
+        height: 92vh;
+        left: -100%;
+        background-color: rgb(255, 255, 255);
+        overflow:scroll;
+        overflow-x: hidden;
+        transition: .3s;
+    }
+
+    /* #aside1 a,#aside1 :radio{
+        font-size: 5px;
+    } */
+    /* slide aside hidden */
+    #aside1.aside1_Slide{
+        position:fixed;
+        width: 80%;
+        height: 94vh;
+        left: -100%;
+        top: 48px;
+        background-color: rgb(255, 255, 255);
+        overflow:scroll;
+        overflow-x: hidden;
+        transition: .3s;
+    }
+    /* btn monitor 控制nav/menu滑動窗*/
+    .menuControlBtn{
+        height: 48px;
+        width: 48px;
+        position: absolute;
+        left:0;
+        background-color:transparent;
+    }
+    
+    #menuControl:checked ~#aside1{
+        left:0;
+    }
+    #menuControl:checked ~#aside1.aside1_Slide {
+        left:0;
+    }
+    #navControl:checked ~.navbarFixed_Slide{
+        height: 48px;
+        position:fixed;
+        top: 0px;
+        left: 0;
+        right: 0;
+    }
+    
+    /* navbar end */
+
+    /* breadcrumb start */
+    .breadcrumb{
+        display:none;
+    }
+    /* breadcrumb end */
+    /* section邊框 */
+    /* .AllListTitle .row{
+        justify-content: center;
+    } */
+    .AllList{
+        /* margin-left: -10%;
+        margin-right: -10%; */
+        /* border: solid;
+        border-color: black; */
+        /* border-radius:5px; */
+    }
+    /* section邊框end */
+    
+    
+}
+/* aside RWD end */
+
+/* asideAvatar 的 RWD */
+@media screen and (min-width: 768px) and (max-width: 992px){
+    #asideAvatar{
+        height: 145px;
+    }
+}
+
+/* MemberPage */
+.MyshowDeleteIcon{
+    display: flex;
+    position:absolute;
+    z-index: 2;
+    top: 10px;
+    right: 25px;
+    padding: 1px 3px;
+    background-color: rgb(256, 256, 256, 0.7);
+    color: rgb(36, 36, 36);
+}
+
+.MyshowDeleteIcon:hover{
+    background-color: rgb(256, 256, 256, 1);
+}
+
+
+
+/* MyItineraryPage */
+.showCityBorder{
+    border: 1px solid #ced4da;
+}
+
+/* showSort icon */
+.showSort i{
+    font-size: 15px;
+}
+
+/* mySubscriptionPage */
+.mySubscriptionDeleteIcon{
+    display: flex;
+    position:absolute;
+    z-index: 2;
+    top: 5px;
+    right: 35px;
+    padding: 1px 3px;
+    background-color: rgb(256, 256, 256, 0.7);
+    color: rgb(36, 36, 36);
+}
+
+@media screen and (max-width: 768px){
+    .mySubscriptionDeleteIcon{
+        display: flex;
+        position:absolute;
+        top: 0px;
+        right: 0px;
+    }
+}
+
+
+/* mySubscription detail page */
+.breadcrumb .active{
+    color: #C57E68;
+}
+
+
+.spanText{
+    background-color: rgba(196, 196, 196, 1);
+    border-radius: 2px;
+    color: white;
+}
+
+.subscriptionShowImg img{
+ height: 300px;
+}
+
+.SubShowDetail{
+    background-color: rgb(255, 255, 255);
+    box-shadow: 5px 0 10px rgb(131, 131, 131);
+    width: 80%;
+    z-index: 1000;
+    padding: 20px;
+    position: absolute;
+    bottom: -15%;
+    right: 7%;
+}
+@media screen and (max-width: 768px){
+    .SubShowDetail{
+        width: 65%;
+        bottom: -15%;
+    }
+}
+
+.SubShowDetail a{
+    text-decoration: none;
+    color: rgb(197, 126, 104);
+    font-size: 10px;
+    transition: all .3s ease-in-out;
+}
+
+.SubShowDetail a:hover{
+    /* font-weight: bold; */
+    color: rgb(0, 0, 0);
+}
+
+
+/* mySubscription detail page */
+.showDetailInform{
+    background-color: rgb(196, 196, 196);
+}
+
+/*右側各星號評論百分比*/
+.progress {
+    height: 16px;
+  }
+  
+  .progress>span {
+    line-height: 16px;
+    font-size: 16px;
+  }

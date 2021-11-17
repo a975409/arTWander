@@ -1,0 +1,64 @@
+﻿
+@{
+    Layout = null;
+}
+<link rel="stylesheet" href="~/css/Adminiframe/iframe.css">
+
+<div class="row">
+    <!-- 用戶瀏覽數量統計 -->
+    <!-- 當日人數 -->
+        <div class="col-12 col-xxl-6 mx-0 w-100 iframeOuter" >
+            <iframe class="iframeInner" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSG6ElWJGuiWH4N2Ys5ROtM8ulGEGsrERru-RZUj_4Eoe3Z0WU8qE4VjS0h10PVunzo_tBaGfUpqG3i/pubchart?oid=2014770030&amp;format=interactive"></iframe>
+        </div>
+
+     @*當日流量*@ 
+    <div class="col-12 col-xxl-6 mx-0 w-100 iframeOuter">
+        <iframe class="iframeInner" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSG6ElWJGuiWH4N2Ys5ROtM8ulGEGsrERru-RZUj_4Eoe3Z0WU8qE4VjS0h10PVunzo_tBaGfUpqG3i/pubchart?oid=1700325156&amp;format=interactive"></iframe>
+    </div>
+
+</div>
+
+
+    @*<script src="~/javascript/Admin/drawCanvasData.js"></script>
+        <script>
+          lineChart(document.getElementById('webFlowLiner').getContext('2d'), true, 'circle', 0, true, '網頁點擊流量');
+          bar(document.getElementById('webFlowBar').getContext('2d'), true, 'circle', 0, true, '網頁點擊流量bar');
+          lineChart(document.getElementById('webNewLiner').getContext('2d'), true, 'circle', 0, true, '用戶新增量bar');
+          bar(document.getElementById('webNewCustomerLiner').getContext('2d'), true, 'circle', 0, true, '展商新增量bar');
+          bar(document.getElementById('webNewShowLiner').getContext('2d'), true, 'circle', 0, true, '新增展演數量bar'); </script>*@
+
+    @*get google analytic json*@
+    @*<html>
+        <head>
+            <script src="https://apis.google.com/js/api.js"></script>
+            <script>
+                function start() {
+                    // Initializes the client with the API key and the Translate API.
+                    gapi.client.init({
+                        'apiKey': 'YOUR_API_KEY',
+                        'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/translate/v2/rest'],
+                    }).then(function () {
+                        // Executes an API request, and returns a Promise.
+                        // The method name `language.translations.list` comes from the API discovery.
+                        return gapi.client.language.translations.list({
+                            q: 'hello world',
+                            source: 'en',
+                            target: 'de',
+                        });
+                    }).then(function (response) {
+                        console.log(response.result.data.translations[0].translatedText);
+                    }, function (reason) {
+                        console.log('Error: ' + reason.result.error.message);
+                    });
+                };
+
+                // Loads the JavaScript client library and invokes `start` afterwards.
+                gapi.load('client', start);
+            </script>
+        </head>
+        <body>
+            <div id="results"></div>
+        </body>
+        </html>*@
+
+
